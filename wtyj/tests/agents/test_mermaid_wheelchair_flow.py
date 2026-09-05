@@ -1620,7 +1620,7 @@ def test_repeated_date_uncertainty_moves_on_without_inventing_or_confirming_date
 
 @pytest.mark.parametrize('selector,value', [('calendar_request','next_week'),('status_request','wildlife_guarantee'),('status_request','pickup_coverage'),('assistance_request','wheelchair_note'),('assistance_request','other_review')])
 def test_protected_reply_keeps_separate_food_answer(monkeypatch,selector,value):
-    model=Mock(return_value=_wheelchair_result('en',fields={},assistance_request='none',requires_human=False,other_question_reply='Breakfast and a BBQ lunch are included.',other_question_excerpt='Is breakfast included?'))
+    model=Mock(return_value=_wheelchair_result('en',fields={},assistance_request='none',requires_human=False,other_question_reply='Breakfast and a BBQ lunch are included.',other_question_excerpt='Is breakfast included?',other_question_topic='food'))
     model.return_value[selector]=value
     monkeypatch.setattr(marina_agent,'process_message',model)
     result=workflow.process_model_turn({'from':'mixed','message_id':value,'text':'Is breakfast included? And my other question?'},None)
@@ -1650,3 +1650,29 @@ def test_old_captured_secondary_wildlife_answer_cannot_duplicate_protected_fact(
     result=workflow.process_model_turn({'from':'copy','message_id':'copy','text':'How much is pickup? Are turtles guaranteed?'},None)
     assert "Turtle sightings do happen" not in result.text
     assert result.text.count(policy.copy('wildlife_guarantee','en'))==1
+
+
+@pytest.mark.parametrize("topic", [None, "none", "accessibility", "protected"])
+def test_paraphrased_assistance_is_not_a_separate_faq(monkeypatch, topic):
+    duplicate = "Guests who use a wheelchair are welcome on the trip. I've added a note for the crew so they can be ready to assist."
+    model = _wheelchair_result("en", fields={"wheelchair_relationship": "husband"},
+        calendar_request="next_week", other_question_reply=duplicate,
+        other_question_excerpt="My husband is in a wheelchair, can he join too ?")
+    if topic is not None:
+        model["other_question_topic"] = topic
+    monkeypatch.setattr(marina_agent, "process_message", Mock(return_value=model))
+    result = workflow.process_model_turn({"from": "repeat", "message_id": "repeat",
+        "text": "My husband is in a wheelchair, can he join too ? We want next week."}, None)
+    assert duplicate not in result.text
+    assert result.text.count(workflow.WHEELCHAIR_COPY["en"]) == 1
+    assert result.text.count("?") == 1
+    assert assistance.for_conversation("repeat") is not None
+
+
+def test_assistance_rejects_faq_without_guest_evidence(monkeypatch):
+    model = _wheelchair_result("en", fields={}, other_question_topic="food",
+        other_question_reply="Breakfast is included.", other_question_excerpt="Is breakfast included?")
+    monkeypatch.setattr(marina_agent, "process_message", Mock(return_value=model))
+    result = workflow.process_model_turn({"from": "no-faq", "message_id": "one",
+        "text": "My husband uses a wheelchair."}, None)
+    assert "Breakfast is included." not in result.text

@@ -1,0 +1,3 @@
+FROM wtyj-agent:tracy-loop-stop-f1aefc5
+COPY wtyj/agents/social/mermaid_reservation_workflow.py /app/agents/social/mermaid_reservation_workflow.py
+COPY wtyj/agents/social/mermaid_understanding.py /app/agents/social/mermaid_understanding.py

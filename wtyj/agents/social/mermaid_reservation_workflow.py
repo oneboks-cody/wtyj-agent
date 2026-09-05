@@ -1396,10 +1396,16 @@ def process_model_turn(
         # The deterministic acknowledgement answers the wheelchair question;
         # normal intake should immediately choose the next missing detail.
         response = ""
-        other = str(understood.get("other_question_reply") or "")
-        for acknowledgement in (WHEELCHAIR_COPY[locale], BOARDING_ASSISTANCE_COPY[locale]):
-            other = other.replace(acknowledgement, "")
-        understood = {**understood, "other_question_reply": other.strip()}
+        # Require a separate supported FAQ topic and verbatim guest evidence.
+        # Exact-copy removal cannot catch paraphrases of the crew acknowledgement.
+        faq_topics = {"food", "inclusions", "activities", "preparation", "pier", "parking", "travel_time", "contact"}
+        excerpt = understood.get("other_question_excerpt")
+        separate_faq = (
+            understood.get("other_question_topic") in faq_topics
+            and isinstance(excerpt, str) and bool(excerpt.strip())
+            and excerpt in str(message.get("text") or "")
+        )
+        understood = {**understood, "other_question_reply": str(understood.get("other_question_reply") or "").strip() if separate_faq else ""}
         has_question = bool(understood.get("other_question_reply") or understood.get("additional_status_requests")) or calendar_request in response_policy.CALENDAR_REQUESTS or understood.get("status_request", "none") != "none"
     if date_request and (not reservation or action == "new_booking") and not review_pending:
         response = ""
