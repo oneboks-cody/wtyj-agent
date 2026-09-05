@@ -213,7 +213,28 @@ def _conn() -> sqlite3.Connection:
         );
         """
     )
+    _ensure_document_versions(conn)
     return conn
+
+
+def _ensure_document_versions(conn):
+    if "document_revision" in {r[1] for r in conn.execute("PRAGMA table_info(mermaid_documents)")}:
+        return
+    conn.execute("BEGIN IMMEDIATE")
+    try:
+        if "document_revision" not in {r[1] for r in conn.execute("PRAGMA table_info(mermaid_documents)")}:
+            schema = conn.execute("SELECT sql FROM sqlite_master WHERE name='mermaid_documents'").fetchone()[0]
+            schema = schema.replace("mermaid_documents", "mermaid_documents_versioned", 1)
+            schema = schema.replace("UNIQUE (tenant_slug, reservation_public_id, kind)", "document_revision INTEGER NOT NULL DEFAULT 1, UNIQUE (tenant_slug, reservation_public_id, kind, document_revision)")
+            conn.execute(schema)
+            columns = ",".join(r[1] for r in conn.execute("PRAGMA table_info(mermaid_documents)"))
+            conn.execute(f"INSERT INTO mermaid_documents_versioned ({columns}) SELECT {columns} FROM mermaid_documents")
+            conn.execute("DROP TABLE mermaid_documents")
+            conn.execute("ALTER TABLE mermaid_documents_versioned RENAME TO mermaid_documents")
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
 
 
 def _money(currency: str, amount: int) -> str:
@@ -469,7 +490,7 @@ def create_receipt(reservation: dict, payment: dict) -> tuple[dict, dict]:
     try:
         existing = conn.execute(
             "SELECT * FROM mermaid_documents WHERE tenant_slug='mermaid' "
-            "AND reservation_public_id=? AND kind='receipt'",
+            "AND reservation_public_id=? AND kind='receipt' AND document_revision=1",
             (reservation["public_id"],),
         ).fetchone()
         if existing is None:

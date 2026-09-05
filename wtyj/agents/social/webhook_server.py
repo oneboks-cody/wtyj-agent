@@ -2176,7 +2176,7 @@ def _flush_buffer(buffer_key):
                             conversation_id=_zernio_conv[:20],
                             media_attached=bool(attachment_url),
                             vehicle_recommendation=bool(reply_vehicle_recommendation))
-                        if mermaid_delivery_commit:
+                        if mermaid_delivery_commit or (reply_media or {}).get("type") == "mermaid_date_confirmation":
                             _mark_ali_delivery_retry(_zernio_channel, _zernio_conv, ids, "mermaid_quote", processing_token=processing_token)
                         elif ali_turn_commit:
                             _mark_ali_delivery_retry(

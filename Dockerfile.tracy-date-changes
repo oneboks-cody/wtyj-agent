@@ -1,0 +1,8 @@
+FROM wtyj-agent:tracy-customer-copy
+COPY wtyj/agents/social/mermaid_documents.py /app/agents/social/mermaid_documents.py
+COPY wtyj/agents/social/mermaid_reservation_workflow.py /app/agents/social/mermaid_reservation_workflow.py
+COPY wtyj/agents/social/mermaid_understanding.py /app/agents/social/mermaid_understanding.py
+COPY wtyj/agents/social/senders/zernio.py /app/agents/social/senders/zernio.py
+COPY wtyj/agents/social/webhook_server.py /app/agents/social/webhook_server.py
+COPY wtyj/agents/social/mermaid_date_changes.py /app/agents/social/mermaid_date_changes.py
+COPY wtyj/agents/marina/marina_agent.py /app/agents/marina/marina_agent.py

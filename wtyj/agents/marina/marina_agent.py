@@ -2210,6 +2210,9 @@ def process_message(
                 bm_logger.log("claude_field_defaulted", field=field,
                               channel=channel, from_id=from_email[:50])
 
+        if response_contract == "mermaid_reservation_demo":
+            result = mermaid_understanding.recover_separate_faq_reply(result, body)
+
         # Mermaid's validated critical routes render their own response later.
         # Other contracts and ordinary unanswered questions keep the fallback.
         server_owned_reply = (

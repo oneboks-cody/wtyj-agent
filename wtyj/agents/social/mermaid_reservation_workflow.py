@@ -540,6 +540,7 @@ class IntakeResult:
     duplicate: bool = False
     generation_failure: dict | None = None
     understanding_source: str | None = None
+    workflow_reply: dict | None = None
 
     def as_reply(self) -> dict:
         reply = {
@@ -556,6 +557,8 @@ class IntakeResult:
             reply["understanding_source"] = self.understanding_source
         if self.generation_failure is not None:
             reply["mermaid_generation_failure"] = self.generation_failure
+        if self.workflow_reply is not None:
+            reply.update(self.workflow_reply)
         return reply
 
 
@@ -1005,6 +1008,9 @@ def process_model_turn(
     context["human_review_pending"] = review_pending
     context["recorded_status"] = response_policy.state_context(phone, reservation)
     context["reservation_state"] = (reservation or {}).get("state")
+    from agents.social import mermaid_date_changes
+    proposal = mermaid_date_changes.pending(phone)
+    context["pending_date_change"] = {key: proposal[key] for key in ("old_date", "new_date")} if proposal else None
     if reservation:
         context["reservation_intake"] = reservation["intake"]
         context["authoritative_pricing"] = reservation["monetary_snapshot"]
@@ -1236,6 +1242,16 @@ def process_model_turn(
     if calendar_request in response_policy.CALENDAR_REQUESTS or date_request:
         understood = {**understood, "fields": {k: v for k, v in (understood.get("fields") or {}).items() if k != "trip_date"}}
     action = understood.get("mermaid_action")
+    if action in {"change_date", "confirm_date_change", "keep_date"} and reservation and mermaid_date_changes.enabled():
+        if action == "change_date":
+            faq_excerpt = understood.get("other_question_excerpt")
+            faq = str(understood.get("other_question_reply") or "") if understood.get("other_question_topic") in {"food", "inclusions", "activities", "preparation", "pier", "parking", "travel_time", "contact"} and isinstance(faq_excerpt, str) and faq_excerpt.strip() and faq_excerpt in str(message.get("text") or "") else ""
+            response = mermaid_date_changes.propose(message, reservation, (understood.get("fields") or {}).get("trip_date"), locale, faq_reply=faq)
+        elif proposal and not _has_guest_question(understood, str(message.get("text") or "")):
+            response = mermaid_date_changes.handle_button({**message, "_zernio_interactive_id": mermaid_date_changes.PREFIX + proposal["token"] + (":confirm" if action == "confirm_date_change" else ":keep")})
+        else:
+            response = {"text": mermaid_date_changes.copy(locale)["stale"], "media": None}
+        return IntakeResult(response["text"], locale, reservation["state"], action="date_change", workflow_reply=response)
     if action not in {"details", "question", "confirm_summary", "cancel", "request_human", "payment_status", "new_booking", "acknowledge"}:
         return IntakeResult(str(understood.get("reply") or COPY[locale]["trip_date"]), locale, fields.get("phase", "collecting"))
     if not review_pending and action == "new_booking" and (reservation or {}).get("state") in {"booked", "cancelled"}:
@@ -1811,6 +1827,11 @@ def handle_demo_message(message: dict, include_media: bool = False, *, use_model
             )
             result = _stopped_loop_result(state, suppressed=True)
             return result.as_reply() if include_media else ""
+        from agents.social import mermaid_date_changes
+        button_reply = mermaid_date_changes.handle_button(message)
+        if button_reply is not None:
+            _cache_reply(message, button_reply)
+            return button_reply if include_media else str(button_reply.get("text") or "")
         cached = (flags.get("mermaid_cached_replies") or {}).get(str(message.get("message_id") or "")) or flags.get("mermaid_cached_reply") or {}
         if (message.get("message_id") and cached.get("message_id") == message["message_id"]
                 and message["message_id"] in flags.get("mermaid_seen_message_ids", [])):
