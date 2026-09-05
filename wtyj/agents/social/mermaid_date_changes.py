@@ -141,16 +141,19 @@ def propose(message, reservation, target, locale, faq_reply=""):
         conn.close()
 
 
-def _completed_reply(proposal, reservation):
+def _completed_reply(proposal, reservation, *, email_followup=True):
+    from agents.social import mermaid_reservation_email as email
     document_id, job_id = proposal['document_public_id'], proposal['job_id']
     document = next(d for d in docs.documents_for_reservation(reservation['public_id']) if d['public_id']==document_id)
     base = os.environ.get('UNBOKS_PUBLIC_BASE_URL','').rstrip('/')
-    return {'text':copy(proposal['locale'])['complete'].format(new=guest.guest_date(proposal['new_date'],proposal['locale'])),
+    followup = (email.after_date_change(reservation) or email.offer(reservation)) if email_followup else ''
+    body = email.copy(proposal['locale'], 'date_complete_body', new=guest.guest_date(proposal['new_date'],proposal['locale'])) + '\n\n' + followup if followup else copy(proposal['locale'])['complete'].format(new=guest.guest_date(proposal['new_date'],proposal['locale']))
+    return {'text':body,
             'media':{'url':docs.build_signed_url(base,document_id,os.environ.get('MERMAID_DEMO_SIGNING_SECRET','')), 'type':'file','filename':document['filename']},
             'mermaid_delivery_commit':{'job_id':job_id}}
 
 
-def handle_button(message):
+def handle_button(message, *, email_followup=True):
     value=str(message.get('_zernio_interactive_id') or '')
     if not enabled() or not value.startswith(PREFIX):
         return None
@@ -176,12 +179,14 @@ def handle_button(message):
             conn.commit()
             if (docs.delivery_job(proposal['job_id']) or {}).get('status')=='delivered':
                 return {'text':'','media':None,'duplicate':True}
-            return _completed_reply(proposal,reservation)
+            return _completed_reply(proposal,reservation,email_followup=email_followup)
         if (proposal['status']!='pending' or proposal['expires_at']<int(time.time()) or reservation['revision']!=proposal['expected_revision'] or reservation['intake']['trip_date']!=proposal['old_date'] or reservation['state']!='booked'):
             return _text(copy(locale)['stale'])
         if choice=='keep':
             conn.execute("UPDATE mermaid_date_changes SET status='cancelled' WHERE token=?",(token,));conn.commit()
-            return _text(copy(locale)['kept'].format(old=guest.guest_date(proposal['old_date'],locale)))
+            from agents.social import mermaid_reservation_email as email
+            followup = email.after_date_change(reservation) if email_followup else ''
+            return _text('\n\n'.join(part for part in (copy(locale)['kept'].format(old=guest.guest_date(proposal['old_date'],locale)), followup) if part))
         error=_date_error(reservation,proposal['new_date'])
         if error:return _rejected_reply(conn, reservation, proposal['new_date'], locale, error)
         payment_row=conn.execute('SELECT * FROM mermaid_demo_payments WHERE reservation_public_id=?',(reservation['public_id'],)).fetchone()
@@ -210,7 +215,7 @@ def handle_button(message):
         conn.execute("INSERT INTO whatsapp_threads (phone,role,text,created_at,channel,sender_name,source_message_key) VALUES (?,'system',? ,?,'whatsapp','TRACY',?)",(reservation['conversation_id'],audit,now,'mermaid-date:'+token))
         conn.execute("UPDATE mermaid_date_changes SET status='confirmed',document_public_id=?,job_id=?,confirmed_at=? WHERE token=?",(doc_id,job_id,now,token))
         conn.commit()
-        return _completed_reply({**proposal,'document_public_id':doc_id,'job_id':job_id},updated)
+        return _completed_reply({**proposal,'document_public_id':doc_id,'job_id':job_id},updated,email_followup=email_followup)
     finally:
         conn.close()
 

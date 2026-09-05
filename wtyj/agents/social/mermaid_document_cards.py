@@ -52,6 +52,7 @@ def quote_text(reservation):
 
 def receipt_text(reservation, payment):
     from agents.social import mermaid_guest_experience as guest
+    from agents.social import mermaid_reservation_email as email
     locale, intake = reservation["language"], reservation["intake"]
     copy = copy_for(locale)
     name = (reservation.get("customer_name") or "").split()
@@ -61,7 +62,7 @@ def receipt_text(reservation, payment):
         f"{guest.guest_copy(locale)['paid']}: {payment['currency']} {int(payment['amount']):,.2f}",
         transport_lines(reservation),
         f"{copy['booking_code']}: {guest.display_reference(reservation['booking_code'])}",
-        copy["closing"],
+        email.copy(locale, 'paid_closing') if email.offer(reservation) else copy["closing"],
     ])
 
 

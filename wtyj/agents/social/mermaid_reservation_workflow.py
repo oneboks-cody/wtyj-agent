@@ -1018,6 +1018,9 @@ def process_model_turn(
         if assessed['reason']:
             context['date_recovery'] = assessed
     from agents.social import mermaid_date_changes
+    from agents.social import mermaid_reservation_email
+    context['email_offer'] = mermaid_reservation_email.context(reservation)
+    context['recorded_status']['email_delivery'] = ((context['email_offer'] or {}).get('last_email') or {}).get('status', 'none')
     proposal = mermaid_date_changes.pending(phone)
     context["pending_date_change"] = {key: proposal[key] for key in ("old_date", "new_date")} if proposal else None
     if reservation:
@@ -1256,10 +1259,18 @@ def process_model_turn(
             faq = reply_planning.supported_faq(understood, str(message.get("text") or ""))
             response = mermaid_date_changes.propose(message, reservation, (understood.get("fields") or {}).get("trip_date"), locale, faq_reply=faq)
         elif proposal and not _has_guest_question(understood, str(message.get("text") or "")):
-            response = mermaid_date_changes.handle_button({**message, "_zernio_interactive_id": mermaid_date_changes.PREFIX + proposal["token"] + (":confirm" if action == "confirm_date_change" else ":keep")})
+            response = mermaid_date_changes.handle_button({**message, "_zernio_interactive_id": mermaid_date_changes.PREFIX + proposal["token"] + (":confirm" if action == "confirm_date_change" else ":keep")}, email_followup=understood.get('email_action','none') not in mermaid_reservation_email.ACTIONS)
         else:
             response = {"text": mermaid_date_changes.copy(locale)["stale"], "media": None}
+        if security_event == 'none' and understood.get('email_action', 'none') in mermaid_reservation_email.ACTIONS:
+            from agents.social import mermaid_reservation_store
+            email_reply = mermaid_reservation_email.handle(message, mermaid_reservation_store.get_reservation(reservation['public_id']), understood, locale, wait_for_date=action=='change_date')
+            response['text'] = reply_planning.join_answers(email_reply, response['text'])
         return IntakeResult(response["text"], locale, reservation["state"], action="date_change", workflow_reply=response)
+    if security_event == 'none' and action not in {'cancel','request_human','new_booking'}:
+        email_reply = mermaid_reservation_email.handle(message, reservation, understood, locale)
+        if email_reply is not None:
+            return IntakeResult(reply_planning.join_answers(reply_planning.supported_faq(understood, guest_text), email_reply), locale, (reservation or {}).get('state',fields.get('phase','collecting')), action='reservation_email')
     if action not in {"details", "question", "confirm_summary", "cancel", "request_human", "payment_status", "new_booking", "acknowledge"}:
         return IntakeResult(str(understood.get("reply") or COPY[locale]["trip_date"]), locale, fields.get("phase", "collecting"))
     if not review_pending and action == "new_booking" and (reservation or {}).get("state") in {"booked", "cancelled"}:

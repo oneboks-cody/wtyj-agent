@@ -65,6 +65,42 @@ def test_no_callback_merging_and_booking_values_unchanged_on_backfill(client):
     assert len(customers.history(cid,changes=True)['items'])==1
 
 
+def test_email_persists_through_booking_updates_without_merging_guest_profiles(client):
+    original = save()
+    save('conversation-b', customer_name='Another Guest')
+    first = customers.account_id('conversation-a')
+    second = customers.account_id('conversation-b')
+    with closing(state._get_conn()) as conn, conn:
+        # A shared family inbox is contact information, not account identity.
+        assert customers.set_email(conn, 'conversation-a', 'family@example.com') == first
+        assert customers.set_email(conn, 'conversation-b', 'family@example.com') == second
+        customers.set_email(conn, 'conversation-a', 'family@example.com')
+    assert first != second
+    assert customers.get_account(first)['customerName'] == original['customer_name']
+    assert len(customers.history(first, changes=True)['items']) == 2
+    save(trip_date='2026-09-09', phase='booked')
+    with closing(state._get_conn()) as conn, conn:
+        customers.set_email(conn, 'conversation-a', 'updated@example.com')
+    # Reservation snapshots contain no email and may later be recaptured.
+    save(trip_date='2026-09-11', phase='booked')
+    account = client.get(f'/dashboard/api/mermaid-customers/{first}').json()
+    assert account['details']['email'] == 'updated@example.com'
+    assert account['details']['trip_date'] == '2026-09-11'
+    assert account['details']['contact_phone'] == original['contact_phone']
+    assert account['customerName'] == original['customer_name']
+    assert customers.get_account(second)['details']['email'] == 'family@example.com'
+    history = customers.history(first, changes=True)['items']
+    assert [item['details'].get('email') for item in history] == [
+        'updated@example.com', 'updated@example.com', 'family@example.com', 'family@example.com', None,
+    ]
+    with closing(state._get_conn()) as conn:
+        conn.execute('BEGIN IMMEDIATE')
+        customers.set_email(conn, 'conversation-a', 'rolled-back@example.com')
+        conn.rollback()
+    assert customers.get_account(first)['details']['email'] == 'updated@example.com'
+    assert client.get('/dashboard/api/mermaid-customers?query=updated%40example.com').json()['items'][0]['id'] == first
+
+
 def test_backfill_existing_legacy_data_without_inventing_phone(client):
     with closing(state._get_conn()) as conn, conn:
         conn.execute("INSERT INTO whatsapp_threads(phone,role,text,created_at,sender_name,channel) VALUES(?,?,?,?,?,?)",

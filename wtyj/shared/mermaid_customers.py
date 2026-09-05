@@ -1,6 +1,6 @@
 """Durable Mermaid customer files, linked to canonical chats and reservations.
 
-Contact numbers are guest details, never an instruction to merge two accounts.
+Contact numbers and emails are guest details, never an instruction to merge accounts.
 All writes share the caller's SQLite transaction with the message/intake write.
 """
 from contextlib import closing
@@ -76,9 +76,16 @@ def capture(conn, conversation_id, *, intake=None, name="", at=None):
                  (at, at, customer_id))
     if intake is not None:
         details = {key: intake[key] for key in DETAIL_KEYS if key in intake}
-        encoded = json.dumps(details, ensure_ascii=False, sort_keys=True)
         previous = conn.execute("SELECT intake_json FROM mermaid_customer_intakes "
                                 "WHERE customer_id=? ORDER BY id DESC LIMIT 1", (customer_id,)).fetchone()
+        # Email belongs to the guest profile, not a particular reservation.
+        # Booking snapshots (including older ones replayed during backfill) must
+        # never erase or replace an explicitly saved contact address.
+        if previous:
+            email = json.loads(previous[0]).get("email")
+            if email:
+                details["email"] = email
+        encoded = json.dumps(details, ensure_ascii=False, sort_keys=True)
         if not previous or previous[0] != encoded:
             conn.execute("INSERT INTO mermaid_customer_intakes(customer_id,conversation_id,intake_json,created_at) "
                          "VALUES(?,?,?,?)", (customer_id, conversation_id, encoded, at))
@@ -86,6 +93,30 @@ def capture(conn, conversation_id, *, intake=None, name="", at=None):
             conn.execute("UPDATE customers SET display_name=? WHERE id=?", (details["customer_name"], customer_id))
     elif name:
         conn.execute("UPDATE customers SET display_name=? WHERE id=? AND display_name=''", (name, customer_id))
+    return customer_id
+
+
+def set_email(conn, conversation_id, email, at=None):
+    """Record a caller-validated address in this guest's profile and history.
+
+    Uses the caller's transaction, never links accounts by email, and leaves
+    names and all existing booking details intact. The email workflow owns
+    consent and syntax validation before calling this helper.
+    """
+    if not isinstance(email, str) or not email.strip():
+        raise ValueError("A non-empty guest email address is required")
+    at = at or datetime.now(timezone.utc).isoformat()
+    customer_id = capture(conn, conversation_id, at=at)
+    if customer_id is None:
+        return None
+    previous = conn.execute("SELECT intake_json FROM mermaid_customer_intakes "
+                            "WHERE customer_id=? ORDER BY id DESC LIMIT 1", (customer_id,)).fetchone()
+    details = json.loads(previous[0]) if previous else {}
+    details["email"] = email.strip()
+    encoded = json.dumps(details, ensure_ascii=False, sort_keys=True)
+    if not previous or previous[0] != encoded:
+        conn.execute("INSERT INTO mermaid_customer_intakes(customer_id,conversation_id,intake_json,created_at) "
+                     "VALUES(?,?,?,?)", (customer_id, conversation_id, encoded, at))
     return customer_id
 
 

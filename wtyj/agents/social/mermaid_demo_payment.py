@@ -147,6 +147,7 @@ def checkout_page(reservation_id: str, expires: int, signature: str, *, form_act
 
 def success_message(reservation: dict, payment: dict) -> str:
     from agents.social import mermaid_document_cards as cards
+    from agents.social import mermaid_reservation_email as email
     if cards.enabled():
         return cards.receipt_text(reservation, payment)
     intake = reservation["intake"]
@@ -157,6 +158,7 @@ def success_message(reservation: dict, payment: dict) -> str:
         f"{guest.display_reference(reservation['booking_code'])} · {guest.guest_date(intake['trip_date'], locale)}\n{guest.party_text(intake, locale)}",
         f"{copy['paid']}: {payment['currency']} {int(payment['amount']):,.2f}",
         guest.transport_text(intake, locale, reservation["monetary_snapshot"]),
+        email.offer(reservation),
     ])
 
 
