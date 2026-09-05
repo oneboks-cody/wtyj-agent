@@ -6,34 +6,34 @@ the official FPI orthography and word list for issue 342.
 
 DOCUMENT_NOTICES = {
     "en": {
-        "quote_banner": "DEMO QUOTE - NOT A VALID TICKET",
-        "receipt_banner": "SIMULATED PAYMENT - DEMO ONLY",
-        "receipt_subtitle": "Klein Curaçao demo reservation",
+        "quote_banner": "TRIP QUOTE",
+        "receipt_banner": "PAYMENT RECEIPT",
+        "receipt_subtitle": "Klein Curaçao reservation",
     },
     "nl": {
-        "quote_banner": "DEMO-OFFERTE - GEEN GELDIG TICKET",
-        "receipt_banner": "GESIMULEERDE BETALING - ALLEEN EEN DEMO",
-        "receipt_subtitle": "Demoreservering voor Klein Curaçao",
+        "quote_banner": "REISOFFERTE",
+        "receipt_banner": "BETALINGSBEWIJS",
+        "receipt_subtitle": "Reservering voor Klein Curaçao",
     },
     "de": {
-        "quote_banner": "DEMO-ANGEBOT - KEIN GÜLTIGES TICKET",
-        "receipt_banner": "SIMULIERTE ZAHLUNG - NUR EINE DEMO",
-        "receipt_subtitle": "Demo-Buchung für Klein Curaçao",
+        "quote_banner": "REISEANGEBOT",
+        "receipt_banner": "ZAHLUNGSBELEG",
+        "receipt_subtitle": "Buchung für Klein Curaçao",
     },
     "es": {
-        "quote_banner": "COTIZACIÓN DEMO - NO ES UN BILLETE VÁLIDO",
-        "receipt_banner": "PAGO SIMULADO - SOLO UNA DEMO",
-        "receipt_subtitle": "Reserva demo para Klein Curaçao",
+        "quote_banner": "COTIZACIÓN",
+        "receipt_banner": "RECIBO DE PAGO",
+        "receipt_subtitle": "Reserva para Klein Curaçao",
     },
     "pap": {
-        "quote_banner": "OFERTA DEMO - NO TA UN TIKÈT VÁLIDO",
-        "receipt_banner": "PAGO SIMULÁ - SOLAMENTE UN DEMO",
-        "receipt_subtitle": "Reservashon demo pa Klein Curaçao",
+        "quote_banner": "OFERTA DI BIAHE",
+        "receipt_banner": "RESIBU DI PAGO",
+        "receipt_subtitle": "Reservashon pa Klein Curaçao",
     },
     "pt": {
-        "quote_banner": "COTAÇÃO DEMO - NÃO É UM BILHETE VÁLIDO",
-        "receipt_banner": "PAGAMENTO SIMULADO - APENAS UMA DEMO",
-        "receipt_subtitle": "Reserva demo para Klein Curaçao",
+        "quote_banner": "COTAÇÃO",
+        "receipt_banner": "RECIBO DE PAGAMENTO",
+        "receipt_subtitle": "Reserva para Klein Curaçao",
     },
 }
 

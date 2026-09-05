@@ -44,7 +44,7 @@ def _stopped_loop_result(state: dict, *, suppressed: bool = False) -> IntakeResu
 
 COPY = {
     "en": {
-        "intro": "Hi, I’m TRACY, Mermaid’s virtual reservation assistant. I’ll arrange your trip and prepare the full demo quote right here in WhatsApp.",
+        "intro": "Hi, I’m TRACY, Mermaid’s virtual reservation assistant. I’ll arrange your trip and prepare the full quote right here in WhatsApp.",
         "trip_date": "What date would you like to visit Klein Curaçao?",
         "adults": "How many adults are traveling?",
         "children": "How many children aged 4 to 12 are traveling? Reply 0 if none.",
@@ -54,13 +54,13 @@ COPY = {
         "hotel": "Which hotel or pickup location should I include in the request?",
         "composition": "How many are adults, children aged 4 to 12, and children aged 0 to 3?",
         "confirm": "Please reply *YES* if everything is correct, or tell me exactly what to change.",
-        "confirmed": "Perfect, I have your confirmed details. I’m preparing your demo reservation and quote now.",
-        "cancelled": "Your demo reservation request is cancelled. No payment was taken.",
+        "confirmed": "Perfect, I have your confirmed details. I’m preparing your reservation and quote now.",
+        "cancelled": "Your reservation request is cancelled. No payment was taken.",
         "human": "I’ve passed this to Mermaid’s team for review. Your details are saved, and I can still help with general trip questions.",
         "invalid_day": "Mermaid’s published trips run Monday, Tuesday, Wednesday, Friday, Saturday and Sunday. Please choose one of those days.",
     },
     "nl": {
-        "intro": "Hoi, ik ben TRACY, Mermaid’s virtuele reserveringsassistent. Ik regel je trip en maak de volledige demo-offerte hier in WhatsApp.",
+        "intro": "Hoi, ik ben TRACY, Mermaid’s virtuele reserveringsassistent. Ik regel je trip en maak de volledige offerte hier in WhatsApp.",
         "trip_date": "Welke datum wil je Klein Curaçao bezoeken?",
         "adults": "Met hoeveel volwassenen reizen jullie?",
         "children": "Hoeveel kinderen van 4 tot en met 12 jaar reizen mee? Antwoord 0 als er geen zijn.",
@@ -70,13 +70,13 @@ COPY = {
         "hotel": "Welk hotel of welke ophaallocatie mag ik in de aanvraag zetten?",
         "composition": "Hoeveel volwassenen, kinderen van 4 tot en met 12 en kinderen van 0 tot en met 3 zijn het?",
         "confirm": "Antwoord met *JA* als alles klopt, of zeg precies wat ik moet aanpassen.",
-        "confirmed": "Perfect, ik heb je gegevens bevestigd. Ik maak nu je demo-reservering en offerte.",
-        "cancelled": "Je demo-reserveringsaanvraag is geannuleerd. Er is niets betaald.",
+        "confirmed": "Perfect, ik heb je gegevens bevestigd. Ik maak nu je-reservering en offerte.",
+        "cancelled": "Je-reserveringsaanvraag is geannuleerd. Er is niets betaald.",
         "human": "Ik heb dit ter beoordeling aan Mermaid’s team doorgegeven. Je gegevens zijn opgeslagen en ik kan algemene vragen over de trip blijven beantwoorden.",
         "invalid_day": "Mermaid vaart volgens de publicatie op maandag, dinsdag, woensdag, vrijdag, zaterdag en zondag. Kies een van die dagen.",
     },
     "de": {
-        "intro": "Hallo, ich bin TRACY, Mermaids virtuelle Reservierungsassistentin. Ich organisiere Ihren Ausflug und erstelle das vollständige Demo-Angebot hier in WhatsApp.",
+        "intro": "Hallo, ich bin TRACY, Mermaids virtuelle Reservierungsassistentin. Ich organisiere Ihren Ausflug und erstelle das vollständige Angebot hier in WhatsApp.",
         "trip_date": "An welchem Datum möchten Sie Klein Curaçao besuchen?",
         "adults": "Wie viele Erwachsene reisen mit?",
         "children": "Wie viele Kinder von 4 bis 12 Jahren reisen mit? Antworten Sie 0, wenn keine mitreisen.",
@@ -92,7 +92,7 @@ COPY = {
         "invalid_day": "Mermaid fährt laut Veröffentlichung Montag, Dienstag, Mittwoch, Freitag, Samstag und Sonntag. Bitte wählen Sie einen dieser Tage.",
     },
     "es": {
-        "intro": "Hola, soy TRACY, la asistente virtual de reservas de Mermaid. Organizaré tu paseo y prepararé la cotización demo completa aquí en WhatsApp.",
+        "intro": "Hola, soy TRACY, la asistente virtual de reservas de Mermaid. Organizaré tu paseo y prepararé la cotización completa aquí en WhatsApp.",
         "trip_date": "¿Qué fecha quieres visitar Klein Curaçao?",
         "adults": "¿Cuántos adultos viajan?",
         "children": "¿Cuántos niños de 4 a 12 años viajan? Responde 0 si no hay.",
@@ -102,13 +102,13 @@ COPY = {
         "hotel": "¿Qué hotel o lugar de recogida debo incluir en la solicitud?",
         "composition": "¿Cuántos son adultos, niños de 4 a 12 y niños de 0 a 3 años?",
         "confirm": "Responde *SÍ* si todo está correcto o dime exactamente qué debo cambiar.",
-        "confirmed": "Perfecto, tus datos están confirmados. Ahora preparo tu reserva demo y cotización.",
-        "cancelled": "Tu solicitud de reserva demo está cancelada. No se realizó ningún pago.",
+        "confirmed": "Perfecto, tus datos están confirmados. Ahora preparo tu reserva y cotización.",
+        "cancelled": "Tu solicitud de reserva está cancelada. No se realizó ningún pago.",
         "human": "He pasado esto al equipo de Mermaid para que lo revise. Tus datos están guardados y puedo seguir respondiendo preguntas generales sobre la excursión.",
         "invalid_day": "Según la información publicada, Mermaid opera lunes, martes, miércoles, viernes, sábado y domingo. Elige uno de esos días.",
     },
     "pap": {
-        "intro": "Bon bini na Mermaid! Mi ta TRACY, asistente virtual di reservashon. Mi ta yuda bo ku bo biahe i prepará bo oferta di demo aki den WhatsApp.",
+        "intro": "Bon bini na Mermaid! Mi ta TRACY, asistente virtual di reservashon. Mi ta yuda bo ku bo biahe i prepará bo oferta aki den WhatsApp.",
         "trip_date": "Ki fecha bo ke bishitá Klein Curaçao?",
         "adults": "Kuantu adulto ta bai?",
         "children": "Kuantu mucha di 4 te ku 12 aña ta bai? Kontestá 0 si no tin.",
@@ -118,13 +118,13 @@ COPY = {
         "hotel": "Na ki hotèl òf lugá nos mester buska bo?",
         "composition": "Kuantu ta adulto, mucha di 4 te ku 12 i mucha di 0 te ku 3 aña?",
         "confirm": "Kontestá *SÍ* si tur kos ta korekto, òf bisa mi eksaktamente kiko mester kambia.",
-        "confirmed": "Perfekto, bo datonan ta konfirmá. Awor mi ta prepará bo reservashon demo i oferta.",
-        "cancelled": "Bo petishon di reservashon demo ta kanselá. No a tuma ningun pago.",
+        "confirmed": "Perfekto, bo datonan ta konfirmá. Awor mi ta prepará bo reservashon i oferta.",
+        "cancelled": "Bo petishon di reservashon ta kanselá. No a tuma ningun pago.",
         "human": "Bo petishon ta warda pa e tim di Mermaid revisá. Bo datonan ta wardá i mi por sigui yuda ku preguntanan general tokante e biahe.",
         "invalid_day": "Segun e informashon publiká, Mermaid ta bai djaluna, djamars, djárason, djabièrnè, djasabra i djadumingu. Skohe un di e dianan ei.",
     },
     "pt": {
-        "intro": "Olá, sou a TRACY, assistente virtual de reservas da Mermaid. Vou organizar seu passeio e preparar a cotação demo completa aqui no WhatsApp.",
+        "intro": "Olá, sou a TRACY, assistente virtual de reservas da Mermaid. Vou organizar seu passeio e preparar a cotação completa aqui no WhatsApp.",
         "trip_date": "Em que data você quer visitar Klein Curaçao?",
         "adults": "Quantos adultos vão viajar?",
         "children": "Quantas crianças de 4 a 12 anos vão viajar? Responda 0 se não houver.",
@@ -134,8 +134,8 @@ COPY = {
         "hotel": "Qual hotel ou local de embarque devo incluir no pedido?",
         "composition": "Quantos são adultos, crianças de 4 a 12 e crianças de 0 a 3 anos?",
         "confirm": "Responda *SIM* se estiver tudo correto ou diga exatamente o que devo alterar.",
-        "confirmed": "Perfeito, seus dados estão confirmados. Agora vou preparar sua reserva demo e cotação.",
-        "cancelled": "Seu pedido de reserva demo foi cancelado. Nenhum pagamento foi realizado.",
+        "confirmed": "Perfeito, seus dados estão confirmados. Agora vou preparar sua reserva e cotação.",
+        "cancelled": "Seu pedido de reserva foi cancelado. Nenhum pagamento foi realizado.",
         "human": "Encaminhei isso à equipe da Mermaid para análise. Seus dados estão salvos e posso continuar respondendo a perguntas gerais sobre o passeio.",
         "invalid_day": "Segundo as informações publicadas, a Mermaid opera segunda, terça, quarta, sexta, sábado e domingo. Escolha um desses dias.",
     },
@@ -475,12 +475,12 @@ FAQ_COPY = {
 
 
 PAYMENT_COPY = {
-    "en": ("For this demo, seats are available. No live inventory system was checked.", "Complete the no-money demo payment here:"),
-    "nl": ("Voor deze demo zijn er plaatsen beschikbaar. Er is geen live beschikbaarheidssysteem gecontroleerd.", "Voltooi hier de demo-betaling zonder echt geld:"),
-    "de": ("Für diese Demo sind Plätze verfügbar. Es wurde kein Live-Verfügbarkeitssystem geprüft.", "Schließen Sie hier die Demo-Zahlung ohne echtes Geld ab:"),
-    "es": ("Para esta demo hay plazas disponibles. No se consultó un sistema de disponibilidad en vivo.", "Completa aquí el pago demo sin dinero real:"),
-    "pap": ("Pa e demo aki tin lugá disponibel. No a kontrolá disponibilidat aktual.", "Kompletá e pago demo sin plaka real aki:"),
-    "pt": ("Para esta demo há lugares disponíveis. Nenhum sistema de disponibilidade ao vivo foi consultado.", "Conclua aqui o pagamento demo sem dinheiro real:"),
+    "en": ("", "Complete your booking here:"),
+    "nl": ("", "Rond je boeking hier af:"),
+    "de": ("", "Schließen Sie Ihre Buchung hier ab:"),
+    "es": ("", "Completa tu reserva aquí:"),
+    "pap": ("", "Kompletá bo reservashon aki:"),
+    "pt": ("", "Conclua sua reserva aqui:"),
 }
 
 
@@ -1827,8 +1827,8 @@ def handle_demo_message(message: dict, include_media: bool = False, *, use_model
         phrase in lower for phrase in ("i paid", "paid", "betaald", "bezahlt", "pagué", "paguei", "mi a paga")
     ):
         text = (
-            "Thanks. A WhatsApp message cannot verify payment. Please complete the no-money demo link; "
-            "only its signed success callback can finish this demo booking."
+            "Thanks. A WhatsApp message cannot verify payment. Please complete the payment link; "
+            "your booking will finish once payment is confirmed."
         )
         if include_media:
             return IntakeResult(text, current["language"], "demo_payment_pending").as_reply()
@@ -1885,7 +1885,7 @@ def handle_demo_message(message: dict, include_media: bool = False, *, use_model
         availability_copy = PAYMENT_COPY[result.locale][0]
         payment_copy = guest.guest_copy(result.locale)["checkout_link"]
         result = IntakeResult(
-            mermaid_documents.quote_message(reservation) + "\n\n" + availability_copy + "\n\n" + payment_copy + "\n" + payment_url,
+            "\n\n".join(part for part in (mermaid_documents.quote_message(reservation), availability_copy, payment_copy + "\n" + payment_url) if part),
             result.locale,
             result.phase,
             action=f"reservation:{reservation['public_id']}",

@@ -56,9 +56,9 @@ def test_checkout_contains_summary_but_no_real_payment_fields(monkeypatch):
     response = mermaid_demo_payment.checkout_page(reservation["public_id"], expires, signature)
     body = response.body.decode()
     assert response.status_code == 200
-    assert "PAYMENT SIMULATION - NO MONEY" in body
+    assert "PAYMENT SIMULATION - NO MONEY" not in body
     assert "Ana Silva" in body and "USD 375.00" in body
-    assert "Simulate successful payment" in body
+    assert "Complete payment" in body
     for forbidden in ('name="card', 'name="account', 'name="password', "cvv", "iban"):
         assert forbidden not in body.casefold()
 
@@ -86,15 +86,15 @@ def test_success_is_atomic_replay_safe_and_sends_one_receipt(monkeypatch):
     booked = mermaid_reservation_store.get_reservation(reservation["public_id"])
     assert first.status_code == second.status_code == 200
     assert booked["state"] == "booked"
-    assert booked["booking_code"].startswith("MER-DEMO-")
-    assert booked["payment_reference"].startswith("PAY-DEMO-")
+    assert booked["booking_code"].startswith("MER-")
+    assert booked["payment_reference"].startswith("PAY-")
     assert booked["receipt_public_id"].startswith("mdoc_")
     assert len(sends) == 1
     args, kwargs = sends[0]
     assert booked["booking_code"] in args[3]
     assert "06:45" in args[3]
     assert kwargs["attachment_type"] == "file"
-    assert kwargs["attachment_name"].startswith("Mermaid - Demo Payment Receipt - ")
+    assert kwargs["attachment_name"].startswith("Mermaid - Payment Receipt - ")
     assert kwargs["attachment_name"].endswith(".pdf")
     assert kwargs["confirm_delivery"] is True
 
@@ -123,7 +123,7 @@ def test_receipt_is_a_payment_receipt_not_confirmation(monkeypatch):
     assert len(reader.pages[0].images) >= 1
     assert "Payment receipt" in reader.metadata.title
     text = "\n".join(page.extract_text() or "" for page in reader.pages)
-    assert "SIMULATED PAYMENT - DEMO ONLY" in text
+    assert "demo" not in text.casefold() and "simulat" not in text.casefold()
     assert "Payment receipt" in text
     assert booked["booking_code"] in text
     assert "USD 375.00" in text

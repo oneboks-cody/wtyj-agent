@@ -226,7 +226,7 @@ def _money_snapshot(intake: dict, catalog: dict) -> dict:
 
 def _booking_code() -> str:
     alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
-    return "MER-DEMO-" + "".join(secrets.choice(alphabet) for _ in range(8))
+    return "MER-" + "".join(secrets.choice(alphabet) for _ in range(8))
 
 
 def confirm_reservation(

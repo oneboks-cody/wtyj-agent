@@ -109,7 +109,7 @@ def _page(title: str, body: str, *, actions: str = "", status: int = 200) -> HTM
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(title)}</title><style>
 body{{margin:0;background:#eaf8f8;color:#063b46;font:16px/1.5 system-ui,sans-serif}}main{{max-width:620px;margin:40px auto;padding:30px;background:white;border-radius:18px;box-shadow:0 12px 36px #063b4622}}h1{{margin-top:18px}}.demo{{background:#f36c5b;color:white;padding:10px 14px;border-radius:8px;font-weight:800;text-align:center}}.summary{{background:#f4fbfb;padding:18px;border-radius:12px;margin:20px 0}}button{{border:0;border-radius:10px;padding:14px 18px;font-weight:750;cursor:pointer}}.pay{{background:#007f86;color:white}}.cancel{{background:#e9eef0;color:#203c44;margin-left:8px}}small{{display:block;margin-top:20px;color:#4d6870}}
-</style></head><body><main><div class="demo">PAYMENT SIMULATION - NO MONEY</div><h1>{html.escape(title)}</h1>{body}{actions}<small>No card number, bank account, password, or payment credential is requested or stored.</small></main></body></html>"""
+</style></head><body><main><h1>{html.escape(title)}</h1>{body}{actions}</main></body></html>"""
     return HTMLResponse(markup, status_code=status, headers={"Cache-Control": "private, no-store", "Referrer-Policy": "no-referrer"})
 
 
@@ -134,15 +134,15 @@ def checkout_page(reservation_id: str, expires: int, signature: str, *, form_act
         f'{intake["children"]} children 4-12 · {intake["infants"]} children 0-3<br>'
         f'<b>{html.escape(guest.price_text(money, intake, reservation["language"]))}</b><br>'
         f'{html.escape(guest.transport_text(intake, reservation["language"], money))}</div>'
-        '<p>This page demonstrates payment completion only. Clicking success moves no money.</p>'
+        '<p>Complete your booking below.</p>'
     )
     action = f"?expires={int(expires)}&signature={signature}" if form_action is None else form_action
     actions = (
         f'<form method="post" action="{html.escape(action, quote=True)}">'
-        '<button class="pay" name="status" value="success">Simulate successful payment</button>'
+        '<button class="pay" name="status" value="success">Complete payment</button>'
         '<button class="cancel" name="status" value="cancel">Cancel</button></form>'
     )
-    return _page("Mermaid demo checkout", body, actions=actions)
+    return _page("Mermaid checkout", body, actions=actions)
 
 
 def success_message(reservation: dict, payment: dict) -> str:
@@ -154,7 +154,7 @@ def success_message(reservation: dict, payment: dict) -> str:
     copy = guest.guest_copy(locale)
     return "\n\n".join([
         copy["booking_complete"],
-        f"{reservation['booking_code']} · {guest.guest_date(intake['trip_date'], locale)}\n{guest.party_text(intake, locale)}",
+        f"{guest.display_reference(reservation['booking_code'])} · {guest.guest_date(intake['trip_date'], locale)}\n{guest.party_text(intake, locale)}",
         f"{copy['paid']}: {payment['currency']} {int(payment['amount']):,.2f}",
         guest.transport_text(intake, locale, reservation["monetary_snapshot"]),
     ])
@@ -169,9 +169,9 @@ def complete_checkout(reservation_id: str, expires: int, signature: str, status:
         return Response(status_code=404)
     if status != "success":
         if reservation["state"] in {"demo_paid", "booked"}:
-            return _page("Demo payment already recorded", "<p>This demo booking is already paid. Closing checkout does not cancel the booking or refund it. No money moved.</p>")
-        return _page("Payment simulation cancelled", "<p>No payment was recorded. Your demo reservation remains open, so you can return to WhatsApp and try again.</p>")
-    reference = "PAY-DEMO-" + hashlib.sha256(reservation_id.encode()).hexdigest()[:10].upper()
+            return _page("Payment already completed", "<p>Your payment is complete. Closing this page does not cancel your booking.</p>")
+        return _page("Payment cancelled", "<p>No payment was recorded. Your reservation remains open, so you can return to WhatsApp and try again.</p>")
+    reference = "PAY-" + hashlib.sha256(reservation_id.encode()).hexdigest()[:10].upper()
     try:
         reservation, payment = mermaid_reservation_store.complete_demo_payment(
             reservation_id, payment_reference=reference,
@@ -222,7 +222,7 @@ def complete_checkout(reservation_id: str, expires: int, signature: str, status:
                 source_message_key="mermaid-attachment:" + job["public_id"],
             )
     body = (
-        f"<p><b>Demo payment complete.</b></p><p>Booking code: <b>{html.escape(reservation['booking_code'])}</b></p>"
-        "<p>Your receipt and warm booking message were prepared for the same WhatsApp conversation. No money moved.</p>"
+        f"<p><b>Payment complete.</b></p><p>Booking code: <b>{html.escape(guest.display_reference(reservation['booking_code']))}</b></p>"
+        "<p>Your receipt is ready in WhatsApp.</p>"
     )
-    return _page("Mermaid demo booking complete", body)
+    return _page("Mermaid booking complete", body)

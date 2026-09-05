@@ -69,12 +69,12 @@ def _hero(width_mm: float, height_mm: float | None = None) -> Image:
     return _HeroImage(width_mm, height_mm)
 
 LABELS = {
-    "en": {"title": "Your Klein Curaçao demo quote", "quote": "Quote", "customer": "Guest", "date": "Trip date", "guests": "Guests", "transport": "Transport", "charges": "Itemized price", "description": "Description", "qty": "Qty", "unit": "Unit", "amount": "Amount", "total": "Total", "included": "Everything included", "schedule": "Your day", "bring": "Bring with you", "rules": "Rules and important notes", "payment": "Next step", "payment_text": "Use the secure demo payment link sent in WhatsApp. It asks for no card or bank details and moves no money.", "arrival": "Arrive at Fishermen's Pier at 06:45. The published island departure is approximately 15:20.", "pickup": "Hotel pickup requested; location and price require confirmation.", "pier": "Meet at Fishermen's Pier", "valid": "This demo quote is valid for 60 minutes.", "available": "For this demo experience, seats are assumed available. No live inventory was checked."},
-    "nl": {"title": "Je demo-offerte voor Klein Curaçao", "quote": "Offerte", "customer": "Gast", "date": "Tripdatum", "guests": "Gasten", "transport": "Vervoer", "charges": "Prijsopbouw", "description": "Omschrijving", "qty": "Aantal", "unit": "Per stuk", "amount": "Bedrag", "total": "Totaal", "included": "Alles inbegrepen", "schedule": "Jullie dag", "bring": "Zelf meenemen", "rules": "Regels en belangrijke informatie", "payment": "Volgende stap", "payment_text": "Gebruik de veilige demo-betaallink in WhatsApp. Er worden geen kaart- of bankgegevens gevraagd en er wordt geen geld verplaatst.", "arrival": "Wees om 06:45 bij Fishermen's Pier. Het gepubliceerde vertrek van het eiland is ongeveer 15:20.", "pickup": "Hoteltransfer aangevraagd; locatie en prijs moeten worden bevestigd.", "pier": "Ontmoeting bij Fishermen's Pier", "valid": "Deze demo-offerte is 60 minuten geldig.", "available": "Voor deze demo wordt beschikbaarheid aangenomen. Er is geen live voorraad gecontroleerd."},
-    "de": {"title": "Ihr Demo-Angebot für Klein Curaçao", "quote": "Angebot", "customer": "Gast", "date": "Ausflugsdatum", "guests": "Gäste", "transport": "Transport", "charges": "Preisübersicht", "description": "Beschreibung", "qty": "Anzahl", "unit": "Einzelpreis", "amount": "Betrag", "total": "Gesamt", "included": "Alles inklusive", "schedule": "Ihr Tag", "bring": "Bitte mitbringen", "rules": "Regeln und wichtige Hinweise", "payment": "Nächster Schritt", "payment_text": "Nutzen Sie den sicheren Demo-Zahlungslink in WhatsApp. Er fragt keine Karten- oder Bankdaten ab und bewegt kein Geld.", "arrival": "Seien Sie um 06:45 am Fishermen's Pier. Die veröffentlichte Abfahrt von der Insel ist ungefähr um 15:20.", "pickup": "Hotelabholung angefragt; Ort und Preis müssen bestätigt werden.", "pier": "Treffpunkt Fishermen's Pier", "valid": "Dieses Demo-Angebot ist 60 Minuten gültig.", "available": "Für diese Demo wird die Verfügbarkeit angenommen. Es wurde kein Live-Bestand geprüft."},
-    "es": {"title": "Tu cotización demo para Klein Curaçao", "quote": "Cotización", "customer": "Pasajero", "date": "Fecha", "guests": "Pasajeros", "transport": "Transporte", "charges": "Precio detallado", "description": "Descripción", "qty": "Cant.", "unit": "Unidad", "amount": "Importe", "total": "Total", "included": "Todo incluido", "schedule": "Tu día", "bring": "Qué llevar", "rules": "Reglas e información importante", "payment": "Siguiente paso", "payment_text": "Usa el enlace seguro de pago demo enviado por WhatsApp. No solicita datos de tarjeta o banco y no mueve dinero.", "arrival": "Llega a Fishermen's Pier a las 06:45. La salida publicada de la isla es aproximadamente a las 15:20.", "pickup": "Recogida en hotel solicitada; ubicación y precio requieren confirmación.", "pier": "Encuentro en Fishermen's Pier", "valid": "Esta cotización demo es válida por 60 minutos.", "available": "Para esta demo se asume disponibilidad. No se consultó un inventario en vivo."},
-    "pap": {"title": "Bo oferta demo pa Klein Curaçao", "quote": "Oferta", "customer": "Bishitante", "date": "Fecha di biahe", "guests": "Bishitantenan", "transport": "Transporte", "charges": "Detaye di preis", "description": "Deskripshon", "qty": "Kant.", "unit": "Unidat", "amount": "Montante", "total": "Total", "included": "Tur kos inkluí", "schedule": "Bo dia", "bring": "Hiba ku bo", "rules": "Reglanan i informashon importante", "payment": "Siguiente paso", "payment_text": "Usa e link sigur di pago demo mandá den WhatsApp. E no ta pidi dato di karta òf banko i no ta move plaka.", "arrival": "Yega Fishermen's Pier pa 06:45. E salida publiká for di e isla ta mas o ménos 15:20.", "pickup": "E servisio pa buska bo na bo alohamentu ta pidi; lugá i preis mester wòrdu konfirmá.", "pier": "Topa na Fishermen's Pier", "valid": "E oferta demo aki ta válido pa 60 minüt.", "available": "Pa e demo aki nos ta asumí ku tin lugá. Nos no a kontrolá disponibilidat aktual."},
-    "pt": {"title": "Sua cotação demo para Klein Curaçao", "quote": "Cotação", "customer": "Passageiro", "date": "Data", "guests": "Passageiros", "transport": "Transporte", "charges": "Preço detalhado", "description": "Descrição", "qty": "Qtd.", "unit": "Unidade", "amount": "Valor", "total": "Total", "included": "Tudo incluído", "schedule": "Seu dia", "bring": "O que levar", "rules": "Regras e informações importantes", "payment": "Próximo passo", "payment_text": "Use o link seguro de pagamento demo enviado no WhatsApp. Ele não solicita cartão ou dados bancários e não movimenta dinheiro.", "arrival": "Chegue ao Fishermen's Pier às 06:45. A saída publicada da ilha é aproximadamente às 15:20.", "pickup": "Traslado do hotel solicitado; local e preço exigem confirmação.", "pier": "Encontro no Fishermen's Pier", "valid": "Esta cotação demo é válida por 60 minutos.", "available": "Para esta demo, a disponibilidade é presumida. Nenhum inventário ao vivo foi consultado."},
+    "en": {"title": "Your Klein Curaçao quote", "quote": "Quote", "customer": "Guest", "date": "Trip date", "guests": "Guests", "transport": "Transport", "charges": "Itemized price", "description": "Description", "qty": "Qty", "unit": "Unit", "amount": "Amount", "total": "Total", "included": "Everything included", "schedule": "Your day", "bring": "Bring with you", "rules": "Rules and important notes", "payment": "Next step", "payment_text": "Use the payment link sent in WhatsApp to complete your booking.", "arrival": "Arrive at Fishermen's Pier at 06:45. The published island departure is approximately 15:20.", "pickup": "Hotel pickup requested; location and price require confirmation.", "pier": "Meet at Fishermen's Pier", "valid": "This quote is valid for 60 minutes.", "available": ""},
+    "nl": {"title": "Je offerte voor Klein Curaçao", "quote": "Offerte", "customer": "Gast", "date": "Tripdatum", "guests": "Gasten", "transport": "Vervoer", "charges": "Prijsopbouw", "description": "Omschrijving", "qty": "Aantal", "unit": "Per stuk", "amount": "Bedrag", "total": "Totaal", "included": "Alles inbegrepen", "schedule": "Jullie dag", "bring": "Zelf meenemen", "rules": "Regels en belangrijke informatie", "payment": "Volgende stap", "payment_text": "Rond je boeking af via de betaallink in WhatsApp.", "arrival": "Wees om 06:45 bij Fishermen's Pier. Het gepubliceerde vertrek van het eiland is ongeveer 15:20.", "pickup": "Hoteltransfer aangevraagd; locatie en prijs moeten worden bevestigd.", "pier": "Ontmoeting bij Fishermen's Pier", "valid": "Deze offerte is 60 minuten geldig.", "available": ""},
+    "de": {"title": "Ihr Angebot für Klein Curaçao", "quote": "Angebot", "customer": "Gast", "date": "Ausflugsdatum", "guests": "Gäste", "transport": "Transport", "charges": "Preisübersicht", "description": "Beschreibung", "qty": "Anzahl", "unit": "Einzelpreis", "amount": "Betrag", "total": "Gesamt", "included": "Alles inklusive", "schedule": "Ihr Tag", "bring": "Bitte mitbringen", "rules": "Regeln und wichtige Hinweise", "payment": "Nächster Schritt", "payment_text": "Schließen Sie Ihre Buchung über den Zahlungslink in WhatsApp ab.", "arrival": "Seien Sie um 06:45 am Fishermen's Pier. Die veröffentlichte Abfahrt von der Insel ist ungefähr um 15:20.", "pickup": "Hotelabholung angefragt; Ort und Preis müssen bestätigt werden.", "pier": "Treffpunkt Fishermen's Pier", "valid": "Dieses Angebot ist 60 Minuten gültig.", "available": ""},
+    "es": {"title": "Tu cotización para Klein Curaçao", "quote": "Cotización", "customer": "Pasajero", "date": "Fecha", "guests": "Pasajeros", "transport": "Transporte", "charges": "Precio detallado", "description": "Descripción", "qty": "Cant.", "unit": "Unidad", "amount": "Importe", "total": "Total", "included": "Todo incluido", "schedule": "Tu día", "bring": "Qué llevar", "rules": "Reglas e información importante", "payment": "Siguiente paso", "payment_text": "Completa tu reserva con el enlace de pago enviado por WhatsApp.", "arrival": "Llega a Fishermen's Pier a las 06:45. La salida publicada de la isla es aproximadamente a las 15:20.", "pickup": "Recogida en hotel solicitada; ubicación y precio requieren confirmación.", "pier": "Encuentro en Fishermen's Pier", "valid": "Esta cotización es válida por 60 minutos.", "available": ""},
+    "pap": {"title": "Bo oferta pa Klein Curaçao", "quote": "Oferta", "customer": "Bishitante", "date": "Fecha di biahe", "guests": "Bishitantenan", "transport": "Transporte", "charges": "Detaye di preis", "description": "Deskripshon", "qty": "Kant.", "unit": "Unidat", "amount": "Montante", "total": "Total", "included": "Tur kos inkluí", "schedule": "Bo dia", "bring": "Hiba ku bo", "rules": "Reglanan i informashon importante", "payment": "Siguiente paso", "payment_text": "Kompletá bo reservashon ku e link di pago mandá den WhatsApp.", "arrival": "Yega Fishermen's Pier pa 06:45. E salida publiká for di e isla ta mas o ménos 15:20.", "pickup": "E servisio pa buska bo na bo alohamentu ta pidi; lugá i preis mester wòrdu konfirmá.", "pier": "Topa na Fishermen's Pier", "valid": "E oferta aki ta válido pa 60 minüt.", "available": ""},
+    "pt": {"title": "Sua cotação para Klein Curaçao", "quote": "Cotação", "customer": "Passageiro", "date": "Data", "guests": "Passageiros", "transport": "Transporte", "charges": "Preço detalhado", "description": "Descrição", "qty": "Qtd.", "unit": "Unidade", "amount": "Valor", "total": "Total", "included": "Tudo incluído", "schedule": "Seu dia", "bring": "O que levar", "rules": "Regras e informações importantes", "payment": "Próximo passo", "payment_text": "Conclua sua reserva pelo link de pagamento enviado no WhatsApp.", "arrival": "Chegue ao Fishermen's Pier às 06:45. A saída publicada da ilha é aproximadamente às 15:20.", "pickup": "Traslado do hotel solicitado; local e preço exigem confirmação.", "pier": "Encontro no Fishermen's Pier", "valid": "Esta cotação é válida por 60 minutos.", "available": ""},
 }
 
 DOCUMENT_COPY = {
@@ -83,13 +83,13 @@ DOCUMENT_COPY = {
         "items": {"adult": "Adult", "child_4_12": "Child age 4-12", "infant_0_3": "Child age 0-3"},
         "included_items": ["Breakfast", "Soft drinks and juices", "BBQ lunch", "Mermaid beach house", "Restrooms and fresh-water shower", "Snorkeling masks", "Beach chairs"],
         "bring_items": ["Towel", "Sunscreen", "Swimwear", "Personal medication", "Hat or cap"],
-        "cancellation": "DEMO POLICY - REPLACE BEFORE GO-LIVE: Cancel or request a change at least 48 hours before departure. Later cancellations and no-shows are non-refundable in this demonstration.",
-        "safety": "DEMO POLICY - REPLACE BEFORE GO-LIVE: Participation is at the guest's own risk. Follow all instructions from the captain and crew.",
-        "insurance": "Insurance coverage is not verified in this demonstration. Mermaid must approve final insurance wording before go-live.",
+        "cancellation": "Cancellation policy: https://www.mermaidboattrips.com/Contact/Cancellation-Policy/",
+        "safety": "General conditions: https://www.mermaidboattrips.com/Contact/General-Conditions/",
+        "insurance": "Privacy statement: https://www.mermaidboattrips.com/Contact/Privacy-Statement/",
         "protocol_title": "Trip protocol", "protocol": "Arrive on time, follow captain and crew instructions, supervise children, use safety equipment as directed, and tell the crew about relevant mobility or dietary requests. Wildlife and exact sea conditions are never guaranteed.",
         "closing": "Bring towels and sunscreen. Mermaid takes care of the rest of your included tropical day.",
         "receipt_title": "Payment receipt", "booking_code": "Booking code", "payment_reference": "Payment reference", "payment_time": "Payment time (UTC)",
-        "receipt_disclaimer": "This receipt records a simulated payment only. No card, bank account, or real funds were used.",
+        "receipt_disclaimer": "",
         "receipt_arrival": "Arrive at Fishermen's Pier at 06:45. Bring towels and sunscreen; Mermaid takes care of the rest of your included tropical day.",
     },
     "nl": {
@@ -97,13 +97,13 @@ DOCUMENT_COPY = {
         "items": {"adult": "Volwassene", "child_4_12": "Kind 4-12 jaar", "infant_0_3": "Kind 0-3 jaar"},
         "included_items": ["Ontbijt", "Frisdrank en sap", "BBQ-lunch", "Mermaid-strandhuis", "Toiletten en zoetwaterdouche", "Snorkelmaskers", "Strandstoelen"],
         "bring_items": ["Handdoek", "Zonnebrand", "Zwemkleding", "Persoonlijke medicatie", "Hoed of pet"],
-        "cancellation": "DEMOBELEID - VERVANGEN VOOR LIVEGANG: Annuleer of wijzig minimaal 48 uur voor vertrek. Latere annuleringen en no-shows worden in deze demo niet terugbetaald.",
-        "safety": "DEMOBELEID - VERVANGEN VOOR LIVEGANG: Deelname is op eigen risico. Volg alle aanwijzingen van kapitein en bemanning.",
-        "insurance": "Verzekeringsdekking is in deze demo niet geverifieerd. Mermaid moet de definitieve tekst voor livegang goedkeuren.",
+        "cancellation": "Annuleringsvoorwaarden: https://www.mermaidboattrips.com/Contact/Cancellation-Policy/",
+        "safety": "Algemene voorwaarden: https://www.mermaidboattrips.com/Contact/General-Conditions/",
+        "insurance": "Privacyverklaring: https://www.mermaidboattrips.com/Contact/Privacy-Statement/",
         "protocol_title": "Tripprotocol", "protocol": "Kom op tijd, volg de aanwijzingen van kapitein en bemanning, houd toezicht op kinderen, gebruik veiligheidsmiddelen zoals aangegeven en meld relevante mobiliteits- of dieetwensen. Dieren en exacte zeecondities zijn nooit gegarandeerd.",
         "closing": "Neem handdoeken en zonnebrand mee. Mermaid zorgt voor de rest van jullie inbegrepen tropische dag.",
         "receipt_title": "Betalingsbewijs", "booking_code": "Boekingscode", "payment_reference": "Betalingsreferentie", "payment_time": "Betaaltijd (UTC)",
-        "receipt_disclaimer": "Dit bewijs registreert alleen een gesimuleerde betaling. Er zijn geen kaart- of bankgegevens en geen echt geld gebruikt.",
+        "receipt_disclaimer": "",
         "receipt_arrival": "Wees om 06:45 bij Fishermen's Pier. Neem handdoeken en zonnebrand mee; Mermaid zorgt voor de rest.",
     },
     "de": {
@@ -111,13 +111,13 @@ DOCUMENT_COPY = {
         "items": {"adult": "Erwachsene", "child_4_12": "Kind 4-12 Jahre", "infant_0_3": "Kind 0-3 Jahre"},
         "included_items": ["Frühstück", "Alkoholfreie Getränke und Säfte", "BBQ-Mittagessen", "Mermaid-Strandhaus", "Toiletten und Süßwasserdusche", "Schnorchelmasken", "Strandstühle"],
         "bring_items": ["Handtuch", "Sonnencreme", "Badesachen", "Persönliche Medikamente", "Hut oder Kappe"],
-        "cancellation": "DEMO-REGEL - VOR LIVEGANG ERSETZEN: Stornieren oder ändern Sie mindestens 48 Stunden vor Abfahrt. Spätere Stornierungen und Nichterscheinen werden in dieser Demo nicht erstattet.",
-        "safety": "DEMO-REGEL - VOR LIVEGANG ERSETZEN: Die Teilnahme erfolgt auf eigenes Risiko. Befolgen Sie alle Anweisungen von Kapitän und Crew.",
-        "insurance": "Der Versicherungsschutz ist in dieser Demo nicht geprüft. Mermaid muss den endgültigen Wortlaut vor dem Livegang freigeben.",
+        "cancellation": "Stornierungsbedingungen: https://www.mermaidboattrips.com/Contact/Cancellation-Policy/",
+        "safety": "Allgemeine Bedingungen: https://www.mermaidboattrips.com/Contact/General-Conditions/",
+        "insurance": "Datenschutzerklärung: https://www.mermaidboattrips.com/Contact/Privacy-Statement/",
         "protocol_title": "Ausflugsprotokoll", "protocol": "Kommen Sie pünktlich, befolgen Sie die Anweisungen von Kapitän und Crew, beaufsichtigen Sie Kinder, nutzen Sie Sicherheitsausrüstung wie angewiesen und melden Sie relevante Mobilitäts- oder Ernährungswünsche. Tiere und genaue Seebedingungen werden nie garantiert.",
         "closing": "Bringen Sie Handtücher und Sonnencreme mit. Mermaid kümmert sich um den Rest Ihres inkludierten Tropentags.",
         "receipt_title": "Zahlungsbeleg", "booking_code": "Buchungscode", "payment_reference": "Zahlungsreferenz", "payment_time": "Zahlungszeit (UTC)",
-        "receipt_disclaimer": "Dieser Beleg dokumentiert nur eine simulierte Zahlung. Es wurden keine Karten- oder Bankdaten und kein echtes Geld verwendet.",
+        "receipt_disclaimer": "",
         "receipt_arrival": "Seien Sie um 06:45 am Fishermen's Pier. Bringen Sie Handtücher und Sonnencreme mit; Mermaid kümmert sich um den Rest.",
     },
     "es": {
@@ -125,13 +125,13 @@ DOCUMENT_COPY = {
         "items": {"adult": "Adulto", "child_4_12": "Niño de 4-12 años", "infant_0_3": "Niño de 0-3 años"},
         "included_items": ["Desayuno", "Refrescos y jugos", "Almuerzo BBQ", "Casa de playa Mermaid", "Baños y ducha de agua dulce", "Máscaras de snorkel", "Sillas de playa"],
         "bring_items": ["Toalla", "Protector solar", "Traje de baño", "Medicamentos personales", "Sombrero o gorra"],
-        "cancellation": "POLÍTICA DEMO - REEMPLAZAR ANTES DE PRODUCCIÓN: Cancela o solicita un cambio al menos 48 horas antes de la salida. Las cancelaciones tardías y ausencias no se reembolsan en esta demo.",
-        "safety": "POLÍTICA DEMO - REEMPLAZAR ANTES DE PRODUCCIÓN: La participación es bajo responsabilidad del pasajero. Sigue todas las instrucciones del capitán y la tripulación.",
-        "insurance": "La cobertura de seguro no está verificada en esta demo. Mermaid debe aprobar el texto definitivo antes de producción.",
+        "cancellation": "Política de cancelación: https://www.mermaidboattrips.com/Contact/Cancellation-Policy/",
+        "safety": "Condiciones generales: https://www.mermaidboattrips.com/Contact/General-Conditions/",
+        "insurance": "Declaración de privacidad: https://www.mermaidboattrips.com/Contact/Privacy-Statement/",
         "protocol_title": "Protocolo del paseo", "protocol": "Llega a tiempo, sigue las instrucciones del capitán y la tripulación, supervisa a los niños, usa el equipo de seguridad como se indique e informa necesidades de movilidad o alimentación. La fauna y las condiciones exactas del mar nunca están garantizadas.",
         "closing": "Trae toallas y protector solar. Mermaid se encarga del resto de tu día tropical incluido.",
         "receipt_title": "Recibo de pago", "booking_code": "Código de reserva", "payment_reference": "Referencia de pago", "payment_time": "Hora del pago (UTC)",
-        "receipt_disclaimer": "Este recibo registra solo un pago simulado. No se usaron tarjeta, cuenta bancaria ni fondos reales.",
+        "receipt_disclaimer": "",
         "receipt_arrival": "Llega a Fishermen's Pier a las 06:45. Trae toallas y protector solar; Mermaid se encarga del resto.",
     },
     "pap": {
@@ -139,13 +139,13 @@ DOCUMENT_COPY = {
         "items": {"adult": "Adulto", "child_4_12": "Mucha di 4-12 aña", "infant_0_3": "Mucha di 0-3 aña"},
         "included_items": ["Desayuno", "Refresko i djus", "Almuerso di barbekiú", "Kas di playa di Mermaid", "Baño i ducha di awa dushi", "Máskara di snòrkel", "Stul di playa"],
         "bring_items": ["Toaya", "Krema solar", "Paña di landa", "Remedi personal", "Sombré òf pèchi"],
-        "cancellation": "REGLA DI DEMO - KAMBIA PROMÉ KU LANSAMENTU: Kanselá òf pidi un kambio por lo ménos 48 ora promé ku salida. Kanselashon lat i no presentá no ta reembolsabel den e demo aki.",
-        "safety": "REGLA DI DEMO - KAMBIA PROMÉ KU LANSAMENTU: Partisipashon ta na riesgo di e bishitante. Sigui tur instrukshon di kapitan i tripulashon.",
-        "insurance": "Kobertura di seguro no ta verifiká den e demo aki. Mermaid mester aprobá e teksto final promé ku lansamentu.",
+        "cancellation": "Reglanan di kanselashon: https://www.mermaidboattrips.com/Contact/Cancellation-Policy/",
+        "safety": "Kondishonnan general: https://www.mermaidboattrips.com/Contact/General-Conditions/",
+        "insurance": "Deklarashon di privasidat: https://www.mermaidboattrips.com/Contact/Privacy-Statement/",
         "protocol_title": "Protokòl di biahe", "protocol": "Yega na tempu, sigui instrukshon di kapitan i tripulashon, tene bista riba muchanan, usa ekiponan di siguridat manera indiká i bisa nos di nesesidat di mobilidat òf dieta. Animalnan i kondishon eksakto di laman nunka ta garantisá.",
         "closing": "Hiba toaya i krema solar. Mermaid ta sòru pa tur loke ta inkluí den bo dia tropikal.",
         "receipt_title": "Resibu di pago", "booking_code": "Kódigo di reservashon", "payment_reference": "Referensia di pago", "payment_time": "Ora di pago (UTC)",
-        "receipt_disclaimer": "E resibu aki ta registrá solamente un pago simulá. No a usa karta, kuenta di banko òf plaka real.",
+        "receipt_disclaimer": "",
         "receipt_arrival": "Yega Fishermen's Pier pa 06:45. Hiba toaya i krema solar; Mermaid ta sòru pa tur loke ta inkluí.",
     },
     "pt": {
@@ -153,13 +153,13 @@ DOCUMENT_COPY = {
         "items": {"adult": "Adulto", "child_4_12": "Criança de 4-12 anos", "infant_0_3": "Criança de 0-3 anos"},
         "included_items": ["Café da manhã", "Refrigerantes e sucos", "Almoço BBQ", "Casa de praia Mermaid", "Banheiros e ducha de água doce", "Máscaras de snorkel", "Cadeiras de praia"],
         "bring_items": ["Toalha", "Protetor solar", "Roupa de banho", "Medicamentos pessoais", "Chapéu ou boné"],
-        "cancellation": "POLÍTICA DEMO - SUBSTITUIR ANTES DA PRODUÇÃO: Cancele ou solicite alteração pelo menos 48 horas antes da saída. Cancelamentos tardios e não comparecimento não são reembolsáveis nesta demo.",
-        "safety": "POLÍTICA DEMO - SUBSTITUIR ANTES DA PRODUÇÃO: A participação é por conta e risco do passageiro. Siga todas as instruções do capitão e da tripulação.",
-        "insurance": "A cobertura de seguro não foi verificada nesta demo. A Mermaid deve aprovar o texto final antes da produção.",
+        "cancellation": "Política de cancelamento: https://www.mermaidboattrips.com/Contact/Cancellation-Policy/",
+        "safety": "Condições gerais: https://www.mermaidboattrips.com/Contact/General-Conditions/",
+        "insurance": "Declaração de privacidade: https://www.mermaidboattrips.com/Contact/Privacy-Statement/",
         "protocol_title": "Protocolo do passeio", "protocol": "Chegue no horário, siga as instruções do capitão e da tripulação, supervisione as crianças, use os equipamentos de segurança conforme orientado e informe necessidades de mobilidade ou alimentação. A fauna e as condições exatas do mar nunca são garantidas.",
         "closing": "Leve toalhas e protetor solar. A Mermaid cuida do restante do seu dia tropical incluído.",
         "receipt_title": "Recibo de pagamento", "booking_code": "Código da reserva", "payment_reference": "Referência do pagamento", "payment_time": "Hora do pagamento (UTC)",
-        "receipt_disclaimer": "Este recibo registra apenas um pagamento simulado. Nenhum cartão, conta bancária ou valor real foi usado.",
+        "receipt_disclaimer": "",
         "receipt_arrival": "Chegue ao Fishermen's Pier às 06:45. Leve toalhas e protetor solar; a Mermaid cuida do restante.",
     },
 }
@@ -329,7 +329,7 @@ def render_quote_pdf(reservation: dict, target: Path) -> str:
     ]))
     story.extend([lists, Paragraph(labels["rules"], section)])
     for key in ("cancellation", "safety", "insurance"):
-        story.extend([Paragraph(_safe(copy[key]), small), Spacer(1, 1.5 * mm)])
+        story.extend([Paragraph(_policy_link(copy[key]), small), Spacer(1, 1.5 * mm)])
     story.extend([
         Paragraph(f"<b>{_safe(copy['protocol_title'])}:</b> {_safe(copy['protocol'])}", small),
         Paragraph(labels["payment"], section), Paragraph(_safe(labels["payment_text"]), body),
@@ -351,7 +351,7 @@ def _document(row: sqlite3.Row | None) -> dict | None:
 def create_quote(reservation: dict) -> tuple[dict, dict]:
     """Create one stable quote and one pending idempotent delivery job."""
     public_id = _doc_id(reservation["public_id"], "quote")
-    filename = f"Mermaid - Demo Trip Quote - {reservation['public_id'][-10:].upper()}.pdf"
+    filename = f"Mermaid - Trip Quote - {reservation['public_id'][-10:].upper()}.pdf"
     target = _root() / reservation["public_id"] / filename
     conn = _conn()
     try:
@@ -401,7 +401,7 @@ def render_receipt_pdf(reservation: dict, payment: dict, target: Path) -> str:
     doc = SimpleDocTemplate(
         str(target), pagesize=A4, rightMargin=18 * mm, leftMargin=18 * mm,
         topMargin=14 * mm, bottomMargin=14 * mm,
-        title=f"Mermaid - {copy['receipt_title']} (Demo) - {reservation['booking_code']}",
+        title=f"Mermaid - {copy['receipt_title']} - {guest.display_reference(reservation['booking_code'])}",
         author="Mermaid Boat Trips Curaçao",
     )
     header = Table([[
@@ -418,8 +418,8 @@ def render_receipt_pdf(reservation: dict, payment: dict, target: Path) -> str:
     if paid_at.tzinfo is None:
         paid_at = paid_at.replace(tzinfo=timezone.utc)
     rows = [
-        [copy["booking_code"], reservation["booking_code"]],
-        [copy["payment_reference"], payment["payment_reference"]],
+        [copy["booking_code"], guest.display_reference(reservation["booking_code"])],
+        [copy["payment_reference"], guest.display_reference(payment["payment_reference"])],
         [labels["customer"], reservation["customer_name"]],
         [labels["date"], guest.guest_date(intake["trip_date"], locale)],
         [labels["guests"], guest.party_text(intake, locale)],
@@ -454,7 +454,7 @@ def render_receipt_pdf(reservation: dict, payment: dict, target: Path) -> str:
         _price_table(money, locale, body, 174), Spacer(1, 4 * mm),
         Paragraph(_safe(guest.price_text({**money, "currency": payment["currency"], "total": payment["amount"]}, intake, locale)), total),
         Spacer(1, 4 * mm), HRFlowable(color=TEAL, thickness=1.3), Spacer(1, 4 * mm),
-        Paragraph(_safe(copy["receipt_disclaimer"]), body),
+        *[Paragraph(_policy_link(copy[key]), body) for key in ("cancellation", "safety", "insurance")],
     ]
     doc.build(story, canvasmaker=canvas_for(DOCUMENT_LANGUAGES[locale]))
     return hashlib.sha256(target.read_bytes()).hexdigest()
@@ -463,7 +463,7 @@ def render_receipt_pdf(reservation: dict, payment: dict, target: Path) -> str:
 def create_receipt(reservation: dict, payment: dict) -> tuple[dict, dict]:
     """Create one stable receipt and its idempotent delivery job."""
     public_id = _doc_id(reservation["public_id"], "receipt")
-    filename = f"Mermaid - Demo Payment Receipt - {reservation['booking_code']}.pdf"
+    filename = f"Mermaid - Payment Receipt - {guest.display_reference(reservation['booking_code'])}.pdf"
     target = _root() / reservation["public_id"] / filename
     conn = _conn()
     try:
@@ -608,3 +608,8 @@ def quote_message(reservation: dict) -> str:
         guest.price_text(reservation["monetary_snapshot"], reservation["intake"], locale),
         guest.transport_text(reservation["intake"], locale, reservation["monetary_snapshot"]),
     ])
+
+
+def _policy_link(value):
+    label, url = value.split(": https://", 1)
+    return f'<link href="https://{html.escape(url, quote=True)}" color="#007F86">{html.escape(label)}</link>'

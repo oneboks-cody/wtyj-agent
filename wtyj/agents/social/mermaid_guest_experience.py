@@ -88,3 +88,8 @@ def party_text(intake, locale):
         if unknown > 0:
             parts.append(formal[band + "_unknown" + ("_one" if unknown == 1 else "")].format(count=unknown))
     return " · ".join(parts)
+
+
+def display_reference(value):
+    """Preserve the unique suffix while hiding the legacy environment prefix."""
+    return str(value or "").replace("MER-DEMO-", "MER-", 1).replace("PAY-DEMO-", "PAY-", 1)

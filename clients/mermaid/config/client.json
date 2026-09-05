@@ -1,6 +1,6 @@
 {
   "slug": "mermaid",
-  "name": "Mermaid Boat Trips Demo",
+  "name": "Mermaid Boat Trips",
   "status": "active",
   "host_port": 8102,
   "whatsapp": "+1 223 276 0075",
@@ -161,7 +161,12 @@
     "cancellation_and_refunds": "An unpaid demo quote can be cancelled and its checkout link revoked atomically. A recorded payment, existing operator review or refund request requires staff review. No real refunds or live-commerce policy promises are made.",
     "scuba_conflict": "Public pages conflict on scuba inclusion and requirements. Do not promise scuba, gear, tanks, a guide, or inclusion; escalate to Mermaid's team.",
     "currency_conflict": "Use the current XCG rates. An older FAQ still uses NAF wording, so requests to pay in NAF or use an older amount require human confirmation.",
-    "contact": "Mermaid Boat Trips Curaçao: +599 9 560 1530 and info@mermaidboattrips.com."
+    "contact": "Mermaid Boat Trips Curaçao: +599 9 560 1530 and info@mermaidboattrips.com.",
+    "published_policies": {
+      "cancellation": "For tickets paid online, the published cancellation page allows cancellation or changes free of charge up to 24 hours prior to the activity date, unless the product page or voucher states otherwise. Changes depend on availability. Within 24 hours and for no-shows, tickets are non-refundable. Open-date vouchers cannot be cancelled. https://www.mermaidboattrips.com/Contact/Cancellation-Policy/",
+      "general_conditions": "https://www.mermaidboattrips.com/Contact/General-Conditions/",
+      "privacy": "https://www.mermaidboattrips.com/Contact/Privacy-Statement/"
+    }
   },
   "common_sense_knowledge": {
     "curacao_timezone": "America/Curacao, UTC-4 without daylight-saving changes",
@@ -255,73 +260,73 @@
       "en": {
         "title": "Your Klein Curaçao trip ☀️🏝️",
         "open_pdf": "Open PDF",
-        "quote_ready": "Your demo quote is ready. Tap Open PDF to view it.",
-        "welcome": "All set, {name}! Your demo booking is complete. Thank you for choosing Mermaid! Your receipt is ready below.",
+        "quote_ready": "Your quote is ready. Tap Open PDF to view it.",
+        "welcome": "All set, {name}! Your booking is complete. Thank you for choosing Mermaid! Your receipt is ready below.",
         "guest": "guest",
         "pickup_at": "🚐 Pickup at {time}",
         "return_included": "Your return to your accommodation is included.",
         "booking_code": "Booking code",
-        "demo_note": "This was a demo payment; no real money was charged.",
+        "demo_note": "",
         "closing": "Blue seas, white sand and a Caribbean day to look forward to! 🌊\n\nDoes everything look right? Anything else I can help you with before your trip?"
       },
       "nl": {
         "title": "Jouw trip naar Klein Curaçao ☀️🏝️",
         "open_pdf": "Open PDF",
-        "quote_ready": "Je demo-offerte staat klaar. Tik op Open PDF om deze te bekijken.",
-        "welcome": "Helemaal geregeld, {name}! Je demo-boeking is rond. Bedankt dat je voor Mermaid kiest! Je betalingsbewijs staat hieronder klaar.",
+        "quote_ready": "Je offerte staat klaar. Tik op Open PDF om deze te bekijken.",
+        "welcome": "Helemaal geregeld, {name}! Je boeking is rond. Bedankt dat je voor Mermaid kiest! Je betalingsbewijs staat hieronder klaar.",
         "guest": "gast",
         "pickup_at": "🚐 We halen je op om {time}",
         "return_included": "De terugrit naar je accommodatie is inbegrepen.",
         "booking_code": "Boekingscode",
-        "demo_note": "Dit was een demobetaling; er is geen echt geld afgeschreven.",
+        "demo_note": "",
         "closing": "Blauwe zee, wit zand en een heerlijke Caribische dag om naar uit te kijken! 🌊\n\nKlopt alles zo? Kan ik je voor de trip nog ergens mee helpen?"
       },
       "de": {
         "title": "Ihr Ausflug nach Klein Curaçao ☀️🏝️",
         "open_pdf": "PDF öffnen",
-        "quote_ready": "Ihr Demo-Angebot ist bereit. Tippen Sie auf PDF öffnen.",
-        "welcome": "Alles bereit, {name}! Ihre Demo-Buchung ist abgeschlossen. Danke, dass Sie Mermaid gewählt haben! Ihren Beleg finden Sie unten.",
+        "quote_ready": "Ihr Angebot ist bereit. Tippen Sie auf PDF öffnen.",
+        "welcome": "Alles bereit, {name}! Ihre Buchung ist abgeschlossen. Danke, dass Sie Mermaid gewählt haben! Ihren Beleg finden Sie unten.",
         "guest": "Gast",
         "pickup_at": "🚐 Abholung um {time}",
         "return_included": "Die Rückfahrt zu Ihrer Unterkunft ist inbegriffen.",
         "booking_code": "Buchungscode",
-        "demo_note": "Dies war eine Demo-Zahlung; es wurde kein echtes Geld abgebucht.",
+        "demo_note": "",
         "closing": "Blaues Meer, weißer Sand und ein karibischer Tag zum Vorfreuen! 🌊\n\nStimmt alles so? Kann ich Ihnen vor dem Ausflug noch mit etwas helfen?"
       },
       "es": {
         "title": "Tu viaje a Klein Curaçao ☀️🏝️",
         "open_pdf": "Abrir PDF",
-        "quote_ready": "Tu cotización demo está lista. Toca Abrir PDF para verla.",
-        "welcome": "¡Todo listo, {name}! Tu reserva demo está completa. ¡Gracias por elegir Mermaid! Tu recibo está listo abajo.",
+        "quote_ready": "Tu cotización está lista. Toca Abrir PDF para verla.",
+        "welcome": "¡Todo listo, {name}! Tu reserva está completa. ¡Gracias por elegir Mermaid! Tu recibo está listo abajo.",
         "guest": "visitante",
         "pickup_at": "🚐 Recogida a las {time}",
         "return_included": "El regreso a tu alojamiento está incluido.",
         "booking_code": "Código de reserva",
-        "demo_note": "Fue un pago de demostración; no se cobró dinero real.",
+        "demo_note": "",
         "closing": "¡Mar azul, arena blanca y un día caribeño para disfrutar! 🌊\n\n¿Está todo correcto? ¿Puedo ayudarte con algo más antes del viaje?"
       },
       "pap": {
         "title": "Bo biahe pa Klein Curaçao ☀️🏝️",
         "open_pdf": "Habri PDF",
-        "quote_ready": "Bo oferta demo ta kla. Primi Habri PDF pa wak e oferta.",
-        "welcome": "Tur kos ta kla, {name}! Bo reservashon demo ta kompletá. Danki pa skohe Mermaid! Bo resibu ta kla aki bou.",
+        "quote_ready": "Bo oferta ta kla. Primi Habri PDF pa wak e oferta.",
+        "welcome": "Tur kos ta kla, {name}! Bo reservashon ta kompletá. Danki pa skohe Mermaid! Bo resibu ta kla aki bou.",
         "guest": "bishitante",
         "pickup_at": "🚐 Nos ta buska bo pa {time}",
         "return_included": "E regreso na bo alohamentu ta inkluí.",
         "booking_code": "Kódigo di reservashon",
-        "demo_note": "Esaki tabata un pago demo; no a kobra plaka di bèrdat.",
+        "demo_note": "",
         "closing": "Laman blou, santu blanku i un bunita dia den Karibe ta warda bo! 🌊\n\nTur kos ta korekto? Tin algu mas ku mi por yuda bo kuné promé ku e biahe?"
       },
       "pt": {
         "title": "Sua viagem a Klein Curaçao ☀️🏝️",
         "open_pdf": "Abrir PDF",
-        "quote_ready": "Sua cotação demo está pronta. Toque em Abrir PDF para ver.",
-        "welcome": "Tudo certo, {name}! Sua reserva demo está concluída. Obrigada por escolher a Mermaid! Seu recibo está pronto abaixo.",
+        "quote_ready": "Sua cotação está pronta. Toque em Abrir PDF para ver.",
+        "welcome": "Tudo certo, {name}! Sua reserva está concluída. Obrigada por escolher a Mermaid! Seu recibo está pronto abaixo.",
         "guest": "visitante",
         "pickup_at": "🚐 Busca às {time}",
         "return_included": "O retorno à sua hospedagem está incluído.",
         "booking_code": "Código da reserva",
-        "demo_note": "Este foi um pagamento de demonstração; nenhum dinheiro real foi cobrado.",
+        "demo_note": "",
         "closing": "Mar azul, areia branca e um dia caribenho para aproveitar! 🌊\n\nEstá tudo certo? Posso ajudar com mais alguma coisa antes da viagem?"
       }
     }

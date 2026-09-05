@@ -1,0 +1,9 @@
+FROM wtyj-agent:tracy-repeated-assistance
+COPY wtyj/agents/social/mermaid_demo_payment.py /app/agents/social/mermaid_demo_payment.py
+COPY wtyj/agents/social/mermaid_document_cards.py /app/agents/social/mermaid_document_cards.py
+COPY wtyj/agents/social/mermaid_document_copy.py /app/agents/social/mermaid_document_copy.py
+COPY wtyj/agents/social/mermaid_documents.py /app/agents/social/mermaid_documents.py
+COPY wtyj/agents/social/mermaid_guest_experience.py /app/agents/social/mermaid_guest_experience.py
+COPY wtyj/agents/social/mermaid_reservation_store.py /app/agents/social/mermaid_reservation_store.py
+COPY wtyj/agents/social/mermaid_reservation_workflow.py /app/agents/social/mermaid_reservation_workflow.py
+COPY wtyj/agents/social/mermaid_understanding.py /app/agents/social/mermaid_understanding.py

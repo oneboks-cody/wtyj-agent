@@ -144,8 +144,8 @@ def test_localized_dense_quote_and_warm_receipt_fit_one_card(locale):
     for caption in (receipt,text):
         assert len((copy["title"]+"\n\n"+caption).encode("utf-16-le"))//2 <= 1024
         assert r["intake"]["pickup_location"] in caption and "05:45" in caption
-    assert copy["closing"] in receipt and copy["demo_note"] in receipt
-    assert "\n\n" in receipt and r["booking_code"] in receipt
+    assert copy["closing"] in receipt and "demo" not in receipt.casefold()
+    assert "\n\n" in receipt and guest.display_reference(r["booking_code"]) in receipt
 
 
 def test_quote_then_real_checkout_dispatches_two_cards_without_replay(monkeypatch):

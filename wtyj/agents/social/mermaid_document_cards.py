@@ -60,8 +60,8 @@ def receipt_text(reservation, payment):
         guest.guest_date(intake["trip_date"], locale) + "\n" + guest.party_text(intake, locale),
         f"{guest.guest_copy(locale)['paid']}: {payment['currency']} {int(payment['amount']):,.2f}",
         transport_lines(reservation),
-        f"{copy['booking_code']}: {reservation['booking_code']}",
-        copy["demo_note"], copy["closing"],
+        f"{copy['booking_code']}: {guest.display_reference(reservation['booking_code'])}",
+        copy["closing"],
     ])
 
 
