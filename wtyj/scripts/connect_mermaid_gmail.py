@@ -190,7 +190,7 @@ class SetupHandler(BaseHTTPRequestHandler):
         self.send_header('Content-Length', str(len(encoded)))
         self.send_header('Cache-Control', 'no-store, max-age=0')
         self.send_header('Pragma', 'no-cache')
-        self.send_header('Referrer-Policy', 'no-referrer')
+        self.send_header('Referrer-Policy', 'same-origin')
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('X-Frame-Options', 'DENY')
         self.send_header('Content-Security-Policy', "default-src 'none'; style-src 'nonce-" + style_nonce + "'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'")
@@ -214,7 +214,7 @@ class SetupHandler(BaseHTTPRequestHandler):
 <label for="password">Google app password</label><input id="password" name="password" type="password" autocomplete="off" spellcheck="false" autocapitalize="none" required maxlength="64" placeholder="xxxx xxxx xxxx xxxx">
 <button type="submit">Connect reservation email</button></form>
 <p class="hint">This local form securely verifies the mailbox through SSH and stores the app password only on the Mermaid server. It does not send an email or read the inbox.</p>'''
-        self._respond(f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>Connect Mermaid email</title>
+        self._respond(f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="same-origin"><title>Connect Mermaid email</title>
 <style nonce="{nonce}">*{{box-sizing:border-box}}body{{margin:0;padding:44px 18px;background:linear-gradient(145deg,#e5f7fa,#f7f3e9);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#214652}}main{{max-width:600px;margin:auto;padding:38px;background:white;border-radius:20px;border-top:6px solid #087e99;box-shadow:0 20px 70px #12485415}}.badge{{font-size:12px;text-transform:uppercase;letter-spacing:1.6px;color:#007a91;font-weight:700}}h1{{font-size:32px;line-height:1.2;letter-spacing:-.7px;color:#083e54;margin:18px 0}}p{{margin:16px 0}}ol{{padding-left:23px}}li{{margin:10px 0}}a{{color:#007991}}.hint{{font-size:13px;color:#58727c}}label{{display:block;margin:24px 0 8px;font-weight:600}}input[type=password]{{display:block;width:100%;padding:15px;border:1px solid #b4cbd1;border-radius:8px;font:18px monospace;outline-color:#00869d}}button{{margin-top:15px;width:100%;border:0;border-radius:8px;padding:16px;color:white;background:#007d96;font:600 16px inherit;cursor:pointer}}.error{{padding:12px 15px;border-radius:8px;background:#fff1e8;color:#8c3918}}@media(max-width:500px){{body{{padding:20px 12px}}main{{padding:26px 22px}}h1{{font-size:28px}}}}</style></head><body><main>{contents}</main></body></html>''', style_nonce=nonce)
 
     def do_GET(self):

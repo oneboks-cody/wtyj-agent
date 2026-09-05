@@ -1,5 +1,5 @@
 # BRIEF — Optional premium reservation email after payment
-**Status:** Deployed; mailbox connection pending | **Files:** Mermaid email workflow, transport and renderer (new), mermaid_understanding.py, mermaid_reservation_workflow.py, mermaid_demo_payment.py, mermaid_document_cards.py, mermaid_date_changes.py, shared/mermaid_customers.py, reservation_email.json, connect_mermaid_gmail.py, focused offline tests | **Depends on:** live helpful recovery | **Blocks:** Gmail app password for hello@1boks.com
+**Status:** Deployed and mailbox connected | **Files:** Mermaid email workflow, transport and renderer (new), mermaid_understanding.py, mermaid_reservation_workflow.py, mermaid_demo_payment.py, mermaid_document_cards.py, mermaid_date_changes.py, shared/mermaid_customers.py, reservation_email.json, connect_mermaid_gmail.py, focused offline tests | **Depends on:** live helpful recovery | **Blocks:** none
 
 ## Context
 The owner wants Tracy to offer an optional email after payment, ask the address when the guest agrees, save it in the dashboard guest profile, and email the complete reservation, receipt, practical information and official rules/policies in a premium layout.
@@ -24,10 +24,12 @@ Focused local checks: opt-in then address sends once; refusal/invalid address/un
 - Backend deployed as wtyj-agent:tracy-reservation-email, image sha256:176e172368158bbe4714a22ef28df8947ce5d3a8a98a9c60e902a6a06f874feb. Nine source files verified against the release. HTTP health 200; watchdog healthy; six peer containers unchanged. Protected client.json and response_policy.json remained unchanged.
 - Preserved 80 conversation records, two booking states, two customers, 15 intake snapshots, one reservation, one payment, four documents and four delivery jobs. Database integrity checked. Backup and report: /root/backups/tracy-reservation-email-verified.
 - Dashboard email field deployed in frontend commit 5bcd14697128e8aa4451fe85aa53f0d1f0850db8, retaining concurrent journey-timeline and customer-details changes. Asset requests and hashes verified.
-- Dedicated sender hello@1boks.com is configured. At deployment, readiness was false because the mailbox credential was absent; generic inbound email remained disabled. The localhost helper verifies the app password and writes only /root/clients/mermaid/config/mermaid_email_password with mode 0600. Credential entry and authenticated delivery remain pending user action; nothing has been represented as sent.
+- Dedicated sender hello@1boks.com is configured. At deployment, readiness was false because the mailbox credential was absent; generic inbound email remained disabled. The localhost helper verifies the app password and writes only /root/clients/mermaid/config/mermaid_email_password with mode 0600. The owner supplied an existing app password through the signed-in Safari session. Gmail authentication succeeded and the live readiness gate is now true. Actual inbox delivery has not been tested and no unsolicited email was sent.
 
 ## Success Condition
 After payment a guest can opt in, supply an email, receive a premium complete confirmation and receipt, and the operator can see the saved address and send history in the guest file.
 
 ## Rollback
 Restore the prior Mermaid image and backed-up targeted configuration. Preserve guest email and send records; do not resend completed or uncertain jobs during rollback.
+
+- Safari setup compatibility: use same-origin referrer policy so Safari supplies the expected Origin on the local form POST. Strict Host/Origin validation, CSRF token, no-store and external-link noreferrer protections remain in place. Safari visibly confirmed the connection; live credential mode is 0600 and health is 200.
