@@ -1,0 +1,2 @@
+FROM wtyj-agent:tracy-date-changes
+COPY wtyj/agents/social/mermaid_date_changes.py /app/agents/social/mermaid_date_changes.py

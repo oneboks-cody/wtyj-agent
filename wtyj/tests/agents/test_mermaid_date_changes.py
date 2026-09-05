@@ -109,6 +109,10 @@ def test_provider_confirmation_uses_two_bound_reply_buttons(monkeypatch):
     assert changes.send_confirmation('guest','account',token)
     assert changes.send_confirmation('guest','account',token)
     assert len(posts)==1 and len(posts[0]['buttons'])==2
+    assert 'text' not in posts[0]
+    assert changes.guest.guest_date(r['intake']['trip_date'],'en') in posts[0]['message']
+    assert changes.guest.guest_date(new,'en') in posts[0]['message']
+    assert posts[0]['message'].endswith('Is that correct?')
     assert posts[0]['buttons'][0]['payload']==changes.PREFIX+token+':confirm'
 
 
@@ -158,7 +162,7 @@ def test_separate_food_answer_is_in_the_actual_button_payload(monkeypatch):
     monkeypatch.setattr(provider,'_post_recommendation_message',lambda *a:posts.append(a[2]) or ('sent',200,'p'))
     monkeypatch.setattr(provider,'_confirm_recommendation_status',lambda *a,**k:'sent')
     assert changes.send_confirmation('guest','account',reply['media']['url'])
-    assert posts[0]['text']==reply['text']
+    assert posts[0]['message']==reply['text']
 
 
 @pytest.mark.parametrize('evidence_valid',[True,False])

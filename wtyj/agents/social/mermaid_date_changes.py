@@ -212,7 +212,7 @@ def send_confirmation(conversation_id, account_id, token):
         if not window:return False
         pid=p['provider_message_id']
         if not pid:
-            c=copy(p['locale']);payload={'accountId':account_id,'text':proposal_reply(p)['text'],'buttons':[{'type':'postback','title':c['yes'],'payload':PREFIX+token+':confirm'},{'type':'postback','title':c['keep'],'payload':PREFIX+token+':keep'}]}
+            c=copy(p['locale']);payload={'accountId':account_id,'message':proposal_reply(p)['text'],'buttons':[{'type':'postback','title':c['yes'],'payload':PREFIX+token+':confirm'},{'type':'postback','title':c['keep'],'payload':PREFIX+token+':keep'}]}
             outcome,status,pid=provider._post_recommendation_message(endpoint+'/messages',headers,payload)
             with conn:conn.execute('UPDATE mermaid_date_changes SET provider_message_id=? WHERE token=?',(pid,token))
         if not pid:return False
