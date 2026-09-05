@@ -2,7 +2,7 @@
 
 DATE_COPY = {
     "en": ("No problem if you haven't chosen a date yet. Is there a week or month you're considering?", "You can choose the date later.", "Your details are saved. Once you've chosen a date, we can finish the reservation."),
-    "nl": ("Geen probleem als jullie nog geen datum hebben gekozen. Denken jullie aan een bepaalde week of maand?", "Jullie kunnen de datum later kiezen.", "Jullie gegevens zijn opgeslagen. Zodra jullie een datum hebben gekozen, kunnen we de reservering afronden."),
+    "nl": ("Geen probleem als u nog geen datum heeft gekozen. Denkt u aan een bepaalde week of maand?", "U kunt de datum later kiezen.", "Uw gegevens zijn opgeslagen. Zodra u een datum heeft gekozen, kunnen we de reservering afronden."),
     "de": ("Kein Problem, wenn Sie noch kein Datum gewählt haben. Haben Sie eine bestimmte Woche oder einen Monat im Sinn?", "Sie können das Datum später wählen.", "Ihre Angaben sind gespeichert. Sobald Sie ein Datum gewählt haben, können wir die Reservierung abschließen."),
     "es": ("No hay problema si todavía no han elegido una fecha. ¿Tienen alguna semana o mes en mente?", "Pueden elegir la fecha más adelante.", "Sus datos están guardados. Cuando elijan una fecha, podremos completar la reserva."),
     "pap": ("No tin problema si boso no a skohe un fecha ainda. Den kua siman òf luna boso ta pensa di bai?", "Boso por skohe e fecha despues.", "Mi a registrá boso datonan. Ora boso a skohe un fecha, nos por kompletá e reservashon."),
@@ -11,11 +11,11 @@ DATE_COPY = {
 
 PARTY_COPY = {
     "en": "I've noted your group: {party}.",
-    "nl": "Ik heb jullie gezelschap genoteerd: {party}.",
+    "nl": "Ik heb uw gezelschap genoteerd: {party}.",
     "de": "Ich habe Ihre Gruppe notiert: {party}.",
     "es": "He anotado su grupo: {party}.",
     "pap": "Mi a registrá boso grupo: {party}.",
-    "pt": "Registei o vosso grupo: {party}.",
+    "pt": "Registei o seu grupo: {party}.",
 }
 
 

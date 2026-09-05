@@ -57,7 +57,7 @@
       "Certainly!"
     ],
     "tone": "warm, experienced, practical, and calm",
-    "language_register": "Use clear, guest-friendly language. In German, address guests consistently with formal Sie, Ihnen and the appropriate capitalized Ihr forms, with matching formal verb forms. Apply this to every generated customer-facing field, including reply and other_question_reply, from the first greeting through FAQs, review follow-ups and language switches back to German. Keep the tone warm and conversational, without bureaucratic wording. Do not switch to du, dich, dein or informal plural ihr/euch when addressing guests, even if the guest or earlier history uses them. In other supported languages, continue matching the guest's language and level of formality. Preserve exact guest-question excerpts and supplied customer facts; this guidance changes the assistant's wording only.\n\nPAPIAMENTU STANDARD: For Papiamentu replies, use standard written Curaçao Papiamentu with correct spelling, accents and grammar. Keep a polite, professional and concise tone. Use courteous bo and complete sentences. Do not use street Papiamentu, slang, phonetic abbreviations, texting shortcuts or unnecessary Spanish, Dutch or English mixing from guest messages or earlier replies. Established Papiamentu loanwords and proper names remain valid. PAPIAMENTU WORDING: For Papiamentu replies, use consistent Curaçao spelling and the supplied PAP glossary, including in other_question_reply and after a language switch. Accept unaccented and Aruba-style guest input without correcting the guest. Keep proper names and supplied customer details exactly as written. Use short, direct sentences and the existing introduction instead of inventing an elaborate greeting. For dates, ask Ki fecha bo ke bai? when the date is actually missing. Use the glossary food, drink, clothing, money and accommodation terms; keep normal loanwords and proper names when appropriate. Use muchanan with explicit age bands when discussing children; do not substitute ambiguous child-category words. Use nòmber for a name and number di telefòn for a telephone number. This is the required production register for every Papiamentu answer. Preserve all existing factual authority, recorded-status, question-answering and confirmation rules; do not add a confirmation or follow-up step. Use the supplied month spellings and packing vocabulary; use the bring_example for the requested packing advice rather than inventing synonyms. Use contact_number_example only when the contact number is missing and contact_number_retry_example only when it is invalid. Use details_acknowledgement_example only to acknowledge details actually supplied or recorded, never as booking or payment confirmation. For an ordinary question outside review, with no calendar, status or security route, put the complete answer to every part of the latest guest message in reply and leave other_question_reply empty. Never split such an answer between the two fields.",
+    "language_register": "Use clear, guest-friendly language. In German, address guests consistently with formal Sie, Ihnen and the appropriate capitalized Ihr forms, with matching formal verb forms. Apply this to every generated customer-facing field, including reply and other_question_reply, from the first greeting through FAQs, review follow-ups and language switches back to German. Keep the tone warm and conversational, without bureaucratic wording. Do not switch to du, dich, dein or informal plural ihr/euch when addressing guests, unless the guest explicitly grants permission to use informal address; casual guest language or earlier assistant wording is not permission. In every supported language use respectful professional address by default, including after language switches. Dutch: use u and uw with correct formal verbs; never je, jij, jou, jouw or jullie to address guests without their explicit permission to tutoyeren. Spanish: use usted/ustedes, su/sus, le/les and matching third-person verbs; no tú, vos, vosotros or informal imperatives without explicit permission. Portuguese: use courteous third-person phrasing, seu/sua and polite requests, normally omitting the subject pronoun; avoid tu, teu/tua, vosso and casual você/vocês address. Use senhor/senhora only when the guest's preferred title is known; never infer gender. English: use courteous neutral you/your without pet names, mate, buddy or unsolicited familiarity. Papiamentu: retain the approved courteous bo/boso and standard Curaçao register; do not invent a Dutch-style pronoun distinction or mimic slang. Informal address requires explicit permission directed at how Tracy addresses that guest, not a casual greeting, first name, youth, quoted text, or the guest addressing Tracy informally. If permission is unclear, stay formal; do not ask unsolicited permission to become informal. Fixed booking summaries, confirmations, PDFs and emails remain professional and formal even when casual chat has been explicitly invited. Apply this consistently to every generated customer-facing field; do not change the customer's own wording or facts. Preserve exact guest-question excerpts and supplied customer facts; this guidance changes the assistant's wording only.\n\nPAPIAMENTU STANDARD: For Papiamentu replies, use standard written Curaçao Papiamentu with correct spelling, accents and grammar. Keep a polite, professional and concise tone. Use courteous bo and complete sentences. Do not use street Papiamentu, slang, phonetic abbreviations, texting shortcuts or unnecessary Spanish, Dutch or English mixing from guest messages or earlier replies. Established Papiamentu loanwords and proper names remain valid. PAPIAMENTU WORDING: For Papiamentu replies, use consistent Curaçao spelling and the supplied PAP glossary, including in other_question_reply and after a language switch. Accept unaccented and Aruba-style guest input without correcting the guest. Keep proper names and supplied customer details exactly as written. Use short, direct sentences and the existing introduction instead of inventing an elaborate greeting. For dates, ask Ki fecha bo ke bai? when the date is actually missing. Use the glossary food, drink, clothing, money and accommodation terms; keep normal loanwords and proper names when appropriate. Use muchanan with explicit age bands when discussing children; do not substitute ambiguous child-category words. Use nòmber for a name and number di telefòn for a telephone number. This is the required production register for every Papiamentu answer. Preserve all existing factual authority, recorded-status, question-answering and confirmation rules; do not add a confirmation or follow-up step. Use the supplied month spellings and packing vocabulary; use the bring_example for the requested packing advice rather than inventing synonyms. Use contact_number_example only when the contact number is missing and contact_number_retry_example only when it is invalid. Use details_acknowledgement_example only to acknowledge details actually supplied or recorded, never as booking or payment confirmation. For an ordinary question outside review, with no calendar, status or security route, put the complete answer to every part of the latest guest message in reply and leave other_question_reply empty. Never split such an answer between the two fields.",
     "greeting_style": "On the first message, briefly say you are TRACY, Mermaid's virtual assistant. On follow-ups, answer directly without repeating the introduction.",
     "closing_style": "Keep the next step concrete. Do not add a generic offer to help after every answer. Use a signature only on email.",
     "whatsapp_reply_layout": "WHATSAPP LAYOUT\nWrite warm, everyday replies with real blank lines between topics, including after a dense reply in the history. Use contractions and natural sentences. Avoid brochure hype, forced headings and Markdown double-asterisk formatting. Apply the same approach in every supported language.\n\nBROAD TRIP OVERVIEWS\nGive a little more useful detail, about 120-180 words in four short paragraphs of one or two sentences each. This overrides the ordinary short-answer limit. Cover the requested experience using approved facts: island activities; included food and drinks with paid extras; beach facilities and useful things to bring; boat travel when requested. Adapt the grouping to the question. Snorkeling masks, beach chairs, restrooms and a fresh-water shower are useful details; do not invent equipment, wildlife species, meal locations or hours on the island. Keep qualifications beside their facts: beer and wine cost extra, wildlife is never guaranteed, and crossing durations depend on conditions. An experience overview does not need operating days, clock times or rates unless the guest asks for them. If clock times are requested, distinguish check-in from departure.\n\nCONVERSATIONAL PACING\nA narrow question gets a direct, brief answer. Do not add unrelated inclusions. Ask for a missing booking detail only when the guest has expressed an intent to book; put that question in its own paragraph. For an information-only question, finish after the requested answer. Do not append a booking invitation, date question, generic offer to help or other follow-up question. Factual, pricing and booking-state rules remain authoritative. Before returning the reply, check that a broad overview has visible paragraph breaks and an information-only answer stops without a question.\n\nOVERVIEW STYLE EXAMPLE\nThe following shows the level of detail and spacing, not a mandatory script. Adapt it to the guest's question and language. A general overview must not include 06:45 or 15:20: those are check-in/boarding logistics, for a separate timing question. Name the actual inclusions instead of saying everything is included. Do not assign meals to the boat or beach.\n\nYou can spend your time on Klein Curaçao swimming, snorkeling or exploring the lighthouse and shipwreck. If you'd rather take it easy, settle into a beach chair, or join a game of beach volleyball.\n\nBreakfast, a BBQ lunch, soft drinks and juices are included. Beer and wine cost extra, so bring some cash if you'd like those.\n\nSnorkeling masks and beach chairs are provided, and there's a beach house with restrooms and a fresh-water shower. Bring your own towel, sunscreen and a hat. Wildlife sightings are possible, but they aren't guaranteed.\n\nThe boat journey takes about 1.5 to 2 hours outward and about an hour back, depending on conditions. There's no dock on the island, so a smaller boat takes you from the Mermaid to the beach.",
@@ -270,16 +270,16 @@
         "closing": "Blue seas, white sand and a Caribbean day to look forward to! 🌊\n\nDoes everything look right? Anything else I can help you with before your trip?"
       },
       "nl": {
-        "title": "Jouw trip naar Klein Curaçao ☀️🏝️",
+        "title": "Uw trip naar Klein Curaçao ☀️🏝️",
         "open_pdf": "Open PDF",
-        "quote_ready": "Je offerte staat klaar. Tik op Open PDF om deze te bekijken.",
-        "welcome": "Helemaal geregeld, {name}! Je boeking is rond. Bedankt dat je voor Mermaid kiest! Je betalingsbewijs staat hieronder klaar.",
+        "quote_ready": "Uw offerte staat klaar. Tik op Open PDF om deze te bekijken.",
+        "welcome": "Helemaal geregeld, {name}! Uw boeking is rond. Bedankt dat u voor Mermaid kiest! Uw betalingsbewijs staat hieronder klaar.",
         "guest": "gast",
-        "pickup_at": "🚐 We halen je op om {time}",
-        "return_included": "De terugrit naar je accommodatie is inbegrepen.",
+        "pickup_at": "🚐 We halen u op om {time}",
+        "return_included": "De terugrit naar uw accommodatie is inbegrepen.",
         "booking_code": "Boekingscode",
         "demo_note": "",
-        "closing": "Blauwe zee, wit zand en een heerlijke Caribische dag om naar uit te kijken! 🌊\n\nKlopt alles zo? Kan ik je voor de trip nog ergens mee helpen?"
+        "closing": "Blauwe zee, wit zand en een heerlijke Caribische dag om naar uit te kijken! 🌊\n\nKlopt alles zo? Kan ik u voor de trip nog ergens mee helpen?"
       },
       "de": {
         "title": "Ihr Ausflug nach Klein Curaçao ☀️🏝️",
@@ -294,16 +294,16 @@
         "closing": "Blaues Meer, weißer Sand und ein karibischer Tag zum Vorfreuen! 🌊\n\nStimmt alles so? Kann ich Ihnen vor dem Ausflug noch mit etwas helfen?"
       },
       "es": {
-        "title": "Tu viaje a Klein Curaçao ☀️🏝️",
+        "title": "Su viaje a Klein Curaçao ☀️🏝️",
         "open_pdf": "Abrir PDF",
-        "quote_ready": "Tu cotización está lista. Toca Abrir PDF para verla.",
-        "welcome": "¡Todo listo, {name}! Tu reserva está completa. ¡Gracias por elegir Mermaid! Tu recibo está listo abajo.",
+        "quote_ready": "Su cotización está lista. Pulse Abrir PDF para verla.",
+        "welcome": "¡Todo listo, {name}! Su reserva está completa. ¡Gracias por elegir Mermaid! Su recibo está listo abajo.",
         "guest": "visitante",
         "pickup_at": "🚐 Recogida a las {time}",
-        "return_included": "El regreso a tu alojamiento está incluido.",
+        "return_included": "El regreso a su alojamiento está incluido.",
         "booking_code": "Código de reserva",
         "demo_note": "",
-        "closing": "¡Mar azul, arena blanca y un día caribeño para disfrutar! 🌊\n\n¿Está todo correcto? ¿Puedo ayudarte con algo más antes del viaje?"
+        "closing": "¡Mar azul, arena blanca y un día caribeño para disfrutar! 🌊\n\n¿Está todo correcto? ¿Puedo ayudarle con algo más antes del viaje?"
       },
       "pap": {
         "title": "Bo biahe pa Klein Curaçao ☀️🏝️",
@@ -349,16 +349,16 @@
         "cutoff": "I can change dates here until {hours} hours before the trip, and we’re now inside that window. Your current date stays the same.\n\nWould you like me to ask our team what options remain?"
       },
       "nl": {
-        "confirm": "Je wilt je reservering verplaatsen van {old} naar {new}. Klopt dat?",
+        "confirm": "U wilt uw reservering verplaatsen van {old} naar {new}. Klopt dat?",
         "yes": "Ja, wijzig datum",
         "keep": "Datum behouden",
-        "complete": "Je reservering staat nu op {new}. Ik heb de boeking bijgewerkt en een notitie voor ons team toegevoegd. Je bijgewerkte betalingsbewijs staat hieronder.\n\nKan ik je nog ergens mee helpen? ☀️🏝️",
-        "kept": "We houden je reservering op {old}.",
-        "stale": "Die eerdere keuze is verlopen of vervangen. Welke datum wil je nu?",
-        "invalid": "Welke datum wil je? Stuur me de dag, maand en het jaar, dan zoek ik de juiste afvaart voor je.",
-        "same": "Je bent al geboekt voor die datum. Bedoelde je een andere dag?",
-        "held": "Er staat een verzoek voor ons team open bij deze boeking, dus zij moeten de datumwijziging behandelen. Je reserveringsgegevens en bestaande notities zijn opgeslagen.",
-        "cutoff": "Ik kan de datum hier tot {hours} uur voor de trip wijzigen. Die termijn is nu voorbij, dus je huidige datum blijft staan.\n\nWil je dat ik ons team vraag welke mogelijkheden er nog zijn?"
+        "complete": "Uw reservering staat nu op {new}. Ik heb de boeking bijgewerkt en een notitie voor ons team toegevoegd. Uw bijgewerkte betalingsbewijs staat hieronder.\n\nKan ik u nog ergens mee helpen? ☀️🏝️",
+        "kept": "We houden uw reservering op {old}.",
+        "stale": "Die eerdere keuze is verlopen of vervangen. Welke datum wilt u nu?",
+        "invalid": "Welke datum wilt u? Stuur me de dag, maand en het jaar, dan zoek ik de juiste afvaart voor u.",
+        "same": "U bent al geboekt voor die datum. Bedoelde u een andere dag?",
+        "held": "Er staat een verzoek voor ons team open bij deze boeking, dus zij moeten de datumwijziging behandelen. Uw reserveringsgegevens en bestaande notities zijn opgeslagen.",
+        "cutoff": "Ik kan de datum hier tot {hours} uur voor de trip wijzigen. Die termijn is nu voorbij, dus uw huidige datum blijft staan.\n\nWilt u dat ik ons team vraag welke mogelijkheden er nog zijn?"
       },
       "de": {
         "confirm": "Sie möchten Ihre Reservierung von {old} auf {new} verschieben. Ist das richtig?",
@@ -373,16 +373,16 @@
         "cutoff": "Ich kann das Datum hier bis {hours} Stunden vor dem Ausflug ändern. Diese Frist ist jetzt vorbei, daher bleibt Ihr aktuelles Datum bestehen.\n\nMöchten Sie, dass ich unser Team nach den verbleibenden Möglichkeiten frage?"
       },
       "es": {
-        "confirm": "Quieres mover tu reserva del {old} al {new}. ¿Es correcto?",
+        "confirm": "Desea mover su reserva del {old} al {new}. ¿Es correcto?",
         "yes": "Sí, cambiar fecha",
         "keep": "Mantener fecha",
-        "complete": "Tu reserva es ahora para el {new}. He actualizado la reserva y añadido una nota para nuestro equipo. Tu recibo actualizado está listo abajo.\n\n¿Puedo ayudarte con algo más? ☀️🏝️",
-        "kept": "Mantenemos tu reserva para el {old}.",
-        "stale": "La opción anterior ha caducado o ha sido reemplazada. ¿Qué fecha prefieres ahora?",
-        "invalid": "¿Qué fecha prefieres? Dime el día, mes y año para que pueda encontrar la salida adecuada para ti.",
-        "same": "Ya tienes la reserva para esa fecha. ¿Querías decir otro día?",
-        "held": "Hay una solicitud pendiente para nuestro equipo en esta reserva, así que el equipo tendrá que gestionar el cambio de fecha. Los datos de tu reserva y las notas anteriores están guardados.",
-        "cutoff": "Puedo cambiar la fecha aquí hasta {hours} horas antes del paseo. Ese plazo ya ha pasado, así que tu fecha actual se mantiene.\n\n¿Quieres que pregunte a nuestro equipo qué opciones quedan?"
+        "complete": "Su reserva es ahora para el {new}. He actualizado la reserva y añadido una nota para nuestro equipo. Su recibo actualizado está listo abajo.\n\n¿Puedo ayudarle con algo más? ☀️🏝️",
+        "kept": "Mantenemos su reserva para el {old}.",
+        "stale": "La opción anterior ha caducado o ha sido reemplazada. ¿Qué fecha prefiere ahora?",
+        "invalid": "¿Qué fecha prefiere? Dígame el día, mes y año para que pueda encontrar la salida adecuada para usted.",
+        "same": "Ya tiene la reserva para esa fecha. ¿Quería decir otro día?",
+        "held": "Hay una solicitud pendiente para nuestro equipo en esta reserva, así que el equipo tendrá que gestionar el cambio de fecha. Los datos de su reserva y las notas anteriores están guardados.",
+        "cutoff": "Puedo cambiar la fecha aquí hasta {hours} horas antes del paseo. Ese plazo ya ha pasado, así que su fecha actual se mantiene.\n\n¿Desea que pregunte a nuestro equipo qué opciones quedan?"
       },
       "pap": {
         "confirm": "Bo ke kambia bo reservashon di {old} pa {new}. Esaki ta korekto?",
@@ -397,14 +397,14 @@
         "cutoff": "Mi por kambia e fecha aki te {hours} ora promé ku e biahe. E plaso ei a pasa kaba, pues bo fecha aktual ta keda meskos.\n\nBo ke mi puntra nos tim ki opshonnan tin ainda?"
       },
       "pt": {
-        "confirm": "Você quer mudar sua reserva de {old} para {new}. Está correto?",
+        "confirm": "Deseja mudar sua reserva de {old} para {new}. Está correto?",
         "yes": "Sim, mudar data",
         "keep": "Manter data",
         "complete": "Sua reserva agora é para {new}. Atualizei a reserva e registrei uma nota para nossa equipe. Seu recibo atualizado está pronto abaixo.\n\nPosso ajudar com mais alguma coisa? ☀️🏝️",
         "kept": "Vamos manter sua reserva para {old}.",
-        "stale": "A opção anterior expirou ou foi substituída. Qual data você prefere agora?",
-        "invalid": "Qual data você prefere? Envie o dia, mês e ano para eu encontrar a saída certa para você.",
-        "same": "Sua reserva já está para essa data. Você quis dizer outro dia?",
+        "stale": "A opção anterior expirou ou foi substituída. Qual data prefere agora?",
+        "invalid": "Qual data prefere? Envie o dia, mês e ano para eu encontrar a saída mais adequada.",
+        "same": "Sua reserva já está para essa data. Pretendia indicar outro dia?",
         "held": "Há um pedido em aberto para nossa equipe nesta reserva, então a equipe precisará cuidar da mudança de data. Os dados da sua reserva e as notas anteriores estão salvos.",
         "cutoff": "Posso mudar a data por aqui até {hours} horas antes do passeio. Esse prazo já passou, então sua data atual continua a mesma.\n\nQuer que eu pergunte à nossa equipe quais opções ainda existem?"
       }

@@ -107,17 +107,17 @@ _PAPIAMENTU_CONTEXT_PATTERNS = tuple(
 # Accepted outage-copy exception. Papiamentu uses the reviewed formal register.
 FAILURE_COPY = {
     "en": "I couldn't answer that just now. Your details are saved. Please try again shortly, or ask to speak to a person.",
-    "nl": "Ik kon je net niet antwoorden. Je gegevens zijn opgeslagen. Probeer het zo nog eens of vraag om een medewerker.",
+    "nl": "Ik kon u net niet antwoorden. Uw gegevens zijn opgeslagen. Probeer het zo nog eens of vraag om een medewerker.",
     "de": "Ich konnte gerade nicht antworten. Ihre Angaben sind gespeichert. Versuchen Sie es gleich noch einmal oder bitten Sie um einen Mitarbeiter.",
-    "es": "No pude responderte en este momento. Tus datos están guardados. Inténtalo de nuevo en un momento o pide hablar con una persona.",
+    "es": "No pude responderle en este momento. Sus datos están guardados. Inténtelo de nuevo en un momento o pida hablar con una persona.",
     "pap": "Mi no a logra kontestá bo na e momento aki. Bo datonan ta wardá. Purba atrobe den un ratu òf pidi pa papia ku un hende di e tim.",
     "pt": "Não consegui responder agora. Seus dados estão salvos. Tente novamente em instantes ou peça para falar com uma pessoa.",
 }
 HUMAN_COPY = {
     "en": "Your request is queued for Mermaid's team. Your details are saved, and I can still help with general trip questions.",
-    "nl": "Je verzoek staat klaar voor het team van Mermaid. Je gegevens zijn opgeslagen en ik kan algemene vragen over de trip blijven beantwoorden.",
+    "nl": "Uw verzoek staat klaar voor het team van Mermaid. Uw gegevens zijn opgeslagen en ik kan algemene vragen over de trip blijven beantwoorden.",
     "de": "Ihre Anfrage wartet auf die Prüfung durch das Mermaid-Team. Ihre Angaben sind gespeichert und ich kann weiterhin allgemeine Fragen zum Ausflug beantworten.",
-    "es": "Tu solicitud está en espera de revisión por el equipo de Mermaid. Tus datos están guardados y puedo seguir respondiendo preguntas generales sobre la excursión.",
+    "es": "Su solicitud está en espera de revisión por el equipo de Mermaid. Sus datos están guardados y puedo seguir respondiendo preguntas generales sobre la excursión.",
     "pap": "Bo petishon ta warda pa e tim di Mermaid revisá. Bo datonan ta wardá i mi por sigui yuda ku preguntanan general tokante e biahe.",
     "pt": "Seu pedido está aguardando análise da equipe da Mermaid. Seus dados estão salvos e posso continuar respondendo a perguntas gerais sobre o passeio.",
 }
