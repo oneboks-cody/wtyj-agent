@@ -18,3 +18,6 @@ New date-change button messages show the old/new date summary directly above the
 
 ## Rollback
 Restore image wtyj-agent:tracy-date-changes. Superseded proposals remain historical and a new request creates fresh choices.
+
+## Release
+18 date-change tests passed. Deployed bc033f1 as wtyj-agent:tracy-button-summary, digest sha256:9581baa0e953845d89e83da41e8597727df9e0f3f6eede7d2b81a8ab1c13e6f3. Health 200, watchdog healthy, six peer containers unchanged. Booking/payment/document/customer content preserved; only pending old-format proposals captured before rollout were superseded. Backup: /root/backups/tracy-button-summary-verified. No manual WhatsApp send was performed.
