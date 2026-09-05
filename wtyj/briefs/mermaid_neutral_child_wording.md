@@ -1,5 +1,5 @@
 # Mermaid — Neutral child wording and compound ages
-**Status:** Prepared locally; live deployment pending authorization | **Files:** clients/mermaid/config/client.json, clients/mermaid/config/reservation_catalog.json | **Depends on:** existing age extraction | **Blocks:** none
+**Status:** Deployed with explicit owner authorization | **Files:** clients/mermaid/config/client.json, clients/mermaid/config/reservation_catalog.json | **Depends on:** existing age extraction | **Blocks:** none
 
 ## Context
 The owner reports repeated unsolicited affectionate labels for children. The existing booking_age_guidance explicitly encourages this wording, and English catalog fallback labels repeat it. The supplied example also shows a compound age interpreted as two children.
@@ -18,3 +18,6 @@ Tracy uses neutral child terminology unless mirroring the guest and does not spl
 
 ## Rollback
 Restore only the prior booking_age_guidance and two English catalog labels; preserve unrelated tenant configuration and customer state. Deployment requires action-specific authorization under the current Unboks policy.
+
+## Deployment evidence
+Owner authorized deployment in this task. Applied only the three approved JSON fields to Mermaid live configuration, preserving other live values. Verified loaded guidance in the runtime prompt and both catalog labels; health returned 200, with no restart. Backup/report: /root/backups/mermaid-neutral-child-wording-20260905T182731Z. Source commit: 0a0eaa1. No model calls, live messages or customer-data edits were performed; generated behavior remains untested.
