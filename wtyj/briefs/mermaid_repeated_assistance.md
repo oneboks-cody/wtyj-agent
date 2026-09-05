@@ -18,3 +18,8 @@ The combined wheelchair/calendar enquiry produces one assistance acknowledgement
 
 ## Rollback
 Restore compose image wtyj-agent:tracy-loop-stop-f1aefc5 and recreate only the Mermaid agent; no schema or data migration.
+
+## Release verification
+Deployed 2026-09-05 UTC from commit 8570157 as wtyj-agent:tracy-repeated-assistance, digest sha256:b49b6ed2758d748e095e870e3bc90bb0361a9e2182de54c9b30b9d350dfa9af2. All 154 wheelchair and 206 model-recovery tests passed. An isolated real-model canary classified the extra answer as accessibility and the final response contained only the canonical acknowledgement, with a persisted crew note. No WhatsApp message was sent by the canary.
+
+Health and watchdog healthy. Customer records, config and six peer containers preserved. Initial verification rolled back on JSON whitespace normalization at startup; semantic JSON comparison confirmed unchanged data and the second deployment succeeded. Backup: /root/backups/tracy-repeated-assistance-verified.
