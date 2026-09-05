@@ -1,5 +1,5 @@
 # Mermaid — Formal guest address in every supported language
-**Status:** Prepared locally; deployment pending authorization | **Files:** client.json, reservation_catalog.json, response_policy.json, reservation_email.json; mermaid_documents.py, mermaid_model_recovery.py, mermaid_reply_planning.py, mermaid_reservation_workflow.py | **Depends on:** current multilingual flow | **Blocks:** none
+**Status:** Deployed with owner authorization | **Files:** client.json, reservation_catalog.json, response_policy.json, reservation_email.json; mermaid_documents.py, mermaid_model_recovery.py, mermaid_reply_planning.py, mermaid_reservation_workflow.py | **Depends on:** current multilingual flow | **Blocks:** none
 
 ## Context
 The owner requires Dutch u/uw unless the customer explicitly permits informal address, and asks for equivalent respectful treatment across languages. The shown pickup summary uses fixed catalog copy; a model-prompt change alone cannot correct it.
@@ -21,3 +21,6 @@ Restore only the approved changed configuration fields and prior source image af
 
 ## Completed local verification
 Reviewed 215 changed copy/guidance values. JSON and Python parse successfully; formatter fields are preserved; executable AST outside the named existing copy dictionaries is identical. English, German and Papiamentu fixed copy is unchanged; the shared register specifies their appropriate respectful defaults. Six existing isolated email checks passed in 1.24 seconds with network and model adapters blocked. No live provider calls or customer sends; no deployment yet.
+
+## Live deployment
+Owner explicitly authorized deployment. Live image: wtyj-agent:tracy-formal-address-91827a4; four source files and 173 configuration fields verified. Preserved newer live Papiamentu guidance after preflight detected drift; only the formal-address prefix changed. Health 200; 58 database tables and six peer containers unchanged. Runtime prompt plus Dutch pickup, PDF title, email offer and question verified without model calls or sends. Backup/report: /root/backups/tracy-formal-address-91827a4-20260905T210328Z. Existing messages/documents were not rewritten.
