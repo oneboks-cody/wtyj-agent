@@ -1008,6 +1008,15 @@ def process_model_turn(
     context["human_review_pending"] = review_pending
     context["recorded_status"] = response_policy.state_context(phone, reservation)
     context["reservation_state"] = (reservation or {}).get("state")
+    recovery = flags.get("mermaid_date_recovery")
+    context["date_recovery"] = recovery if recovery and (
+        (not reservation and not recovery.get("reservation_public_id")) or
+        (reservation and recovery.get("reservation_public_id") == reservation["public_id"] and recovery.get("revision") == reservation["revision"])
+    ) else None
+    if not reservation and not context['date_recovery'] and fields.get('trip_date'):
+        assessed = response_policy.date_recovery(fields['trip_date'], allow_today=True)
+        if assessed['reason']:
+            context['date_recovery'] = assessed
     from agents.social import mermaid_date_changes
     proposal = mermaid_date_changes.pending(phone)
     context["pending_date_change"] = {key: proposal[key] for key in ("old_date", "new_date")} if proposal else None
@@ -1244,8 +1253,7 @@ def process_model_turn(
     action = understood.get("mermaid_action")
     if action in {"change_date", "confirm_date_change", "keep_date"} and reservation and mermaid_date_changes.enabled():
         if action == "change_date":
-            faq_excerpt = understood.get("other_question_excerpt")
-            faq = str(understood.get("other_question_reply") or "") if understood.get("other_question_topic") in {"food", "inclusions", "activities", "preparation", "pier", "parking", "travel_time", "contact"} and isinstance(faq_excerpt, str) and faq_excerpt.strip() and faq_excerpt in str(message.get("text") or "") else ""
+            faq = reply_planning.supported_faq(understood, str(message.get("text") or ""))
             response = mermaid_date_changes.propose(message, reservation, (understood.get("fields") or {}).get("trip_date"), locale, faq_reply=faq)
         elif proposal and not _has_guest_question(understood, str(message.get("text") or "")):
             response = mermaid_date_changes.handle_button({**message, "_zernio_interactive_id": mermaid_date_changes.PREFIX + proposal["token"] + (":confirm" if action == "confirm_date_change" else ":keep")})
@@ -1256,6 +1264,7 @@ def process_model_turn(
         return IntakeResult(str(understood.get("reply") or COPY[locale]["trip_date"]), locale, fields.get("phase", "collecting"))
     if not review_pending and action == "new_booking" and (reservation or {}).get("state") in {"booked", "cancelled"}:
         fields = {}
+        flags.pop("mermaid_date_recovery", None)
         generation_source = str(message_id or "")
         if (
             not generation_source
@@ -1271,17 +1280,17 @@ def process_model_turn(
     fields["language"] = locale
     changes = {}
     invalid_contact = False
+    invalid_date = None
     for key, value in (understood.get("fields") or {}).items():
         if key in {"adults", "children", "infants"}:
             if type(value) is int and 0 <= value <= 100:
                 changes[key] = value
         elif key == "trip_date" and isinstance(value, str):
-            try:
-                parsed = datetime.strptime(value, "%Y-%m-%d")
-                if parsed.date() >= datetime.now(timezone(timedelta(hours=-4))).date():
-                    changes[key] = parsed.date().isoformat()
-            except ValueError:
-                pass
+            assessed = response_policy.date_recovery(value, allow_today=True)
+            if not assessed['reason']:
+                changes[key] = assessed['requested_date']
+            elif (not reservation or action == 'new_booking') and not review_pending:
+                invalid_date = assessed
         elif key == "pickup_preference" and value in {"pier", "pickup_requested"}:
             changes[key] = value
         elif key == "contact_phone":
@@ -1313,6 +1322,11 @@ def process_model_turn(
             changes["child_ages"] = [age for age in fields["child_ages"] if age_band(age) not in reduced]
     changes = {key: value for key, value in changes.items() if fields.get(key) != value}
     fields.update(changes)
+    if invalid_date:
+        fields.pop('trip_date', None)
+        flags['mermaid_date_recovery'] = invalid_date
+    elif 'trip_date' in changes:
+        flags.pop('mermaid_date_recovery', None)
     if date_request and (not reservation or action == "new_booking") and security_event == "none":
         fields.pop("trip_date", None)
         fields["date_selection"] = (
@@ -1491,12 +1505,16 @@ def process_model_turn(
             response = response_policy.status_reply("payment", locale, response_policy.state_context(phone, reservation))
     else:
         if fields.get("trip_date"):
-            day = datetime.strptime(fields["trip_date"], "%Y-%m-%d").strftime("%A").casefold()
-            if day not in mermaid_catalog.get_catalog()["service"]["operating_weekdays"]:
+            assessed = response_policy.date_recovery(fields['trip_date'], allow_today=True)
+            if assessed['reason']:
+                invalid_date = assessed
                 fields.pop("trip_date")
-                response = response_policy.calendar_reply('operating_days', locale) + "\n\n" + COPY[locale]["trip_date"]
+                flags['mermaid_date_recovery'] = assessed
         question = _next_question(fields, locale)
-        if invalid_contact:
+        if invalid_date:
+            fields['phase'] = 'collecting'
+            response = response_policy.date_recovery_reply(invalid_date, locale)
+        elif invalid_contact:
             fields["phase"] = "collecting"
         elif question:
             fields["phase"] = "collecting"
@@ -1554,6 +1572,8 @@ def process_model_turn(
     elif review_pending and action in {'confirm_summary', 'new_booking', 'cancel'}:
         # Informational selectors cannot conceal a review-blocked decision.
         pass
+    elif invalid_date:
+        response = response_policy.date_recovery_reply(invalid_date, locale)
     elif calendar_request in response_policy.CALENDAR_REQUESTS:
         response = response_policy.calendar_reply(calendar_request, locale)
     elif understood.get('status_request') == 'wildlife_guarantee' and not (
@@ -1576,20 +1596,19 @@ def process_model_turn(
         if other_answer:
             response = other_answer + '\n\n' + response
     elif review_pending:
-        # Generic action labels and missing question excerpts do not prove
-        # staff activity. Only the dedicated FAQ body may accompany records.
-        response = response_policy.status_reply('handover', locale, response_policy.state_context(phone, reservation))
-        other_answer = str(understood.get('other_question_reply') or '').strip()
-        if other_answer:
-            response = other_answer + '\n\n' + response
+        # A pending staff task does not make every follow-up a status enquiry.
+        # Answer an evidenced ordinary FAQ without reciting the queue again.
+        other_answer = reply_planning.supported_faq(understood, guest_text)
+        understood = {**understood, 'other_question_reply': other_answer}
+        response = other_answer or response_policy.status_reply('handover', locale, response_policy.state_context(phone, reservation))
     # Calendar and status are independent concerns, as are multiple protected
     # questions in one turn. A single primary selector must not discard them.
     decision_blocked = review_pending and action in {"confirm_summary", "new_booking", "cancel"}
     if not canonical_response and result_action != "cancel" and not decision_blocked and security_event == "none":
         requests = list(understood.get("additional_status_requests") or [])
-        if calendar_request in response_policy.CALENDAR_REQUESTS:
+        if calendar_request in response_policy.CALENDAR_REQUESTS or invalid_date:
             requests.insert(0, understood.get("status_request", "none"))
-        rendered = set() if calendar_request in response_policy.CALENDAR_REQUESTS else {understood.get("status_request")}
+        rendered = set() if calendar_request in response_policy.CALENDAR_REQUESTS or invalid_date else {understood.get("status_request")}
         for request in requests:
             if request in rendered or request == "none":
                 continue
@@ -1611,9 +1630,13 @@ def process_model_turn(
                      or understood.get("status_request", "none") != "none"
                      or review_pending or result_action == "human_takeover"
                      or wheelchair_note or wheelchair_withdrawal
-                     or general_boarding_assistance or date_request or understood.get("additional_status_requests"))
+                     or general_boarding_assistance or date_request or invalid_date
+                     or 'trip_date' in supplied or context.get('date_recovery')
+                     or understood.get("additional_status_requests"))
         if protected:
             other_answer = str(understood.get("other_question_reply") or "").strip()
+            if invalid_date or 'trip_date' in supplied or context.get('date_recovery'):
+                other_answer = reply_planning.supported_faq(understood, guest_text)
             # Old wildlife responses put the guarantee itself in the FAQ
             # slot. Require independent guest evidence before appending it
             # to the authoritative guarantee, which already answers that.

@@ -49,10 +49,68 @@ def calendar_dates(request: str, *, today: date | None = None, catalog: dict | N
             if WEEKDAYS[(start + timedelta(days=i)).weekday()] in days]
 
 
-def date_label(value: str | date, locale: str) -> str:
+def date_label(value: str | date, locale: str, *, include_weekday: bool = True) -> str:
     day = date.fromisoformat(value) if isinstance(value, str) else value
+    configured = policy()
+    names, months = configured['weekdays'], configured['months']
+    label = f"{day.day} {months.get(locale, months['en'])[day.month - 1]} {day.year}"
+    return f"{names.get(locale, names['en'])[day.weekday()]} {label}" if include_weekday else label
+
+
+def next_sailings(start: date, *, today: date | None = None, current_date: str | None = None,
+                  catalog: dict | None = None) -> list[str]:
+    """Offer two future published sailings, never the currently booked date."""
+    first = max(start, (today or local_today()) + timedelta(days=1))
+    weekdays = (catalog or mermaid_catalog.get_catalog())['service']['operating_weekdays']
+    result = []
+    for offset in range(15):
+        day = first + timedelta(days=offset)
+        if WEEKDAYS[day.weekday()] in weekdays and day.isoformat() != current_date:
+            result.append(day.isoformat())
+            if len(result) == 2:
+                break
+    return result
+
+
+def date_recovery(target: str | None, *, today: date | None = None,
+                  current_date: str | None = None, allow_today: bool = False) -> dict:
+    """Assess structured date input and calculate a useful next step from policy."""
+    today = today or local_today()
+    try:
+        day = date.fromisoformat(target)
+    except (TypeError, ValueError):
+        return {'reason': 'unclear', 'requested_date': None, 'alternatives': []}
+    if day < today:
+        reason = 'past'
+    elif day == today and not allow_today:
+        reason = 'today'
+    elif WEEKDAYS[day.weekday()] not in mermaid_catalog.get_catalog()['service']['operating_weekdays']:
+        reason = 'closed'
+    else:
+        reason = None
+    return {'reason': reason, 'requested_date': day.isoformat(),
+            'alternatives': next_sailings(day, today=today, current_date=current_date) if reason else []}
+
+
+def date_options_reply(alternatives: list[str], locale: str) -> str:
+    if len(alternatives) < 2:
+        return copy('date_no_options', locale)
+    return copy('date_options', locale).format(
+        first=date_label(alternatives[0], locale), second=date_label(alternatives[1], locale))
+
+
+def date_recovery_reply(recovery: dict, locale: str, current_date: str | None = None) -> str:
+    reason = recovery['reason']
+    target = recovery.get('requested_date')
+    day = date.fromisoformat(target) if target else None
     names = policy()['weekdays']
-    return f"{names.get(locale, names['en'])[day.weekday()]} {day.isoformat()}"
+    explanation = copy('date_' + reason, locale).format(
+        date=date_label(day, locale, include_weekday=reason != 'closed') if day else '',
+        weekday=names.get(locale, names['en'])[day.weekday()] if day else '')
+    unchanged = copy('date_unchanged', locale).format(date=date_label(current_date, locale)) if current_date else ''
+    # Unclear input needs one clarification, not unrelated suggested dates.
+    parts = [unchanged, explanation] if reason == 'unclear' else [explanation, unchanged, date_options_reply(recovery['alternatives'], locale)]
+    return '\n\n'.join(part for part in parts if part)
 
 
 def calendar_reply(request: str, locale: str, *, today: date | None = None) -> str:
@@ -65,8 +123,8 @@ def calendar_reply(request: str, locale: str, *, today: date | None = None) -> s
         return copy('operating_days', locale).format(days=days)
     dates = calendar_dates(request, today=today, catalog=catalog)
     if not dates:
-        return copy('no_dates', locale)
-    return copy('calendar', locale).format(dates='; '.join(date_label(day, locale) for day in dates))
+        return copy('no_dates', locale) + '\n\n' + date_options_reply(next_sailings(today or local_today(), today=today, catalog=catalog), locale)
+    return copy('calendar', locale).format(dates='\n'.join('• ' + date_label(day, locale) for day in dates))
 
 
 def state_context(conversation: str, reservation: dict | None) -> dict:

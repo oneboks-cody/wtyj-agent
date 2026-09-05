@@ -342,11 +342,11 @@
         "keep": "Keep date",
         "complete": "Your reservation is now for {new}. I’ve updated your booking and added a note for our team. Your revised receipt is ready below.\n\nAnything else I can help with? ☀️🏝️",
         "kept": "We’ll keep your reservation for {old}.",
-        "stale": "That choice is no longer current. Please tell me which date you’d like.",
-        "invalid": "Please choose a future date from our published sailing schedule.",
-        "same": "That date is already on your reservation.",
-        "held": "Your booking is currently being handled by a team member. Please ask them to make this change.",
-        "cutoff": "Date changes are available up to 24 hours before the trip. Your current date remains unchanged."
+        "stale": "That earlier choice has expired or been replaced. Which date would you like now?",
+        "invalid": "Which date would you like? Send me the day, month and year so I can find the right sailing for you.",
+        "same": "You’re already booked for that date. Did you mean a different day?",
+        "held": "There’s an open request for our team on this booking, so they’ll need to handle the date change. Your reservation details and existing notes are saved.",
+        "cutoff": "I can change dates here until {hours} hours before the trip, and we’re now inside that window. Your current date stays the same.\n\nWould you like me to ask our team what options remain?"
       },
       "nl": {
         "confirm": "Je wilt je reservering verplaatsen van {old} naar {new}. Klopt dat?",
@@ -354,11 +354,11 @@
         "keep": "Datum behouden",
         "complete": "Je reservering staat nu op {new}. Ik heb de boeking bijgewerkt en een notitie voor ons team toegevoegd. Je bijgewerkte betalingsbewijs staat hieronder.\n\nKan ik je nog ergens mee helpen? ☀️🏝️",
         "kept": "We houden je reservering op {old}.",
-        "stale": "Deze keuze is niet meer actueel. Welke datum wil je?",
-        "invalid": "Kies een toekomstige datum uit ons gepubliceerde vaarschema.",
-        "same": "Die datum staat al op je reservering.",
-        "held": "Een teamlid behandelt je boeking. Vraag diegene om deze wijziging.",
-        "cutoff": "Wijzigen kan tot 24 uur voor de trip. Je huidige datum blijft staan."
+        "stale": "Die eerdere keuze is verlopen of vervangen. Welke datum wil je nu?",
+        "invalid": "Welke datum wil je? Stuur me de dag, maand en het jaar, dan zoek ik de juiste afvaart voor je.",
+        "same": "Je bent al geboekt voor die datum. Bedoelde je een andere dag?",
+        "held": "Er staat een verzoek voor ons team open bij deze boeking, dus zij moeten de datumwijziging behandelen. Je reserveringsgegevens en bestaande notities zijn opgeslagen.",
+        "cutoff": "Ik kan de datum hier tot {hours} uur voor de trip wijzigen. Die termijn is nu voorbij, dus je huidige datum blijft staan.\n\nWil je dat ik ons team vraag welke mogelijkheden er nog zijn?"
       },
       "de": {
         "confirm": "Sie möchten Ihre Reservierung von {old} auf {new} verschieben. Ist das richtig?",
@@ -366,11 +366,11 @@
         "keep": "Datum behalten",
         "complete": "Ihre Reservierung gilt jetzt für {new}. Ich habe die Buchung aktualisiert und eine Notiz für unser Team hinzugefügt. Ihr aktualisierter Beleg steht unten bereit.\n\nKann ich sonst noch helfen? ☀️🏝️",
         "kept": "Ihre Reservierung bleibt für {old} bestehen.",
-        "stale": "Diese Auswahl ist nicht mehr aktuell. Welches Datum wünschen Sie?",
-        "invalid": "Bitte wählen Sie ein zukünftiges Datum aus unserem veröffentlichten Fahrplan.",
-        "same": "Dieses Datum steht bereits auf Ihrer Reservierung.",
-        "held": "Ein Teammitglied bearbeitet Ihre Buchung. Bitte wenden Sie sich für diese Änderung an diese Person.",
-        "cutoff": "Änderungen sind bis 24 Stunden vor dem Ausflug möglich. Ihr bisheriges Datum bleibt bestehen."
+        "stale": "Diese frühere Auswahl ist abgelaufen oder wurde ersetzt. Welches Datum wünschen Sie jetzt?",
+        "invalid": "Welches Datum wünschen Sie? Nennen Sie mir Tag, Monat und Jahr, damit ich die passende Fahrt für Sie finden kann.",
+        "same": "Sie sind bereits für dieses Datum gebucht. Meinten Sie einen anderen Tag?",
+        "held": "Zu dieser Buchung liegt eine offene Anfrage für unser Team vor. Deshalb muss das Team die Datumsänderung übernehmen. Ihre Reservierungsangaben und bisherigen Notizen sind gespeichert.",
+        "cutoff": "Ich kann das Datum hier bis {hours} Stunden vor dem Ausflug ändern. Diese Frist ist jetzt vorbei, daher bleibt Ihr aktuelles Datum bestehen.\n\nMöchten Sie, dass ich unser Team nach den verbleibenden Möglichkeiten frage?"
       },
       "es": {
         "confirm": "Quieres mover tu reserva del {old} al {new}. ¿Es correcto?",
@@ -378,11 +378,11 @@
         "keep": "Mantener fecha",
         "complete": "Tu reserva es ahora para el {new}. He actualizado la reserva y añadido una nota para nuestro equipo. Tu recibo actualizado está listo abajo.\n\n¿Puedo ayudarte con algo más? ☀️🏝️",
         "kept": "Mantenemos tu reserva para el {old}.",
-        "stale": "Esta opción ya no está vigente. ¿Qué fecha prefieres?",
-        "invalid": "Elige una fecha futura de nuestro calendario publicado.",
-        "same": "Esa fecha ya figura en tu reserva.",
-        "held": "Un miembro del equipo está gestionando tu reserva. Pídele este cambio.",
-        "cutoff": "Los cambios están disponibles hasta 24 horas antes del paseo. Tu fecha actual se mantiene."
+        "stale": "La opción anterior ha caducado o ha sido reemplazada. ¿Qué fecha prefieres ahora?",
+        "invalid": "¿Qué fecha prefieres? Dime el día, mes y año para que pueda encontrar la salida adecuada para ti.",
+        "same": "Ya tienes la reserva para esa fecha. ¿Querías decir otro día?",
+        "held": "Hay una solicitud pendiente para nuestro equipo en esta reserva, así que el equipo tendrá que gestionar el cambio de fecha. Los datos de tu reserva y las notas anteriores están guardados.",
+        "cutoff": "Puedo cambiar la fecha aquí hasta {hours} horas antes del paseo. Ese plazo ya ha pasado, así que tu fecha actual se mantiene.\n\n¿Quieres que pregunte a nuestro equipo qué opciones quedan?"
       },
       "pap": {
         "confirm": "Bo ke kambia bo reservashon di {old} pa {new}. Esaki ta korekto?",
@@ -390,11 +390,11 @@
         "keep": "Mantené fecha",
         "complete": "Bo reservashon ta pa {new} awor. Mi a aktualisá e reservashon i registrá un nota pa nos ekipo. Bo resibu aktualisá ta kla aki bou.\n\nTin algu mas ku mi por yuda bo kuné? ☀️🏝️",
         "kept": "Nos ta mantené bo reservashon pa {old}.",
-        "stale": "E opshon aki no ta aktual mas. Ki fecha bo ke?",
-        "invalid": "Skohe un fecha den futuro for di nos orario publiká.",
-        "same": "E fecha ei ta registrá kaba den bo reservashon.",
-        "held": "Un miembro di nos ekipo ta atendé bo reservashon. Pidi e persona ei pa hasi e kambio.",
-        "cutoff": "Kambio ta posibel te 24 ora promé ku e biahe. Bo fecha aktual ta keda meskos."
+        "stale": "E opshon anterior a kaduká òf a wordu remplasá. Ki fecha bo ke awor?",
+        "invalid": "Ki fecha bo ke? Manda mi e dia, luna i aña pa mi por buska e biahe adekuá pa bo.",
+        "same": "Bo reservashon ta pa e fecha ei kaba. Bo a ke men un otro dia?",
+        "held": "Tin un petishon pendiente pa nos tim tokante e reservashon aki, pues e tim mester atendé e kambio di fecha. E datonan di bo reservashon i e notanan eksistente ta wardá.",
+        "cutoff": "Mi por kambia e fecha aki te {hours} ora promé ku e biahe. E plaso ei a pasa kaba, pues bo fecha aktual ta keda meskos.\n\nBo ke mi puntra nos tim ki opshonnan tin ainda?"
       },
       "pt": {
         "confirm": "Você quer mudar sua reserva de {old} para {new}. Está correto?",
@@ -402,11 +402,11 @@
         "keep": "Manter data",
         "complete": "Sua reserva agora é para {new}. Atualizei a reserva e registrei uma nota para nossa equipe. Seu recibo atualizado está pronto abaixo.\n\nPosso ajudar com mais alguma coisa? ☀️🏝️",
         "kept": "Vamos manter sua reserva para {old}.",
-        "stale": "Essa opção não está mais vigente. Qual data você prefere?",
-        "invalid": "Escolha uma data futura do nosso calendário publicado.",
-        "same": "Essa data já consta na sua reserva.",
-        "held": "Um membro da equipe está cuidando da sua reserva. Peça a essa pessoa a alteração.",
-        "cutoff": "Alterações estão disponíveis até 24 horas antes do passeio. Sua data atual permanece."
+        "stale": "A opção anterior expirou ou foi substituída. Qual data você prefere agora?",
+        "invalid": "Qual data você prefere? Envie o dia, mês e ano para eu encontrar a saída certa para você.",
+        "same": "Sua reserva já está para essa data. Você quis dizer outro dia?",
+        "held": "Há um pedido em aberto para nossa equipe nesta reserva, então a equipe precisará cuidar da mudança de data. Os dados da sua reserva e as notas anteriores estão salvos.",
+        "cutoff": "Posso mudar a data por aqui até {hours} horas antes do passeio. Esse prazo já passou, então sua data atual continua a mesma.\n\nQuer que eu pergunte à nossa equipe quais opções ainda existem?"
       }
     }
   }

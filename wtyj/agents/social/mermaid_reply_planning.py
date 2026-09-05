@@ -19,6 +19,15 @@ PARTY_COPY = {
 }
 
 
+def supported_faq(understood, text):
+    """Only an independently evidenced ordinary question supplies a FAQ body."""
+    excerpt = understood.get('other_question_excerpt')
+    if (understood.get('other_question_topic') in {'food', 'inclusions', 'activities', 'preparation', 'pier', 'parking', 'travel_time', 'contact'}
+            and isinstance(excerpt, str) and excerpt.strip() and excerpt in text):
+        return str(understood.get('other_question_reply') or '').strip()
+    return ''
+
+
 def date_request(understood, text):
     """Uncertainty must be evidenced in this guest turn, never invented."""
     request = understood.get("date_request")

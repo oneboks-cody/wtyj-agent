@@ -39,7 +39,8 @@ def test_calendar_replaces_model_invented_dates(monkeypatch, locale):
     model(monkeypatch, locale, calendar_request='this_week', fields={'trip_date':'2026-09-10'})
     result = workflow.process_model_turn({'from':'guest','message_id':'week','text':'question'}, None)
     assert result.text == policy.calendar_reply('this_week', locale)
-    assert '2026-09-06' in result.text and '2026-09-10' not in result.text
+    assert policy.date_label('2026-09-06', locale) in result.text
+    assert policy.date_label('2026-09-10', locale) not in result.text
     assert 'trip_date' not in state_registry.wa_get_booking_state('guest')['fields']['mermaid_intake']
 
 
@@ -267,6 +268,14 @@ _SAFE_FAQ = {
     'pap': "Desayuno ta inkluí. Yega na e pier pa 06:45.",
     'pt': "O café da manhã está incluído. Chegue ao píer às 06:45.",
 }
+_FOOD_QUESTION = {
+    'en': "Is breakfast included? When should we arrive?",
+    'nl': "Is ontbijt inbegrepen? Hoe laat moeten we er zijn?",
+    'de': "Ist Frühstück dabei? Wann müssen wir da sein?",
+    'es': "¿Está incluido el desayuno? ¿A qué hora debemos llegar?",
+    'pap': "Desayuno ta inkluí? Ki ora nos mester yega?",
+    'pt': "O café da manhã está incluído? A que horas devemos chegar?",
+}
 
 
 def _queued_accessibility_review(locale):
@@ -308,15 +317,16 @@ def test_plain_review_acknowledgement_uses_queue_records_without_model_status_se
 @pytest.mark.parametrize('locale', workflow.SUPPORTED_LOCALES)
 @pytest.mark.parametrize('action', ['acknowledge', 'question', 'details'])
 @pytest.mark.parametrize('requires_human', [False, True])
-def test_review_faq_uses_dedicated_body_despite_missing_excerpt_or_generic_label(monkeypatch, locale, action, requires_human):
+def test_review_faq_uses_supported_evidenced_body_despite_generic_label(monkeypatch, locale, action, requires_human):
     intake = _queued_accessibility_review(locale)
     model(monkeypatch, locale, mermaid_action=action,
           reply=_SAFE_FAQ[locale] + ' ' + _FALSE_REVIEW_PROSE[locale],
           other_question_reply=_SAFE_FAQ[locale], status_request='none',
+          other_question_topic='food', other_question_excerpt=_FOOD_QUESTION[locale],
           guest_question_excerpt='', has_open_question=True, requires_human=requires_human)
     result = workflow.process_model_turn(
-        {'from': 'guest', 'message_id': 'review-faq', 'text': 'Question?'}, None)
-    assert result.text == _SAFE_FAQ[locale] + '\n\n' + policy.copy('review_queued', locale)
+        {'from': 'guest', 'message_id': 'review-faq', 'text': _FOOD_QUESTION[locale]}, None)
+    assert result.text == _SAFE_FAQ[locale]
     assert result.action == ('human_takeover' if requires_human else None)
     _assert_review_preserved(intake)
 
@@ -407,10 +417,11 @@ def test_wildlife_condition_during_review_uses_facts_and_keeps_safe_followup(mon
     assert result.action is None
     _assert_review_preserved(intake)
     stub.return_value.update(reply=_SAFE_FAQ[locale], other_question_reply=_SAFE_FAQ[locale],
-                             status_request='none', guest_question_excerpt='Question?')
+                             status_request='none', guest_question_excerpt=_FOOD_QUESTION[locale],
+                             other_question_topic='food', other_question_excerpt=_FOOD_QUESTION[locale])
     followup = workflow.process_model_turn(
-        {'from': 'guest', 'message_id': 'safe-followup', 'text': 'Question?'}, None)
-    assert followup.text == _SAFE_FAQ[locale] + '\n\n' + policy.copy('review_queued', locale)
+        {'from': 'guest', 'message_id': 'safe-followup', 'text': _FOOD_QUESTION[locale]}, None)
+    assert followup.text == _SAFE_FAQ[locale]
     assert followup.action is None
     _assert_review_preserved(intake)
 

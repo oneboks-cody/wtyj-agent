@@ -10,6 +10,7 @@ from urllib.parse import quote
 from shared import config_loader, mermaid_catalog, mermaid_customers, state_registry
 from agents.social import mermaid_documents as docs, mermaid_reservation_store as store
 from agents.social import mermaid_guest_experience as guest
+from agents.social import mermaid_response_policy as response_policy
 
 PREFIX = 'mermaid-date:'
 MEDIA_TYPE = 'mermaid_date_confirmation'
@@ -70,18 +71,37 @@ def _held(conn, reservation):
 def _date_error(reservation, target):
     cfg = mermaid_catalog.get_catalog()
     now = datetime.now(LOCAL)
-    try:
-        day = datetime.strptime(target, '%Y-%m-%d').date()
-    except (TypeError, ValueError):
-        return 'invalid'
-    if day <= now.date() or day.strftime('%A').lower() not in cfg['service']['operating_weekdays']:
-        return 'invalid'
+    if target == reservation['intake']['trip_date']:
+        return 'same'
     old = datetime.fromisoformat(reservation['intake']['trip_date'] + 'T' + cfg['service']['arrival_time']).replace(tzinfo=LOCAL)
     if old - now < timedelta(hours=settings().get('minimum_notice_hours', 24)):
         return 'cutoff'
-    if target == reservation['intake']['trip_date']:
-        return 'same'
-    return None
+    return response_policy.date_recovery(target, today=now.date())['reason']
+
+
+def _save_recovery(conn, reservation, recovery):
+    row = conn.execute('SELECT flags_json FROM whatsapp_booking_state WHERE phone=?', (reservation['conversation_id'],)).fetchone()
+    if row:
+        flags = json.loads(row[0])
+        if recovery:
+            flags['mermaid_date_recovery'] = {**recovery, 'reservation_public_id': reservation['public_id'], 'revision': reservation['revision']}
+        else:
+            flags.pop('mermaid_date_recovery', None)
+        conn.execute('UPDATE whatsapp_booking_state SET flags_json=? WHERE phone=?', (json.dumps(flags, ensure_ascii=False), reservation['conversation_id']))
+
+
+def _rejected_reply(conn, reservation, target, locale, error, faq_reply=''):
+    recovery = response_policy.date_recovery(target, current_date=reservation['intake']['trip_date'])
+    _save_recovery(conn, reservation, recovery if error in {'unclear', 'past', 'today', 'closed'} else None)
+    # An explicit replacement request supersedes the previous choice even when
+    # it cannot be fulfilled. Old buttons must not apply an abandoned change.
+    conn.execute("UPDATE mermaid_date_changes SET status='superseded' WHERE conversation_id=? AND status='pending'", (reservation['conversation_id'],))
+    if error in {'unclear', 'past', 'today', 'closed'}:
+        text = response_policy.date_recovery_reply(recovery, locale, reservation['intake']['trip_date'])
+    else:
+        text = copy(locale)[error].format(hours=settings().get('minimum_notice_hours', 24))
+    conn.commit()
+    return _text('\n\n'.join(part for part in (faq_reply, text) if part))
 
 
 def proposal_reply(proposal):
@@ -101,7 +121,7 @@ def propose(message, reservation, target, locale, faq_reply=""):
             return _text(copy(locale)['held'])
         error = _date_error(current, target)
         if error:
-            return _text(copy(locale)[error])
+            return _rejected_reply(conn, current, target, locale, error, faq_reply)
         existing = conn.execute('SELECT * FROM mermaid_date_changes WHERE conversation_id=? AND source_message_id=?', (current['conversation_id'], str(message.get('message_id') or ''))).fetchone()
         if existing:
             return proposal_reply(dict(existing)) if existing['status']=='pending' else _text(copy(locale)['stale'])
@@ -110,6 +130,7 @@ def propose(message, reservation, target, locale, faq_reply=""):
         if existing and existing['faq_reply']==faq_reply:
             return proposal_reply(dict(existing))
         token = secrets.token_urlsafe(24)
+        _save_recovery(conn, current, None)
         conn.execute("UPDATE mermaid_date_changes SET status='superseded' WHERE conversation_id=? AND status='pending'", (current['conversation_id'],))
         conn.execute('INSERT INTO mermaid_date_changes (token,reservation_public_id,conversation_id,account_id,source_message_id,old_date,new_date,expected_revision,locale,expires_at,created_at,faq_reply) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
                      (token,current['public_id'],current['conversation_id'],current['zernio_account_id'],str(message.get('message_id') or token),current['intake']['trip_date'],target,current['revision'],locale,int(time.time())+60*settings().get('confirmation_minutes',30),docs._now(),faq_reply))
@@ -162,7 +183,7 @@ def handle_button(message):
             conn.execute("UPDATE mermaid_date_changes SET status='cancelled' WHERE token=?",(token,));conn.commit()
             return _text(copy(locale)['kept'].format(old=guest.guest_date(proposal['old_date'],locale)))
         error=_date_error(reservation,proposal['new_date'])
-        if error:return _text(copy(locale)[error])
+        if error:return _rejected_reply(conn, reservation, proposal['new_date'], locale, error)
         payment_row=conn.execute('SELECT * FROM mermaid_demo_payments WHERE reservation_public_id=?',(reservation['public_id'],)).fetchone()
         if not payment_row:return _text(copy(locale)['held'])
         now=docs._now();revision=reservation['revision']+1

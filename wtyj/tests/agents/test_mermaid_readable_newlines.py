@@ -10,7 +10,6 @@ import pytest
 from agents.marina import marina_agent
 from agents.social import mermaid_reservation_store as store
 from agents.social import mermaid_reservation_workflow as workflow
-from agents.social.mermaid_response_policy import copy as policy_copy
 from shared import config_loader, state_registry
 
 FIXTURE = json.loads((Path(__file__).parents[1] / 'fixtures/mermaid_base059_escaped_newlines.json').read_text())
@@ -65,13 +64,14 @@ def test_captured_base059_sdk_reply_has_readable_paragraphs_and_same_state(runti
 
 def test_dedicated_faq_breaks_compose_with_existing_cleanup_and_recorded_review(runtime, monkeypatch):
     client, raw = _sdk(monkeypatch, reply='Acknowledged.',
+                       other_question_topic='food', other_question_excerpt=FIXTURE['guest_input'],
                        other_question_reply='Desayuno—barbekiú.\\n\\n[HANDOFF]Yega na 06:45.')
     state_registry.wa_save_booking_state('synthetic-guest', {'mermaid_intake': FIXTURE['before']['fields']}, {})
     state_registry.create_pending_notification(notification_type='escalation', channel='whatsapp',
         customer_id='synthetic-guest', customer_name='Synthetic Guest', subject='Synthetic review', body='Synthetic review', mode='soft')
     result = workflow.process_model_turn({'from': 'synthetic-guest', 'message_id': 'dedicated',
                                          'text': FIXTURE['guest_input']}, None)
-    assert result.text == 'Desayuno,barbekiú.\n\nYega na 06:45.\n\n' + policy_copy('review_queued', 'pap')
+    assert result.text == 'Desayuno,barbekiú.\n\nYega na 06:45.'
     assert state_registry.get_active_escalation_mode('synthetic-guest') == 'soft'
     assert not state_registry.get_ai_muted('synthetic-guest')
     assert raw['other_question_reply'] == 'Desayuno—barbekiú.\\n\\n[HANDOFF]Yega na 06:45.'
