@@ -78,7 +78,10 @@ def render_email(reservation: dict, payment: dict, recipient: str, *,
         if not item.get("quantity"):
             continue
         label = guest.pickup_label(money, locale) if item["key"] == "pickup" else copy["items"][item["key"]]
-        price_lines.append((f"{item['quantity']} × {label}", _amount(money["currency"], item["line_total"])))
+        if item['quantity'] != 1:
+            label = copy.get('items_plural', {}).get(item['key'], label)
+        separator = ' ' if locale == 'nl' and item['key'] != 'pickup' else ' × '
+        price_lines.append((f"{item['quantity']}{separator}{label}", _amount(money["currency"], item["line_total"])))
 
     policies = settings()["policy_links"]
     text_parts = [brand, copy["title"], greeting, copy["intro"], date,
@@ -99,7 +102,8 @@ def render_email(reservation: dict, payment: dict, recipient: str, *,
 
     paragraph = "margin:0 0 14px;font-size:15px;line-height:1.65;color:#435b64;"
     def p(value):
-        return f'<p style="{paragraph}">{_esc(value)}</p>'
+        return ''.join(f'<p style="{paragraph}">' + '<br>'.join(_esc(line) for line in part.split('\n')) + '</p>'
+                       for part in str(value).split('\n\n'))
 
     def section(title, content):
         return (f'<h2 style="margin:26px 0 9px;font-size:18px;line-height:1.35;'

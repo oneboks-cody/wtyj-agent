@@ -70,7 +70,31 @@ def _hero(width_mm: float, height_mm: float | None = None) -> Image:
 
 LABELS = {
     "en": {"title": "Your Klein Curaçao quote", "quote": "Quote", "customer": "Guest", "date": "Trip date", "guests": "Guests", "transport": "Transport", "charges": "Itemized price", "description": "Description", "qty": "Qty", "unit": "Unit", "amount": "Amount", "total": "Total", "included": "Everything included", "schedule": "Your day", "bring": "Bring with you", "rules": "Rules and important notes", "payment": "Next step", "payment_text": "Use the payment link sent in WhatsApp to complete your booking.", "arrival": "Arrive at Fishermen's Pier at 06:45. The published island departure is approximately 15:20.", "pickup": "Hotel pickup requested; location and price require confirmation.", "pier": "Meet at Fishermen's Pier", "valid": "This quote is valid for 60 minutes.", "available": ""},
-    "nl": {"title": "Uw offerte voor Klein Curaçao", "quote": "Offerte", "customer": "Gast", "date": "Tripdatum", "guests": "Gasten", "transport": "Vervoer", "charges": "Prijsopbouw", "description": "Omschrijving", "qty": "Aantal", "unit": "Per stuk", "amount": "Bedrag", "total": "Totaal", "included": "Alles inbegrepen", "schedule": "Uw dag", "bring": "Zelf meenemen", "rules": "Regels en belangrijke informatie", "payment": "Volgende stap", "payment_text": "Rond uw boeking af via de betaallink in WhatsApp.", "arrival": "Wees om 06:45 bij Fishermen's Pier. Het gepubliceerde vertrek van het eiland is ongeveer 15:20.", "pickup": "Hoteltransfer aangevraagd; locatie en prijs moeten worden bevestigd.", "pier": "Ontmoeting bij Fishermen's Pier", "valid": "Deze offerte is 60 minuten geldig.", "available": ""},
+    "nl": {
+    "title": "Uw offerte voor Klein Curaçao",
+    "quote": "Offerte",
+    "customer": "Gast",
+    "date": "Datum",
+    "guests": "Gasten",
+    "transport": "Vervoer",
+    "charges": "Kostenoverzicht",
+    "description": "Omschrijving",
+    "qty": "Aantal",
+    "unit": "Per stuk",
+    "amount": "Bedrag",
+    "total": "Totaal",
+    "included": "Dit is inbegrepen",
+    "schedule": "Dagprogramma",
+    "bring": "Wat neemt u mee?",
+    "rules": "Praktische informatie en voorwaarden",
+    "payment": "Volgende stap",
+    "payment_text": "Rond uw boeking af via de betaallink in WhatsApp.",
+    "arrival": "We verwachten u om 06:45 bij Fishermen's Pier. De terugvaart vanaf Klein Curaçao is gepland rond 15:20.",
+    "pickup": "Hoteltransfer aangevraagd; locatie en prijs moeten worden bevestigd.",
+    "pier": "Ontmoeting bij Fishermen's Pier",
+    "valid": "Deze offerte is 60 minuten geldig.",
+    "available": ""
+},
     "de": {"title": "Ihr Angebot für Klein Curaçao", "quote": "Angebot", "customer": "Gast", "date": "Ausflugsdatum", "guests": "Gäste", "transport": "Transport", "charges": "Preisübersicht", "description": "Beschreibung", "qty": "Anzahl", "unit": "Einzelpreis", "amount": "Betrag", "total": "Gesamt", "included": "Alles inklusive", "schedule": "Ihr Tag", "bring": "Bitte mitbringen", "rules": "Regeln und wichtige Hinweise", "payment": "Nächster Schritt", "payment_text": "Schließen Sie Ihre Buchung über den Zahlungslink in WhatsApp ab.", "arrival": "Seien Sie um 06:45 am Fishermen's Pier. Die veröffentlichte Abfahrt von der Insel ist ungefähr um 15:20.", "pickup": "Hotelabholung angefragt; Ort und Preis müssen bestätigt werden.", "pier": "Treffpunkt Fishermen's Pier", "valid": "Dieses Angebot ist 60 Minuten gültig.", "available": ""},
     "es": {"title": "Su cotización para Klein Curaçao", "quote": "Cotización", "customer": "Pasajero", "date": "Fecha", "guests": "Pasajeros", "transport": "Transporte", "charges": "Precio detallado", "description": "Descripción", "qty": "Cant.", "unit": "Unidad", "amount": "Importe", "total": "Total", "included": "Todo incluido", "schedule": "Su día", "bring": "Qué llevar", "rules": "Reglas e información importante", "payment": "Siguiente paso", "payment_text": "Complete su reserva con el enlace de pago enviado por WhatsApp.", "arrival": "Llegue a Fishermen's Pier a las 06:45. La salida publicada de la isla es aproximadamente a las 15:20.", "pickup": "Recogida en hotel solicitada; ubicación y precio requieren confirmación.", "pier": "Encuentro en Fishermen's Pier", "valid": "Esta cotización es válida por 60 minutos.", "available": ""},
     "pap": {"title": "Bo oferta pa Klein Curaçao", "quote": "Oferta", "customer": "Bishitante", "date": "Fecha di biahe", "guests": "Bishitantenan", "transport": "Transporte", "charges": "Detaye di preis", "description": "Deskripshon", "qty": "Kant.", "unit": "Unidat", "amount": "Montante", "total": "Total", "included": "Tur kos inkluí", "schedule": "Bo dia", "bring": "Hiba ku bo", "rules": "Reglanan i informashon importante", "payment": "Siguiente paso", "payment_text": "Kompletá bo reservashon ku e link di pago mandá den WhatsApp.", "arrival": "Yega Fishermen's Pier pa 06:45. E salida publiká for di e isla ta mas o ménos 15:20.", "pickup": "E servisio pa buska bo na bo alohamentu ta pidi; lugá i preis mester wòrdu konfirmá.", "pier": "Topa na Fishermen's Pier", "valid": "E oferta aki ta válido pa 60 minüt.", "available": ""},
@@ -93,19 +117,45 @@ DOCUMENT_COPY = {
         "receipt_arrival": "Arrive at Fishermen's Pier at 06:45. Bring towels and sunscreen; Mermaid takes care of the rest of your included tropical day.",
     },
     "nl": {
-        "tagline": "Klein Curaçao, inclusief goede vibes", "party": "{adults} volwassenen, {children} kinderen 4-12, {infants} kinderen 0-3", "catalog": "Catalogus",
-        "items": {"adult": "Volwassene", "child_4_12": "Kind 4-12 jaar", "infant_0_3": "Kind 0-3 jaar"},
-        "included_items": ["Ontbijt", "Frisdrank en sap", "BBQ-lunch", "Mermaid-strandhuis", "Toiletten en zoetwaterdouche", "Snorkelmaskers", "Strandstoelen"],
-        "bring_items": ["Handdoek", "Zonnebrand", "Zwemkleding", "Persoonlijke medicatie", "Hoed of pet"],
-        "cancellation": "Annuleringsvoorwaarden: https://www.mermaidboattrips.com/Contact/Cancellation-Policy/",
-        "safety": "Algemene voorwaarden: https://www.mermaidboattrips.com/Contact/General-Conditions/",
-        "insurance": "Privacyverklaring: https://www.mermaidboattrips.com/Contact/Privacy-Statement/",
-        "protocol_title": "Tripprotocol", "protocol": "Kom op tijd, volg de aanwijzingen van kapitein en bemanning, houd toezicht op kinderen, gebruik veiligheidsmiddelen zoals aangegeven en meld relevante mobiliteits- of dieetwensen. Dieren en exacte zeecondities zijn nooit gegarandeerd.",
-        "closing": "Neem handdoeken en zonnebrand mee. Mermaid zorgt voor de rest van uw inbegrepen tropische dag.",
-        "receipt_title": "Betalingsbewijs", "booking_code": "Boekingscode", "payment_reference": "Betalingsreferentie", "payment_time": "Betaaltijd (UTC)",
-        "receipt_disclaimer": "",
-        "receipt_arrival": "Wees om 06:45 bij Fishermen's Pier. Neem handdoeken en zonnebrand mee; Mermaid zorgt voor de rest.",
+    "tagline": "Een dag naar Klein Curaçao",
+    "party": "{adults} volwassenen, {children} kinderen 4-12, {infants} kinderen 0-3",
+    "catalog": "Catalogus",
+    "items": {
+        "adult": "Volwassene",
+        "child_4_12": "Kind 4-12 jaar",
+        "infant_0_3": "Kind 0-3 jaar"
     },
+    "included_items": [
+        "Ontbijt en barbecuelunch",
+        "Frisdranken en vruchtensappen",
+        "Snorkels en strandstoelen",
+        "Strandhuis met toiletten en een douche met zoet water"
+    ],
+    "bring_items": [
+        "Handdoek",
+        "Zonnebrandcrème",
+        "Zwemkleding",
+        "Eventuele medicijnen",
+        "Hoed of pet"
+    ],
+    "cancellation": "Annuleringsvoorwaarden: https://www.mermaidboattrips.com/Contact/Cancellation-Policy/",
+    "safety": "Algemene voorwaarden: https://www.mermaidboattrips.com/Contact/General-Conditions/",
+    "insurance": "Privacyverklaring: https://www.mermaidboattrips.com/Contact/Privacy-Statement/",
+    "protocol_title": "Goed om te weten",
+    "protocol": "Volg de aanwijzingen van de kapitein en bemanning en houd toezicht op kinderen. Geef dieetwensen of benodigde begeleiding vooraf door. De overtocht hangt af van de omstandigheden op zee; het zien van zeeschildpadden is niet gegarandeerd. Bier en wijn zijn tegen betaling verkrijgbaar. Zwemvinnen zijn niet inbegrepen.",
+    "closing": "We kijken ernaar uit u aan boord te verwelkomen.",
+    "receipt_title": "Betalingsbewijs",
+    "booking_code": "Boekingscode",
+    "payment_reference": "Betalingsreferentie",
+    "payment_time": "Betaald op (UTC)",
+    "receipt_disclaimer": "",
+    "receipt_arrival": "We verwachten u om 06:45 bij Fishermen's Pier. Neem zwemkleding, een handdoek en zonnebrandcrème mee.",
+    "items_plural": {
+        "adult": "Volwassenen",
+        "child_4_12": "Kinderen 4-12 jaar",
+        "infant_0_3": "Kinderen 0-3 jaar"
+    }
+},
     "de": {
         "tagline": "Klein Curaçao, gute Stimmung inklusive", "party": "{adults} Erwachsene, {children} Kinder 4-12, {infants} Kinder 0-3", "catalog": "Katalog",
         "items": {"adult": "Erwachsene", "child_4_12": "Kind 4-12 Jahre", "infant_0_3": "Kind 0-3 Jahre"},
@@ -172,6 +222,10 @@ def _now() -> str:
 def _safe(value: object, limit: int = 500) -> str:
     text = re.sub(r"[\x00-\x1f\x7f]", " ", str(value or ""))
     return html.escape(" ".join(text.split())[:limit])
+
+
+def _safe_lines(value: object) -> str:
+    return '<br/>'.join(_safe(line) for line in str(value or '')[:500].split('\n'))
 
 
 def _root() -> Path:
@@ -257,6 +311,8 @@ def _price_table(money: dict, locale: str, body: ParagraphStyle, width_mm: float
             continue
         row = Structure("TR", table_structure)
         item_label = guest.pickup_label(money, locale) if item["key"] == "pickup" else copy["items"][item["key"]]
+        if item['quantity'] != 1:
+            item_label = copy.get('items_plural', {}).get(item['key'], item_label)
         values = (item_label, str(item["quantity"]), _money(money["currency"], item["unit_amount"]),
                   _money(money["currency"], item["line_total"]))
         rows.append([Paragraph(_safe(value), body if index == 0 else right_bold if index == 3 else right,
@@ -333,7 +389,7 @@ def render_quote_pdf(reservation: dict, target: Path) -> str:
     transport = guest.transport_text(intake, locale, money)
     departure = guest.guest_copy(locale)["island_departure"].format(time=mermaid_catalog.get_catalog()["service"]["island_departure_time"])
     story.extend([details, Paragraph(labels["transport"], section),
-                  Paragraph(_safe(transport), body), Paragraph(_safe(departure), body),
+                  Paragraph(_safe_lines(transport), body), Paragraph(_safe(departure), body),
                   Paragraph(labels["charges"], section)])
     price_table = _price_table(money, locale, body, 180)
     story.extend([price_table, Spacer(1, 2 * mm),
@@ -453,7 +509,7 @@ def render_receipt_pdf(reservation: dict, payment: dict, target: Path) -> str:
         row = Structure("TR", details_structure)
         detail_rows.append([
             Paragraph(f"<b>{_safe(label)}</b>", body, role="TH", structure=row, scope="Row"),
-            Paragraph(_safe(value), body, role="TD", structure=row),
+            Paragraph(_safe_lines(value) if label == labels['transport'] else _safe(value), body, role="TD", structure=row),
         ])
     table = Table(detail_rows, colWidths=[52 * mm, 122 * mm])
     table.setStyle(TableStyle([
@@ -464,7 +520,7 @@ def render_receipt_pdf(reservation: dict, payment: dict, target: Path) -> str:
         ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
     ]))
     story = [
-        _hero(174), Spacer(1, 3 * mm), header, Spacer(1, 4 * mm),
+        _hero(174, 48 if locale == "nl" else None), Spacer(1, 3 * mm), header, Spacer(1, 4 * mm),
         Table([[Paragraph(_safe(notices["receipt_banner"]), marker)]], colWidths=[174 * mm], style=TableStyle([
             ("BACKGROUND", (0, 0), (-1, -1), CORAL),
             ("TOPPADDING", (0, 0), (-1, -1), 6),
