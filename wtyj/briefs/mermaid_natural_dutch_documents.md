@@ -27,3 +27,10 @@ Visual review also identified English-style date syntax in German, Spanish and P
 - Configuration comparisons preserve Dutch copy, service/pricing configuration and policy meaning; policy summary edits only add paragraph spacing.
 - Focused date-label checks verify German/Spanish/Portuguese syntax and existing English/Dutch fallback, including dates without weekdays.
 - PDF layouts visually reviewed; no external provider calls, delivery, live state changes or deployment.
+
+## Authorized live deployment and owner review
+Owner explicitly requested fixing/deploying the complete language revision and sending one WhatsApp review message. Deployed `wtyj-agent:tracy-language-918e7c4`, built from the verified live prompt-cache image to preserve its newer changes. Three runtime source hashes and 205 individually compared configuration edits verified; six peer containers unchanged. Health 200. Backup: `/root/backups/tracy-language-918e7c4-20260906T132131Z`.
+
+The first attempt rolled back after legitimate inbound WhatsApp activity changed runtime records during restart. No database restore was performed. The completed attempt verified all 58 database tables unchanged while stopped, then verified integrity after startup; ordinary customer processing remained permitted. Protected backup from the first attempt remains available at `/root/backups/tracy-language-918e7c4-20260906T132026Z`.
+
+One Dutch message built from the deployed email/transport copy and the owner's recorded reservation was sent to the verified Calvin WhatsApp conversation ending 003. The adapter confirmed send status and the exact message was recorded in dashboard history. Enforced maximum one message POST, with idempotency key `tracy-language-918e7c4-owner-review`; no model calls or fallback sends. This delivery was explicitly requested by the owner, not an automated paid evaluation. No PDF or email was sent in this review message.
