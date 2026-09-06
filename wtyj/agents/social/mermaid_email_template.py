@@ -80,7 +80,7 @@ def render_email(reservation: dict, payment: dict, recipient: str, *,
         label = guest.pickup_label(money, locale) if item["key"] == "pickup" else copy["items"][item["key"]]
         if item['quantity'] != 1:
             label = copy.get('items_plural', {}).get(item['key'], label)
-        separator = ' ' if locale == 'nl' and item['key'] != 'pickup' else ' × '
+        separator = ' ' if item['key'] != 'pickup' else ' × '
         price_lines.append((f"{item['quantity']}{separator}{label}", _amount(money["currency"], item["line_total"])))
 
     policies = settings()["policy_links"]

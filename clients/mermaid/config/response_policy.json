@@ -448,5 +448,19 @@
       "novembro",
       "dezembro"
     ]
+  },
+  "date_formats": {
+    "de": {
+      "date": "{day}. {month} {year}",
+      "with_weekday": "{weekday}, {date}"
+    },
+    "es": {
+      "date": "{day} de {month} de {year}",
+      "with_weekday": "{weekday}, {date}"
+    },
+    "pt": {
+      "date": "{day} de {month} de {year}",
+      "with_weekday": "{weekday}, {date}"
+    }
   }
 }

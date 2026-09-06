@@ -53,8 +53,11 @@ def date_label(value: str | date, locale: str, *, include_weekday: bool = True) 
     day = date.fromisoformat(value) if isinstance(value, str) else value
     configured = policy()
     names, months = configured['weekdays'], configured['months']
-    label = f"{day.day} {months.get(locale, months['en'])[day.month - 1]} {day.year}"
-    return f"{names.get(locale, names['en'])[day.weekday()]} {label}" if include_weekday else label
+    formats = configured.get('date_formats', {}).get(locale, {})
+    label = formats.get('date', '{day} {month} {year}').format(
+        day=day.day, month=months.get(locale, months['en'])[day.month - 1], year=day.year)
+    return formats.get('with_weekday', '{weekday} {date}').format(
+        weekday=names.get(locale, names['en'])[day.weekday()], date=label) if include_weekday else label
 
 
 def next_sailings(start: date, *, today: date | None = None, current_date: str | None = None,
