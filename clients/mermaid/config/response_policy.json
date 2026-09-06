@@ -69,7 +69,7 @@
       "calendar": "Here are the scheduled sailing dates:\n\n{dates}\n\nWhich day would work best for you?",
       "operating_days": "We sail on {days}.",
       "no_dates": "There are no more scheduled sailings in that period, but we can look at another date.",
-      "review_queued": "Your request is queued for Mermaid’s team. I can still help with general trip questions.",
+      "review_queued": "I’ve passed your request to the Mermaid team for a closer look. Your details are saved, so you won’t need to explain everything again.\n\nWhile they review it, is there anything else I can help you with for your trip?",
       "review_active": "A team member has taken over this conversation.",
       "review_none": "There is no pending staff-review request recorded for this chat.",
       "payment_unpaid": "Your payment hasn’t been completed yet.",
