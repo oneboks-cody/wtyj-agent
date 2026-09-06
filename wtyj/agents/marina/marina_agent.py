@@ -2165,10 +2165,19 @@ def process_message(
         system_prompt = redact_config_credentials(system_prompt, prompt_config)
         user_prompt = redact_config_credentials(user_prompt, prompt_config)
 
+        # Cache only Mermaid's stable, redacted instructions and tool prefix.
+        # Guest messages/history stay outside the breakpoint, unchanged.
+        request_system = system_prompt
+        if response_contract == "mermaid_reservation_demo":
+            request_system = [{
+                "type": "text", "text": system_prompt,
+                "cache_control": {"type": "ephemeral", "ttl": "5m"},
+            }]
+
         response = client.messages.create(
             model="claude-sonnet-4-6",
             max_tokens=2048,
-            system=system_prompt,
+            system=request_system,
             tools=[tool_schema],
             tool_choice={"type": "tool", "name": "marina_response"},
             messages=[{"role": "user", "content": user_prompt}],
@@ -2177,9 +2186,15 @@ def process_message(
         # Log API token usage
         _usage = getattr(response, "usage", None)
         if _usage:
+            cache_usage = {}
+            for name in ("cache_creation_input_tokens", "cache_read_input_tokens"):
+                count = getattr(_usage, name, 0)
+                cache_usage[name] = count if isinstance(count, int) else 0
             bm_logger.log("api_usage",
                 input_tokens=_usage.input_tokens,
                 output_tokens=_usage.output_tokens,
+                **cache_usage,
+                total_input_tokens=_usage.input_tokens + sum(cache_usage.values()),
                 model="claude-sonnet-4-6",
                 channel=channel,
                 from_id=from_email[:50])

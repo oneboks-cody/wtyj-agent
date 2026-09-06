@@ -125,7 +125,7 @@ def test_marina_mermaid_contract_is_one_forced_tool_call(monkeypatch):
     args = client.messages.create.call_args.kwargs
     assert args["tool_choice"] == {"type": "tool", "name": "marina_response"}
     assert "mermaid_action" in args["tools"][0]["input_schema"]["properties"]
-    assert "Current Curaçao date" in args["system"]
+    assert "Current Curaçao date" in args["system"][0]["text"]
 
 
 def test_mermaid_contract_excludes_live_credentials_at_model_boundary(monkeypatch):
