@@ -986,6 +986,10 @@ def process_model_turn(
             action="summary_confirmed",
             understanding_source="pending_confirmation_retry",
         )
+    from agents.social import mermaid_document_language as document_language
+    button_value = str(message.get('_zernio_interactive_id') or '')
+    if button_value.startswith(document_language.PREFIX) and not document_language.selected_button(message, flags):
+        return IntakeResult('', fields.get('language', 'en'), fields.get('phase', 'collecting'), duplicate=True)
     history = state_registry.dm_get_history(phone, "whatsapp", limit=16)
     session_started_at = str(flags.get("mermaid_session_started_at") or "")
     visible_history = [
@@ -1005,6 +1009,8 @@ def process_model_turn(
         or bool((reservation or {}).get("human_takeover"))
     )
     context = dict(fields)
+    context['document_language_options'] = document_language.options()
+    context['verified_document_language_choice'] = document_language.selected_button(message, flags)
     context["human_review_pending"] = review_pending
     context["recorded_status"] = response_policy.state_context(phone, reservation)
     context["reservation_state"] = (reservation or {}).get("state")
@@ -1086,6 +1092,10 @@ def process_model_turn(
         return _stopped_loop_result(
             {"fields": root_fields, "flags": flags},
         )
+    document_language.apply_understanding(fields, flags, understood, message)
+    locale = fields.get('document_language') or locale
+    root_fields['mermaid_intake'] = fields
+    state_registry.wa_save_booking_state(phone, root_fields, flags, state.get('completed_bookings') or [])
     guest_text = str(message.get("text") or "")
     from agents.social import mermaid_reply_planning as reply_planning
     date_request = reply_planning.date_request(understood, guest_text)
@@ -1267,14 +1277,14 @@ def process_model_turn(
             email_reply = mermaid_reservation_email.handle(message, mermaid_reservation_store.get_reservation(reservation['public_id']), understood, locale, wait_for_date=action=='change_date')
             response['text'] = reply_planning.join_answers(email_reply, response['text'])
         return IntakeResult(response["text"], locale, reservation["state"], action="date_change", workflow_reply=response)
-    if security_event == 'none' and action not in {'cancel','request_human','new_booking'}:
+    if security_event == 'none' and action not in {'cancel','request_human','new_booking'} and not document_language.needs_choice(fields):
         email_reply = mermaid_reservation_email.handle(message, reservation, understood, locale)
         if email_reply is not None:
             return IntakeResult(reply_planning.join_answers(reply_planning.supported_faq(understood, guest_text), email_reply), locale, (reservation or {}).get('state',fields.get('phase','collecting')), action='reservation_email')
     if action not in {"details", "question", "confirm_summary", "cancel", "request_human", "payment_status", "new_booking", "acknowledge"}:
         return IntakeResult(str(understood.get("reply") or COPY[locale]["trip_date"]), locale, fields.get("phase", "collecting"))
     if not review_pending and action == "new_booking" and (reservation or {}).get("state") in {"booked", "cancelled"}:
-        fields = {}
+        fields = {key: fields[key] for key in ('chat_language', 'document_language', 'language') if key in fields}
         flags.pop("mermaid_date_recovery", None)
         generation_source = str(message_id or "")
         if (
@@ -1531,6 +1541,9 @@ def process_model_turn(
             fields["phase"] = "collecting"
             if not response or action == "confirm_summary":
                 response = question
+        elif document_language.needs_choice(fields):
+            fields['phase'] = 'collecting'
+            response = (flags.get(document_language.FLAG) or {}).get('text') or response
         elif natural_payment_approval:
             # A guest can approve the displayed details and naturally ask how
             # to pay in the same sentence. The quote and checkout answer that
@@ -2003,9 +2016,12 @@ def handle_demo_message(message: dict, include_media: bool = False, *, use_model
         current = mermaid_reservation_store.latest_for_conversation(str(message.get("from") or ""))
         if current:
             mermaid_reservation_store.freeze_for_human(current["public_id"])
-    if use_model and result.action != "loop_stopped":
-        _cache_reply(message, result.as_reply())
-    return result.as_reply() if include_media else result.text
+    reply = result.as_reply()
+    if use_model and result.action != "loop_stopped" and not result.duplicate:
+        from agents.social import mermaid_document_language
+        reply = mermaid_document_language.attach(reply, message)
+        _cache_reply(message, reply)
+    return reply if include_media else str(reply.get('text') or '')
 
 
 def _cache_reply(message: dict, reply: dict) -> None:

@@ -11,7 +11,7 @@ from shared import config_loader, state_registry
 
 IDENTIFIER = "mermaid_conversation_id"
 DETAIL_KEYS = (
-    "customer_name", "contact_phone", "language", "trip_date", "adults",
+    "customer_name", "contact_phone", "language", "chat_language", "document_language", "trip_date", "adults",
     "children", "infants", "child_ages", "pickup_preference", "pickup_location",
     "dietary_requirements", "accessibility_notes", "wheelchair_relationship",
     "special_requests", "phase",
@@ -82,9 +82,13 @@ def capture(conn, conversation_id, *, intake=None, name="", at=None):
         # Booking snapshots (including older ones replayed during backfill) must
         # never erase or replace an explicitly saved contact address.
         if previous:
-            email = json.loads(previous[0]).get("email")
+            previous_details = json.loads(previous[0])
+            email = previous_details.get("email")
             if email:
                 details["email"] = email
+            for preference in ('chat_language', 'document_language'):
+                if preference not in details and previous_details.get(preference):
+                    details[preference] = previous_details[preference]
         encoded = json.dumps(details, ensure_ascii=False, sort_keys=True)
         if not previous or previous[0] != encoded:
             conn.execute("INSERT INTO mermaid_customer_intakes(customer_id,conversation_id,intake_json,created_at) "

@@ -21,6 +21,9 @@ class ZernioSender(Sender):
         from shared.tenant_guard import is_account_allowed
         if not is_account_allowed(account_id, direction="outbound"):
             return False
+        if attachment_type == "mermaid_document_language":
+            from agents.social.mermaid_document_language import send_picker
+            return send_picker(conversation_id, account_id, attachment_url)
         if attachment_type == "mermaid_date_confirmation":
             from agents.social.mermaid_date_changes import send_confirmation
             return send_confirmation(conversation_id, account_id, attachment_url)

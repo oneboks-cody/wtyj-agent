@@ -370,5 +370,13 @@
   },
   "links": {
     "checkout_base_url": "https://unboks.org/mermaid"
+  },
+  "document_languages": {
+    "en": "English",
+    "nl": "Nederlands",
+    "de": "Deutsch",
+    "es": "Español",
+    "pt": "Português",
+    "pap": "Papiamentu"
   }
 }

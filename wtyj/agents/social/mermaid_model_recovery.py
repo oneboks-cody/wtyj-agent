@@ -396,20 +396,22 @@ def _validation_error(result, guest_text="", expected_locale=""):
             "es": "spanish|español|spaans|spanisch|spañó",
             "pt": "portuguese|português|portugees|portugiesisch|portugés",
         }
-        result_locale = result.get("language")
+        result_locale = result.get("chat_language") or result.get("language")
         target = language_names.get(result_locale) if isinstance(result_locale, str) else None
         explicit_switch = bool(target and re.search(
             r"(?:\b(?:in|na|en|auf|em|to)\s+(?:" + target + r")\b|\b(?:" + target + r")\s+(?:please|por fabor|por favor|alstublieft|bitte)\b)",
             str(guest_text or ""), re.IGNORECASE,
         ))
         papiamentu_context = (
-            result.get("language") == "pap"
-            or (expected_locale == "pap" and not explicit_switch)
-            or any(
-                pattern.search(text)
-                for text in (("" if explicit_switch else str(guest_text or "")), customer_text)
-                for pattern in _PAPIAMENTU_CONTEXT_PATTERNS
-            )
+            result_locale == "pap"
+            or (not result.get("chat_language") and (
+                (expected_locale == "pap" and not explicit_switch)
+                or any(
+                    pattern.search(text)
+                    for text in (("" if explicit_switch else str(guest_text or "")), customer_text)
+                    for pattern in _PAPIAMENTU_CONTEXT_PATTERNS
+                )
+            ))
         )
         if papiamentu_context:
             formal_papiamentu = (
