@@ -62,4 +62,4 @@ def test_quote_first_then_explicit_approval(monkeypatch):
 @pytest.mark.parametrize('language',['en','nl','de','es','pt','pap'])
 def test_quote_card_is_only_review_instruction(language):
     text=docs.quote_message({'language':language})
-    assert 'Open PDF' in text and '/pay/' not in text and 'USD' not in text
+    assert text and '/pay/' not in text and 'USD' not in text

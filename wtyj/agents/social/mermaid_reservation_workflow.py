@@ -1541,7 +1541,8 @@ def process_model_turn(
         fields.update(assistance_overlay)
         fields["language"] = locale
         fields["phase"] = "quote_ready"
-        if action == "confirm_summary" and not has_question and not changes:
+        if (action == "confirm_summary" and not has_question and not changes
+                and flags.get("mermaid_quote_change_requested") != reservation.get("quote_public_id")):
             result_action = "quote_confirmed"
             response = ""
             canonical_response = True
@@ -1938,13 +1939,39 @@ def handle_demo_message(message: dict, include_media: bool = False, *, use_model
         if include_media:
             return IntakeResult(text, current["language"], "demo_payment_pending").as_reply()
         return text
-    result = process_model_turn(message, current, defer_seen=True) if use_model else process_intake_turn(
-        str(message.get("from") or ""),
-        str(message.get("text") or ""),
-        message_id=str(message.get("message_id") or ""),
-        from_name=str(message.get("from_name") or ""),
-        reservation=current,
-    )
+    from agents.social import mermaid_document_cards as quote_cards
+    choice = quote_cards.quote_button_choice(message, current) if use_model else None
+    if choice is not None:
+        locale = (current or {}).get('language', 'en')
+        labels = guest.guest_copy(locale)['quote_buttons']
+        state = state_registry.wa_get_booking_state(phone)
+        flags = dict(state.get('flags') or {})
+        if (current and current['state'] == 'demo_payment_pending'
+                and message.get('message_id')
+                and flags.get('mermaid_pending_quote_approval_message_id') == message['message_id']):
+            choice = 'accept'
+        if state_registry.get_active_escalation_mode(phone) in {'soft', 'hard'} or state_registry.get_ai_muted(phone):
+            choice = 'stale'
+        if choice == 'accept' and flags.get('mermaid_quote_change_requested') == current.get('quote_public_id'):
+            choice = 'change'
+        if choice == 'accept':
+            flags['mermaid_pending_quote_approval_message_id'] = str(message.get('message_id') or '')
+            state_registry.wa_save_booking_state(phone, state.get('fields') or {}, flags, state.get('completed_bookings') or [])
+            result = IntakeResult('', locale, 'quote_ready', action='quote_confirmed')
+        else:
+            if choice == 'change':
+                flags['mermaid_quote_change_requested'] = current['quote_public_id']
+                state_registry.wa_save_booking_state(phone, state.get('fields') or {}, flags, state.get('completed_bookings') or [])
+            result = IntakeResult(labels['change_prompt' if choice == 'change' else 'stale'], locale, (current or {}).get('state', 'collecting'))
+    else:
+        result = process_model_turn(message, current, defer_seen=True) if use_model else process_intake_turn(
+            str(message.get("from") or ""),
+            str(message.get("text") or ""),
+            message_id=str(message.get("message_id") or ""),
+            from_name=str(message.get("from_name") or ""),
+            reservation=current,
+        )
+
     if result.generation_failure is not None:
         # An outage notice is not a completed model decision or cached answer.
         return result.as_reply() if include_media else result.text

@@ -131,7 +131,15 @@
         "infants_unknown_one": "{count} child (0–3)",
         "infants_unknown": "{count} children (0–3)"
       },
-      "quote_review": "Your quote is ready. Tap Open PDF to review it.\n\nIs everything in the quote correct? Once you confirm, I’ll send the link to complete your booking and payment."
+      "quote_review": "Your quote is ready. Tap View quote to review it.",
+      "quote_buttons": {
+        "open": "View quote",
+        "accept": "Approve and continue",
+        "change": "Request a change",
+        "prompt": "Have you reviewed the quote? Choose how you would like to proceed.",
+        "change_prompt": "What would you like to change in the quote?",
+        "stale": "This option is no longer available. Please use the buttons with your latest quote."
+      }
     },
     "nl": {
       "pickup_pending": "Transfer vanaf {location} is aangevraagd, nog niet bevestigd. Prijs en ophaaltijd moeten nog worden bevestigd; transfer is niet inbegrepen in het tripbedrag.",
@@ -181,7 +189,15 @@
       },
       "reservation_summary": "*Uw reservering voor Klein Curaçao ☀️🏝️*\n\nMag ik deze gegevens nog even met u controleren?\n\n*Reserveringsgegevens*\nDatum: {date}\nGasten: {party}\nNaam: {name}\n{contact}\n*Ophalen en terugbrengen*\n{transport}\n\n*Kloppen deze gegevens?*\nZodra u bevestigt, stuur ik u een offerte met alle reserveringsdetails, wat er is inbegrepen en de betaalmogelijkheden. Wilt u nog iets wijzigen? Laat het mij gerust weten.",
       "summary_pickup_vehicle_priced": "Ophaaltijd: {pickup_time}\nLocatie: {location}\nVervoer: {quantity} × {vehicle}\n\nHet vervoer van en naar uw accommodatie kost {currency} {amount}. Wilt u ervoor zorgen dat u om {pickup_time} klaarstaat?",
-      "quote_review": "Uw offerte staat klaar. Tik op Open PDF om deze te bekijken.\n\nKloppen alle gegevens in de offerte? Zodra u bevestigt, stuur ik u de link om uw boeking af te ronden en te betalen."
+      "quote_review": "Uw offerte staat klaar. Tik op Bekijk offerte om deze te bekijken.",
+      "quote_buttons": {
+        "open": "Bekijk offerte",
+        "accept": "Akkoord, ga verder",
+        "change": "Wijziging doorgeven",
+        "prompt": "Heeft u de offerte bekeken? Kies hieronder hoe u verder wilt gaan.",
+        "change_prompt": "Wat wilt u wijzigen in de offerte?",
+        "stale": "Deze keuze is niet meer beschikbaar. Gebruik de knoppen bij uw meest recente offerte."
+      }
     },
     "de": {
       "pickup_pending": "Die Abholung von {location} ist angefragt, nicht bestätigt. Preis und Abholzeit müssen noch bestätigt werden; die Abholung ist nicht im Ausflugspreis enthalten.",
@@ -229,7 +245,15 @@
         "infants_unknown_one": "{count} Kind (0–3)",
         "infants_unknown": "{count} Kinder (0–3)"
       },
-      "quote_review": "Ihr Angebot ist fertig. Über „Open PDF“ können Sie es ansehen.\n\nSind alle Angaben im Angebot korrekt? Sobald Sie bestätigen, sende ich Ihnen den Link zum Abschluss Ihrer Buchung und zur Zahlung."
+      "quote_review": "Ihr Angebot ist fertig. Über „Angebot ansehen“ können Sie es ansehen.",
+      "quote_buttons": {
+        "open": "Angebot ansehen",
+        "accept": "Annehmen und weiter",
+        "change": "Änderung anfragen",
+        "prompt": "Haben Sie das Angebot geprüft? Wie möchten Sie fortfahren?",
+        "change_prompt": "Was möchten Sie am Angebot ändern?",
+        "stale": "Diese Auswahl ist nicht mehr verfügbar. Bitte verwenden Sie die Schaltflächen beim neuesten Angebot."
+      }
     },
     "es": {
       "pickup_pending": "La recogida en {location} está solicitada, no confirmada. Falta confirmar el precio y la hora; la recogida no está incluida en el importe del paseo.",
@@ -277,7 +301,15 @@
         "infants_unknown_one": "{count} niño (0–3)",
         "infants_unknown": "{count} niños (0–3)"
       },
-      "quote_review": "Su presupuesto está listo. Pulse «Open PDF» para revisarlo.\n\n¿Son correctos todos los datos? Cuando lo confirme, le enviaré el enlace para completar su reserva y realizar el pago."
+      "quote_review": "Su presupuesto está listo. Pulse «Ver presupuesto» para revisarlo.",
+      "quote_buttons": {
+        "open": "Ver presupuesto",
+        "accept": "Aceptar y continuar",
+        "change": "Solicitar un cambio",
+        "prompt": "¿Ha revisado el presupuesto? Elija cómo desea continuar.",
+        "change_prompt": "¿Qué desea cambiar en el presupuesto?",
+        "stale": "Esta opción ya no está disponible. Use los botones del presupuesto más reciente."
+      }
     },
     "pap": {
       "pickup_pending": "E servisio pa buska bo na {location} ta pidi, pero no ta konfirmá. E preis i ora pa buska bo mester wòrdu konfirmá ainda; e servisio no ta inkluí den e montante di biahe.",
@@ -325,7 +357,15 @@
         "infants_unknown_one": "{count} mucha (0–3)",
         "infants_unknown": "{count} mucha (0–3)"
       },
-      "quote_review": "Bo oferta ta kla. Primi Open PDF pa wak e dokumento.\n\nTur dato den e oferta ta korekto? Ora bo konfirmá, mi ta manda bo e link pa kompletá bo reserva i hasi e pago."
+      "quote_review": "Bo oferta ta kla. Primi Wak oferta pa wak e dokumento.",
+      "quote_buttons": {
+        "open": "Wak oferta",
+        "accept": "Akordá i sigui",
+        "change": "Pidi un kambio",
+        "prompt": "Bo a wak e oferta? Skohe kon bo ke sigui.",
+        "change_prompt": "Kiko bo ke kambia den e oferta?",
+        "stale": "E opshon aki no ta disponibel mas. Usa e botonnan di bo oferta mas resien."
+      }
     },
     "pt": {
       "pickup_pending": "O traslado de {location} foi solicitado, não confirmado. O preço e o horário ainda precisam de confirmação; o traslado não está incluído no valor do passeio.",
@@ -373,7 +413,15 @@
         "infants_unknown_one": "{count} criança (0–3)",
         "infants_unknown": "{count} crianças (0–3)"
       },
-      "quote_review": "Seu orçamento está pronto. Toque em «Open PDF» para conferir.\n\nTodos os dados estão corretos? Após a confirmação, enviarei o link para concluir a reserva e efetuar o pagamento."
+      "quote_review": "Seu orçamento está pronto. Toque em «Ver orçamento» para conferir.",
+      "quote_buttons": {
+        "open": "Ver orçamento",
+        "accept": "Aceitar e continuar",
+        "change": "Solicitar alteração",
+        "prompt": "Já conferiu o orçamento? Escolha como deseja continuar.",
+        "change_prompt": "O que gostaria de alterar no orçamento?",
+        "stale": "Esta opção não está mais disponível. Use os botões do orçamento mais recente."
+      }
     }
   },
   "links": {

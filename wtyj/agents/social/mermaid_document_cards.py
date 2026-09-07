@@ -131,13 +131,25 @@ def try_send(conversation_id, account_id, text, attachment_url, idempotency_key)
     if (parsed.scheme, parsed.netloc) != (origin.scheme, origin.netloc) or not match:
         return None
     try:
-        return _send(conversation_id, account_id, text, match[1], base, idempotency_key)
+        if not _send(conversation_id, account_id, text, match[1], base, idempotency_key):
+            return False
+        from agents.social import mermaid_reservation_store as store, mermaid_documents as docs
+        conn = docs._conn()
+        try:
+            row = conn.execute("SELECT reservation_public_id FROM mermaid_documents WHERE public_id=? AND tenant_slug='mermaid'", (match[1],)).fetchone()
+            reservation = store.get_reservation(row[0]) if row else None
+        finally:
+            conn.close()
+        if reservation and reservation['state'] == 'quote_ready' and reservation.get('quote_public_id') == match[1]:
+            return _send(conversation_id, account_id, '', match[1], base,
+                         (idempotency_key or 'mermaid-card:' + match[1]) + ':decisions', decisions=True)
+        return True
     except Exception as exc:
         bm_logger.log("mermaid_card_deferred", error=type(exc).__name__)
         return False
 
 
-def _send(conversation_id, account_id, text, document_id, base, idempotency_key):
+def _send(conversation_id, account_id, text, document_id, base, idempotency_key, *, decisions=False):
     from agents.social import mermaid_documents as docs, mermaid_reservation_store as store
     from agents.social import zernio_dm_client as provider
     conn = _conn()
@@ -164,6 +176,18 @@ def _send(conversation_id, account_id, text, document_id, base, idempotency_key)
                 "body": {"text": body_text}, "footer": {"text": "Mermaid Boat Trips Curaçao"},
                 "action": {"name": "cta_url", "parameters": {"display_text": copy["open_pdf"], "url": download_url(base, document, reservation)}},
             }}
+            from agents.social import mermaid_guest_experience as guest
+            labels = guest.guest_copy(reservation['language']).get('quote_buttons')
+            if labels and reservation.get('quote_public_id') == document_id:
+                payload['interactive']['action']['parameters']['display_text'] = labels['open']
+            if decisions:
+                if not labels or reservation['state'] != 'quote_ready':
+                    return False
+                prefix = f"mermaid-quote:{document_id}:{reservation['revision']}:"
+                payload = {'accountId': account_id, 'message': labels['prompt'], 'buttons': [
+                    {'type': 'postback', 'title': labels['accept'], 'payload': prefix + 'accept'},
+                    {'type': 'postback', 'title': labels['change'], 'payload': prefix + 'change'},
+                ]}
             with conn:
                 conn.execute("INSERT OR IGNORE INTO mermaid_card_deliveries (action_key,document_public_id,conversation_id,account_id,payload_json,created_at,updated_at) VALUES (?,?,?,?,?,?,?)",
                              (key, document_id, conversation_id, account_id, json.dumps(payload, ensure_ascii=False), docs._now(), docs._now()))
@@ -195,3 +219,26 @@ def _send(conversation_id, account_id, text, document_id, base, idempotency_key)
         return outcome == "sent"
     finally:
         conn.close()
+
+
+def quote_button_choice(message, reservation):
+    """Accept only a choice actually issued for this guest and quote revision."""
+    value = str(message.get('_zernio_interactive_id') or '')
+    if not value.startswith('mermaid-quote:'):
+        return None
+    if not reservation or reservation['state'] != 'quote_ready' or reservation.get('human_takeover'):
+        return 'stale'
+    expected = f"mermaid-quote:{reservation.get('quote_public_id')}:{reservation['revision']}:"
+    choice = value[len(expected):] if value.startswith(expected) else ''
+    if choice not in {'accept', 'change'}:
+        return 'stale'
+    conversation, account = str(message.get('from') or ''), str(message.get('_zernio_account_id') or '')
+    if (reservation['conversation_id'], reservation['zernio_account_id']) != (conversation, account):
+        return 'stale'
+    for record in records(reservation['quote_public_id'], conversation, account):
+        if record['status'] not in {'delivered', 'pending'} or not record['provider_message_id']:
+            continue
+        payload = json.loads(record['payload_json'])
+        if any(b.get('payload') == value for b in payload.get('buttons', [])):
+            return choice
+    return 'stale'
