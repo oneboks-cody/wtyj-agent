@@ -130,7 +130,8 @@
         "children_unknown": "{count} children (4–12)",
         "infants_unknown_one": "{count} child (0–3)",
         "infants_unknown": "{count} children (0–3)"
-      }
+      },
+      "quote_review": "Your quote is ready. Tap Open PDF to review it.\n\nIs everything in the quote correct? Once you confirm, I’ll send the link to complete your booking and payment."
     },
     "nl": {
       "pickup_pending": "Transfer vanaf {location} is aangevraagd, nog niet bevestigd. Prijs en ophaaltijd moeten nog worden bevestigd; transfer is niet inbegrepen in het tripbedrag.",
@@ -179,7 +180,8 @@
         "infants_unknown": "{count} kinderen (0–3)"
       },
       "reservation_summary": "*Uw reservering voor Klein Curaçao ☀️🏝️*\n\nMag ik deze gegevens nog even met u controleren?\n\n*Reserveringsgegevens*\nDatum: {date}\nGasten: {party}\nNaam: {name}\n{contact}\n*Ophalen en terugbrengen*\n{transport}\n\n*Kloppen deze gegevens?*\nZodra u bevestigt, stuur ik u een offerte met alle reserveringsdetails, wat er is inbegrepen en de betaalmogelijkheden. Wilt u nog iets wijzigen? Laat het mij gerust weten.",
-      "summary_pickup_vehicle_priced": "Ophaaltijd: {pickup_time}\nLocatie: {location}\nVervoer: {quantity} × {vehicle}\n\nHet vervoer van en naar uw accommodatie kost {currency} {amount}. Wilt u ervoor zorgen dat u om {pickup_time} klaarstaat?"
+      "summary_pickup_vehicle_priced": "Ophaaltijd: {pickup_time}\nLocatie: {location}\nVervoer: {quantity} × {vehicle}\n\nHet vervoer van en naar uw accommodatie kost {currency} {amount}. Wilt u ervoor zorgen dat u om {pickup_time} klaarstaat?",
+      "quote_review": "Uw offerte staat klaar. Tik op Open PDF om deze te bekijken.\n\nKloppen alle gegevens in de offerte? Zodra u bevestigt, stuur ik u de link om uw boeking af te ronden en te betalen."
     },
     "de": {
       "pickup_pending": "Die Abholung von {location} ist angefragt, nicht bestätigt. Preis und Abholzeit müssen noch bestätigt werden; die Abholung ist nicht im Ausflugspreis enthalten.",
@@ -226,7 +228,8 @@
         "children_unknown": "{count} Kinder (4–12)",
         "infants_unknown_one": "{count} Kind (0–3)",
         "infants_unknown": "{count} Kinder (0–3)"
-      }
+      },
+      "quote_review": "Ihr Angebot ist fertig. Über „Open PDF“ können Sie es ansehen.\n\nSind alle Angaben im Angebot korrekt? Sobald Sie bestätigen, sende ich Ihnen den Link zum Abschluss Ihrer Buchung und zur Zahlung."
     },
     "es": {
       "pickup_pending": "La recogida en {location} está solicitada, no confirmada. Falta confirmar el precio y la hora; la recogida no está incluida en el importe del paseo.",
@@ -273,7 +276,8 @@
         "children_unknown": "{count} niños (4–12)",
         "infants_unknown_one": "{count} niño (0–3)",
         "infants_unknown": "{count} niños (0–3)"
-      }
+      },
+      "quote_review": "Su presupuesto está listo. Pulse «Open PDF» para revisarlo.\n\n¿Son correctos todos los datos? Cuando lo confirme, le enviaré el enlace para completar su reserva y realizar el pago."
     },
     "pap": {
       "pickup_pending": "E servisio pa buska bo na {location} ta pidi, pero no ta konfirmá. E preis i ora pa buska bo mester wòrdu konfirmá ainda; e servisio no ta inkluí den e montante di biahe.",
@@ -320,7 +324,8 @@
         "children_unknown": "{count} mucha (4–12)",
         "infants_unknown_one": "{count} mucha (0–3)",
         "infants_unknown": "{count} mucha (0–3)"
-      }
+      },
+      "quote_review": "Bo oferta ta kla. Primi Open PDF pa wak e dokumento.\n\nTur dato den e oferta ta korekto? Ora bo konfirmá, mi ta manda bo e link pa kompletá bo reserva i hasi e pago."
     },
     "pt": {
       "pickup_pending": "O traslado de {location} foi solicitado, não confirmado. O preço e o horário ainda precisam de confirmação; o traslado não está incluído no valor do passeio.",
@@ -367,7 +372,8 @@
         "children_unknown": "{count} crianças (4–12)",
         "infants_unknown_one": "{count} criança (0–3)",
         "infants_unknown": "{count} crianças (0–3)"
-      }
+      },
+      "quote_review": "Seu orçamento está pronto. Toque em «Open PDF» para conferir.\n\nTodos os dados estão corretos? Após a confirmação, enviarei o link para concluir a reserva e efetuar o pagamento."
     }
   },
   "links": {

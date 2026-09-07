@@ -67,7 +67,7 @@ def test_one_summary_price_and_natural_approval(monkeypatch):
     assert result.action=='summary_confirmed'
 
 
-def test_natural_approval_plus_payment_question_creates_quote_and_checkout(monkeypatch):
+def test_natural_approval_plus_payment_question_creates_quote_for_review(monkeypatch):
     initial=fields();initial['phase']='awaiting_summary_confirmation'
     state_registry.wa_save_booking_state('guest',{'mermaid_intake':initial},{})
     model=Mock(return_value=dict(
@@ -80,9 +80,9 @@ def test_natural_approval_plus_payment_question_creates_quote_and_checkout(monke
         {'from':'guest','text':'Yes, looks good, where and when do I pay?',
          'message_id':'natural-payment-approval'},True,use_model=True)
     reservation=store.latest_for_conversation('guest')
-    assert reservation and reservation['state']=='demo_payment_pending'
+    assert reservation and reservation['state']=='quote_ready'
     assert result['media'] and result['media']['type']=='file'
-    assert '/pay/' in result['text']
+    assert '/pay/' not in result['text']
     assert response_policy.copy('payment_none','en') not in result['text']
 
 

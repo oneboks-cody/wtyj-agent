@@ -1003,6 +1003,10 @@ def process_model_turn(
             action="summary_confirmed",
             understanding_source="pending_confirmation_retry",
         )
+    if (defer_seen and message_id
+            and flags.get("mermaid_pending_quote_approval_message_id") == message_id):
+        return IntakeResult("", fields.get("language", "en"), "quote_ready",
+                            action="quote_confirmed", understanding_source="pending_quote_retry")
     from agents.social import mermaid_document_language as document_language
     button_value = str(message.get('_zernio_interactive_id') or '')
     if button_value.startswith(document_language.PREFIX) and not document_language.selected_button(message, flags):
@@ -1530,6 +1534,20 @@ def process_model_turn(
         fields["phase"] = "cancellation_requested"
         response = ""
         result_action = "cancel"
+    elif reservation and reservation["state"] == "quote_ready" and action != "new_booking":
+        # A displayed quote needs its own approval; initial detail approval is
+        # never carried forward as consent to proceed to checkout.
+        fields = dict(root_fields.get("mermaid_intake") or fields)
+        fields.update(assistance_overlay)
+        fields["language"] = locale
+        fields["phase"] = "quote_ready"
+        if action == "confirm_summary" and not has_question and not changes:
+            result_action = "quote_confirmed"
+            response = ""
+            canonical_response = True
+        elif action in {"confirm_summary", "payment_status"} or understood.get("status_request") == "payment":
+            response = guest.guest_copy(locale)["quote_review"]
+            canonical_response = True
     elif reservation and reservation["state"] in {"demo_payment_pending", "booked", "cancelled"} and action != "new_booking":
         # Answers after a quote never reopen intake or change the immutable quote.
         fields = dict(root_fields.get("mermaid_intake") or fields)
@@ -1867,6 +1885,8 @@ def process_model_turn(
     root_fields["mermaid_intake"] = fields
     if defer_seen and message_id and result_action == "summary_confirmed":
         flags["mermaid_pending_confirmation_message_id"] = message_id
+    elif defer_seen and message_id and result_action == "quote_confirmed":
+        flags["mermaid_pending_quote_approval_message_id"] = message_id
     elif message_id and result_action != "cancel" and not defer_seen:
         flags["mermaid_seen_message_ids"] = (seen + [message_id])[-100:]
     state_registry.wa_save_booking_state(phone, root_fields, flags, state.get("completed_bookings") or [])
@@ -1958,21 +1978,8 @@ def handle_demo_message(message: dict, include_media: bool = False, *, use_model
             "url": mermaid_documents.build_signed_url(base_url, document["public_id"], secret),
             "type": "file", "filename": document["filename"], "id": document["public_id"],
         }
-        reservation = mermaid_reservation_store.transition(
-            reservation["public_id"], "demo_payment_pending",
-            idempotency_key=f"payment-pending:{reservation['public_id']}",
-            actor="system", reason="No-money demo checkout created",
-        )
-        payment_url = mermaid_demo_payment.build_payment_url(
-            mermaid_catalog.get_catalog().get("links", {}).get("checkout_base_url") or base_url,
-            reservation["public_id"], secret
-        )
-        availability_copy = PAYMENT_COPY[result.locale][0]
-        payment_copy = guest.guest_copy(result.locale)["checkout_link"]
         result = IntakeResult(
-            "\n\n".join(part for part in (mermaid_documents.quote_message(reservation), availability_copy, payment_copy + "\n" + payment_url) if part),
-            result.locale,
-            result.phase,
+            mermaid_documents.quote_message(reservation), result.locale, "quote_ready",
             action=f"reservation:{reservation['public_id']}",
         )
         if include_media:
@@ -1982,6 +1989,22 @@ def handle_demo_message(message: dict, include_media: bool = False, *, use_model
             if use_model:
                 _cache_reply(message, reply)
             return reply
+    elif result.action == "quote_confirmed" and current:
+        from agents.social import mermaid_demo_payment
+        import os
+        current = _reservation_store.get_reservation(current["public_id"])
+        if current and current["state"] in {"quote_ready", "demo_payment_pending"} and not current["human_takeover"]:
+            current = _reservation_store.transition(
+                current["public_id"], "demo_payment_pending",
+                idempotency_key=f"quote-accepted:{current['public_id']}",
+                actor="customer", reason="Customer confirmed the quote before checkout",
+            )
+            url = mermaid_demo_payment.build_payment_url(
+                mermaid_catalog.get_catalog().get("links", {}).get("checkout_base_url") or os.environ.get("UNBOKS_PUBLIC_BASE_URL", "http://localhost:8001"),
+                current["public_id"], os.environ.get("MERMAID_DEMO_SIGNING_SECRET", ""),
+            )
+            result = IntakeResult(guest.guest_copy(result.locale)["checkout_link"] + "\n" + url,
+                                  result.locale, "demo_payment_pending")
     elif result.action == "payment_status" and current:
         from agents.social import mermaid_demo_payment
         import os
@@ -2056,6 +2079,8 @@ def _cache_reply(message: dict, reply: dict) -> None:
     flags["mermaid_seen_message_ids"] = (
         list(flags.get("mermaid_seen_message_ids") or []) + [message_id]
     )[-100:]
+    if flags.get("mermaid_pending_quote_approval_message_id") == message_id:
+        flags.pop("mermaid_pending_quote_approval_message_id", None)
     if flags.get("mermaid_pending_confirmation_message_id") == message_id:
         flags.pop("mermaid_pending_confirmation_message_id", None)
     state_registry.wa_save_booking_state(phone, state.get("fields") or {}, flags, state.get("completed_bookings") or [])

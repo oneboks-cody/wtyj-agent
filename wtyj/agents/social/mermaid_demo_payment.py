@@ -51,7 +51,7 @@ def build_payment_url(base_url: str, reservation_id: str, secret: str, now: int 
             reservation = conn.execute(
                 "SELECT public_id,conversation_id FROM mermaid_reservations "
                 "WHERE public_id=? AND tenant_slug='mermaid' "
-                "AND state!='cancelled' AND human_takeover=0",
+                "AND state='demo_payment_pending' AND human_takeover=0",
                 (reservation_id,),
             ).fetchone()
             if not reservation or mermaid_reservation_store._operator_review_active(
