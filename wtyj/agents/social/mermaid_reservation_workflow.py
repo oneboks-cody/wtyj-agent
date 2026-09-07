@@ -1007,6 +1007,8 @@ def process_model_turn(
             and flags.get("mermaid_pending_quote_approval_message_id") == message_id):
         return IntakeResult("", fields.get("language", "en"), "quote_ready",
                             action="quote_confirmed", understanding_source="pending_quote_retry")
+    if (defer_seen and message_id and flags.get('mermaid_pending_quote_revision') == message_id):
+        return IntakeResult('', fields.get('language','en'), 'quote_ready', action='revise_quote')
     from agents.social import mermaid_document_language as document_language
     button_value = str(message.get('_zernio_interactive_id') or '')
     if button_value.startswith(document_language.PREFIX) and not document_language.selected_button(message, flags):
@@ -1285,6 +1287,9 @@ def process_model_turn(
     if calendar_request in response_policy.CALENDAR_REQUESTS or date_request:
         understood = {**understood, "fields": {k: v for k, v in (understood.get("fields") or {}).items() if k != "trip_date"}}
     action = understood.get("mermaid_action")
+    if action == 'change_date' and reservation and reservation['state'] == 'quote_ready':
+        action = 'details'
+        understood = {**understood, 'mermaid_action': action}
     if action in {"change_date", "confirm_date_change", "keep_date"} and reservation and mermaid_date_changes.enabled():
         if action == "change_date":
             faq = reply_planning.supported_faq(understood, str(message.get("text") or ""))
@@ -1541,7 +1546,21 @@ def process_model_turn(
         fields.update(assistance_overlay)
         fields["language"] = locale
         fields["phase"] = "quote_ready"
-        if (action == "confirm_summary" and not has_question and not changes
+        correction_keys = {'trip_date','adults','children','infants','child_ages','customer_name','contact_phone','pickup_preference','pickup_location','document_language','language'}
+        correction = any(fields.get(k) != reservation['intake'].get(k) for k in correction_keys if k in fields)
+        if correction or invalid_date or invalid_contact:
+            flags['mermaid_quote_change_requested'] = reservation.get('quote_public_id')
+        missing = _next_question(fields, locale)
+        if invalid_date or invalid_contact or missing:
+            response = (response_policy.date_recovery_reply(invalid_date, locale) if invalid_date else
+                        guest.guest_copy(locale)['contact_phone_prompt'] if invalid_contact else missing)
+            canonical_response = True
+        elif correction and not has_question:
+            result_action = 'revise_quote'
+            response = ''
+            canonical_response = True
+        elif (action == "confirm_summary" and not has_question and not changes
+                and reservation.get('quote_public_id')
                 and flags.get("mermaid_quote_change_requested") != reservation.get("quote_public_id")):
             result_action = "quote_confirmed"
             response = ""
@@ -1886,6 +1905,8 @@ def process_model_turn(
     root_fields["mermaid_intake"] = fields
     if defer_seen and message_id and result_action == "summary_confirmed":
         flags["mermaid_pending_confirmation_message_id"] = message_id
+    elif defer_seen and message_id and result_action == 'revise_quote':
+        flags['mermaid_pending_quote_revision'] = message_id
     elif defer_seen and message_id and result_action == "quote_confirmed":
         flags["mermaid_pending_quote_approval_message_id"] = message_id
     elif message_id and result_action != "cancel" and not defer_seen:
@@ -2016,6 +2037,28 @@ def handle_demo_message(message: dict, include_media: bool = False, *, use_model
             if use_model:
                 _cache_reply(message, reply)
             return reply
+    elif result.action == 'revise_quote' and current:
+        from agents.social import mermaid_documents
+        import os
+        state = state_registry.wa_get_booking_state(phone)
+        intake = (state.get('fields') or {}).get('mermaid_intake') or {}
+        current = _reservation_store.revise_unpaid_quote(
+            current['public_id'], intake, expected_revision=current['revision'],
+            conversation_id=phone, account_id=str(message.get('_zernio_account_id') or ''),
+            idempotency_key='quote-revise:' + str(message.get('message_id') or ''),
+        )
+        document, job = mermaid_documents.create_quote(current)
+        current = _reservation_store.attach_revised_quote(current['public_id'], document['public_id'], current['revision'])
+        state = state_registry.wa_get_booking_state(phone)
+        flags = dict(state.get('flags') or {})
+        flags.pop('mermaid_quote_change_requested', None)
+        state_registry.wa_save_booking_state(phone, state.get('fields') or {}, flags, state.get('completed_bookings') or [])
+        reply = IntakeResult(mermaid_documents.quote_message(current), result.locale, 'quote_ready').as_reply()
+        reply['media'] = {'type':'file','url':mermaid_documents.build_signed_url(os.environ.get('UNBOKS_PUBLIC_BASE_URL','http://localhost:8001'),document['public_id'],os.environ.get('MERMAID_DEMO_SIGNING_SECRET','')),'filename':document['filename'],'id':document['public_id']}
+        reply['mermaid_delivery_commit'] = {'job_id':job['public_id']}
+        if use_model:
+            _cache_reply(message, reply)
+        return reply if include_media else reply['text']
     elif result.action == "quote_confirmed" and current:
         from agents.social import mermaid_demo_payment
         import os
@@ -2106,6 +2149,8 @@ def _cache_reply(message: dict, reply: dict) -> None:
     flags["mermaid_seen_message_ids"] = (
         list(flags.get("mermaid_seen_message_ids") or []) + [message_id]
     )[-100:]
+    if flags.get('mermaid_pending_quote_revision') == message_id:
+        flags.pop('mermaid_pending_quote_revision', None)
     if flags.get("mermaid_pending_quote_approval_message_id") == message_id:
         flags.pop("mermaid_pending_quote_approval_message_id", None)
     if flags.get("mermaid_pending_confirmation_message_id") == message_id:

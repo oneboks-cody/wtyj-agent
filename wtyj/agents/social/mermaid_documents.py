@@ -677,33 +677,37 @@ def _document(row: sqlite3.Row | None) -> dict | None:
 
 def create_quote(reservation: dict) -> tuple[dict, dict]:
     """Create one stable quote and one pending idempotent delivery job."""
-    public_id = _doc_id(reservation["public_id"], "quote")
+    revision = int(reservation["intake"].get("_quote_revision", 1))
+    suffix = "" if revision == 1 else f":r{revision}"
+    public_id = _doc_id(reservation["public_id"] + suffix, "quote")
     filename = f"Mermaid - Trip Quote - {reservation['public_id'][-10:].upper()}.pdf"
+    if revision != 1:
+        filename = filename.removesuffix(".pdf") + f" - R{revision}.pdf"
     target = _root() / reservation["public_id"] / filename
     conn = _conn()
     try:
         existing = conn.execute(
-            "SELECT * FROM mermaid_documents WHERE tenant_slug='mermaid' AND reservation_public_id=? AND kind='quote'",
-            (reservation["public_id"],),
+            "SELECT * FROM mermaid_documents WHERE tenant_slug='mermaid' AND reservation_public_id=? AND kind='quote' AND document_revision=?",
+            (reservation["public_id"], revision),
         ).fetchone()
         if existing is None:
             digest = render_quote_pdf(reservation, target)
             now = _now()
             conn.execute(
                 "INSERT INTO mermaid_documents (public_id, tenant_slug, reservation_public_id, kind, locale, "
-                "filename, path, sha256, content_type, created_at) VALUES (?, 'mermaid', ?, 'quote', ?, ?, ?, ?, 'application/pdf', ?)",
-                (public_id, reservation["public_id"], reservation["language"], filename, str(target), digest, now),
+                "filename, path, sha256, content_type, created_at, document_revision) VALUES (?, 'mermaid', ?, 'quote', ?, ?, ?, ?, 'application/pdf', ?, ?)",
+                (public_id, reservation["public_id"], reservation["language"], filename, str(target), digest, now, revision),
             )
             conn.commit()
             existing = conn.execute("SELECT * FROM mermaid_documents WHERE public_id=?", (public_id,)).fetchone()
         now = _now()
-        job_id = "mjob_" + hashlib.sha256(f"quote:{reservation['public_id']}".encode()).hexdigest()[:24]
+        job_id = "mjob_" + hashlib.sha256(f"quote:{reservation['public_id']}{suffix}".encode()).hexdigest()[:24]
         conn.execute(
             "INSERT OR IGNORE INTO mermaid_delivery_jobs (public_id, tenant_slug, reservation_public_id, "
             "document_public_id, conversation_id, kind, status, idempotency_key, created_at, updated_at) "
             "VALUES (?, 'mermaid', ?, ?, ?, 'quote', 'pending', ?, ?, ?)",
             (job_id, reservation["public_id"], public_id, reservation["conversation_id"],
-             f"mermaid-quote:{reservation['public_id']}", now, now),
+             f"mermaid-quote:{reservation['public_id']}{suffix}", now, now),
         )
         conn.commit()
         job = conn.execute("SELECT * FROM mermaid_delivery_jobs WHERE public_id=?", (job_id,)).fetchone()

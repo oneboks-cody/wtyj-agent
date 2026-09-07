@@ -797,3 +797,52 @@ def events(public_id: str) -> list[dict]:
         ).fetchall()]
     finally:
         conn.close()
+
+
+def revise_unpaid_quote(public_id, intake, *, expected_revision, conversation_id, account_id, idempotency_key):
+    """Version an unpaid quote atomically; retain its old PDF and audit history."""
+    conn = _conn()
+    try:
+        conn.execute('BEGIN IMMEDIATE')
+        current = get_reservation(public_id, connection=conn)
+        if (not current or current['conversation_id'] != conversation_id
+                or current['zernio_account_id'] != account_id or current['state'] != 'quote_ready'
+                or current['human_takeover'] or _operator_review_active(conn, conversation_id)):
+            raise MermaidReservationError('Quote cannot be revised')
+        replay = conn.execute("SELECT 1 FROM mermaid_reservation_events WHERE tenant_slug='mermaid' AND idempotency_key=? AND reservation_public_id=?", (idempotency_key, public_id)).fetchone()
+        if replay:
+            conn.commit()
+            return current
+        if current['revision'] != expected_revision:
+            raise MermaidReservationError('Quote changed before correction')
+        from shared.mermaid_guest_ages import normalize_child_ages
+        intake = dict(intake)
+        if intake.get('child_ages') and normalize_child_ages(intake['child_ages'], intake) is None:
+            raise MermaidReservationError('Invalid guest ages')
+        revision = current['revision'] + 1
+        intake['_quote_revision'] = revision
+        money = _money_snapshot(intake, mermaid_catalog.get_catalog())
+        now = _now()
+        conn.execute("UPDATE mermaid_reservations SET intake_json=?,monetary_snapshot_json=?,customer_name=?,language=?,quote_public_id=NULL,revision=?,updated_at=? WHERE public_id=? AND tenant_slug='mermaid'", (json.dumps(intake,ensure_ascii=False),json.dumps(money),intake['customer_name'],intake['language'],revision,now,public_id))
+        conn.execute("DELETE FROM mermaid_checkout_links WHERE reservation_public_id=? AND tenant_slug='mermaid'", (public_id,))
+        changed = {k: {'before': current['intake'].get(k), 'after': v} for k,v in intake.items() if not k.startswith('_') and k != 'phase' and current['intake'].get(k) != v}
+        conn.execute("INSERT INTO mermaid_reservation_events (reservation_public_id,tenant_slug,event_type,from_state,to_state,actor,reason,idempotency_key,revision,payload_json,created_at) VALUES (?,'mermaid','quote_revised','quote_ready','quote_ready','customer','Customer requested quote corrections',?,?,?,?)", (public_id,idempotency_key,revision,json.dumps({'changes':changed,'previous_document':current.get('quote_public_id')},ensure_ascii=False),now))
+        conn.commit()
+        return get_reservation(public_id)
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()
+
+
+def attach_revised_quote(public_id, document_id, expected_revision):
+    conn = _conn()
+    try:
+        with conn:
+            changed = conn.execute("UPDATE mermaid_reservations SET quote_public_id=?,updated_at=? WHERE public_id=? AND tenant_slug='mermaid' AND state='quote_ready' AND revision=? AND human_takeover=0 AND (quote_public_id IS NULL OR quote_public_id=?)", (document_id,_now(),public_id,expected_revision,document_id)).rowcount
+            if changed != 1:
+                raise MermaidReservationError('Revised quote is no longer current')
+        return get_reservation(public_id)
+    finally:
+        conn.close()
