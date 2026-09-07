@@ -678,6 +678,23 @@ def _summary(fields: dict, locale: str) -> str:
     party = guest.party_text(fields, locale)
     contact = (f"{guest.guest_copy(locale)['contact_phone_label']}: {fields['contact_phone']}\n"
                if fields.get("contact_phone") else "")
+    copy = guest.guest_copy(locale)
+    if copy.get("reservation_summary"):
+        money = guest.intake_money(fields)
+        plan = money.get("pickup_plan") or {}
+        if (fields.get("pickup_preference") == "pickup_requested"
+                and plan.get("vehicle_key") and money.get("pickup_amount") is not None
+                and copy.get("summary_pickup_vehicle_priced")):
+            pickup = copy["summary_pickup_vehicle_priced"].format(
+                pickup_time=mermaid_catalog.pickup_time(),
+                location=fields.get("pickup_location") or copy["hotel"],
+                quantity=plan["quantity"], vehicle=guest.pickup_label(money, locale),
+                currency=money["currency"], amount=f"{money['pickup_amount']:g}",
+            )
+        return copy["reservation_summary"].format(
+            date=guest.guest_date(fields["trip_date"], locale), party=party,
+            name=fields["customer_name"], contact=contact, transport=pickup,
+        )
     return (
         f"*{labels['title']}*\n\n"
         f"{labels['date']}: {guest.guest_date(fields['trip_date'], locale)}\n"

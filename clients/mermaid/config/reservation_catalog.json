@@ -177,7 +177,9 @@
         "children_unknown": "{count} kinderen (4–12)",
         "infants_unknown_one": "{count} kind (0–3)",
         "infants_unknown": "{count} kinderen (0–3)"
-      }
+      },
+      "reservation_summary": "*Uw reservering voor Klein Curaçao ☀️🏝️*\n\nMag ik deze gegevens nog even met u controleren?\n\n*Reserveringsgegevens*\nDatum: {date}\nGasten: {party}\nNaam: {name}\n{contact}\n*Ophalen en terugbrengen*\n{transport}\n\n*Kloppen deze gegevens?*\nZodra u bevestigt, stuur ik u een offerte met alle reserveringsdetails, wat er is inbegrepen en de betaalmogelijkheden. Wilt u nog iets wijzigen? Laat het mij gerust weten.",
+      "summary_pickup_vehicle_priced": "Ophaaltijd: {pickup_time}\nLocatie: {location}\nVervoer: {quantity} × {vehicle}\n\nHet vervoer van en naar uw accommodatie kost {currency} {amount}. Wilt u ervoor zorgen dat u om {pickup_time} klaarstaat?"
     },
     "de": {
       "pickup_pending": "Die Abholung von {location} ist angefragt, nicht bestätigt. Preis und Abholzeit müssen noch bestätigt werden; die Abholung ist nicht im Ausflugspreis enthalten.",
