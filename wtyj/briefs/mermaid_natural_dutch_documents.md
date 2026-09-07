@@ -43,3 +43,8 @@ Remove the stale long English exemplar, replace the 120-180 word target with con
 Offline regressions inspect the assembled production prompt and compare vocabulary against the already-reviewed email copy, so future edits cannot silently leave conversation guidance disconnected again. Live output quality is not claimed verified without an authorized model call. This revision is local pending separate deployment approval.
 
 Follow-up validation: two focused offline tests passed in 0.08 seconds. The actual assembled prompt contains all six editorial guides and the existing formal register; drink/equipment/facility terms agree with approved email copy. The stale English exemplar and 120-180 word target are absent; information-first pacing and one-question guidance are present. git diff --check passed. No model calls, live writes, sends or deployment.
+
+## Conversation wording — authorized live release
+Owner approved deployment. Deployed `wtyj-agent:tracy-wording-d2b2fd8` on 7 September 2026 as a scoped overlay on the verified language-release image. One runtime source file and two persona configuration fields verified. The separately implemented document-language selector remains undeployed.
+
+Health 200; all 58 database tables unchanged during cutover; six peer containers unchanged; maintenance marker cleared. Backup: `/root/backups/tracy-wording-d2b2fd8-20260907T141914Z`. The live assembled prompt contains all six conversation wording guides and the updated layout, including vruchtensappen; the stale overview exemplar and 120-180 word target are absent. Verification used no model calls or customer sends. Actual generated-response quality was not evaluated through a paid provider.
