@@ -156,6 +156,8 @@ public_router = APIRouter(prefix="/r", tags=["ali-public"])
 
 from dashboard.isluno_api import build_router as build_isluno_router
 router.include_router(build_isluno_router(_check_auth))
+from shared.isluno_media import build_public_router as build_isluno_media_router
+public_router.include_router(build_isluno_media_router())
 
 
 # --- Auth ---

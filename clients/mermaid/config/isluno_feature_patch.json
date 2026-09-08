@@ -1,5 +1,9 @@
 {
   "features": {
     "isluno_itinerary_demo_v1": false
+  },
+  "isluno": {
+    "native_carousels": false,
+    "media_base_url": null
   }
 }

@@ -1030,6 +1030,17 @@ def handle_incoming_whatsapp_message(message: dict, channel: str = "whatsapp",
         bm_logger.log("whatsapp_auto_block_warning", phone=phone[:50])
         return _moderation.get("reply", "")
 
+    # Isluno owns a separate context before any legacy intake/reset is loaded.
+    from shared import isluno_config
+    _isluno_features = config_loader.get_raw().get("features") or {}
+    if channel == "whatsapp" and isinstance(_isluno_features, dict) and _isluno_features.get(isluno_config.FEATURE) is True:
+        from agents.social.isluno_discovery import handle_message
+        from shared.isluno_pricing import ItineraryError
+        try:
+            return handle_message(message) if include_media else ""
+        except (isluno_config.IslunoUnavailable, ItineraryError):
+            return ""
+
     # Get existing booking state
     state = state_registry.wa_get_booking_state(phone)
     fields = state.get("fields", {})
