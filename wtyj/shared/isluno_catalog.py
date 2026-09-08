@@ -100,9 +100,14 @@ def _validate_rules(product):
         missing.append("guest_rules_unverified")
     else:
         _check(isinstance(guest, dict), "guest rules")
+        _check(not set(guest) - {"minimum_age", "maximum_age", "adult_min_age", "max_guests", "children_require_adult"}, "unsupported guest rule")
         _integer(guest.get("minimum_age"), "minimum age", 0, 120)
         _integer(guest.get("maximum_age"), "maximum age", guest["minimum_age"], 120)
         _integer(guest.get("adult_min_age"), "adult age", guest["minimum_age"], guest["maximum_age"])
+        if "max_guests" in guest:
+            _integer(guest["max_guests"], "maximum guests", 1, 1000)
+        if "children_require_adult" in guest:
+            _check(type(guest["children_require_adult"]) is bool, "children require adult must be boolean")
     if price is None:
         missing.append("exact_prices_unverified")
     else:
@@ -143,6 +148,7 @@ def _validate_rules(product):
         missing.append("schedule_unverified")
     else:
         _check(isinstance(schedule, dict), "schedule")
+        _check(not set(schedule) - {"timezone", "weekdays", "slots", "evidence", "published_check_in_times", "check_in_minutes_before"}, "unsupported schedule rule")
         try:
             ZoneInfo(schedule.get("timezone", ""))
         except (TypeError, ValueError, ZoneInfoNotFoundError) as exc:
@@ -162,6 +168,17 @@ def _validate_rules(product):
             _check(isinstance(slot.get("start"), str) and _TIME.fullmatch(slot["start"]), "slot start")
             _integer(slot.get("duration_minutes"), "slot duration", 1, 7 * 24 * 60)
         _text(schedule.get("evidence"), "schedule evidence", 2000)
+        if "check_in_minutes_before" in schedule:
+            _integer(schedule["check_in_minutes_before"], "check-in lead minutes", 0, 1440)
+        if "published_check_in_times" in schedule:
+            checkins = schedule["published_check_in_times"]
+            _check(isinstance(checkins, list) and len(checkins) == len(slots), "check-in times must match departure slots in order")
+            for checkin, slot in zip(checkins, slots):
+                _check(isinstance(checkin, str) and _TIME.fullmatch(checkin), "check-in time")
+                _check(checkin <= slot["start"], "check-in must not follow departure")
+                if "check_in_minutes_before" in schedule:
+                    minutes = lambda value: int(value[:2]) * 60 + int(value[3:])
+                    _check(minutes(slot["start"]) - minutes(checkin) == schedule["check_in_minutes_before"], "conflicting check-in time and lead")
     options = product.get("options")
     if options is None:
         missing.append("options_unverified")

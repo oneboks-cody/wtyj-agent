@@ -31,6 +31,43 @@ def synthetic_catalog():
 
 
 class CatalogTests(unittest.TestCase):
+    def test_invalid_optional_rules_cannot_publish_or_create_history(self):
+        keys = ("guest_rules", "price_rules", "schedule", "options", "pickup", "policies")
+        base = synthetic_catalog()
+        product = base["products"][0]
+        product["demo_rules"] = {"authority": "user_approved_demo_sample", "version": "fixture-v1", "real_booking_eligible": False,
+                                 "label": "DEMO SAMPLE", "approval_ref": "Synthetic approval", "rules": {key: copy.deepcopy(product[key]) for key in keys}}
+        cases = [("guest_rules", "max_guests", -1), ("guest_rules", "max_guests", True), ("guest_rules", "max_guests", 1001),
+                 ("guest_rules", "children_require_adult", "false"), ("guest_rules", "unknown_constraint", 3),
+                 ("schedule", "published_check_in_times", ["25:99"]), ("schedule", "published_check_in_times", []),
+                 ("schedule", "published_check_in_times", ["10:00"]), ("schedule", "check_in_minutes_before", -20),
+                 ("schedule", "check_in_minutes_before", True), ("schedule", "check_in_minutes_before", 1441),
+                 ("schedule", "unknown_constraint", [])]
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "isluno_catalog.json"
+            path.write_text(json.dumps(base))
+            store = CatalogStore(path)
+            before = store.snapshot()
+            original_bytes = path.read_bytes()
+            for group, key, invalid in cases:
+                demo = copy.deepcopy(product["demo_rules"])
+                demo["rules"][group][key] = invalid
+                with self.subTest(group=group, key=key, value=invalid), self.assertRaises(CatalogError):
+                    store.publish([{"id": product["id"], "changes": {"demo_rules": demo}}], before["revision"])
+                self.assertEqual(before, store.snapshot())
+                self.assertEqual(original_bytes, path.read_bytes())
+                self.assertFalse(path.with_name("isluno_catalog_versions").exists())
+
+    def test_valid_optional_rules_and_check_in_association(self):
+        catalog = synthetic_catalog()
+        product = catalog["products"][0]
+        product["guest_rules"].update({"max_guests": 4, "children_require_adult": True})
+        product["schedule"].update({"published_check_in_times": ["08:40"], "check_in_minutes_before": 20})
+        self.assertTrue(validate_catalog(catalog)["products"][0]["readiness"]["quotable"])
+        product["schedule"]["check_in_minutes_before"] = 30
+        with self.assertRaisesRegex(CatalogError, "conflicting check-in"):
+            validate_catalog(catalog)
+
     def test_sample_rules_preserve_unknown_facts_and_are_demo_only(self):
         catalog = synthetic_catalog()
         product = catalog["products"][0]
