@@ -87,13 +87,13 @@ def capabilities():
                 "known": known, "enabled": False, "journey_type": JOURNEY if known else None,
                 "brand": None, "mode": "demo" if known else None,
                 "capabilities": {"brand_profile": False, "isolated_context": False,
-                                 "itinerary_booking": False, "demo_payment": False, "catalog_editor": False}}
+                                 "itinerary_booking": False, "demo_payment": False, "catalog_editor": False, "itinerary_workspace": False}}
     try:
         profile = active_profile()
     except IslunoUnavailable:
         return response
     response.update({"enabled": True, "brand": brand_snapshot(profile), "document_languages": profile["document_languages"]})
-    response["capabilities"].update({"brand_profile": True, "isolated_context": True, "itinerary_booking": True, "demo_payment": True, "catalog_editor": True})
+    response["capabilities"].update({"brand_profile": True, "isolated_context": True, "itinerary_booking": True, "demo_payment": True, "catalog_editor": True, "itinerary_workspace": True})
     return response
 
 

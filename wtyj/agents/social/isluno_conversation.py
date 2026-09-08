@@ -191,7 +191,9 @@ class ConversationStore:
                         selection = {k: pending[k] for k in ('item_id','product_id','date','slot_id','guest_ages','options','pickup')}
                         active = self.itinerary._apply(scope, active['id'], opaque(scope, trigger, 'save-' + item_id), active['revision'],
                             {'action': 'update' if exists else 'add', 'selection': selection}, connection=db, catalog_snapshot=snapshot)
-                        session['item_details'][item_id] = {'guest_name': session['guest']['name'], 'pickup_location': pending.get('pickup_location')}
+                        prior_name = session['item_details'].get(item_id, {}).get('guest_name')
+                        item_guest = session['guest']['name'] if booking['guest'].get('name') or not prior_name else prior_name
+                        session['item_details'][item_id] = {'guest_name': item_guest, 'pickup_location': pending.get('pickup_location')}
                         del session['pending'][item_id]
                 except (ItineraryError, CatalogError) as exc:
                     db.execute('ROLLBACK TO item_updates')

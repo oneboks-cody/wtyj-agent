@@ -72,4 +72,6 @@ def build_router(check_auth, itinerary_store_factory=ItineraryStore, conversatio
 
     from dashboard.isluno_catalog_api import build_router as catalog_router
     router.include_router(catalog_router(check_auth))
+    from dashboard.isluno_operations import build_router as operations_router
+    router.include_router(operations_router(check_auth))
     return router
