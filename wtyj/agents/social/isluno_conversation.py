@@ -206,7 +206,7 @@ class ConversationStore:
                 db.execute('RELEASE item_updates')
             from agents.social.isluno_quotes import invalidate_changed
             if booking['guest'].get('name') and action not in {'new', 'add', 'update'} and status != 'review':
-                for detail in session['item_details'].values():
+                for detail in [*session['item_details'].values(), *session['pending'].values()]:
                     if detail.get('guest_name') == current['guest'].get('name'):
                         detail['guest_name'] = booking['guest']['name']
             invalidate_changed(db, scope, session, active)

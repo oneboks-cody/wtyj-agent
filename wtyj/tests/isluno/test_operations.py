@@ -128,6 +128,25 @@ class OperationsTests(unittest.TestCase):
             if d['document_id']:
                 self.assertEqual(d['document_id'],d['quote_id']);self.assertEqual(d['document_kind'],'quote')
 
+    def test_name_only_correction_updates_matching_pending_party_before_completion(self):
+        self.turn(response('add',[{'product_id':'fixture-cruise'}],guest={'name':'Other Party','ages':[35]}))
+        other=next(iter(self.store.session(self.scope())['pending']))
+        self.turn(response('add',[{'product_id':'fixture-cruise'}],guest={'name':'Calvin'}))
+        item_id=next(item for item in self.store.session(self.scope())['pending'] if item!=other)
+        self.turn(response('none',guest={'name':'Kelvin'}),text='My name is Kelvin, not Calvin.')
+        pending=self.store.session(self.scope())['pending']
+        self.assertEqual(pending[item_id]['guest_name'],'Kelvin')
+        self.assertEqual(pending[other]['guest_name'],'Other Party')
+        self.turn(response('update',[{'item_id':item_id,'date':'2026-10-19'}]))
+        self.turn(response('update',[{'item_id':other,'date':'2026-10-20'}]))
+        self.turn(response('summary'))
+        row=self.listing()['items'][0];detail=self.get('journeys/'+row['id']).json()
+        self.assertEqual(detail['guest_name'],'Kelvin')
+        self.assertEqual(detail['item_details'][item_id]['guest_name'],'Kelvin')
+        self.assertEqual(detail['item_details'][other]['guest_name'],'Other Party')
+        self.assertEqual(detail['quotes'][-1]['snapshot']['item_details'][item_id]['guest_name'],'Kelvin')
+        self.assertEqual(detail['quotes'][-1]['snapshot']['item_details'][other]['guest_name'],'Other Party')
+
     def test_reads_do_not_modify_snapshots_or_create_delivery(self):
         self.pay();before=self.payments.records(self.scope());row=self.listing()['items'][0]
         for _ in range(2):self.get('journeys/'+row['id'])
