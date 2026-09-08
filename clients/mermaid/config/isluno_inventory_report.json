@@ -1,0 +1,650 @@
+{
+  "schema_version": "isluno.inventory.v1",
+  "observed_at": "2026-09-08T15:52:16.361926+00:00",
+  "historical_product_count": 31,
+  "discovered_product_count": 31,
+  "imported_product_count": 31,
+  "count_delta": 0,
+  "listing_evidence": [
+    {
+      "url": "https://isluno.com/",
+      "sha256": "6629b75b1a9b0b6ba97383ff616e77148bd3ddf265aa9994c315c18ed39fa9b8",
+      "product_urls": [
+        "https://isluno.com/tours/afternoon-explorer-tour",
+        "https://isluno.com/tours/all-west-beach-hopping",
+        "https://isluno.com/tours/aquafari-curacao-snorkel",
+        "https://isluno.com/tours/atv-buggy-3-hours",
+        "https://isluno.com/tours/atv-buggy-4-hours",
+        "https://isluno.com/tours/curacao-city-highlights",
+        "https://isluno.com/tours/half-day-snorkel-lunch",
+        "https://isluno.com/tours/klein-curacao-catamaran-day-trip",
+        "https://isluno.com/tours/sunset-sail",
+        "https://isluno.com/tours/wonders-of-curacao"
+      ]
+    },
+    {
+      "url": "https://isluno.com/explore",
+      "sha256": "4dbb1abbbb29a7973ace45275f7a6fe206ac444bfe89e395b937c25c264c2ba3",
+      "product_urls": [
+        "https://isluno.com/tours/afternoon-explorer-tour",
+        "https://isluno.com/tours/all-west-beach-hopping",
+        "https://isluno.com/tours/aquafari-curacao-snorkel",
+        "https://isluno.com/tours/atv-buggy-3-hours",
+        "https://isluno.com/tours/atv-buggy-4-hours",
+        "https://isluno.com/tours/atv-buggy-6-hours",
+        "https://isluno.com/tours/atv-buggy-7-hours",
+        "https://isluno.com/tours/curacao-city-highlights",
+        "https://isluno.com/tours/discover-scuba-dive",
+        "https://isluno.com/tours/discover-willemstad",
+        "https://isluno.com/tours/flyboard-experience",
+        "https://isluno.com/tours/half-day-snorkel-lunch",
+        "https://isluno.com/tours/jetski-tour-30-min",
+        "https://isluno.com/tours/kadushi-utv-tours",
+        "https://isluno.com/tours/klein-curacao-a-trip-to-paradise",
+        "https://isluno.com/tours/klein-curacao-catamaran-day-trip",
+        "https://isluno.com/tours/klein-curacao-weekly-luxury-yacht-trip",
+        "https://isluno.com/tours/mid-day-reef-tour",
+        "https://isluno.com/tours/miss-ann-klein-curacao",
+        "https://isluno.com/tours/national-park-jeep-safari",
+        "https://isluno.com/tours/open-fishing-trip",
+        "https://isluno.com/tours/seatrek-underwater-walking-tour",
+        "https://isluno.com/tours/snorkel-and-beach-adventures",
+        "https://isluno.com/tours/sunset-boat-trip",
+        "https://isluno.com/tours/sunset-sail",
+        "https://isluno.com/tours/sup-curacao-paddle-boarding",
+        "https://isluno.com/tours/tandem-skydive-experience",
+        "https://isluno.com/tours/the-jungle-tour",
+        "https://isluno.com/tours/tugboat-seabob",
+        "https://isluno.com/tours/west-coast-blue-room",
+        "https://isluno.com/tours/wonders-of-curacao"
+      ]
+    }
+  ],
+  "coverage_limit": "Every distinct public product URL linked by the unfiltered explore and homepage at capture time; not proof of unpublished supplier/owner inventory.",
+  "gallery_source_count": 290,
+  "gallery_associations": 287,
+  "unique_image_bytes": 56823688,
+  "missing_assets": [],
+  "same_content_duplicates": [
+    {
+      "product_id": "atv-buggy-3-hours",
+      "source_url": "https://storage.googleapis.com/isluno-bucket/assets/asset_1773330337000.webp",
+      "sha256": "2c76fccd4730709a1d64f8236d75508152005c12774a8bed7ba64c73d706509f"
+    },
+    {
+      "product_id": "atv-buggy-4-hours",
+      "source_url": "https://storage.googleapis.com/isluno-bucket/assets/asset_1773330723526.webp",
+      "sha256": "2c76fccd4730709a1d64f8236d75508152005c12774a8bed7ba64c73d706509f"
+    },
+    {
+      "product_id": "atv-buggy-6-hours",
+      "source_url": "https://storage.googleapis.com/isluno-bucket/assets/asset_1773330678061.webp",
+      "sha256": "2c76fccd4730709a1d64f8236d75508152005c12774a8bed7ba64c73d706509f"
+    }
+  ],
+  "products": [
+    {
+      "id": "afternoon-explorer-tour",
+      "source_url": "https://isluno.com/tours/afternoon-explorer-tour",
+      "gallery_count": 7,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 7
+      }
+    },
+    {
+      "id": "all-west-beach-hopping",
+      "source_url": "https://isluno.com/tours/all-west-beach-hopping",
+      "gallery_count": 10,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 10
+      }
+    },
+    {
+      "id": "aquafari-curacao-snorkel",
+      "source_url": "https://isluno.com/tours/aquafari-curacao-snorkel",
+      "gallery_count": 1,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 1
+      }
+    },
+    {
+      "id": "atv-buggy-3-hours",
+      "source_url": "https://isluno.com/tours/atv-buggy-3-hours",
+      "gallery_count": 10,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 10
+      }
+    },
+    {
+      "id": "atv-buggy-4-hours",
+      "source_url": "https://isluno.com/tours/atv-buggy-4-hours",
+      "gallery_count": 10,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 10
+      }
+    },
+    {
+      "id": "atv-buggy-6-hours",
+      "source_url": "https://isluno.com/tours/atv-buggy-6-hours",
+      "gallery_count": 10,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 10
+      }
+    },
+    {
+      "id": "atv-buggy-7-hours",
+      "source_url": "https://isluno.com/tours/atv-buggy-7-hours",
+      "gallery_count": 9,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 9
+      }
+    },
+    {
+      "id": "curacao-city-highlights",
+      "source_url": "https://isluno.com/tours/curacao-city-highlights",
+      "gallery_count": 10,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 10
+      }
+    },
+    {
+      "id": "discover-scuba-dive",
+      "source_url": "https://isluno.com/tours/discover-scuba-dive",
+      "gallery_count": 20,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 20
+      }
+    },
+    {
+      "id": "discover-willemstad",
+      "source_url": "https://isluno.com/tours/discover-willemstad",
+      "gallery_count": 9,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 9
+      }
+    },
+    {
+      "id": "flyboard-experience",
+      "source_url": "https://isluno.com/tours/flyboard-experience",
+      "gallery_count": 3,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 3
+      }
+    },
+    {
+      "id": "half-day-snorkel-lunch",
+      "source_url": "https://isluno.com/tours/half-day-snorkel-lunch",
+      "gallery_count": 10,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 10
+      }
+    },
+    {
+      "id": "jetski-tour-30-min",
+      "source_url": "https://isluno.com/tours/jetski-tour-30-min",
+      "gallery_count": 3,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 3
+      }
+    },
+    {
+      "id": "kadushi-utv-tours",
+      "source_url": "https://isluno.com/tours/kadushi-utv-tours",
+      "gallery_count": 8,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 8
+      }
+    },
+    {
+      "id": "klein-curacao-a-trip-to-paradise",
+      "source_url": "https://isluno.com/tours/klein-curacao-a-trip-to-paradise",
+      "gallery_count": 13,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 13
+      }
+    },
+    {
+      "id": "klein-curacao-catamaran-day-trip",
+      "source_url": "https://isluno.com/tours/klein-curacao-catamaran-day-trip",
+      "gallery_count": 11,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 11
+      }
+    },
+    {
+      "id": "klein-curacao-weekly-luxury-yacht-trip",
+      "source_url": "https://isluno.com/tours/klein-curacao-weekly-luxury-yacht-trip",
+      "gallery_count": 10,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 10
+      }
+    },
+    {
+      "id": "mid-day-reef-tour",
+      "source_url": "https://isluno.com/tours/mid-day-reef-tour",
+      "gallery_count": 7,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 7
+      }
+    },
+    {
+      "id": "miss-ann-klein-curacao",
+      "source_url": "https://isluno.com/tours/miss-ann-klein-curacao",
+      "gallery_count": 10,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 10
+      }
+    },
+    {
+      "id": "national-park-jeep-safari",
+      "source_url": "https://isluno.com/tours/national-park-jeep-safari",
+      "gallery_count": 16,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 16
+      }
+    },
+    {
+      "id": "open-fishing-trip",
+      "source_url": "https://isluno.com/tours/open-fishing-trip",
+      "gallery_count": 4,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 4
+      }
+    },
+    {
+      "id": "seatrek-underwater-walking-tour",
+      "source_url": "https://isluno.com/tours/seatrek-underwater-walking-tour",
+      "gallery_count": 8,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 8
+      }
+    },
+    {
+      "id": "snorkel-and-beach-adventures",
+      "source_url": "https://isluno.com/tours/snorkel-and-beach-adventures",
+      "gallery_count": 19,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 19
+      }
+    },
+    {
+      "id": "sunset-boat-trip",
+      "source_url": "https://isluno.com/tours/sunset-boat-trip",
+      "gallery_count": 7,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 7
+      }
+    },
+    {
+      "id": "sunset-sail",
+      "source_url": "https://isluno.com/tours/sunset-sail",
+      "gallery_count": 10,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 10
+      }
+    },
+    {
+      "id": "sup-curacao-paddle-boarding",
+      "source_url": "https://isluno.com/tours/sup-curacao-paddle-boarding",
+      "gallery_count": 8,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 8
+      }
+    },
+    {
+      "id": "tandem-skydive-experience",
+      "source_url": "https://isluno.com/tours/tandem-skydive-experience",
+      "gallery_count": 8,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 8
+      }
+    },
+    {
+      "id": "the-jungle-tour",
+      "source_url": "https://isluno.com/tours/the-jungle-tour",
+      "gallery_count": 7,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 7
+      }
+    },
+    {
+      "id": "tugboat-seabob",
+      "source_url": "https://isluno.com/tours/tugboat-seabob",
+      "gallery_count": 10,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 10
+      }
+    },
+    {
+      "id": "west-coast-blue-room",
+      "source_url": "https://isluno.com/tours/west-coast-blue-room",
+      "gallery_count": 9,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 9
+      }
+    },
+    {
+      "id": "wonders-of-curacao",
+      "source_url": "https://isluno.com/tours/wonders-of-curacao",
+      "gallery_count": 10,
+      "readiness": {
+        "discoverable": true,
+        "quotable": false,
+        "unresolved": [
+          "exact_prices_unverified",
+          "guest_rules_unverified",
+          "options_unverified",
+          "pickup_unverified",
+          "policies_unverified",
+          "schedule_unverified"
+        ],
+        "verified_images": 10
+      }
+    }
+  ],
+  "public_get_requests": 323,
+  "public_bytes_read": 79063395,
+  "supplier_api_calls": 0,
+  "provider_calls": 0,
+  "image_policy": "Original approved public trip image bytes, content-addressed and validated; short-lived URL query signatures omitted. Hosting/delivery is a later authorized stage."
+}

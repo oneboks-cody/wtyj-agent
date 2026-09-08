@@ -1,0 +1,3 @@
+# Import/verification tools only; runtime catalog uses the standard library.
+beautifulsoup4==4.14.3
+Pillow==12.1.1
