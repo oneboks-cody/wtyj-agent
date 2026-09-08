@@ -76,7 +76,7 @@ class DiscoveryStore:
             row = db.execute('SELECT payload FROM isluno_discovery_plans WHERE scope_key=? AND trigger_id=?', (scope.key, trigger_id)).fetchone()
             return json.loads(row[0]) if row else None
 
-    def plan(self, scope, trigger_id, sent_at, decision=None, *, action_token=None, interactive_type=None):
+    def plan(self, scope, trigger_id, sent_at, decision=None, *, action_token=None, interactive_type=None, translations=None, response_text=None):
         require_scope(scope)
         check(isinstance(trigger_id, str) and 0 < len(trigger_id) <= 512, 'missing_verified_message_id')
         try:
@@ -97,6 +97,7 @@ class DiscoveryStore:
                                  (action_token, scope.key)).fetchone()
                 check(row is not None, 'invalid_discovery_action')
                 old, action = json.loads(row['payload']), json.loads(row['action_json'])
+                translations = old.get('translations', {})
                 check(row['plan_id'] == old['id'] and old['catalog_revision'] == snapshot['revision']
                       and datetime.fromisoformat(old['expires_at']) > self.clock(), 'stale_discovery_action')
                 selected_product = action['product_id']
@@ -112,6 +113,10 @@ class DiscoveryStore:
                 if action['kind'] == 'add':
                     selected_intent = {'kind': 'add_trip', 'product_id': action['product_id'], 'catalog_revision': snapshot['revision']}
             decision = isluno_understanding.validate(decision, isluno_understanding.context(snapshot))
+            if translations is not None:
+                from agents.social.isluno_conversation_understanding import validate_translations
+                translations = {k: v for k, v in translations.items() if k in decision['product_ids']}
+                validate_translations(translations, decision, isluno_understanding.context(snapshot))
             if decision['intent'] == 'add' and len(decision['product_ids']) == 1:
                 selected_intent = {'kind': 'add_trip', 'product_id': decision['product_ids'][0], 'catalog_revision': snapshot['revision']}
             locale = decision['language']
@@ -147,6 +152,8 @@ class DiscoveryStore:
             else:
                 product = chosen[0]
                 known_facts = isluno_understanding.facts(product)
+                if translations is not None and locale != 'en':
+                    known_facts = translations.get(product['id'], {})
                 keys = decision['fact_keys'] or ['summary']
                 fact_text = '\n\n'.join(known_facts[k] for k in keys if k in known_facts)
                 # Full source-backed information stays accessible through native More info.
@@ -185,10 +192,14 @@ class DiscoveryStore:
                               'action': {'buttons': [{'type': 'quick_reply', 'quick_reply': {'id': b['payload'], 'title': b['title']}} for b in buttons]}}
                              for i, url in enumerate(urls)]
                     body = {'accountId': scope.account_id, 'interactive': {'type': 'carousel', 'body': {'text': text[:1024]}, 'action': {'cards': cards}}}
+            if response_text is not None:
+                check(isinstance(response_text, str) and 0 < len(response_text) <= 4096, 'invalid_conversation_reply')
+                body = {'accountId': scope.account_id, 'message': response_text, 'buttons': []}
+                asset_ids, missing, fallback = [], [], None
             payload = {'id': plan_id, 'scope': scope.__dict__, 'trigger_id': trigger_id, 'trigger_sent_at': sent_at,
                        'catalog_revision': snapshot['revision'], 'catalog_version': snapshot['catalog']['version'],
                        'product_ids': decision['product_ids'], 'language': locale, 'fact_keys': decision['fact_keys'],
-                       'product_fact_keys': fact_association, 'answer_status': answer_status,
+                       'product_fact_keys': fact_association, 'answer_status': answer_status, 'translations': translations,
                        'body': body, 'fallback': fallback, 'asset_ids': asset_ids, 'missing_asset_ids': missing,
                        'selected_intent': selected_intent, 'requires_human': decision['intent'] == 'human',
                        'created_at': self.clock().isoformat(), 'expires_at': (self.clock() + timedelta(hours=24)).isoformat()}
@@ -210,7 +221,7 @@ class DiscoveryStore:
     def allow_turn(self, scope):
         require_scope(scope)
         with self.db() as db:
-            rows = db.execute('SELECT payload FROM isluno_discovery_plans WHERE scope_key=? ORDER BY rowid DESC LIMIT 50', (scope.key,)).fetchall()
+            rows = db.execute("SELECT payload FROM isluno_discovery_plans WHERE scope_key=? AND status!='consumed_action' ORDER BY rowid DESC LIMIT 50", (scope.key,)).fetchall()
         recent = sum(datetime.fromisoformat(json.loads(row[0])['created_at']) > self.clock() - timedelta(hours=1) for row in rows)
         check(recent < 50, 'discovery_rate_limited')
 

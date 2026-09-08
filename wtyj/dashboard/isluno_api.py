@@ -2,12 +2,13 @@
 from fastapi import APIRouter, Depends, Response, HTTPException, Query
 
 from agents.social.isluno_itinerary import ItineraryStore
+from agents.social.isluno_conversation import ConversationStore
 from shared.isluno_pricing import ItineraryError
 
 from shared import isluno_config
 
 
-def build_router(check_auth, itinerary_store_factory=ItineraryStore):
+def build_router(check_auth, itinerary_store_factory=ItineraryStore, conversation_store_factory=ConversationStore):
     router = APIRouter(prefix="/isluno", dependencies=[Depends(check_auth)])
 
     @router.get("/capabilities")
@@ -38,5 +39,14 @@ def build_router(check_auth, itinerary_store_factory=ItineraryStore):
                       customer_ref: str, revision: int | None = Query(default=None, ge=1)):
         response.headers["Cache-Control"] = "no-store"
         return read_itinerary(account_id, conversation_id, customer_ref, itinerary_id, revision)
+
+    @router.get("/operator-requests")
+    def operator_requests(response: Response, account_id: str, conversation_id: str, customer_ref: str):
+        try:
+            scope = isluno_config.verified_scope(account_id=account_id, conversation_id=conversation_id, customer_ref=customer_ref)
+            response.headers["Cache-Control"] = "no-store"
+            return {"requests": conversation_store_factory().reviews(scope)}
+        except isluno_config.IslunoUnavailable as exc:
+            raise HTTPException(status_code=403, detail="Isluno scope unavailable") from exc
 
     return router

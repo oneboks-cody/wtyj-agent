@@ -2135,12 +2135,12 @@ def process_message(
 
     try:
         api_key = os.environ.get("ANTHROPIC_API_KEY", "")
-        if response_contract in {"mermaid_reservation_demo", "isluno_discovery"} and not api_key:
+        if response_contract in {"mermaid_reservation_demo", "isluno_discovery", "isluno_conversation"} and not api_key:
             fallback["model_error"] = {"kind": "credentials", "retryable": False}
             return fallback
         client = (
             anthropic.Anthropic(api_key=api_key, max_retries=0, timeout=30.0)
-            if response_contract in {"mermaid_reservation_demo", "isluno_discovery"}
+            if response_contract in {"mermaid_reservation_demo", "isluno_discovery", "isluno_conversation"}
             else anthropic.Anthropic(api_key=api_key)
         )
         tool_schema = MARINA_TOOL
@@ -2155,6 +2155,11 @@ def process_message(
                 from_email, subject, body, thread_fields, thread_flags,
                 action_context, channel=channel, messages=messages,
             )
+        elif response_contract == "isluno_conversation":
+            from agents.social import isluno_conversation_understanding
+            system_prompt = isluno_conversation_understanding.system_prompt()
+            tool_schema = isluno_conversation_understanding.TOOL
+            user_prompt = json.dumps({"latest_guest": body, "saved_context": thread_fields, "history": messages or []}, ensure_ascii=False)
         elif response_contract == "isluno_discovery":
             from agents.social import isluno_understanding
             system_prompt = isluno_understanding.system_prompt()
@@ -2217,6 +2222,8 @@ def process_message(
                           channel=channel, from_id=from_email[:50])
             return fallback
         result = dict(tool_use_block.input)
+        if response_contract == "isluno_conversation":
+            return isluno_conversation_understanding.validate(result, thread_fields["catalog"])
         if response_contract == "isluno_discovery":
             return isluno_understanding.validate(result, thread_fields["catalog"])
         # A real Mermaid FAQ response used an empty string for no extracted

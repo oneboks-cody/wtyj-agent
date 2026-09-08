@@ -1034,7 +1034,7 @@ def handle_incoming_whatsapp_message(message: dict, channel: str = "whatsapp",
     from shared import isluno_config
     _isluno_features = config_loader.get_raw().get("features") or {}
     if channel == "whatsapp" and isinstance(_isluno_features, dict) and _isluno_features.get(isluno_config.FEATURE) is True:
-        from agents.social.isluno_discovery import handle_message
+        from agents.social.isluno_conversation import handle_message
         from shared.isluno_pricing import ItineraryError
         try:
             return handle_message(message) if include_media else ""

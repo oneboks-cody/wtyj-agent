@@ -326,7 +326,7 @@ class DiscoveryTests(unittest.TestCase):
         with patch.object(social_agent.state_registry, 'match_ignored_contact', return_value=None), \
              patch.object(social_agent.auto_block, 'evaluate_inbound', return_value={}), \
              patch.object(social_agent.state_registry, 'wa_get_booking_state', side_effect=AssertionError('legacy state read')), \
-             patch('agents.social.isluno_discovery.handle_message', return_value={'text': 'fixture'}) as handler:
+             patch('agents.social.isluno_conversation.handle_message', return_value={'text': 'fixture'}) as handler:
             self.assertEqual(social_agent.handle_incoming_whatsapp_message({'from': 'fixture', 'text': 'Hello'}, include_media=True), {'text': 'fixture'})
             handler.assert_called_once()
 

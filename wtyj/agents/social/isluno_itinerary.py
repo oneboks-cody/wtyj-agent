@@ -1,5 +1,5 @@
 """Scoped demo itineraries with immutable revisions and transactional replay."""
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -103,7 +103,7 @@ class ItineraryStore:
         check(set(mutation) == ({'action', 'item_id'} if action == 'remove' else {'action', 'selection'}), 'invalid_mutation_fields')
         return self._apply(scope, itinerary_id, request_id, expected_revision, mutation)
 
-    def _apply(self, scope, itinerary_id, request_id, expected_revision, mutation):
+    def _apply(self, scope, itinerary_id, request_id, expected_revision, mutation, *, connection=None):
         profile = require_scope(scope)  # No database/config write before verified scope.
         identifier(itinerary_id)
         identifier(request_id)
@@ -111,8 +111,9 @@ class ItineraryStore:
             fingerprint = hashlib.sha256(encoded([itinerary_id, expected_revision, mutation]).encode()).hexdigest()
         except (TypeError, ValueError) as exc:
             raise ItineraryError('invalid_mutation') from exc
-        with self._connection() as db, db:
-            db.execute('BEGIN IMMEDIATE')
+        with (self._connection() if connection is None else nullcontext(connection)) as db, (db if connection is None else nullcontext()):
+            if connection is None:
+                db.execute('BEGIN IMMEDIATE')
             replay = db.execute('SELECT * FROM isluno_itinerary_requests WHERE scope_key=? AND request_id=?',
                                 (scope.key, request_id)).fetchone()
             if replay:
@@ -138,7 +139,10 @@ class ItineraryStore:
                     raise ItineraryConflict('itinerary_revision_changed', current_revision=current['revision'])
                 check(current['status'] == 'draft', 'itinerary_not_editable')
                 items = current['items']
-                if action == 'remove':
+                if action == 'cancel':
+                    items = current['items']
+                    current['status'] = 'cancelled'
+                elif action == 'remove':
                     item_id = identifier(mutation['item_id'])
                     check(any(i['id'] == item_id for i in items), 'item_not_found')
                     items = [i for i in items if i['id'] != item_id]

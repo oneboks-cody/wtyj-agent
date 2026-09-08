@@ -1,4 +1,5 @@
 """Run Isluno unittest checks with sockets/DNS disabled and synthetic config."""
+import argparse
 import json
 import os
 from pathlib import Path
@@ -9,6 +10,9 @@ import unittest
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--pattern', default='test_*.py', help='Unittest filename pattern; network denial always remains enabled')
+    args = parser.parse_args()
     root = Path(__file__).resolve().parents[2]
     sys.path.insert(0, str(root / "wtyj"))
 
@@ -26,7 +30,7 @@ def main():
                                       "features": {}, "channel_account_allowlist": {"mode": "strict", "zernio_accounts": ["fixture-account"]}}))
         os.environ["CLIENT_CONFIG_PATH"] = str(config)
         os.environ["ANTHROPIC_API_KEY"] = "offline-dummy-key"
-        tests = unittest.defaultTestLoader.discover(str(root / "wtyj/tests/isluno"), pattern="test_*.py")
+        tests = unittest.defaultTestLoader.discover(str(root / "wtyj/tests/isluno"), pattern=args.pattern)
         result = unittest.TextTestRunner(verbosity=2).run(tests)
         print("External sockets/DNS denied. No legacy pytest root fixtures loaded.")
         return 0 if result.wasSuccessful() else 1
