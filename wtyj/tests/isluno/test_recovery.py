@@ -253,3 +253,33 @@ class RecoveryTests(unittest.TestCase):
         self.assertEqual(self.store.audit()['incidents'],[])
         self.t.now+=timedelta(minutes=16)
         self.assertEqual(len(self.store.audit()['incidents']),1)
+
+    def test_old_completed_replay_cannot_clear_newer_failure_or_stalled_claim(self):
+        for stalled in (False,True):
+            with self.subTest(stalled=stalled):
+                from shared.isluno_config import verified_scope
+                self.t.scope=lambda:verified_scope(account_id='synthetic-account',conversation_id='old-replay-'+str(stalled),customer_ref='old-replay-'+str(stalled))
+                self.t.now=NOW;self.t.initial();scope=self.t.scope()
+                with self.store.db() as db:old_trigger=db.execute('SELECT trigger_id FROM isluno_conversation_turns WHERE scope_key=? AND outcome IS NOT NULL',(scope.key,)).fetchone()[0]
+                before=self.t.active();revision=self.t.store.session(scope)['revision']
+                class Crash(BaseException):pass
+                def fail():raise Crash() if stalled else RuntimeError('Synthetic failure')
+                if stalled:
+                    with self.assertRaises(Crash):self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='later-failure',before_response=fail)
+                else:
+                    reply,calls=self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='later-failure',before_response=fail)
+                    self.assertEqual((reply,calls),('',1))
+                self.t.now+=timedelta(hours=2)
+                prior=self.t.get('today').json();self.assertEqual(prior['counts']['attention'],1)
+                incidents=[i for i in prior['recovery']['incidents'] if i['scope_key']==scope.key]
+                self.assertEqual(len(incidents),1);self.assertEqual(incidents[0]['kind'],'understanding_stalled' if stalled else 'understanding_failure')
+                _,calls=self.t.turn(response(),trigger=old_trigger);self.assertEqual(calls,0)
+                after=self.t.get('today').json();self.assertEqual(after['counts']['attention'],1)
+                self.assertEqual(self.t.store.session(scope)['revision'],revision);self.assertEqual(self.t.active(),before)
+                self.assertEqual(next(i for i in after['recovery']['incidents'] if i['scope_key']==scope.key)['status'],'operator_review')
+                _,calls=self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='genuine-later-update');self.assertEqual(calls,1)
+                self.assertGreater(self.t.store.session(scope)['revision'],revision)
+                self.assertEqual(self.t.active()['items'][0]['selection']['date'],'2026-10-20')
+                resolved=self.t.get('today').json();self.assertEqual(resolved['counts']['attention'],0)
+                self.assertEqual(next(i for i in resolved['recovery']['incidents'] if i['scope_key']==scope.key)['status'],'progress_resumed_new_turn')
+                self.assertEqual(self.calls,[])

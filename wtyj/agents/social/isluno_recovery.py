@@ -54,7 +54,15 @@ class RecoveryStore:
     def progress(self,scope,trigger):
         self.initialize();isluno_config.require_scope(scope)
         with self.db() as db,db:
-            db.execute("UPDATE isluno_recovery_incidents SET status='progress_resumed_new_turn' WHERE scope_key=? AND trigger_id!=? AND kind IN ('understanding_failure','understanding_stalled') AND status='operator_review'",(scope.key,trigger))
+            db.execute('BEGIN IMMEDIATE')
+            completed=db.execute('SELECT outcome FROM isluno_conversation_turns WHERE scope_key=? AND trigger_id=?',(scope.key,trigger)).fetchone()
+            if not completed or not completed[0]:return
+            applied_revision=json.loads(completed[0])['session']['revision']
+            rows=db.execute("SELECT i.id,t.baseline FROM isluno_recovery_incidents i JOIN isluno_conversation_turns t ON t.scope_key=i.scope_key AND t.trigger_id=i.trigger_id WHERE i.scope_key=? AND i.trigger_id!=? AND i.kind IN ('understanding_failure','understanding_stalled') AND i.status='operator_review'",(scope.key,trigger)).fetchall()
+            for row in rows:
+                # Replaying an older outcome is not evidence of later progress.
+                if applied_revision>json.loads(row['baseline'])['revision']:
+                    db.execute("UPDATE isluno_recovery_incidents SET status='progress_resumed_new_turn' WHERE id=?",(row['id'],))
     def incident(self,scope,trigger,kind,code):
         self.initialize();isluno_config.require_scope(scope)
         session=self.conversation.session(scope);identifier=hashlib.sha256((scope.key+trigger+kind).encode()).hexdigest()
