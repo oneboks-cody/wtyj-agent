@@ -129,6 +129,8 @@ def _job_reply(job, locale):
 
 def _send(reservation, recipient, source_id, locale, *, allow_resend=False):
     """Prepare current data before claiming the SMTP attempt, then never blind-retry."""
+    from agents.social.isluno_transition import blocked
+    if blocked():return ""
     conn = _conn()
     attempted = False
     try:
@@ -177,6 +179,7 @@ def _send(reservation, recipient, source_id, locale, *, allow_resend=False):
         conn.commit()
         attempted = True
         try:
+            if blocked():raise transport.EmailSendError("legacy_quarantined")
             transport.send_email(recipient, content, (document['filename'], attachment), message_id=message_id)
             status, error = 'accepted', ''
         except transport.EmailSendError as exc:

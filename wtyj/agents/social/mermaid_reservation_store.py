@@ -239,6 +239,8 @@ def confirm_reservation(
     assistance_session_owned: bool = False,
 ) -> dict:
     """Create exactly one assumed-available reservation per confirmed summary."""
+    from agents.social.isluno_transition import blocked
+    if blocked():raise MermaidReservationError("Legacy action quarantined for operator review")
     required = {"trip_date", "adults", "children", "infants", "customer_name", "pickup_preference", "language"}
     if not required.issubset(intake):
         raise MermaidReservationError("confirmed intake is incomplete")
@@ -682,6 +684,8 @@ def complete_demo_payment(
     actor: str = "demo_checkout",
 ) -> tuple[dict, dict]:
     """Atomically record the simulated payment and the paid/booked transitions."""
+    from agents.social.isluno_transition import blocked
+    if blocked():raise MermaidReservationError("Legacy action quarantined for operator review")
     conn = _conn()
     try:
         conn.execute("BEGIN IMMEDIATE")

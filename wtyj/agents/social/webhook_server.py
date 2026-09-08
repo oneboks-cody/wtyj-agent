@@ -72,12 +72,14 @@ def _quote_confirmation_fallback_text(
 
 @asynccontextmanager
 async def lifespan(app):
+    from agents.social.isluno_transition import requested,ensure,blocked
+    if requested():ensure()
     # Brief 190: content pipeline archived — scheduler only starts when explicitly enabled
     if config_loader.get_raw().get("features", {}).get("content_pipeline", False):
         from agents.social.scheduler import start_scheduler
         start_scheduler()
     from agents.social.ali_quote_workflow import resume_pending_processing
-    resume_pending_processing()
+    if not blocked():resume_pending_processing()
     recovery_stop = None
     recovery_thread = None
     workflow_type = str(
@@ -85,7 +87,7 @@ async def lifespan(app):
     )
     if workflow_type == "ali_quote":
         _run_ali_document_retention_cleanup()
-    elif workflow_type == "mermaid_reservation_demo":
+    elif workflow_type == "mermaid_reservation_demo" and not blocked():
         repaired = state_registry.reconcile_mermaid_escalation_freezes()
         log("mermaid_escalation_state_reconciled", **repaired)
     # Every WhatsApp tenant needs durable recovery after provider acceptance.
@@ -466,6 +468,10 @@ def _recover_stale_ali_inbound_once(
             )
             continue
         processing_token = next(iter(recovery_tokens))
+        from agents.social.isluno_transition import quarantined_inbound
+        if quarantined_inbound(message_ids):
+            state_registry.inbound_processing_bulk_update(message_ids,"processing_failed",reason="isluno_legacy_quarantine",error="Legacy turn requires operator review; automatic replay disabled.",processing_token=processing_token)
+            continue
         stable_batch_id = durable_batch_id or hashlib.sha256(
             "\x1f".join(message_ids).encode("utf-8")
         ).hexdigest()
@@ -775,6 +781,11 @@ def _ali_inbound_recovery_loop(
             _recover_stale_ali_inbound_once(ali_workflow=ali_workflow)
         except Exception as exc:
             log("ali_inbound_recovery_failed", error=type(exc).__name__)
+        try:
+            from agents.social.isluno_recovery import run_once as run_isluno_recovery
+            run_isluno_recovery()
+        except Exception as exc:
+            log("isluno_recovery_scheduler_failed", error=type(exc).__name__)
         try:
             from agents.social.mermaid_abandoned_reminders import run_once
             run_once()

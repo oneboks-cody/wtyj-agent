@@ -1,0 +1,58 @@
+{
+  "fixture_only": true,
+  "legacy_tables_unchanged": true,
+  "cutover": {
+    "activated_at": "2026-09-08T18:00:00+00:00",
+    "quarantined": [
+      {
+        "source": "inbound_processing_events",
+        "reference": "old-inbound",
+        "conversation_id": "legacy-guest",
+        "original_status": "processing",
+        "sha256": "7174f8292ff4c357653e126b9d321c817c00c90ce368d9a4ff20a8261f858645",
+        "disposition": "operator_review_no_automatic_replay",
+        "quarantined_at": "2026-09-08T18:00:00+00:00"
+      },
+      {
+        "source": "mermaid_abandoned_reminders",
+        "reference": "old-reminder",
+        "conversation_id": "legacy-guest",
+        "original_status": "sending",
+        "sha256": "97417d41c4837d9a8bfb7a9c2e5be650234ff5c9eef05363fb92e7fcb96864dd",
+        "disposition": "uncertain_outcome_reconcile_no_replay",
+        "quarantined_at": "2026-09-08T18:00:00+00:00"
+      },
+      {
+        "source": "mermaid_checkout_links",
+        "reference": "old-token",
+        "conversation_id": null,
+        "original_status": "unknown",
+        "sha256": "43bb896d4e817c01b89be1c9d943f2ef5f749ccbf85f6eb619391984c616e847",
+        "disposition": "operator_review_no_automatic_replay",
+        "quarantined_at": "2026-09-08T18:00:00+00:00"
+      },
+      {
+        "source": "mermaid_delivery_jobs",
+        "reference": "old-job",
+        "conversation_id": "legacy-guest",
+        "original_status": "pending",
+        "sha256": "962844c7795fd187cde688dd0e826dd82bd59abae3ba2541073cc2da221c5bdb",
+        "disposition": "uncertain_outcome_reconcile_no_replay",
+        "quarantined_at": "2026-09-08T18:00:00+00:00"
+      },
+      {
+        "source": "mermaid_reservations",
+        "reference": "old",
+        "conversation_id": "legacy-guest",
+        "original_status": "quote_sent",
+        "sha256": "8e79bebd21581d10087d42bbbb265c45b96dd75a4920ea43ca1ac8e4d363ceb6",
+        "disposition": "operator_review_no_automatic_replay",
+        "quarantined_at": "2026-09-08T18:00:00+00:00"
+      }
+    ]
+  },
+  "rollback_fence_retained": true,
+  "legacy_checkout_http_status": 410,
+  "quarantined_inbound_recovery_replayed": false,
+  "provider_calls": 0
+}

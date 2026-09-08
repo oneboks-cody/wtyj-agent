@@ -21,6 +21,8 @@ def _document_identity(url):
 
 
 def reconcile_job(job_id):
+    from agents.social.isluno_transition import blocked
+    if blocked():return "quarantined"
     job = documents.delivery_job(job_id)
     if not job or job["status"] == "delivered":
         return "delivered" if job else "unknown"

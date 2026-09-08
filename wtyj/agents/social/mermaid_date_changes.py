@@ -154,6 +154,8 @@ def _completed_reply(proposal, reservation, *, email_followup=True):
 
 
 def handle_button(message, *, email_followup=True):
+    from agents.social.isluno_transition import blocked
+    if blocked():return None
     value=str(message.get('_zernio_interactive_id') or '')
     if not enabled() or not value.startswith(PREFIX):
         return None
@@ -221,6 +223,8 @@ def handle_button(message, *, email_followup=True):
 
 
 def send_confirmation(conversation_id, account_id, token):
+    from agents.social.isluno_transition import blocked
+    if blocked():return False
     """Use the provider's reply-button API; persist its receipt before polling."""
     from agents.social import zernio_dm_client as provider
     if not enabled():return False

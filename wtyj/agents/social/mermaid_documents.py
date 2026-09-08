@@ -830,6 +830,8 @@ def create_receipt(reservation: dict, payment: dict) -> tuple[dict, dict]:
 
 
 def claim_initial_delivery(job_id: str) -> bool:
+    from agents.social.isluno_transition import blocked
+    if blocked():return False
     """Reserve the initial receipt send before I/O, including concurrent callbacks."""
     conn = _conn()
     try:

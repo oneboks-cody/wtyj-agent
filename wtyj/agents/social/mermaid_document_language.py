@@ -80,6 +80,8 @@ def attach(reply, message):
 
 
 def send_picker(conversation_id, account_id, token):
+    from agents.social.isluno_transition import blocked
+    if blocked():return False
     """One native list containing the six reviewed document languages."""
     from agents.social import zernio_dm_client as provider
     state = state_registry.wa_get_booking_state(conversation_id)

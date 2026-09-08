@@ -13,7 +13,7 @@ sys.path[:0]=[str(ROOT/'wtyj'),str(ROOT/'wtyj/tests/isluno')]
 
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--port',type=int,default=8788);parser.add_argument('--manifest',required=True);parser.add_argument('--workspace',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--port',type=int,default=8788);parser.add_argument('--manifest',required=True);parser.add_argument('--workspace',action='store_true');parser.add_argument('--recovery',action='store_true');args=parser.parse_args()
     from scripts.serve_isluno_catalog_fixture import denied,fixture_auth
     socket.socket.connect=denied;socket.socket.connect_ex=denied;socket.socket.sendto=denied;socket.create_connection=denied
     os.environ['ANTHROPIC_API_KEY']='offline-dummy-key'
@@ -24,6 +24,9 @@ def main():
     from test_conversation import response
     from shared import isluno_config
     fixture=PaymentTests('test_actual_payment_receipt_and_unique_ticket_per_item');fixture.setUp()
+    if args.recovery:
+        from scripts.isluno_recovery_fixture import before
+        before(fixture)
     fixture.scope=lambda:isluno_config.verified_scope(account_id='synthetic-account',conversation_id='fixture-guest-one',customer_ref='fixture-whatsapp-one')
     fixture.initial()
     fixture.scope=lambda:isluno_config.verified_scope(account_id='synthetic-account',conversation_id='fixture-guest-two',customer_ref='fixture-whatsapp-two')
@@ -35,6 +38,9 @@ def main():
     fixture.deliver(job,['accepted','accepted','ambiguous'])
     fixture.scope=lambda:isluno_config.verified_scope(account_id='synthetic-account',conversation_id='fixture-guest-three',customer_ref='fixture-whatsapp-three')
     job=fixture.pay();fixture.deliver(job)
+    if args.recovery:
+        from scripts.isluno_recovery_fixture import after
+        after(fixture)
     from dashboard.isluno_operations import Operations,build_router
     from fastapi import FastAPI,Depends
     import uvicorn

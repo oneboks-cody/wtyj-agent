@@ -296,6 +296,27 @@ def render(outcome, snapshot):
 
 
 def handle_message(message, *, store=None, discovery=None, understand=None):
+    from agents.social.isluno_recovery import RecoveryStore
+    from agents.social.isluno_transition import ensure,quarantined_inbound
+    store=store or ConversationStore()
+    scope=verified_scope(account_id=message.get('_zernio_account_id',''),conversation_id=message.get('from',''),customer_ref=message.get('_zernio_sender_id',''))
+    trigger=message.get('message_id') or message.get('_ali_action_id')
+    check(isinstance(trigger,str) and bool(trigger),'missing_verified_message_id')
+    ensure(store.itinerary.db_path,store.itinerary.clock())
+    check(not quarantined_inbound([trigger],store.itinerary.db_path),'legacy_turn_quarantined')
+    recovery=RecoveryStore(store)
+    recovery.observe(scope,trigger,message.get('_zernio_sent_at',''))
+    token=str(message.get('_zernio_interactive_id',''))
+    if token and not token.startswith(('ip_','ie_','iq_','isl_')):
+        recovery.incident(scope,trigger,'legacy_action','quarantined_legacy_button')
+        raise ItineraryError('legacy_action_quarantined')
+    result=_handle_message(message,store=store,discovery=discovery,understand=understand)
+    recovery.progress(scope,trigger)
+    recovery.schedule(scope,trigger,result)
+    return result
+
+
+def _handle_message(message, *, store=None, discovery=None, understand=None):
     store = store or ConversationStore()
     discovery = discovery or DiscoveryStore(store.itinerary.db_path, store.itinerary.catalog_path, clock=store.itinerary.clock)
     scope = verified_scope(account_id=message.get('_zernio_account_id', ''), conversation_id=message.get('from', ''), customer_ref=message.get('_zernio_sender_id', ''))
@@ -340,10 +361,18 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
                 active = store.itinerary.get(scope, saved['active_itinerary_id']) if saved['active_itinerary_id'] else None
                 model_state = {**saved, 'itinerary': active, 'discovery': discovery.current_context(scope),
                                'current_time': store.itinerary.clock().isoformat(), 'timezone': 'America/Curacao'}
-                decision = (understand or understanding.understand)(scope, message.get('text', ''), model_state, snapshot)
-                understanding.validate(decision, discovery_understanding.context(snapshot))
+                try:
+                    decision = (understand or understanding.understand)(scope, message.get('text', ''), model_state, snapshot)
+                    understanding.validate(decision, discovery_understanding.context(snapshot))
+                except Exception as exc:
+                    from agents.social.isluno_recovery import RecoveryStore
+                    RecoveryStore(store).incident(scope,trigger,'understanding_failure',type(exc).__name__)
+                    raise ItineraryError('understanding_unavailable') from exc
             store.record_decision(scope, trigger, decision)
         outcome = store.apply(scope, trigger, saved, decision, message.get('text', ''))
+    if decision['booking']['action']=='stop_reminders':
+        from agents.social.isluno_recovery import RecoveryStore
+        RecoveryStore(store).opt_out(scope)
     prepared_fulfillment = None
     if decision['booking']['action'] in {'documents', 'email'}:
         from agents.social.isluno_payments import PaymentStore, envelope as paid_envelope
@@ -368,7 +397,11 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
     booking = decision['booking']
     response_text = None
     if booking['action'] != 'none' or booking['guest'] or booking['document_language']:
-        response_text = '' if prepared_fulfillment else render(outcome, snapshot)
+        if booking['action']=='stop_reminders':
+            from agents.social.isluno_recovery_copy import STOP
+            response_text=STOP[decision['language']]
+        else:
+            response_text = '' if prepared_fulfillment else render(outcome, snapshot)
         # A simultaneous supported question is answered from its selected,
         # versioned fact translations before the canonical operation result.
         facts = []

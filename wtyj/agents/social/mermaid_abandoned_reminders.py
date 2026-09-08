@@ -11,6 +11,8 @@ from shared import config_loader, state_registry
 
 
 def settings():
+    from agents.social.isluno_transition import blocked
+    if blocked():return {}
     raw = config_loader.get_raw()
     if raw.get('slug') != 'mermaid' or not raw.get('features', {}).get('mermaid_reminders'):
         return {}

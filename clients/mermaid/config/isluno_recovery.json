@@ -1,0 +1,21 @@
+{
+  "tenant_slug": "mermaid",
+  "journey_type": "isluno_itinerary_demo_v1",
+  "version": "isluno-reminders-v1",
+  "enabled": false,
+  "hours": [
+    6,
+    18
+  ],
+  "native_review_pending": [
+    "pap"
+  ],
+  "messages": {
+    "en": "Isluno demo reminder: your itinerary is unfinished. Reply here to continue, ask for a person, or stop reminders. No payment or supplier reservation has been made.",
+    "nl": "Isluno-demoherinnering: uw reisplan is nog niet afgerond. Antwoord hier om verder te gaan, om een medewerker te vragen of herinneringen te stoppen. Er is geen betaling of reservering bij een aanbieder gedaan.",
+    "de": "Isluno-Demoerinnerung: Ihr Reiseplan ist noch nicht abgeschlossen. Antworten Sie hier, um fortzufahren, eine Person anzufordern oder Erinnerungen zu stoppen. Es gab keine Zahlung oder Anbieterbuchung.",
+    "es": "Recordatorio de demostración de Isluno: su itinerario está incompleto. Responda para continuar, pedir ayuda de una persona o detener los recordatorios. No se ha realizado ningún pago ni reserva con el proveedor.",
+    "pt": "Lembrete de demonstração da Isluno: o seu itinerário está incompleto. Responda para continuar, pedir ajuda de uma pessoa ou parar os lembretes. Não houve pagamento nem reserva com o fornecedor.",
+    "pap": "Recordatorio di demo di Isluno: bo itinerario no ta kompleto ainda. Kontestá pa sigui, pidi yudansa di un persona òf para recordatorionan. No a hasi pago ni reservashon serka proveedor."
+  }
+}

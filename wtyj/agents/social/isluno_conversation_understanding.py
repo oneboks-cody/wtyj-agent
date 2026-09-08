@@ -9,7 +9,7 @@ from shared.isluno_pricing import check
 TOOL = copy.deepcopy(discovery.TOOL)
 TOOL['input_schema']['properties'].update({
     'booking': {'type': 'object', 'additionalProperties': False,
-        'properties': {'action': {'type': 'string', 'enum': ['none', 'new', 'add', 'update', 'remove', 'cancel', 'human', 'approve', 'summary', 'documents', 'email']},
+        'properties': {'action': {'type': 'string', 'enum': ['none', 'new', 'add', 'update', 'remove', 'cancel', 'human', 'approve', 'summary', 'documents', 'email', 'stop_reminders']},
                        'updates': {'type': 'array', 'maxItems': 10, 'items': {'type': 'object', 'properties': {
                            'item_id': {'type': 'string'}, 'product_id': {'type': 'string'}, 'date': {'type': 'string'},
                            'slot_id': {'type': 'string'}, 'guest_ages': {'type': 'array', 'items': {'type': 'integer'}},
@@ -43,7 +43,7 @@ def system_prompt():
         'Translations are faithful to those facts only: preserve numbers, restrictions, uncertainty and demo labels; never add new claims. '
         'Product names stay recognizable. All money, changes, cancellation and operator status are rendered by the server. '
         'If saved itinerary is paid or no longer editable, request human recovery; never claim a refund or completed change. '
-        'Use booking.action human for an explicit operator request. Supplier/safety questions with unconfirmed answers use the unavailable-answer path.')
+        'Use booking.action stop_reminders when the guest asks to stop reminders or follow-up messages. Do not infer opt-in. Use booking.action human for an explicit operator request. Supplier/safety questions with unconfirmed answers use the unavailable-answer path.')
 
 
 def validate(result, catalog):
@@ -52,7 +52,7 @@ def validate(result, catalog):
     discovery.validate(base, catalog)
     booking = result['booking']
     check(isinstance(booking, dict) and {'action', 'updates', 'guest', 'document_language'} <= set(booking) <= {'action', 'updates', 'guest', 'document_language', 'email_address', 'email_address_correction'}, 'invalid_booking_contract')
-    check(isinstance(booking['action'], str) and booking['action'] in {'none', 'new', 'add', 'update', 'remove', 'cancel', 'human', 'approve', 'summary', 'documents', 'email'}, 'invalid_booking_action')
+    check(isinstance(booking['action'], str) and booking['action'] in {'none', 'new', 'add', 'update', 'remove', 'cancel', 'human', 'approve', 'summary', 'documents', 'email', 'stop_reminders'}, 'invalid_booking_action')
     check('email_address' not in booking or isinstance(booking['email_address'], str) and len(booking['email_address']) <= 254, 'invalid_email_address')
     check('email_address_correction' not in booking or type(booking['email_address_correction']) is bool, 'invalid_email_correction')
     updates = booking['updates']

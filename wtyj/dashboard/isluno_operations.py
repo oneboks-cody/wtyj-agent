@@ -178,9 +178,11 @@ class Operations:
                     if item['selection']['date']==now.astimezone(ZoneInfo(item['timezone'])).date().isoformat():
                         scheduled.append({'journey_id':identifier,'item_id':item['id'],'guest_name':detail['item_details'].get(item['id'],{}).get('guest_name'),
                             'product_name':item['product']['name'],'starts_at':item['starts_at'],'timezone':item['timezone'],'stage_label':detail['item_stages'][item['id']]['label']})
-        return {'as_of':now.isoformat(),'journeys':journeys,'attention':attention,'scheduled_today':scheduled,
+        from agents.social.isluno_recovery import RecoveryStore
+        recovery=RecoveryStore(self.conversation).audit()
+        return {'recovery':recovery,'as_of':now.isoformat(),'journeys':journeys,'attention':attention,'scheduled_today':scheduled,
                 'counts':{'itineraries':len(journeys),'trip_items':sum(j['item_count'] for j in journeys),
-                          'demo_paid':sum(j['stage']=='demo_paid' for j in journeys),'attention':len(attention)},
+                          'demo_paid':sum(j['stage']=='demo_paid' for j in journeys),'attention':len(attention)+sum(i['status']=='operator_review' for i in recovery['incidents'])+len(recovery['outbound_failures'])+sum(r['status'] in {'ambiguous','claimed','rejected','blocked','window_closed'} for r in recovery['reminders'])+len(recovery['legacy']['quarantined'])},
                 'availability':'assumed_demo','payment':'simulated','real_money_charged':False,'supplier_booking_made':False}
 
     def document(self, identifier, document_id):

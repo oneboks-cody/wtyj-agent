@@ -30,6 +30,10 @@ def send_reply(channel: str, conversation_id: str, account_id: str, text: str,
     (like send_dm_reply) directly, so the registry stays the source of truth
     for which transport handles which channel.
     """
+    if channel == "whatsapp":
+        from agents.social.isluno_transition import blocked
+        if blocked() and attachment_type not in {"isluno_discovery", "isluno_quote", "isluno_fulfillment"}:
+            return False
     sender_cls = SENDERS.get(channel, DEFAULT_SENDER)
     name_kwargs = {"attachment_name": attachment_name} if attachment_name else {}
     return sender_cls.send(conversation_id, account_id, text,
