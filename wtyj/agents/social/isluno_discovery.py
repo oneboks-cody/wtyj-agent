@@ -25,6 +25,16 @@ LABELS = {
 }
 
 
+CLARIFICATIONS = {
+ 'en': ["I don’t have confirmed information to answer that question. Would you like operator help?", "I couldn’t match a trip. Could you describe the activity or trip you mean?", "Your request for operator help is recorded. No booking or payment has been made.", "Ask the team"],
+ 'nl': ["Ik heb geen bevestigde informatie om die vraag te beantwoorden. Wil je hulp van het team?", "Ik kon geen passende reis vinden. Kun je de activiteit of reis beschrijven?", "Je verzoek om hulp van het team is vastgelegd. Er is niets geboekt of betaald.", "Vraag het team"],
+ 'de': ["Mir fehlen bestätigte Informationen zu dieser Frage. Möchtest du Hilfe vom Team?", "Ich konnte keine passende Reise finden. Welche Aktivität oder Reise meinst du?", "Deine Anfrage an das Team ist erfasst. Es wurde nichts gebucht oder bezahlt.", "Team fragen"],
+ 'es': ["No tengo información confirmada para responder. ¿Quieres ayuda del equipo?", "No encontré un viaje que coincida. ¿Puedes describir la actividad o el viaje?", "Tu solicitud de ayuda está registrada. No se ha realizado ninguna reserva ni pago.", "Preguntar al equipo"],
+ 'pt': ["Não tenho informação confirmada para responder. Gostaria de ajuda da equipa?", "Não encontrei uma viagem correspondente. Pode descrever a atividade ou viagem?", "O pedido de ajuda está registado. Não foi feita nenhuma reserva ou pagamento.", "Perguntar à equipa"],
+ 'pap': ["Mi no tin informashon konfirmá pa kontestá e pregunta. Bo ke yudansa di e ekipo?", "Mi no a haña un biahe ku ta kuadra. Bo por deskribí e aktividat òf biahe?", "Bo petishon pa yudansa ta registrá. No a hasi reservashon ni pago.", "Puntra e ekipo"],
+}
+
+
 def dump(value):
     return json.dumps(value, sort_keys=True, ensure_ascii=False)
 
@@ -89,7 +99,13 @@ class DiscoveryStore:
                 old, action = json.loads(row['payload']), json.loads(row['action_json'])
                 check(row['plan_id'] == old['id'] and old['catalog_revision'] == snapshot['revision']
                       and datetime.fromisoformat(old['expires_at']) > self.clock(), 'stale_discovery_action')
-                decision = {'product_ids': [action['product_id']], 'language': old['language'], 'intent': 'details', 'fact_keys': old['fact_keys'], 'question': ''}
+                selected_product = action['product_id']
+                selected_keys = old.get('product_fact_keys', {}).get(selected_product, [])
+                if action['kind'] == 'choose':
+                    selected_keys = selected_keys or ['summary']
+                decision = {'product_ids': [selected_product] if selected_product else [], 'language': old['language'],
+                            'intent': 'human' if action['kind'] == 'human' else 'details',
+                            'fact_keys': selected_keys, 'question': ''}
                 offset = action.get('offset', 0)
                 force_single = action.get('fallback') is True
                 info_offset = action.get('info_offset', 0)
@@ -108,8 +124,19 @@ class DiscoveryStore:
                 return {'type': 'postback', 'title': title, 'payload': token}
             products = {p['id']: p for p in snapshot['catalog']['products']}
             chosen = [products[key] for key in decision['product_ids']]
-            if not chosen:
-                text = labels[5]  # Model prose is never authority for customer-facing trip facts.
+            fact_association = {p['id']: [k for k in decision['fact_keys'] if k in isluno_understanding.facts(p)] for p in chosen}
+            answer_status = ('human_requested' if decision['intent'] == 'human' else
+                             'no_match' if not chosen else
+                             'unavailable' if not decision['fact_keys'] and decision['question'].strip() else 'source_backed')
+            if answer_status != 'source_backed':
+                clarification = CLARIFICATIONS[locale]
+                text = clarification[{'unavailable': 0, 'no_match': 1, 'human_requested': 2}[answer_status]]
+                clarification_buttons = ([button('human', chosen[0]['id'] if len(chosen) == 1 else None, clarification[3])]
+                                         if answer_status == 'unavailable' else [])
+                body = {'accountId': scope.account_id, 'message': text, 'buttons': clarification_buttons}
+                asset_ids, missing, fallback = [], [], None
+            elif not chosen:
+                text = CLARIFICATIONS[locale][1]
                 body = {'accountId': scope.account_id, 'message': text, 'buttons': []}
                 asset_ids, missing, fallback = [], [], None
             elif len(chosen) > 1:
@@ -158,15 +185,10 @@ class DiscoveryStore:
                               'action': {'buttons': [{'type': 'quick_reply', 'quick_reply': {'id': b['payload'], 'title': b['title']}} for b in buttons]}}
                              for i, url in enumerate(urls)]
                     body = {'accountId': scope.account_id, 'interactive': {'type': 'carousel', 'body': {'text': text[:1024]}, 'action': {'cards': cards}}}
-                    # Confirmed native rejection falls back to ONE image. A fresh next
-                    # photo action starts at the second original asset, so none are lost.
-                    fallback_buttons = [button('add', product['id'], labels[1])]
-                    if positions[0] + 1 < len(gallery):
-                        fallback_buttons.append(button('photos', product['id'], labels[2], offset=positions[0] + 1, fallback=True))
-                    fallback = {'accountId': scope.account_id, 'message': text[:1024], 'attachmentUrl': urls[0], 'attachmentType': 'image', 'buttons': fallback_buttons}
             payload = {'id': plan_id, 'scope': scope.__dict__, 'trigger_id': trigger_id, 'trigger_sent_at': sent_at,
                        'catalog_revision': snapshot['revision'], 'catalog_version': snapshot['catalog']['version'],
                        'product_ids': decision['product_ids'], 'language': locale, 'fact_keys': decision['fact_keys'],
+                       'product_fact_keys': fact_association, 'answer_status': answer_status,
                        'body': body, 'fallback': fallback, 'asset_ids': asset_ids, 'missing_asset_ids': missing,
                        'selected_intent': selected_intent, 'requires_human': decision['intent'] == 'human',
                        'created_at': self.clock().isoformat(), 'expires_at': (self.clock() + timedelta(hours=24)).isoformat()}

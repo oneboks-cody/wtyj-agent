@@ -27,15 +27,13 @@ def post_once(scope, body, key, guard=None):
         return {'status': 'ambiguous'}  # No blind retry, even with an idempotency key.
     data = client._response_json(response)
     details = data.get('data') if isinstance(data.get('data'), dict) else {}
-    if details.get('partialFailure') or data.get('warnings') or data.get('success') is False:
+    if details.get('partialFailure') or data.get('warnings'):
         return {'status': 'ambiguous'}
     provider_id = client._response_message_id(response)
     if 200 <= response.status_code < 300:
-        return {'status': 'accepted' if provider_id else 'ambiguous', 'provider_id': provider_id}
-    error = data.get('error') if isinstance(data.get('error'), dict) else {}
-    code = error.get('code')
-    if response.status_code == 400 and type(code) is int and code in {100, 131053}:
-        return {'status': 'rejected_media'}
+        return {'status': 'accepted' if provider_id and data.get('success') is not False else 'ambiguous', 'provider_id': provider_id}
+    # Documented errors use top-level string code and optional platformError.
+    # Neither shape proves a safe no-send media failure: never auto-fallback.
     if response.status_code in {408, 409, 429} or response.status_code >= 500:
         return {'status': 'ambiguous'}
     return {'status': 'rejected'}
@@ -81,18 +79,7 @@ def send_plan(conversation_id, account_id, plan_id, *, store=None, post=None, wi
             result = {'status': 'window_closed'}
         else:
             result = post(scope, plan['body'], 'isluno-discovery-' + plan_id + ('-fallback' if plan.get('fallback_active') else ''))
-        # No automatic fallback after ambiguous/partial/rate-limit failures.
-        # A definite media rejection records a fallback plan for a subsequent
-        # paced invocation; only a single image is attempted on that path.
-        if result.get('status') == 'rejected_media' and plan.get('fallback'):
-            plan['rejected_primary_body'] = plan['body']
-            plan['body'], plan['fallback'] = plan['fallback'], None
-            plan['delivery_asset_ids'] = plan['asset_ids'][:1]
-            plan['fallback_active'] = True
-            with store.db() as db, db:
-                db.execute("UPDATE isluno_discovery_plans SET status='queued', payload=? WHERE id=?", (dump(plan), plan_id))
-            sleep(6)
-            return send_plan(conversation_id, account_id, plan_id, store=store, post=post, window=window, sleep=sleep)
+        # A remote rejection does not establish safe automatic fallback.
         with store.db() as db, db:
             db.execute('UPDATE isluno_discovery_plans SET status=?,provider_id=? WHERE id=?',
                        (result.get('status', 'ambiguous'), result.get('provider_id'), plan_id))

@@ -40,7 +40,7 @@ def system_prompt():
             'Return up to three matching products. Use details for one trip, discover for recommendations, add only for an explicit '
             'request to start arranging that trip, human for an explicit person request. Discovery never books or pays. '
             'Use question only for a short clarifying question if no product matches; no prices, facts or promises in question. '
-            'For a question whose answer is not in supplied facts, return no fact_keys and ask the guest whether they want operator help. '
+            'For a question whose answer is not in supplied facts, return no fact_keys and a nonempty question to request the server-owned unavailable-answer prompt. The server safely localizes clarification; your prose is not shown as fact. '
             'Do not direct guests to a website or email to book. Never copy old Mermaid booking state. '
             'Do not guess safety, supplier availability, times, child prices or payment status. The demo uses labelled sample rules later.')
 

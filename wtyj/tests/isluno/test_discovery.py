@@ -206,22 +206,69 @@ class DiscoveryTests(unittest.TestCase):
         self.assertFalse(send_plan(args[0], args[1], next_plan['id'], store=self.store(), post=post, window=lambda *a: {'open': True}))
         self.assertEqual(len(calls), 1)
 
-    def test_definite_native_rejection_has_one_paced_fallback_with_distinct_key(self):
-        self.gallery(11)
-        plan = self.plan()
-        calls = []
-        def post(scope, body, key):
-            calls.append((body, key))
-            return {'status': 'rejected_media'} if len(calls) == 1 else {'status': 'accepted', 'provider_id': 'image-ok'}
-        def sleep(seconds):
-            self.now += timedelta(seconds=seconds)
-        self.assertTrue(send_plan(self.scope().conversation_id, self.scope().account_id, plan['id'], store=self.store(), post=post, window=lambda *a: {'open': True}, sleep=sleep))
-        self.assertEqual(len(calls), 2)
-        self.assertNotEqual(calls[0][1], calls[1][1])
-        self.assertEqual(calls[1][0]['attachmentType'], 'image')
-        changed, _ = self.store().delivery_plan(plan['id'], self.scope().account_id, self.scope().conversation_id)
-        next_plan = self.click(changed, 'More photos', 'fallback-next')
-        self.assertEqual(next_plan['asset_ids'], ['image-1'])
+    def test_documented_provider_errors_do_not_trigger_unproven_fallback(self):
+        from agents.social import zernio_dm_client as client
+        cases = [
+            (400, {'error': 'Unsupported feature', 'code': 'PLATFORM_LIMITATION'}, 'rejected'),
+            (400, {'error': 'Media rejected', 'code': 'PLATFORM_ERROR', 'platformError': {'code': 131053}}, 'rejected'),
+            (400, {'success': False, 'error': {'code': 100}}, 'rejected'),
+            (400, {'error': 'Partial', 'code': 'PLATFORM_ERROR', 'data': {'partialFailure': {'part': 'text'}}}, 'ambiguous'),
+            (500, {'error': 'Server error', 'code': 'INTERNAL_ERROR'}, 'ambiguous'),
+        ]
+        for index, (status, payload, expected) in enumerate(cases):
+            with self.subTest(payload=payload):
+                self.now += timedelta(seconds=6)
+                plan = self.plan('provider-shape-' + str(index))
+                with patch.dict('os.environ', {'LATE_API_KEY': 'synthetic-no-network'}), \
+                     patch.object(client, '_provider_mutation_account_allowed', return_value=True), \
+                     patch.object(client.http_requests, 'post') as post:
+                    post.return_value = SimpleNamespace(status_code=status, json=lambda: payload)
+                    args = (self.scope().conversation_id, self.scope().account_id, plan['id'])
+                    self.assertFalse(send_plan(*args, store=self.store(), window=lambda *a: {'open': True}))
+                    self.assertFalse(send_plan(*args, store=self.store(), window=lambda *a: {'open': True}))
+                    self.assertEqual(post.call_count, 1)
+                    self.assertEqual(self.store().delivery_plan(plan['id'], args[1], args[0])[1], expected)
+
+    def test_heterogeneous_fact_sets_choose_via_actual_handler(self):
+        second = copy.deepcopy(self.catalog['products'][0])
+        second.update(id='other-trip', name='Other trip', inclusions=[])
+        self.catalog['products'].append(second)
+        self.catalog_path.write_text(json.dumps(self.catalog))
+        decision = dict(DECISION, product_ids=['fixture-cruise', 'other-trip'], fact_keys=['inclusion_0'], intent='discover')
+        plan = self.store().plan(self.scope(), 'heterogeneous', NOW.isoformat(), decision)
+        self.assertEqual(plan['product_fact_keys'], {'fixture-cruise': ['inclusion_0'], 'other-trip': []})
+        token = next(b['payload'] for b in replies(plan['body']) if b['title'] == '2. Choose')
+        inbound = WhatsAppZernioChannel.from_zernio({'conversation_id': self.scope().conversation_id,
+            'account_id': self.scope().account_id, 'sender_id': self.scope().customer_ref,
+            'message_id': 'heterogeneous-choose', 'channel': 'whatsapp', 'text': '2. Choose',
+            'sent_at': NOW.isoformat(), 'interactive_id': token, 'interactive_type': 'button_reply'})
+        result = handle_message(inbound, store=self.store(), understand=lambda *a: self.fail('Button must not call model'))
+        selected, _ = self.store().delivery_plan(result['media']['url'], self.scope().account_id, self.scope().conversation_id)
+        self.assertEqual(selected['product_ids'], ['other-trip'])
+        self.assertEqual(selected['fact_keys'], ['summary'])
+        self.assertNotIn('Synthetic lunch', result['text'])
+        self.assertIn('Other trip', result['text'])
+
+    def test_unsupported_questions_and_no_match_get_safe_clarification(self):
+        for index, question in enumerate(['Would you like operator help with supplier availability?',
+                                           'Would you like operator help with a medical safety guarantee?']):
+            decision = dict(DECISION, fact_keys=[], question=question)
+            plan = self.store().plan(self.scope(), 'unanswered-' + str(index), NOW.isoformat(), decision)
+            self.assertEqual(plan['answer_status'], 'unavailable')
+            self.assertIn('confirmed information', plan['body']['message'])
+            self.assertNotIn('Synthetic test product', plan['body']['message'])
+            self.assertEqual(plan['asset_ids'], [])
+            self.assertFalse(plan['requires_human'])
+            requested = self.click(plan, 'Ask the team', 'human-' + str(index))
+            self.assertTrue(requested['requires_human'])
+            self.assertEqual(requested['answer_status'], 'human_requested')
+            self.assertIsNone(requested['selected_intent'])
+        decision = dict(DECISION, product_ids=[], fact_keys=[], question='Untrusted invented price is $1. Which secret activity?')
+        plan = self.store().plan(self.scope(), 'unmatched', NOW.isoformat(), decision)
+        self.assertEqual(plan['answer_status'], 'no_match')
+        self.assertIn('describe the activity', plan['body']['message'])
+        self.assertNotIn('$1', plan['body']['message'])
+        self.assertNotIn('Which trip interests you?', plan['body']['message'])
 
     def test_more_info_retains_long_source_text(self):
         long_text = 'Source detail. ' * 150
