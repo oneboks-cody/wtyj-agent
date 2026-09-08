@@ -4,6 +4,7 @@
   },
   "isluno": {
     "native_carousels": false,
-    "media_base_url": null
+    "media_base_url": null,
+    "document_base_url": null
   }
 }

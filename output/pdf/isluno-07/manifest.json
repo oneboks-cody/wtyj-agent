@@ -1,0 +1,74 @@
+[
+  {
+    "language": "en",
+    "file": "isluno-quote-en.pdf",
+    "sha256": "a1336d3e447d0cb7f78a1852b1c007528f364c867c967856da7cff032e55b4ac",
+    "pages": 4,
+    "bytes": 47406,
+    "items": 6,
+    "currency": "USD",
+    "total_minor": 150000,
+    "demo_labels_every_page": true,
+    "synthetic_only": true
+  },
+  {
+    "language": "nl",
+    "file": "isluno-quote-nl.pdf",
+    "sha256": "3b1eab1a10a7d264d7ee379f7091273abc9056d860e3ff3345d9d7fac42ac86f",
+    "pages": 4,
+    "bytes": 47716,
+    "items": 6,
+    "currency": "USD",
+    "total_minor": 150000,
+    "demo_labels_every_page": true,
+    "synthetic_only": true
+  },
+  {
+    "language": "de",
+    "file": "isluno-quote-de.pdf",
+    "sha256": "eb8a99804b18061675866a0491953423d930de557dafd40afd29ef10b86f0968",
+    "pages": 4,
+    "bytes": 47812,
+    "items": 6,
+    "currency": "USD",
+    "total_minor": 150000,
+    "demo_labels_every_page": true,
+    "synthetic_only": true
+  },
+  {
+    "language": "es",
+    "file": "isluno-quote-es.pdf",
+    "sha256": "6da2ece42d70e56f13880946ae6ce6093bdbd07f2ff72d2660ed6c15fc9c07e3",
+    "pages": 4,
+    "bytes": 47638,
+    "items": 6,
+    "currency": "USD",
+    "total_minor": 150000,
+    "demo_labels_every_page": true,
+    "synthetic_only": true
+  },
+  {
+    "language": "pt",
+    "file": "isluno-quote-pt.pdf",
+    "sha256": "7aea32c259c142bfedf63ad56d4a11d8689180327c098bcfa0a3a8de0c4a4c24",
+    "pages": 4,
+    "bytes": 48060,
+    "items": 6,
+    "currency": "USD",
+    "total_minor": 150000,
+    "demo_labels_every_page": true,
+    "synthetic_only": true
+  },
+  {
+    "language": "pap",
+    "file": "isluno-quote-pap.pdf",
+    "sha256": "0356306b628bbad59d292ae6abf6f49bac98af39903252a9021cfc18653c5ef0",
+    "pages": 4,
+    "bytes": 47647,
+    "items": 6,
+    "currency": "USD",
+    "total_minor": 150000,
+    "demo_labels_every_page": true,
+    "synthetic_only": true
+  }
+]

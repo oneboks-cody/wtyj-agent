@@ -9,7 +9,7 @@ from shared.isluno_pricing import check
 TOOL = copy.deepcopy(discovery.TOOL)
 TOOL['input_schema']['properties'].update({
     'booking': {'type': 'object', 'additionalProperties': False,
-        'properties': {'action': {'type': 'string', 'enum': ['none', 'new', 'add', 'update', 'remove', 'cancel', 'human', 'approve']},
+        'properties': {'action': {'type': 'string', 'enum': ['none', 'new', 'add', 'update', 'remove', 'cancel', 'human', 'approve', 'summary']},
                        'updates': {'type': 'array', 'maxItems': 10, 'items': {'type': 'object', 'properties': {
                            'item_id': {'type': 'string'}, 'product_id': {'type': 'string'}, 'date': {'type': 'string'},
                            'slot_id': {'type': 'string'}, 'guest_ages': {'type': 'array', 'items': {'type': 'integer'}},
@@ -29,6 +29,8 @@ def system_prompt():
         'Saved session and item IDs are authoritative. Preserve guest data unless explicitly corrected; ask only missing information. '
         'booking.action add means an explicit new trip; update targets existing or pending item IDs; remove targets one item; '
         'cancel means an explicit unpaid whole-itinerary cancellation; new starts a separate itinerary only when explicitly requested. '
+        'Use booking.action summary when the customer asks to review the complete itinerary or get a quote. '
+        'Native reply buttons alone confirm summary details and approve a quote. '
         'Never infer approval from a question, acknowledgement or correction. approve is only explicit approval; the server owns quote stages. '
         'Use the supplied booking_rules for valid slot/option IDs and constraints. Do not invent identifiers. Capture all supplied guest names, exact ages, dates, slot IDs, options and pickup choices. Never invent an adult age from an adult count. '
         'Resolve relative dates from supplied current date and timezone. A bare answer refers to the last missing field. '
@@ -47,7 +49,7 @@ def validate(result, catalog):
     discovery.validate(base, catalog)
     booking = result['booking']
     check(isinstance(booking, dict) and set(booking) == {'action', 'updates', 'guest', 'document_language'}, 'invalid_booking_contract')
-    check(isinstance(booking['action'], str) and booking['action'] in {'none', 'new', 'add', 'update', 'remove', 'cancel', 'human', 'approve'}, 'invalid_booking_action')
+    check(isinstance(booking['action'], str) and booking['action'] in {'none', 'new', 'add', 'update', 'remove', 'cancel', 'human', 'approve', 'summary'}, 'invalid_booking_action')
     updates = booking['updates']
     check(not updates or booking['action'] in {'new','add','update','remove'}, 'updates_require_explicit_action')
     check(isinstance(updates, list) and len(updates) <= 10, 'invalid_booking_updates')

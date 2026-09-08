@@ -102,7 +102,9 @@ class ConversationTests(unittest.TestCase):
         self.assertIn('Synthetic lunch', result['text'])
         self.assertEqual(self.active(), before)
         result, _ = self.turn(response('approve'))
-        self.assertIn('approval is not available', result['text'])
+        self.assertEqual(result['media']['type'], 'isluno_quote')
+        from agents.social.isluno_quotes import QuoteStore
+        self.assertEqual(QuoteStore(self.store).list(self.scope())[0]['status'], 'summary')
         self.assertEqual(self.active(), before)
         self.assertEqual(count, 1)
 

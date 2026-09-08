@@ -49,4 +49,15 @@ def build_router(check_auth, itinerary_store_factory=ItineraryStore, conversatio
         except isluno_config.IslunoUnavailable as exc:
             raise HTTPException(status_code=403, detail="Isluno scope unavailable") from exc
 
+    @router.get("/quotes")
+    def quotes(response: Response, account_id: str, conversation_id: str, customer_ref: str,
+               limit: int = Query(default=20, ge=1, le=100), offset: int = Query(default=0, ge=0)):
+        from agents.social.isluno_quotes import QuoteStore
+        try:
+            scope = isluno_config.verified_scope(account_id=account_id, conversation_id=conversation_id, customer_ref=customer_ref)
+            response.headers["Cache-Control"] = "no-store"
+            return {"quotes": QuoteStore(conversation_store_factory()).list(scope, limit=limit, offset=offset)}
+        except isluno_config.IslunoUnavailable as exc:
+            raise HTTPException(status_code=403, detail="Isluno scope unavailable") from exc
+
     return router

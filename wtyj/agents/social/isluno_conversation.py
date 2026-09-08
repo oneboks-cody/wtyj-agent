@@ -50,6 +50,8 @@ class ConversationStore:
                     id TEXT PRIMARY KEY, scope_key TEXT NOT NULL, itinerary_id TEXT, reason TEXT NOT NULL,
                     request_json TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending');
             ''')
+            from agents.social.isluno_quotes import init_schema
+            init_schema(db)
             yield db
 
     def session(self, scope):
@@ -108,10 +110,13 @@ class ConversationStore:
             session = copy.deepcopy(current)
             session.setdefault('item_details', {})
             session['chat_language'] = decision['language']
+            session['catalog_revision'] = snapshot['revision']
             if booking['document_language'] is not None:
                 session['document_language'] = booking['document_language']
             active = self.itinerary._current(db, scope, session['active_itinerary_id']) if session['active_itinerary_id'] else None
             action = booking['action']
+            if action in {'summary', 'approve'} and session['document_language'] is None:
+                session['document_language'] = session['chat_language']
             review = action == 'human' or decision['intent'] == 'human' or (active and active['status'] != 'draft' and (action in {'add', 'update', 'remove', 'cancel'} or (booking['guest'] and action != 'new')))
             status, error = 'saved', None
             if review:
@@ -133,6 +138,7 @@ class ConversationStore:
                     for u in booking['updates'])):
                 status = 'choose_item'
             elif action == 'approve':
+                session['guest'].update(booking['guest'])
                 status = 'approval_unavailable'
             elif action == 'cancel':
                 if active:
@@ -193,6 +199,12 @@ class ConversationStore:
                     session['item_details'] = details_before
                     error = exc.code if isinstance(exc, ItineraryError) else 'product_rules_unavailable'
                 db.execute('RELEASE item_updates')
+            from agents.social.isluno_quotes import invalidate_changed
+            if booking['guest'].get('name') and action not in {'new', 'add', 'update'} and status != 'review':
+                for detail in session['item_details'].values():
+                    if detail.get('guest_name') == current['guest'].get('name'):
+                        detail['guest_name'] = booking['guest']['name']
+            invalidate_changed(db, scope, session, active)
             session['revision'] += 1
             outcome = {'session': session, 'itinerary': active, 'status': status, 'error': error, 'catalog_revision': snapshot['revision']}
             reply = render(outcome, snapshot)
@@ -286,6 +298,9 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
     timestamp = message.get('_zernio_sent_at', '')
     base_decision = None
     source_snapshot = None
+    if str(message.get('_zernio_interactive_id', '')).startswith('iq_'):
+        from agents.social.isluno_quotes import QuoteStore, envelope as quote_envelope
+        return quote_envelope(QuoteStore(store).act(scope, trigger, timestamp, message['_zernio_interactive_id'], message.get('_zernio_interactive_type')))
     if message.get('_zernio_interactive_id'):
         action_plan = discovery.plan(scope, trigger, timestamp, action_token=message['_zernio_interactive_id'], interactive_type=message.get('_zernio_interactive_type'))
         if not action_plan['selected_intent'] and not action_plan['requires_human']:
@@ -312,6 +327,16 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
                 understanding.validate(decision, discovery_understanding.context(snapshot))
             store.record_decision(scope, trigger, decision)
         outcome = store.apply(scope, trigger, saved, decision, message.get('text', ''))
+    with store.db() as db:
+        existing_quote_reply = db.execute('SELECT job_id FROM isluno_quote_requests WHERE scope_key=? AND trigger_id=?', (scope.key, trigger)).fetchone()
+        old_quote = db.execute('SELECT s.status FROM isluno_quote_latest l JOIN isluno_quote_state s ON s.quote_id=l.quote_id WHERE l.scope_key=?', (scope.key,)).fetchone()
+    ready = outcome['itinerary'] and outcome['itinerary']['status'] == 'draft' and outcome['itinerary']['items'] and not outcome['session']['pending']
+    prepared_quote = None
+    if existing_quote_reply or ready and outcome['status'] != 'review' and (decision['booking']['action'] in {'summary', 'approve'} or old_quote and old_quote['status'] == 'superseded'):
+        from agents.social.isluno_quotes import QuoteStore, envelope as quote_envelope
+        prepared_quote = QuoteStore(store).prepare(scope, trigger, timestamp, expected_session_revision=outcome['session']['revision'])
+        if not decision['question']:
+            return quote_envelope(prepared_quote)
     base = {key: decision[key] for key in discovery_understanding.TOOL['input_schema']['required']}
     booking = decision['booking']
     response_text = None
@@ -327,6 +352,9 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
         if facts and decision['question']:
             fact_text = '\n\n'.join(facts)[:max(0, 4096 - len(response_text) - 2)]
             response_text = fact_text + '\n\n' + response_text
+    if prepared_quote:
+        from agents.social.isluno_quote_documents import REVIEW_READY
+        response_text = (response_text or '') + '\n\n' + REVIEW_READY[decision['language']]
     # Action resolution used this trigger already; use a distinct durable reply
     # ID for its application result so selection metadata cannot mask intake.
     reply_trigger = 'conversation-' + opaque(scope, trigger, 'reply')
