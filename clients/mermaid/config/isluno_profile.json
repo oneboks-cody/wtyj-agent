@@ -1,0 +1,32 @@
+{
+  "schema_version": "isluno.v1",
+  "tenant_slug": "mermaid",
+  "journey_type": "isluno_itinerary_demo_v1",
+  "profile_version": "isluno-profile-v1-20260908",
+  "brand": {
+    "id": "isluno",
+    "name": "Isluno",
+    "assistant_name": "TRACY",
+    "website": "https://isluno.com",
+    "primary_color": "#125055"
+  },
+  "document_languages": ["en", "nl", "de", "es", "pap", "pt"],
+  "native_review_pending": ["pap"],
+  "mode": "demo",
+  "greetings": {
+    "en": "Welcome to Isluno! I’m TRACY, your virtual trip assistant.",
+    "nl": "Welkom bij Isluno! Ik ben TRACY, uw virtuele reisassistent.",
+    "de": "Willkommen bei Isluno! Ich bin TRACY, Ihre virtuelle Reiseassistentin.",
+    "es": "¡Bienvenido a Isluno! Soy TRACY, su asistente virtual de viajes.",
+    "pap": "Bon bini na Isluno! Mi ta TRACY, bo asistente virtual pa biahenan.",
+    "pt": "Boas-vindas à Isluno! Sou a TRACY, sua assistente virtual de viagens."
+  },
+  "demo_notice": {
+    "en": "This is a demo. Some trip rules are labelled samples. No money moves and no real supplier reservation is made.",
+    "nl": "Dit is een demo. Sommige reisvoorwaarden zijn gemarkeerde voorbeeldwaarden. Er wordt geen geld afgeschreven en geen echte reservering bij een aanbieder gemaakt.",
+    "de": "Dies ist eine Demo. Einige Reiseregeln sind gekennzeichnete Beispiele. Es wird kein Geld eingezogen und keine echte Anbieterbuchung vorgenommen.",
+    "es": "Esta es una demostración. Algunas condiciones son ejemplos identificados. No se mueve dinero ni se realiza una reserva real con el proveedor.",
+    "pap": "Esaki ta un demo. Algun regla di biahe ta ehèmpelnan indiká. No ta move sèn i no ta hasi un reservashon real serka un proveedor.",
+    "pt": "Esta é uma demonstração. Algumas condições são exemplos identificados. Nenhum dinheiro é movimentado e nenhuma reserva real é feita com o fornecedor."
+  }
+}
