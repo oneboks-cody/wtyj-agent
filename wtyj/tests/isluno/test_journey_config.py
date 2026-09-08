@@ -87,7 +87,7 @@ class JourneyConfigTests(unittest.TestCase):
         self.assertEqual(set(result["document_languages"]), {"en", "nl", "de", "es", "pap", "pt"})
         self.assertEqual(result["capabilities"], {
             "brand_profile": True, "isolated_context": True,
-            "itinerary_booking": True, "demo_payment": True, "catalog_editor": False,
+            "itinerary_booking": True, "demo_payment": True, "catalog_editor": True,
         })
         self.assertEqual(identity.require_scope(self.scope()), self.profile)
 

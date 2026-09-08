@@ -70,4 +70,6 @@ def build_router(check_auth, itinerary_store_factory=ItineraryStore, conversatio
         except isluno_config.IslunoUnavailable as exc:
             raise HTTPException(status_code=403, detail="Isluno scope unavailable") from exc
 
+    from dashboard.isluno_catalog_api import build_router as catalog_router
+    router.include_router(catalog_router(check_auth))
     return router

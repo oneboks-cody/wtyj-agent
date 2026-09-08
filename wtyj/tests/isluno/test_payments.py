@@ -218,6 +218,28 @@ class PaymentTests(unittest.TestCase):
         with self.assertRaisesRegex(ItineraryError,'expired_payment_action'):
             self.payments.complete(self.scope(),'expired',self.now.isoformat(),token,'button_reply')
 
+    def test_operator_catalog_api_changes_new_quotes_not_paid_history(self):
+        from fastapi import FastAPI
+        from fastapi.testclient import TestClient
+        from dashboard.isluno_catalog_api import build_router
+        from scripts.serve_isluno_catalog_fixture import fixture_auth
+        paid=self.pay(); before=self.payments.records(self.scope())[0]
+        pdfs={d['id']:self.payments.document(d['id']) for d in before['documents']}
+        catalog=CatalogStore(self.catalog_path); snapshot=catalog.snapshot()
+        prices=json.loads(json.dumps(snapshot['catalog']['products'][0]['price_rules']))
+        prices['age_bands'][2]['amount_minor']=12000
+        app=FastAPI();app.include_router(build_router(fixture_auth(),lambda:catalog))
+        with TestClient(app) as client:
+            result=client.put('/catalog',headers={'Authorization':'Bearer isluno-local-fixture-token'},json={
+                'expected_revision':snapshot['revision'],'changes':[{'id':'fixture-cruise','changes':{'summary':'New catalog description','price_rules':prices}}]})
+            self.assertEqual(result.status_code,200)
+        self.assertEqual(self.payments.records(self.scope())[0],before)
+        self.assertEqual({ident:self.payments.document(ident) for ident in pdfs},pdfs)
+        self.turn(response('new',[{'product_id':'fixture-cruise','date':'2026-10-20'}],{'name':'New Party','ages':[35,34,8]}))
+        self.assertEqual(self.active()['totals']['total_minor'],29000)
+        self.assertNotEqual(self.active()['id'],before['snapshot']['itinerary']['id'])
+        self.assertEqual(self.payments.records(self.scope())[0]['snapshot'],before['snapshot'])
+
     def test_catalog_change_after_mint_blocks_payment(self):
         approved=self.approved();catalog=CatalogStore(self.catalog_path);snap=catalog.snapshot()
         catalog.publish([{'id':'fixture-cruise','changes':{'summary':'Changed'}}],snap['revision'])

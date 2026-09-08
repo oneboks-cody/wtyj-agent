@@ -331,6 +331,12 @@ class CatalogStore:
                         _check(isinstance(asset, dict) and asset.get("id") in known, "unknown gallery asset")
                         immutable = lambda a: {k: v for k, v in a.items() if k not in {"order", "caption"}}
                         _check(immutable(asset) == immutable(known[asset["id"]]), "asset source/delivery identity is immutable")
+                if by_id[key].get("demo_rules") and "demo_rules" in values:
+                    previous = by_id[key]["demo_rules"]
+                    replacement = values["demo_rules"]
+                    _check(isinstance(replacement, dict), "existing demo sample provenance cannot be removed")
+                    for field in ("authority", "label", "approval_ref", "real_booking_eligible"):
+                        _check(replacement.get(field) == previous[field], "demo sample provenance is immutable")
                 values = copy.deepcopy(values)
                 if "demo_rules" in values and values["demo_rules"] is not None:
                     _check(isinstance(values["demo_rules"], dict), "demo rule object")
