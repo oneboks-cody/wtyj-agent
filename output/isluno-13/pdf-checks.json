@@ -1,0 +1,51 @@
+[
+  {
+    "file": "1-28222a1b00436708982c0bd63671970d.pdf",
+    "sha256": "21f22288636afe6e0dfea00585a01dec5f0e586aff6bbc81f2e45b3d539698b7",
+    "pages": 1,
+    "demo_notice_every_page": true,
+    "text_extractable_every_page": true
+  },
+  {
+    "file": "1-b6e76e59e2beb7d19ba872f73b8f0bc7.pdf",
+    "sha256": "3a081658767defb582d49cd1cbc610e963a5a8caaf26cc5bcc34b879fe8bae2d",
+    "pages": 1,
+    "demo_notice_every_page": true,
+    "text_extractable_every_page": true
+  },
+  {
+    "file": "1-d9b279635867af9b876c7d844658b540.pdf",
+    "sha256": "9c048396d59b6a9808a237cec11826b33594bbd27f2c8fb7e7c3d3fce6f1ce3c",
+    "pages": 1,
+    "demo_notice_every_page": true,
+    "text_extractable_every_page": true
+  },
+  {
+    "file": "2-6f44962c49152c09cf4e0c50114c4da8.pdf",
+    "sha256": "00807544e8950351cd2b666eb69cf8c9aab98832eacdd114d3102533cdd3b3c0",
+    "pages": 1,
+    "demo_notice_every_page": true,
+    "text_extractable_every_page": true
+  },
+  {
+    "file": "2-7f4de8c42fe350233a404115eca1d9bc.pdf",
+    "sha256": "f71ef963b23df82e9cd7725b4321b8d2c67505ac683889309964886f7dbd3fdd",
+    "pages": 1,
+    "demo_notice_every_page": true,
+    "text_extractable_every_page": true
+  },
+  {
+    "file": "2-95da5f2a1fe0f34e771e6d61f5061f53.pdf",
+    "sha256": "d33500838f2eb4aadb0ba438ab4782762af656dc2670274345b763813db95aeb",
+    "pages": 2,
+    "demo_notice_every_page": true,
+    "text_extractable_every_page": true
+  },
+  {
+    "file": "2-9b1dba1e2158ab131ca1644a6324d4a3.pdf",
+    "sha256": "baba0742121d8b2a527d163c9258bc5d5e3479ee44f40270fcc680735eabe185",
+    "pages": 1,
+    "demo_notice_every_page": true,
+    "text_extractable_every_page": true
+  }
+]

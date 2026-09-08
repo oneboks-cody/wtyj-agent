@@ -1,0 +1,317 @@
+[
+  {
+    "file": "output/pdf/isluno-07/isluno-quote-en.pdf",
+    "sha256": "a1336d3e447d0cb7f78a1852b1c007528f364c867c967856da7cff032e55b4ac",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-07/isluno-quote-nl.pdf",
+    "sha256": "3b1eab1a10a7d264d7ee379f7091273abc9056d860e3ff3345d9d7fac42ac86f",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-07/isluno-quote-de.pdf",
+    "sha256": "eb8a99804b18061675866a0491953423d930de557dafd40afd29ef10b86f0968",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-07/isluno-quote-es.pdf",
+    "sha256": "6da2ece42d70e56f13880946ae6ce6093bdbd07f2ff72d2660ed6c15fc9c07e3",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-07/isluno-quote-pt.pdf",
+    "sha256": "7aea32c259c142bfedf63ad56d4a11d8689180327c098bcfa0a3a8de0c4a4c24",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-07/isluno-quote-pap.pdf",
+    "sha256": "0356306b628bbad59d292ae6abf6f49bac98af39903252a9021cfc18653c5ef0",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-receipt-en.pdf",
+    "sha256": "e0d0abdd54500e8d69205f44a5a4ce5ee51bcd86d73a876b75db3967f5f02f49",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-ticket-en-1.pdf",
+    "sha256": "03fe677d9bc72888b40511ef44e1b8f9fbe2cadf4e26fbd86eb282447d13a4f2",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-ticket-en-2.pdf",
+    "sha256": "76851698350852bfa8f5b95a7392c83d884d91f6c8c61ec0d1d952578276ed2a",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-receipt-nl.pdf",
+    "sha256": "c1769ef6ff93991d6d5f15b695f416d8816bf55ae9af683e7bffb96da30a7a6d",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-ticket-nl-1.pdf",
+    "sha256": "095bad1627367b1f3fb3da75a4d7f7c0d55d483b6b37991ecc4e7fefc319bd66",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-ticket-nl-2.pdf",
+    "sha256": "16ff8fdd4c7b57a46e386f6c4ec04360f8b22bb08a3352c5e43d296e6b738cc7",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-receipt-de.pdf",
+    "sha256": "f576a8da7e75e1e769eceb3b4a22c8f27f98715bc25ed34b718a3efe505c7563",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-ticket-de-1.pdf",
+    "sha256": "c1ce58a3d9b292359dfad51efbebfd62ae4b1f9e633752ccb2a36665c3dda030",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-ticket-de-2.pdf",
+    "sha256": "5985903caa07334c68a51bd74cd787c25efe3d8d956bbab944ab7aa7a84e7249",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-receipt-es.pdf",
+    "sha256": "bdc6df9c53af6c2bed123a39580876abc11216e93abef8daf3d417c42b46f6c2",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-ticket-es-1.pdf",
+    "sha256": "2a902a1a3ec9d70024c9e70fb2e9848bc63a80bf29270a6110c464a09041b7a1",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-ticket-es-2.pdf",
+    "sha256": "fa0884ebca940213611dbedc3d8adf8c4e6928da5b1f7a14cdd868c2ab4ae561",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-receipt-pt.pdf",
+    "sha256": "907dbf33d28e256f77cad3917d628bab9a52cd0ae44503f0740913396402accb",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-ticket-pt-1.pdf",
+    "sha256": "4c41a357566ce38998801561997666739d5d62f32ca57882e9433327cf2f01cc",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-ticket-pt-2.pdf",
+    "sha256": "ac5990e80d84a866ad25b8b008d6d301099894289d220338dea67fdef7f2fa59",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-receipt-pap.pdf",
+    "sha256": "6c75476e69740ac9cc8c302cceaba5d1524bd3b64e7623563be605fada405b5a",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-ticket-pap-1.pdf",
+    "sha256": "6bf6bcdabc8c0f9c34f9993be4404157235dbef998c2cbb718fb44e1946a269e",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "output/pdf/isluno-08/isluno-ticket-pap-2.pdf",
+    "sha256": "b5b11b138fda35287292e308c8518bd17ecf4c3d8ae3d77e58356582ec1c63e7",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-09/01-list.png",
+    "sha256": "5287329de08d3a8626def0d68c0d376baec12339ee0c1a8f1cc6c08ace2dbeb3",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-09/02-editor-saved.png",
+    "sha256": "fa800ad3d798d4a852c2566818d0eb8a9c243199075408870f4987105785bdb9",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-09/03-gallery-saved.png",
+    "sha256": "1c42113cac6fd18b4b1f3843cb1741ecaab99f9c7561f925f943fe53c3c7df42",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-09/04-invalid-rules.png",
+    "sha256": "a6dd06ef89b9133a63d4579e55f20bbf0e9dea40a7ef7d20950834062f0911e6",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-09/05-conflict.png",
+    "sha256": "9a23051153d4aa7124bb0e7261715eef89baa7587d77f56e6d975353b064196e",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-09/06-mobile-gallery.png",
+    "sha256": "e8210e76354d9eb6a8c00b075bfba4bf3a66d0ac9fe828e337774ca43f77f459",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-09/07-empty-search.png",
+    "sha256": "6d9db99df6ec4aa1ff1d368e0dead60306dba4e17cc8e1944a4210e97782b224",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-09/08-reload-error.png",
+    "sha256": "6f227b2f1259ab873abc5739b5763d6501dc05b605f85a0349b858d986187184",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-10/01-journeys.png",
+    "sha256": "0fa19da4abaae6240fb80906a4df689fbacfcb9c501dfe3c071ae2869cb0b217",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-10/02-multi-trip.png",
+    "sha256": "3729b4e300e96d20d6c7b082129b6f6ed40c75486a6bffe06059ecdaea7d5f49",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-10/03-quote-corrections.png",
+    "sha256": "d5aaa10fde0dc95ff1b99221233419d092bb3b83e8a6af25e64a1e643239cb3d",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-10/04-payment-tickets.png",
+    "sha256": "825607e44507f72e9faf363d3bb923d3494ae49466ee164f169a488d1976333e",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-10/05-partial-delivery.png",
+    "sha256": "e4c2571484a7dcf5657e7dfe02d8726683aa17a5b6e466f65b0b1ab8d439dcb5",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-10/06-event-history.png",
+    "sha256": "5159c40279941b4b5bc4de8074658507658593d24d6d174cd2a90bf3bb875a78",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-10/07-refresh-failure.png",
+    "sha256": "bf6bfde6ffda96b6541e7671657a1cb7cc93d1f80f671f414184a3b2e62c2642",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-10/08-mobile-trips.png",
+    "sha256": "a9fd756efec3d19e19a379b3eed1013d0f0f56d52b7ac46174a822d2eadc0010",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-10/09-empty-search.png",
+    "sha256": "b02cb5139398db52343c9aa83f7db11bb04a54c18d555c7641465c25610acb1a",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-10/10-guest-workspaces.png",
+    "sha256": "0f3fba650b853443f39609ffb6a05dc743137740fa550d87fa802a2871502b35",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-10/11-guest-history.png",
+    "sha256": "a5c049edcf3476d175e66401f22c7f772c8de1aebf37528306ffaf449a80419c",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-10/12-tenant-switch.png",
+    "sha256": "a6cb2ee7e72c8e854e009e0cf69d6de4af9d1358b4750219fcabe58bb976fed4",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-10/13-quote-delivery-associations.png",
+    "sha256": "22580c2008392e156a53b35aaa52ee7d8e06edbada84582975a01a69af6fc813",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-10/14-mobile-delivery-associations.png",
+    "sha256": "27e63abf85a0499ed428b434613013ec357aeb8ecc5a33bd169a4963df185f43",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-11/01-today-paused.png",
+    "sha256": "11a147963e262259a74a5518ab9f45d68fb9d3f11dba1809182ef90733add976",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-11/02-catalog-navigation.png",
+    "sha256": "11928efaaaf0f29c41ea39b09d412a531ab1c6a98c1b25ded8389396c27e96f2",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-11/03-itinerary-navigation.png",
+    "sha256": "df8fe3f3ed6a418bdb84ed40540122909fd5bbb713ec91de34b07444a412503b",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-11/04-legacy-brand.png",
+    "sha256": "458b3a71baa389be7523d891bf6132a268dddebb32a782dbd32202ee4f793b17",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-11/05-control-failure.png",
+    "sha256": "a61ba120b6905e75913b883b560512c8fb60531cebafca5e8f1836fd61cc4eec",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-11/06-unknown-controls.png",
+    "sha256": "919ae3f25cba58f31086c46bb4bc41204d47ad07cb13b5e8005a78d341af376d",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-11/07-mobile-today.png",
+    "sha256": "ea0a89561d42a8448b5080485ee65a3944ae2422e43aa9ba57f2f83d40caf3fd",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-11/08-mobile-menu.png",
+    "sha256": "b0626588a4aad453bfa62501aebb510a9f7637bf793405dac1c77b086d65a6b7",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-11/09-capability-off.png",
+    "sha256": "f8fc1108f6747bfa4254ea0785a4c7ddba910abf9214f9c0c787df2a66a64b83",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-11/10-other-tenant.png",
+    "sha256": "0a5ff9ad503ade8a1360fa1e06b02cdeadfea46eeb63a4100ef22fbd8ab35b67",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-11/11-control-recovery.png",
+    "sha256": "f681470e266f7e94e4f88a558f09bbac605d9a5676e286cba19e93c90b078451",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-11/12-today-failure.png",
+    "sha256": "f2744373cd713379c150078884a586160859a0b90423a1be6a86106fa1aca94c",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-11/13-status-error.png",
+    "sha256": "41f9a94b89abf3eeda2663f9b0027d693255001778999128e088147a665be03e",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-12/recovery-desktop.png",
+    "sha256": "68acfbd9ce9170bd23cbc16bc384af0306651b55cb45ecf53e3e3b1655d3d3b7",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-12/recovery-mobile.png",
+    "sha256": "87585769def2d6a39b44af76ee492812c4a09b7a6e7d0a2485ff83820653ee7d",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-12/saved-progress-desktop.png",
+    "sha256": "f2b4f150d743d46d32881236a95aedad99c0bcdbb480603a9d00d87b68cb9aec",
+    "matches_recorded_manifest": true
+  },
+  {
+    "file": "/Users/calvin/Projects/isluno-dashboard-demo-20260908/output/isluno-12/saved-progress-mobile.png",
+    "sha256": "dcef9cb73d4e3a4f872b69a7b0f2567522ef8f72ad9845b38fe6f58a964f32d2",
+    "matches_recorded_manifest": true
+  }
+]

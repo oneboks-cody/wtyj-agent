@@ -1,0 +1,735 @@
+[
+  {
+    "id": "ISL-01.1",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/346",
+    "criterion": "A reproducible backend and dashboard source/config manifest identifies every included change; discrepancies have an explicit disposition.",
+    "evidence": [
+      "wtyj/briefs/isluno_baseline_manifest.json"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Historical baseline observations are carried evidence, not current runtime verification."
+  },
+  {
+    "id": "ISL-01.2",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/346",
+    "criterion": "Existing Mermaid issues and PRs are linked as evidence without being bulk closed, duplicated or treated as merged.",
+    "evidence": [
+      "wtyj/briefs/isluno_baseline_contracts.md"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Historical baseline observations are carried evidence, not current runtime verification."
+  },
+  {
+    "id": "ISL-01.3",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/346",
+    "criterion": "The agreed contracts cover per-item guests, dates, options, prices, status and gallery assets, plus tenant/customer/journey/version identity.",
+    "evidence": [
+      "wtyj/tests/isluno/fixtures/contracts.v1.json"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Historical baseline observations are carried evidence, not current runtime verification."
+  },
+  {
+    "id": "ISL-01.4",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/346",
+    "criterion": "A synthetic fixture pack and dependency map are available; real customer records and credentials are excluded.",
+    "evidence": [
+      "wtyj/briefs/isluno_baseline_manifest.json"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Historical baseline observations are carried evidence, not current runtime verification."
+  },
+  {
+    "id": "ISL-02.1",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/347",
+    "criterion": "The inventory manifest accounts for every discovered product; the earlier count of 31 is reconciled with the refreshed inventory.",
+    "evidence": [
+      "test_catalog.py::test_repository_catalog_and_all_assets_match_import_manifest"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Committed 31-product inventory only; no fresh website fetch. Unknown supplier facts remain null; sample rules are explicit."
+  },
+  {
+    "id": "ISL-02.2",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/347",
+    "criterion": "Every product has stable IDs and all approved gallery images mapped to that product; broken/duplicate images and source discrepancies are reported.",
+    "evidence": [
+      "test_catalog_import.py::test_gallery_dedup_and_expiring_tokens_never_enter_source_records",
+      "test_discovery.py::test_all_originals_convert_to_bounded_jpegs_without_network_or_new_downloads"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Committed 31-product inventory only; no fresh website fetch. Unknown supplier facts remain null; sample rules are explicit."
+  },
+  {
+    "id": "ISL-02.3",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/347",
+    "criterion": "Unknown prices, taxes, age rules, schedules or policies are visibly unresolved and cannot silently become invented quote values.",
+    "evidence": [
+      "test_catalog.py::test_sample_rules_preserve_unknown_facts_and_are_demo_only"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Committed 31-product inventory only; no fresh website fetch. Unknown supplier facts remain null; sample rules are explicit."
+  },
+  {
+    "id": "ISL-02.4",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/347",
+    "criterion": "Edits cannot overwrite concurrent changes or alter existing quote/booked snapshots.",
+    "evidence": [
+      "test_catalog.py::test_concurrent_publish_has_one_winner",
+      "test_quotes.py::test_catalog_publication_revokes_actions_without_repricing_frozen_items"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Committed 31-product inventory only; no fresh website fetch. Unknown supplier facts remain null; sample rules are explicit."
+  },
+  {
+    "id": "ISL-02.5",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/347",
+    "criterion": "Catalog data works with demo adapters without hitting supplier APIs.",
+    "evidence": [
+      "test_itinerary.py::test_all_31_products_demo_price_with_explicit_sample_labels"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Committed 31-product inventory only; no fresh website fetch. Unknown supplier facts remain null; sample rules are explicit."
+  },
+  {
+    "id": "ISL-03.1",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/348",
+    "criterion": "With the capability off, existing Mermaid behavior remains available and other tenants are unchanged.",
+    "evidence": [
+      "test_journey_config.py::test_default_off_and_only_literal_true_enables",
+      "test_recovery.py::test_cutover_and_rollback_quarantine_legacy_callers_without_changing_history"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Before first cutover feature-off preserves baseline; after cutover rollback intentionally retains the automated legacy fence."
+  },
+  {
+    "id": "ISL-03.2",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/348",
+    "criterion": "With it on in synthetic tests, all new journey context and generated customer-facing identity use Isluno.",
+    "evidence": [
+      "test_journey_context.py::test_fresh_context_does_not_import_or_change_legacy_rows"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Before first cutover feature-off preserves baseline; after cutover rollback intentionally retains the automated legacy fence."
+  },
+  {
+    "id": "ISL-03.3",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/348",
+    "criterion": "Wrong tenant/account/journey contexts fail closed and old Mermaid context cannot populate a new Isluno booking.",
+    "evidence": [
+      "test_journey_config.py::test_scope_rejects_foreign_and_legacy_identity"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Before first cutover feature-off preserves baseline; after cutover rollback intentionally retains the automated legacy fence."
+  },
+  {
+    "id": "ISL-03.4",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/348",
+    "criterion": "The existing number, account ownership, credentials and live feature controls are not modified by local implementation.",
+    "evidence": [
+      "clients/mermaid/config/isluno_feature_patch.json",
+      "candidate-manifest.json"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Before first cutover feature-off preserves baseline; after cutover rollback intentionally retains the automated legacy fence."
+  },
+  {
+    "id": "ISL-04.1",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/349",
+    "criterion": "One-trip and multi-trip itineraries persist across restart and produce exact item/total reconciliation.",
+    "evidence": [
+      "test_itinerary.py::test_single_multi_restart_and_exact_lines"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Engine-level concurrency/price tests are unit contracts; integrated callers separately create new business stages."
+  },
+  {
+    "id": "ISL-04.2",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/349",
+    "criterion": "Different product child bands, extras and pickup policies are respected; unknown conversion/tax/fee rules are not invented.",
+    "evidence": [
+      "test_itinerary.py::test_child_bands_extras_pickup_and_capacity",
+      "test_itinerary.py::test_mixed_currency_and_unverified_tax_are_never_invented"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Engine-level concurrency/price tests are unit contracts; integrated callers separately create new business stages."
+  },
+  {
+    "id": "ISL-04.3",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/349",
+    "criterion": "Concurrent or duplicated mutations cannot lose an update, duplicate an item or mutate a confirmed quote snapshot.",
+    "evidence": [
+      "test_itinerary.py::test_concurrent_distinct_edits_have_one_winner",
+      "test_itinerary.py::test_simultaneous_duplicate_request_has_one_effect"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Engine-level concurrency/price tests are unit contracts; integrated callers separately create new business stages."
+  },
+  {
+    "id": "ISL-04.4",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/349",
+    "criterion": "Known schedule overlap and invalid date/guest combinations produce a correctable state.",
+    "evidence": [
+      "test_itinerary.py::test_known_overlap_including_checkin_is_correctable_and_atomic",
+      "test_itinerary.py::test_guest_date_and_option_errors_do_not_mutate"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Engine-level concurrency/price tests are unit contracts; integrated callers separately create new business stages."
+  },
+  {
+    "id": "ISL-04.5",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/349",
+    "criterion": "Storage changes are additive and a prior application can coexist with retained new records.",
+    "evidence": [
+      "test_itinerary.py::test_scope_isolation_and_additive_legacy_compatibility",
+      "test_integrated.py::test_new_journeys_and_ledgers_survive_cutover_rollback_without_replay"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Engine-level concurrency/price tests are unit contracts; integrated callers separately create new business stages."
+  },
+  {
+    "id": "ISL-05.1",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/350",
+    "criterion": "Recommendations and stated trip facts can be traced to the selected catalog version.",
+    "evidence": [
+      "test_conversation.py::test_catalog_publish_during_understanding_keeps_source_and_price_bound"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Native carousels remain default-off/unverified; complete in-chat ordinary-image pagination is the supported offline contract."
+  },
+  {
+    "id": "ISL-05.2",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/350",
+    "criterion": "Galleries of 1, 2, 10, 11 and 21 images remain fully accessible in WhatsApp with correct pagination and product association.",
+    "evidence": [
+      "test_discovery.py::test_all_gallery_sizes_are_accessible_and_correctly_associated",
+      "test_discovery.py::test_single_image_fallback_mode_keeps_every_photo_in_chat"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Native carousels remain default-off/unverified; complete in-chat ordinary-image pagination is the supported offline contract."
+  },
+  {
+    "id": "ISL-05.3",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/350",
+    "criterion": "Choose/Add/More photos actions use chat reply payloads; discovery does not require an external website.",
+    "evidence": [
+      "test_discovery.py::test_choose_add_and_duplicate_turn_do_not_create_booking"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Native carousels remain default-off/unverified; complete in-chat ordinary-image pagination is the supported offline contract."
+  },
+  {
+    "id": "ISL-05.4",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/350",
+    "criterion": "Missing images, stale actions and ambiguous send failures do not spam the customer or silently select another product.",
+    "evidence": [
+      "test_discovery.py::test_missing_media_is_reported_without_product_substitution",
+      "test_discovery.py::test_window_pacing_replay_and_ambiguous_delivery"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Native carousels remain default-off/unverified; complete in-chat ordinary-image pagination is the supported offline contract."
+  },
+  {
+    "id": "ISL-05.5",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/350",
+    "criterion": "Gallery browsing does not create a booking or payment.",
+    "evidence": [
+      "test_discovery.py::test_choose_add_and_duplicate_turn_do_not_create_booking"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Native carousels remain default-off/unverified; complete in-chat ordinary-image pagination is the supported offline contract."
+  },
+  {
+    "id": "ISL-06.1",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/351",
+    "criterion": "The customer can book one trip, add a second, change only one date and remove an item without losing unrelated details.",
+    "evidence": [
+      "test_conversation.py::test_one_trip_second_trip_targeted_date_change_and_removal",
+      "test_operations.py::test_date_only_correction_preserves_each_trip_party"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Six-language automated contracts are not native-speaker approval."
+  },
+  {
+    "id": "ISL-06.2",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/351",
+    "criterion": "Questions and correction requests are answered without being mistaken for summary/quote approval.",
+    "evidence": [
+      "test_conversation.py::test_question_and_approval_do_not_mutate_itinerary"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Six-language automated contracts are not native-speaker approval."
+  },
+  {
+    "id": "ISL-06.3",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/351",
+    "criterion": "The six existing supported languages and language switches preserve structured state; native-language review gaps remain explicit.",
+    "evidence": [
+      "test_conversation.py::test_language_switches_preserve_state_and_separate_document_language",
+      "test_conversation.py::test_missing_non_english_translation_is_rejected"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Six-language automated contracts are not native-speaker approval."
+  },
+  {
+    "id": "ISL-06.4",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/351",
+    "criterion": "One understanding path per inbound is preserved; Python does not introduce reply-text or keyword intent classifiers.",
+    "evidence": [
+      "test_conversation.py::test_conversation_sdk_uses_single_existing_model_request"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Six-language automated contracts are not native-speaker approval."
+  },
+  {
+    "id": "ISL-06.5",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/351",
+    "criterion": "Unpaid cancellation is safe; post-payment changes go through an explicit supported recovery/operator path.",
+    "evidence": [
+      "test_conversation.py::test_cancel_unpaid_and_route_paid_changes_to_operator_without_mutation"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Six-language automated contracts are not native-speaker approval."
+  },
+  {
+    "id": "ISL-07.1",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/352",
+    "criterion": "Customer summary, quote PDF, database and dashboard projection agree on items, dates, guests, currency and totals.",
+    "evidence": [
+      "test_quotes.py::test_multi_item_snapshot_keeps_different_guests_pickups_and_exact_prices",
+      "integrated.json"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Immutable quote version, PDF bytes and projection tested offline; provider delivery not established."
+  },
+  {
+    "id": "ISL-07.2",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/352",
+    "criterion": "A correction produces a new quote/version and invalidates every old approval/payment action.",
+    "evidence": [
+      "test_quotes.py::test_correction_creates_new_version_revokes_every_old_action_and_document"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Immutable quote version, PDF bytes and projection tested offline; provider delivery not established."
+  },
+  {
+    "id": "ISL-07.3",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/352",
+    "criterion": "Repeated approval is idempotent; a guest question is not approval.",
+    "evidence": [
+      "test_quotes.py::test_actual_flow_separate_confirm_approve_and_duplicate_taps",
+      "test_quotes.py::test_question_is_not_approval_and_chat_language_is_separate"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Immutable quote version, PDF bytes and projection tested offline; provider delivery not established."
+  },
+  {
+    "id": "ISL-07.4",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/352",
+    "criterion": "Rendered samples cover all supported document languages and long/multi-item itineraries without clipped prices or missing demo labels.",
+    "evidence": [
+      "output/pdf/isluno-07/manifest.json",
+      "visual-review.md"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Immutable quote version, PDF bytes and projection tested offline; provider delivery not established."
+  },
+  {
+    "id": "ISL-07.5",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/352",
+    "criterion": "Documents are delivered only to the bound conversation/customer and delivery claims match recorded state.",
+    "evidence": [
+      "test_quotes.py::test_wrong_customer_plaintext_expired_and_duplicate_key_conflict",
+      "test_quotes.py::test_ambiguous_and_claimed_delivery_never_retry_or_claim_delivered"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Immutable quote version, PDF bytes and projection tested offline; provider delivery not established."
+  },
+  {
+    "id": "ISL-08.1",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/353",
+    "criterion": "No website or card entry is required to complete the demo payment; ordinary text claiming payment does not mark it paid.",
+    "evidence": [
+      "test_integrated.py::test_new_journeys_and_ledgers_survive_cutover_rollback_without_replay",
+      "test_payments.py::test_wrong_customer_plaintext_expiry_and_corrected_actions_fail_closed"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Native demo payment is simulated; attachment URLs are transport resources, not external customer checkout. Ambiguous delivery stays unresolved."
+  },
+  {
+    "id": "ISL-08.2",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/353",
+    "criterion": "Duplicate, expired, wrong-user and superseded actions cannot complete payment or fulfillment twice.",
+    "evidence": [
+      "test_payments.py::test_duplicate_and_concurrent_taps_commit_once",
+      "test_payments.py::test_wrong_customer_plaintext_expiry_and_corrected_actions_fail_closed"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Native demo payment is simulated; attachment URLs are transport resources, not external customer checkout. Ambiguous delivery stays unresolved."
+  },
+  {
+    "id": "ISL-08.3",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/353",
+    "criterion": "All ticket items and totals match the paid quote; every artifact states that no real money or supplier booking occurred.",
+    "evidence": [
+      "test_payments.py::test_actual_payment_receipt_and_unique_ticket_per_item",
+      "output/pdf/isluno-08/manifest.json",
+      "integrated.json"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Native demo payment is simulated; attachment URLs are transport resources, not external customer checkout. Ambiguous delivery stays unresolved."
+  },
+  {
+    "id": "ISL-08.4",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/353",
+    "criterion": "Restart or partial document delivery recovers without duplicating the booking or previously completed sends.",
+    "evidence": [
+      "test_payments.py::test_restart_partial_delivery_skips_accepted_and_ambiguity_never_resends",
+      "test_payments.py::test_restart_after_accepted_part_before_next_claim_resumes_remaining"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Native demo payment is simulated; attachment URLs are transport resources, not external customer checkout. Ambiguous delivery stays unresolved."
+  },
+  {
+    "id": "ISL-08.5",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/353",
+    "criterion": "Optional email occurs only after consent and never blocks WhatsApp fulfillment.",
+    "evidence": [
+      "test_payments.py::test_email_requires_exact_address_native_consent_and_cannot_block_whatsapp",
+      "test_payments.py::test_invalid_supplied_replacement_revokes_old_email",
+      "integrated.json"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Native demo payment is simulated; attachment URLs are transport resources, not external customer checkout. Ambiguous delivery stays unresolved."
+  },
+  {
+    "id": "ISL-09.1",
+    "issue": "https://github.com/unboks-org/unboks-dashboard-api/issues/164",
+    "criterion": "Operators can find/edit every product and reorder/caption its gallery through real backend API callers.",
+    "evidence": [
+      "dashboard:docs/ISL-09-catalog-editor.md",
+      "test_catalog_api.py::test_actual_publication_conflict_and_immutable_catalog_history"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Actual-shell/API browser evidence carried at unchanged dashboard head; synthetic authentication is explicit."
+  },
+  {
+    "id": "ISL-09.2",
+    "issue": "https://github.com/unboks-org/unboks-dashboard-api/issues/164",
+    "criterion": "Invalid prices/rules or concurrent edits cannot silently publish; missing data remains visible.",
+    "evidence": [
+      "test_catalog_api.py::test_invalid_rules_identity_and_asset_injection_are_atomic",
+      "test_catalog_api.py::test_actual_publication_conflict_and_immutable_catalog_history"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Actual-shell/API browser evidence carried at unchanged dashboard head; synthetic authentication is explicit."
+  },
+  {
+    "id": "ISL-09.3",
+    "issue": "https://github.com/unboks-org/unboks-dashboard-api/issues/164",
+    "criterion": "Changes affect new recommendations/quotes while preserving historical snapshots.",
+    "evidence": [
+      "test_payments.py::test_operator_catalog_api_changes_new_quotes_not_paid_history"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Actual-shell/API browser evidence carried at unchanged dashboard head; synthetic authentication is explicit."
+  },
+  {
+    "id": "ISL-09.4",
+    "issue": "https://github.com/unboks-org/unboks-dashboard-api/issues/164",
+    "criterion": "Unauthorized tenants cannot access Isluno catalog operations.",
+    "evidence": [
+      "test_catalog_api.py::test_auth_tenant_and_disabled_capability_guard_reads_and_writes"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Actual-shell/API browser evidence carried at unchanged dashboard head; synthetic authentication is explicit."
+  },
+  {
+    "id": "ISL-09.5",
+    "issue": "https://github.com/unboks-org/unboks-dashboard-api/issues/164",
+    "criterion": "Desktop/mobile and keyboard interactions work with explicit loading/error/empty states.",
+    "evidence": [
+      "dashboard:output/isluno-09/manifest.json",
+      "dashboard:docs/ISL-09-catalog-editor.md"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Actual-shell/API browser evidence carried at unchanged dashboard head; synthetic authentication is explicit."
+  },
+  {
+    "id": "ISL-10.1",
+    "issue": "https://github.com/unboks-org/unboks-dashboard-api/issues/165",
+    "criterion": "One-trip and multi-trip bookings are visible with accurate per-item and aggregate status.",
+    "evidence": [
+      "test_operations.py::test_real_multi_item_payment_tickets_and_truthful_partial_delivery",
+      "integrated.json"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Operator data reflects server ledgers, not provider delivery/read confirmation."
+  },
+  {
+    "id": "ISL-10.2",
+    "issue": "https://github.com/unboks-org/unboks-dashboard-api/issues/165",
+    "criterion": "Operators can trace every quote correction, payment action and document delivery.",
+    "evidence": [
+      "test_operations.py::test_corrected_quote_history_remains_visible_and_old_guest_not_renamed",
+      "test_operations.py::test_delivery_parts_identify_superseded_and_current_quote_versions"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Operator data reflects server ledgers, not provider delivery/read confirmation."
+  },
+  {
+    "id": "ISL-10.3",
+    "issue": "https://github.com/unboks-org/unboks-dashboard-api/issues/165",
+    "criterion": "The UI cannot manufacture a paid/booked state or offer an invalid transition.",
+    "evidence": [
+      "test_operations.py::test_reads_do_not_modify_snapshots_or_create_delivery",
+      "dashboard:docs/ISL-10-itinerary-operations.md"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Operator data reflects server ledgers, not provider delivery/read confirmation."
+  },
+  {
+    "id": "ISL-10.4",
+    "issue": "https://github.com/unboks-org/unboks-dashboard-api/issues/165",
+    "criterion": "Current Isluno journeys and historical Mermaid records remain distinguishable without widening access.",
+    "evidence": [
+      "test_operations.py::test_auth_feature_scope_and_pagination",
+      "dashboard:docs/ISL-10-itinerary-operations.md"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Operator data reflects server ledgers, not provider delivery/read confirmation."
+  },
+  {
+    "id": "ISL-10.5",
+    "issue": "https://github.com/unboks-org/unboks-dashboard-api/issues/165",
+    "criterion": "Actual backend-connected browser tests cover loading, partial failure, search, mobile and tenant switching.",
+    "evidence": [
+      "dashboard:output/isluno-10/manifest.json",
+      "dashboard:docs/ISL-10-itinerary-operations.md"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Operator data reflects server ledgers, not provider delivery/read confirmation."
+  },
+  {
+    "id": "ISL-11.1",
+    "issue": "https://github.com/unboks-org/unboks-dashboard-api/issues/166",
+    "criterion": "New Isluno screens, document labels and applicable navigation use the approved brand consistently.",
+    "evidence": [
+      "dashboard:docs/ISL-11-workspace.md",
+      "clients/mermaid/config/isluno_profile.json"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Outer login, live takeover and current controls remain live-only gates."
+  },
+  {
+    "id": "ISL-11.2",
+    "issue": "https://github.com/unboks-org/unboks-dashboard-api/issues/166",
+    "criterion": "Simulated availability/payment and pending/failed actions are unmistakable.",
+    "evidence": [
+      "test_today.py::test_pending_failed_handover_and_demo_totals_are_server_owned",
+      "dashboard:output/isluno-11/manifest.json"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Outer login, live takeover and current controls remain live-only gates."
+  },
+  {
+    "id": "ISL-11.3",
+    "issue": "https://github.com/unboks-org/unboks-dashboard-api/issues/166",
+    "criterion": "Automation/handover status comes from verified server state; unknown state is not shown as active.",
+    "evidence": [
+      "dashboard:artifacts/unboks/src/components/isluno/IslunoWorkspace.test.tsx",
+      "dashboard:docs/ISL-11-workspace.md"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Outer login, live takeover and current controls remain live-only gates."
+  },
+  {
+    "id": "ISL-11.4",
+    "issue": "https://github.com/unboks-org/unboks-dashboard-api/issues/166",
+    "criterion": "Other tenants retain their existing navigation, branding and permissions.",
+    "evidence": [
+      "dashboard:docs/ISL-11-workspace.md",
+      "test_journey_config.py::test_scope_rejects_foreign_and_legacy_identity"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Outer login, live takeover and current controls remain live-only gates."
+  },
+  {
+    "id": "ISL-11.5",
+    "issue": "https://github.com/unboks-org/unboks-dashboard-api/issues/166",
+    "criterion": "No login or number reconnect is introduced merely to rename the experience.",
+    "evidence": [
+      "dashboard:docs/ISL-11-workspace.md",
+      "release-packet.md"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Outer login, live takeover and current controls remain live-only gates."
+  },
+  {
+    "id": "ISL-12.1",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/354",
+    "criterion": "After synthetic cutover, no legacy Mermaid reminder or action can send/book under the Isluno brand.",
+    "evidence": [
+      "test_recovery.py::test_cutover_and_rollback_quarantine_legacy_callers_without_changing_history",
+      "integrated.json"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Defined rollback retains guard-capable code; it never means restoring a pre-guard binary or dropping new tables."
+  },
+  {
+    "id": "ISL-12.2",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/354",
+    "criterion": "Customer reply, opt-out, takeover, completion and closed-window conditions suppress reminders correctly.",
+    "evidence": [
+      "test_recovery.py::test_reply_opt_out_takeover_completion_and_window_suppress",
+      "test_recovery.py::test_runtime_guard_preserves_verified_control_and_legacy_opt_out"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Defined rollback retains guard-capable code; it never means restoring a pre-guard binary or dropping new tables."
+  },
+  {
+    "id": "ISL-12.3",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/354",
+    "criterion": "Restart/duplicate events and ambiguous sends do not replay completed side effects.",
+    "evidence": [
+      "test_recovery.py::test_ambiguous_exception_and_crash_never_retry",
+      "test_payments.py::test_claimed_email_after_restart_does_not_blind_retry"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Defined rollback retains guard-capable code; it never means restoring a pre-guard binary or dropping new tables."
+  },
+  {
+    "id": "ISL-12.4",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/354",
+    "criterion": "Legacy data remains intact; pending legacy work has an explicit operator disposition.",
+    "evidence": [
+      "integrated.json",
+      "output/isluno-12/cutover-rollback.json"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Defined rollback retains guard-capable code; it never means restoring a pre-guard binary or dropping new tables."
+  },
+  {
+    "id": "ISL-12.5",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/354",
+    "criterion": "Failure states preserve customer progress and make only truthful status claims.",
+    "evidence": [
+      "test_recovery.py::test_old_completed_replay_cannot_clear_newer_failure_or_stalled_claim",
+      "test_recovery.py::test_opt_out_with_corrections_keeps_acknowledgement_on_quote_paths",
+      "dashboard:output/isluno-12/manifest.json"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "Defined rollback retains guard-capable code; it never means restoring a pre-guard binary or dropping new tables."
+  },
+  {
+    "id": "ISL-13.1",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/355",
+    "criterion": "One-trip and multi-trip journeys complete through real application callers with no customer navigation outside the chat flow.",
+    "evidence": [
+      "integrated.json",
+      "test_integrated.py::test_new_journeys_and_ledgers_survive_cutover_rollback_without_replay"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "New integrated evidence; independent acceptance pending."
+  },
+  {
+    "id": "ISL-13.2",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/355",
+    "criterion": "Acceptance evidence maps every V1 requirement to the exact candidate versions; fixtures cannot directly advance business stages on the application's behalf.",
+    "evidence": [
+      "requirements.json",
+      "requirements.md",
+      "candidate-manifest.json",
+      "boundaries.md"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "New integrated evidence; independent acceptance pending."
+  },
+  {
+    "id": "ISL-13.3",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/355",
+    "criterion": "No unresolved critical data-integrity, isolation, payment-truthfulness or duplicate-send defect remains.",
+    "evidence": [
+      "offline-tests.txt",
+      "release-packet.md"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "New integrated evidence; independent acceptance pending."
+  },
+  {
+    "id": "ISL-13.4",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/355",
+    "criterion": "Gatekeeper independently inspects the changed code and evidence and records PASS or precise blockers.",
+    "evidence": [
+      "https://github.com/BensonOpas/wtyj-agent/issues/355"
+    ],
+    "status": "independent review pending",
+    "limit": "New integrated evidence; independent acceptance pending."
+  },
+  {
+    "id": "ISL-13.5",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/355",
+    "criterion": "Offline results, native-language review and provider-delivery evidence are separately labeled; no paid/live run is implied.",
+    "evidence": [
+      "boundaries.md",
+      "visual-review.md",
+      "release-packet.md"
+    ],
+    "status": "offline evidence; see limits",
+    "limit": "New integrated evidence; independent acceptance pending."
+  },
+  {
+    "id": "ISL-14.1",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/356",
+    "criterion": "The approved +1 223 276 0075 connection has one active owner/consumer and the agreed Isluno brand/journey.",
+    "evidence": [
+      "release-packet.md"
+    ],
+    "status": "live gate — pending",
+    "limit": "Release execution is not authorized or performed. Offline preparation cannot satisfy live criteria."
+  },
+  {
+    "id": "ISL-14.2",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/356",
+    "criterion": "Old Mermaid data remains available as agreed, stale actions are contained and new inbound work is retained through the switch.",
+    "evidence": [
+      "integrated.json",
+      "release-packet.md"
+    ],
+    "status": "live gate — pending",
+    "limit": "Release execution is not authorized or performed. Offline preparation cannot satisfy live criteria."
+  },
+  {
+    "id": "ISL-14.3",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/356",
+    "criterion": "Exact deployed candidate versions match the reviewed packet; other tenants are unaffected.",
+    "evidence": [
+      "candidate-manifest.json",
+      "release-packet.md"
+    ],
+    "status": "live gate — pending",
+    "limit": "Release execution is not authorized or performed. Offline preparation cannot satisfy live criteria."
+  },
+  {
+    "id": "ISL-14.4",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/356",
+    "criterion": "Any promised live delivery/name behavior has corresponding authorized verification; pending gates remain explicit.",
+    "evidence": [
+      "boundaries.md",
+      "release-packet.md"
+    ],
+    "status": "live gate — pending",
+    "limit": "Release execution is not authorized or performed. Offline preparation cannot satisfy live criteria."
+  },
+  {
+    "id": "ISL-14.5",
+    "issue": "https://github.com/BensonOpas/wtyj-agent/issues/356",
+    "criterion": "Rollback restores the prior supported behavior without erasing new records or replaying sends.",
+    "evidence": [
+      "integrated.json",
+      "release-packet.md"
+    ],
+    "status": "live gate — pending",
+    "limit": "Release execution is not authorized or performed. Offline preparation cannot satisfy live criteria."
+  }
+]

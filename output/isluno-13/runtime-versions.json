@@ -1,0 +1,17 @@
+{
+  "python": "3.14.7",
+  "libraries": {
+    "fastapi": "0.135.1",
+    "httpx": "0.28.1",
+    "reportlab": "4.4.3",
+    "pypdf": "4.3.1",
+    "Pillow": "12.1.1"
+  },
+  "dependency_files": [
+    {
+      "path": "requirements.txt",
+      "sha256": "13f873c191dba61fcc6f42954d3ad898ec39f785a583f6a9a0210e8fa89abf71"
+    }
+  ],
+  "fixture_runtime_only": true
+}
