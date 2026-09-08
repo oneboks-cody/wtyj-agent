@@ -367,3 +367,10 @@ class CatalogStore:
         finally:
             if os.path.exists(name):
                 os.unlink(name)
+
+
+def validate_snapshot(snapshot):
+    _check(isinstance(snapshot, dict) and set(snapshot) == {"catalog", "revision"}, "catalog snapshot envelope")
+    catalog = validate_catalog(snapshot["catalog"])
+    _check(revision(catalog) == snapshot["revision"], "catalog snapshot revision mismatch")
+    return {"catalog": catalog, "revision": snapshot["revision"]}

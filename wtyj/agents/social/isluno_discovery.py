@@ -8,7 +8,7 @@ import textwrap
 from pathlib import Path
 
 from shared import config_loader
-from shared.isluno_catalog import CatalogStore
+from shared.isluno_catalog import CatalogStore, validate_snapshot
 from shared.isluno_config import JourneyScope, require_scope, active_profile
 from shared.isluno_media import MediaLibrary, MediaUnavailable
 from shared.isluno_pricing import check, ItineraryError
@@ -57,6 +57,11 @@ class DiscoveryStore:
         db.row_factory = sqlite3.Row
         try:
             db.executescript('''
+                CREATE TABLE IF NOT EXISTS isluno_catalog_snapshots (revision TEXT PRIMARY KEY, payload TEXT NOT NULL);
+                CREATE TRIGGER IF NOT EXISTS isluno_catalog_snapshot_no_update BEFORE UPDATE ON isluno_catalog_snapshots
+                    BEGIN SELECT RAISE(ABORT, 'immutable catalog snapshot'); END;
+                CREATE TRIGGER IF NOT EXISTS isluno_catalog_snapshot_no_delete BEFORE DELETE ON isluno_catalog_snapshots
+                    BEGIN SELECT RAISE(ABORT, 'immutable catalog snapshot'); END;
                 CREATE TABLE IF NOT EXISTS isluno_discovery_plans (
                     id TEXT PRIMARY KEY, scope_key TEXT NOT NULL, trigger_id TEXT NOT NULL,
                     payload TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'queued', provider_id TEXT,
@@ -76,7 +81,7 @@ class DiscoveryStore:
             row = db.execute('SELECT payload FROM isluno_discovery_plans WHERE scope_key=? AND trigger_id=?', (scope.key, trigger_id)).fetchone()
             return json.loads(row[0]) if row else None
 
-    def plan(self, scope, trigger_id, sent_at, decision=None, *, action_token=None, interactive_type=None, translations=None, response_text=None):
+    def plan(self, scope, trigger_id, sent_at, decision=None, *, action_token=None, interactive_type=None, translations=None, response_text=None, catalog_snapshot=None):
         require_scope(scope)
         check(isinstance(trigger_id, str) and 0 < len(trigger_id) <= 512, 'missing_verified_message_id')
         try:
@@ -89,7 +94,9 @@ class DiscoveryStore:
             previous = db.execute('SELECT payload FROM isluno_discovery_plans WHERE scope_key=? AND trigger_id=?', (scope.key, trigger_id)).fetchone()
             if previous:
                 return json.loads(previous[0])
-            snapshot = CatalogStore(self.catalog_path).snapshot()
+            current_snapshot = CatalogStore(self.catalog_path).snapshot()
+            snapshot = validate_snapshot(catalog_snapshot) if catalog_snapshot is not None and action_token is None else current_snapshot
+            db.execute('INSERT OR IGNORE INTO isluno_catalog_snapshots VALUES(?,?)', (snapshot['revision'], dump(snapshot)))
             offset, info_offset, selected_intent, force_single = 0, 0, None, False
             if action_token is not None:
                 check(interactive_type in {'button_reply', 'list_reply'}, 'unverified_discovery_action')
@@ -194,10 +201,24 @@ class DiscoveryStore:
                     body = {'accountId': scope.account_id, 'interactive': {'type': 'carousel', 'body': {'text': text[:1024]}, 'action': {'cards': cards}}}
             if response_text is not None:
                 check(isinstance(response_text, str) and 0 < len(response_text) <= 4096, 'invalid_conversation_reply')
-                body = {'accountId': scope.account_id, 'message': response_text, 'buttons': []}
+                help_buttons = body.get('buttons', []) if answer_status == 'unavailable' else []
+                if answer_status == 'unavailable':
+                    response_text += '\n\n' + CLARIFICATIONS[locale][0]
+                body = {'accountId': scope.account_id, 'message': response_text, 'buttons': help_buttons}
+                asset_ids, missing, fallback = [], [], None
+            superseded = snapshot['revision'] != current_snapshot['revision']
+            if superseded:
+                notice = {'en':'Trip information has changed. Please ask for the latest details before confirming.',
+                          'nl':'De reisinformatie is gewijzigd. Vraag om de nieuwste gegevens voordat je bevestigt.',
+                          'de':'Die Reiseinformationen haben sich geändert. Bitte frage vor der Bestätigung nach aktuellen Angaben.',
+                          'es':'La información del viaje ha cambiado. Pide los datos más recientes antes de confirmar.',
+                          'pt':'As informações da viagem mudaram. Peça os dados mais recentes antes de confirmar.',
+                          'pap':'Informashon di biahe a kambia. Puntra pa e datonan mas resien promé ku konfirmá.'}[locale]
+                content = body.get('message') or body['interactive']['body']['text']
+                body = {'accountId': scope.account_id, 'message': content[:3500] + '\n\n' + notice, 'buttons': []}
                 asset_ids, missing, fallback = [], [], None
             payload = {'id': plan_id, 'scope': scope.__dict__, 'trigger_id': trigger_id, 'trigger_sent_at': sent_at,
-                       'catalog_revision': snapshot['revision'], 'catalog_version': snapshot['catalog']['version'],
+                       'catalog_revision': snapshot['revision'], 'catalog_version': snapshot['catalog']['version'], 'catalog_superseded': superseded,
                        'product_ids': decision['product_ids'], 'language': locale, 'fact_keys': decision['fact_keys'],
                        'product_fact_keys': fact_association, 'answer_status': answer_status, 'translations': translations,
                        'body': body, 'fallback': fallback, 'asset_ids': asset_ids, 'missing_asset_ids': missing,
@@ -208,6 +229,14 @@ class DiscoveryStore:
                 db.execute('INSERT INTO isluno_discovery_actions VALUES(?,?,?)', (token, plan_id, dump(action)))
             db.execute('INSERT INTO isluno_discovery_latest VALUES(?,?) ON CONFLICT(scope_key) DO UPDATE SET plan_id=excluded.plan_id', (scope.key, plan_id))
             return payload
+
+    def source_snapshot(self, scope, plan):
+        require_scope(scope)
+        check(plan['scope'] == scope.__dict__, 'discovery_source_scope_mismatch')
+        with self.db() as db:
+            row = db.execute('SELECT payload FROM isluno_catalog_snapshots WHERE revision=?', (plan['catalog_revision'],)).fetchone()
+        check(row is not None, 'missing_durable_catalog_snapshot')
+        return validate_snapshot(json.loads(row[0]))
 
     def current_context(self, scope):
         require_scope(scope)

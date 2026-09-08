@@ -9,7 +9,7 @@ from agents.social.isluno_itinerary import ItineraryStore, encoded
 from agents.social.isluno_discovery import DiscoveryStore, CLARIFICATIONS
 from agents.social import isluno_understanding as discovery_understanding
 from agents.social import isluno_conversation_understanding as understanding
-from shared.isluno_catalog import CatalogStore, CatalogError, quote_rules
+from shared.isluno_catalog import CatalogStore, CatalogError, quote_rules, validate_snapshot
 from shared.isluno_config import require_scope, verified_scope
 from shared.isluno_pricing import check, ItineraryError
 
@@ -41,6 +41,7 @@ class ConversationStore:
     def db(self):
         with self.itinerary._connection() as db:
             db.executescript('''
+                CREATE TABLE IF NOT EXISTS isluno_catalog_snapshots (revision TEXT PRIMARY KEY, payload TEXT NOT NULL);
                 CREATE TABLE IF NOT EXISTS isluno_booking_sessions (scope_key TEXT PRIMARY KEY, payload TEXT NOT NULL);
                 CREATE TABLE IF NOT EXISTS isluno_conversation_turns (
                     scope_key TEXT NOT NULL, trigger_id TEXT NOT NULL, baseline TEXT NOT NULL,
@@ -57,7 +58,7 @@ class ConversationStore:
             row = db.execute('SELECT payload FROM isluno_booking_sessions WHERE scope_key=?', (scope.key,)).fetchone()
             return json.loads(row[0]) if row else default_session()
 
-    def reserve(self, scope, trigger):
+    def reserve(self, scope, trigger, source_snapshot=None):
         require_scope(scope)
         check(isinstance(trigger, str) and 0 < len(trigger) <= 512, 'missing_verified_message_id')
         with self.db() as db, db:
@@ -68,8 +69,19 @@ class ConversationStore:
                 return json.loads(row['baseline']), json.loads(row['decision']) if row['decision'] else None, json.loads(row['outcome']) if row['outcome'] else None
             row = db.execute('SELECT payload FROM isluno_booking_sessions WHERE scope_key=?', (scope.key,)).fetchone()
             saved = json.loads(row[0]) if row else default_session()
+            snapshot = validate_snapshot(source_snapshot) if source_snapshot is not None else CatalogStore(self.itinerary.catalog_path).snapshot()
+            db.execute('INSERT OR IGNORE INTO isluno_catalog_snapshots VALUES(?,?)', (snapshot['revision'], encoded(snapshot)))
+            saved['catalog_revision'] = snapshot['revision']
             db.execute('INSERT INTO isluno_conversation_turns(scope_key,trigger_id,baseline) VALUES(?,?,?)', (scope.key, trigger, encoded(saved)))
             return saved, None, None
+
+    def source_snapshot(self, scope, baseline):
+        require_scope(scope)
+        check(bool(baseline.get('catalog_revision')), 'missing_durable_catalog_binding')
+        with self.db() as db:
+            row = db.execute('SELECT payload FROM isluno_catalog_snapshots WHERE revision=?', (baseline['catalog_revision'],)).fetchone()
+        check(row is not None, 'missing_durable_catalog_snapshot')
+        return validate_snapshot(json.loads(row[0]))
 
     def record_decision(self, scope, trigger, decision):
         require_scope(scope)
@@ -84,6 +96,7 @@ class ConversationStore:
     def apply(self, scope, trigger, baseline, decision, text):
         require_scope(scope)
         booking = decision['booking']
+        snapshot = self.source_snapshot(scope, baseline)
         with self.db() as db, db:
             db.execute('BEGIN IMMEDIATE')
             turn = db.execute('SELECT outcome FROM isluno_conversation_turns WHERE scope_key=? AND trigger_id=?', (scope.key, trigger)).fetchone()
@@ -123,7 +136,7 @@ class ConversationStore:
                 status = 'approval_unavailable'
             elif action == 'cancel':
                 if active:
-                    active = self.itinerary._apply(scope, active['id'], opaque(scope, trigger, 'cancel'), active['revision'], {'action': 'cancel'}, connection=db)
+                    active = self.itinerary._apply(scope, active['id'], opaque(scope, trigger, 'cancel'), active['revision'], {'action': 'cancel'}, connection=db, catalog_snapshot=snapshot)
                     session['pending'] = {}
                 status = 'cancelled' if active else 'no_active'
             else:
@@ -131,7 +144,7 @@ class ConversationStore:
                 if action in {'add', 'new'}:
                     if active is None or action == 'new':
                         itinerary_id = opaque(scope, trigger, 'itinerary')
-                        active = self.itinerary._apply(scope, itinerary_id, opaque(scope, trigger, 'create'), None, {'action': 'create'}, connection=db)
+                        active = self.itinerary._apply(scope, itinerary_id, opaque(scope, trigger, 'create'), None, {'action': 'create'}, connection=db, catalog_snapshot=snapshot)
                         session['active_itinerary_id'], session['pending'] = itinerary_id, {}
                     updates = booking['updates'] or [{'product_id': p} for p in decision['product_ids']]
                     for index, update in enumerate(updates):
@@ -146,7 +159,7 @@ class ConversationStore:
                         if action == 'remove':
                             session['pending'].pop(item_id, None)
                             if any(i['id'] == item_id for i in active['items']):
-                                active = self.itinerary._apply(scope, active['id'], opaque(scope, trigger, 'remove-' + item_id), active['revision'], {'action': 'remove', 'item_id': item_id}, connection=db)
+                                active = self.itinerary._apply(scope, active['id'], opaque(scope, trigger, 'remove-' + item_id), active['revision'], {'action': 'remove', 'item_id': item_id}, connection=db, catalog_snapshot=snapshot)
                         else:
                             existing = next((i['selection'] for i in active['items'] if i['id'] == item_id), {})
                             pending = session['pending'].setdefault(item_id, {**copy.deepcopy(existing), **{k:v for k,v in session['item_details'].get(item_id, {}).items() if k == 'pickup_location'}})
@@ -165,13 +178,13 @@ class ConversationStore:
                 details_before = copy.deepcopy(session['item_details'])
                 try:
                     for item_id, pending in (list(session['pending'].items()) if action in {'add', 'update', 'new'} or booking['guest'] else []):
-                        missing = complete_selection(pending, session['guest'], CatalogStore(self.itinerary.catalog_path).snapshot())
+                        missing = complete_selection(pending, session['guest'], snapshot)
                         if missing:
                             continue
                         exists = any(i['id'] == item_id for i in active['items'])
                         selection = {k: pending[k] for k in ('item_id','product_id','date','slot_id','guest_ages','options','pickup')}
                         active = self.itinerary._apply(scope, active['id'], opaque(scope, trigger, 'save-' + item_id), active['revision'],
-                            {'action': 'update' if exists else 'add', 'selection': selection}, connection=db)
+                            {'action': 'update' if exists else 'add', 'selection': selection}, connection=db, catalog_snapshot=snapshot)
                         session['item_details'][item_id] = {'guest_name': session['guest']['name'], 'pickup_location': pending.get('pickup_location')}
                         del session['pending'][item_id]
                 except (ItineraryError, CatalogError) as exc:
@@ -181,8 +194,8 @@ class ConversationStore:
                     error = exc.code if isinstance(exc, ItineraryError) else 'product_rules_unavailable'
                 db.execute('RELEASE item_updates')
             session['revision'] += 1
-            outcome = {'session': session, 'itinerary': active, 'status': status, 'error': error}
-            reply = render(outcome, CatalogStore(self.itinerary.catalog_path).snapshot())
+            outcome = {'session': session, 'itinerary': active, 'status': status, 'error': error, 'catalog_revision': snapshot['revision']}
+            reply = render(outcome, snapshot)
             session['history'] = (session['history'] + [{'role':'user','content':text or '[WhatsApp reply action]'}, {'role':'assistant','content':reply}])[-100:]
             db.execute('INSERT INTO isluno_booking_sessions VALUES(?,?) ON CONFLICT(scope_key) DO UPDATE SET payload=excluded.payload', (scope.key, encoded(session)))
             db.execute('UPDATE isluno_conversation_turns SET outcome=? WHERE scope_key=? AND trigger_id=?', (encoded(outcome), scope.key, trigger))
@@ -209,10 +222,12 @@ def complete_selection(pending, guest, snapshot):
         option = next(o for o in rules['options'] if o['id'] == option_id)
         if not pending['pickup']:
             pending['options'][option_id] = 0
-        elif option_id not in pending['options']:
-            if option['basis'] == 'per_person': pending['options'][option_id] = len(pending['guest_ages'])
-            elif option['basis'] == 'per_booking': pending['options'][option_id] = 1
-            else: return 10
+        elif option['basis'] == 'per_person':
+            pending['options'][option_id] = len(pending['guest_ages'])
+        elif option['basis'] == 'per_booking':
+            pending['options'][option_id] = 1
+        elif not pending['options'].get(option_id):
+            return 10
     if any(o['required'] and not pending['options'].get(o['id']) for o in rules['options']): return 10
     return None
 
@@ -270,21 +285,23 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
     trigger = message.get('message_id') or message.get('_ali_action_id')
     timestamp = message.get('_zernio_sent_at', '')
     base_decision = None
+    source_snapshot = None
     if message.get('_zernio_interactive_id'):
         action_plan = discovery.plan(scope, trigger, timestamp, action_token=message['_zernio_interactive_id'], interactive_type=message.get('_zernio_interactive_type'))
         if not action_plan['selected_intent'] and not action_plan['requires_human']:
             return envelope(action_plan)
         with discovery.db() as db, db:
             db.execute("UPDATE isluno_discovery_plans SET status='consumed_action' WHERE id=?", (action_plan['id'],))
+        source_snapshot = discovery.source_snapshot(scope, action_plan)
         base_decision = {'language': action_plan['language'], 'product_ids': action_plan['product_ids'], 'fact_keys': action_plan['fact_keys'],
                          'intent': 'human' if action_plan['requires_human'] else 'add', 'question': '',
                          'translations': action_plan.get('translations') or {},
                          'booking': {'action': 'human' if action_plan['requires_human'] else 'add', 'updates': [], 'guest': {}, 'document_language': None}}
-    saved, decision, outcome = store.reserve(scope, trigger)
+    saved, decision, outcome = store.reserve(scope, trigger, source_snapshot)
+    snapshot = store.source_snapshot(scope, saved)
     if outcome is None:
         if decision is None:
             discovery.allow_turn(scope)
-            snapshot = CatalogStore(store.itinerary.catalog_path).snapshot()
             if base_decision is not None:
                 decision = base_decision
             else:
@@ -299,20 +316,21 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
     booking = decision['booking']
     response_text = None
     if booking['action'] != 'none' or booking['guest'] or booking['document_language']:
-        response_text = render(outcome, CatalogStore(store.itinerary.catalog_path).snapshot())
+        response_text = render(outcome, snapshot)
         # A simultaneous supported question is answered from its selected,
         # versioned fact translations before the canonical operation result.
         facts = []
-        products = {p['id']: p for p in CatalogStore(store.itinerary.catalog_path).read()['products']}
+        products = {p['id']: p for p in snapshot['catalog']['products']}
         for product_id in decision['product_ids']:
             source = discovery_understanding.facts(products[product_id]) if decision['language'] == 'en' else decision['translations'].get(product_id, {})
             facts += [source[k] for k in decision['fact_keys'] if k in source]
         if facts and decision['question']:
-            response_text = '\n\n'.join(facts + [response_text])[:4096]
+            fact_text = '\n\n'.join(facts)[:max(0, 4096 - len(response_text) - 2)]
+            response_text = fact_text + '\n\n' + response_text
     # Action resolution used this trigger already; use a distinct durable reply
     # ID for its application result so selection metadata cannot mask intake.
     reply_trigger = 'conversation-' + opaque(scope, trigger, 'reply')
-    plan = discovery.plan(scope, reply_trigger, timestamp, base, translations=decision['translations'], response_text=response_text)
+    plan = discovery.plan(scope, reply_trigger, timestamp, base, translations=decision['translations'], response_text=response_text, catalog_snapshot=snapshot)
     return envelope(plan)
 
 

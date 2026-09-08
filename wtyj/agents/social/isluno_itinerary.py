@@ -103,7 +103,7 @@ class ItineraryStore:
         check(set(mutation) == ({'action', 'item_id'} if action == 'remove' else {'action', 'selection'}), 'invalid_mutation_fields')
         return self._apply(scope, itinerary_id, request_id, expected_revision, mutation)
 
-    def _apply(self, scope, itinerary_id, request_id, expected_revision, mutation, *, connection=None):
+    def _apply(self, scope, itinerary_id, request_id, expected_revision, mutation, *, connection=None, catalog_snapshot=None):
         profile = require_scope(scope)  # No database/config write before verified scope.
         identifier(itinerary_id)
         identifier(request_id)
@@ -147,7 +147,7 @@ class ItineraryStore:
                     check(any(i['id'] == item_id for i in items), 'item_not_found')
                     items = [i for i in items if i['id'] != item_id]
                 else:
-                    item = price_item(CatalogStore(self.catalog_path).snapshot(), mutation['selection'], now=now)
+                    item = price_item(catalog_snapshot if catalog_snapshot is not None else CatalogStore(self.catalog_path).snapshot(), mutation['selection'], now=now)
                     exists = any(i['id'] == item['id'] for i in items)
                     check(not exists if action == 'add' else exists,
                           'item_already_exists' if action == 'add' else 'item_not_found')

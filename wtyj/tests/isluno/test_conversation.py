@@ -40,7 +40,7 @@ class ConversationTests(unittest.TestCase):
         self.discovery = DiscoveryStore(self.itinerary.db_path, self.catalog_path, media=FakeMedia(), clock=lambda: NOW)
         self.serial = 0
 
-    def turn(self, decision=None, text='Synthetic guest turn', *, token=None, trigger=None):
+    def turn(self, decision=None, text='Synthetic guest turn', *, token=None, trigger=None, before_response=None):
         from agents.social import social_agent, isluno_conversation
         self.serial += 1
         message = WhatsAppZernioChannel.from_zernio({'conversation_id': self.scope().conversation_id,
@@ -53,6 +53,11 @@ class ConversationTests(unittest.TestCase):
              patch.object(isluno_conversation, 'ConversationStore', return_value=self.store), \
              patch.object(isluno_conversation, 'DiscoveryStore', return_value=self.discovery), \
              patch.object(isluno_conversation.understanding, 'understand', return_value=copy.deepcopy(decision)) as model:
+            if before_response is not None:
+                def model_response(*args):
+                    before_response()
+                    return copy.deepcopy(decision)
+                model.side_effect = model_response
             result = social_agent.handle_incoming_whatsapp_message(message, include_media=True)
         return result, model.call_count
 
@@ -295,3 +300,112 @@ class ConversationTests(unittest.TestCase):
         self.assertIn('09:00, 14:00',result['text'])
         self.turn(response('update',[{'slot_id':'afternoon'}]))
         self.assertEqual(self.active()['items'][0]['selection']['slot_id'],'afternoon')
+
+    def pickup_catalog(self, basis='per_booking'):
+        catalog = synthetic_catalog()
+        product = catalog['products'][0]
+        product['options'] = [{'id':'transfer','name':'Transfer','basis':basis,'amount_minor':2500,'max_quantity':10,'required':False},
+                              {'id':'photo','name':'Photo','basis':'per_booking','amount_minor':1000,'max_quantity':1,'required':False}]
+        product['pickup'] = {'mode':'priced_option','meeting_point':'Fixture hotel','option_id':'transfer'}
+        self.catalog_path.write_text(json.dumps(catalog))
+
+    def test_pickup_round_trip_toggle_preserves_other_extras(self):
+        self.pickup_catalog()
+        self.turn(response('add',[{'product_id':'fixture-cruise','date':'2026-10-15','pickup':False,'options':{'photo':1}}], {'name':'Calvin','ages':[35]}))
+        item_id = self.active()['items'][0]['id']
+        for enabled in [True,False,True]:
+            result,_ = self.turn(response('update',[{'item_id':item_id,'pickup':enabled,'pickup_location':'Synthetic Hotel'}]))
+            item = self.active()['items'][0]
+            self.assertEqual(item['selection']['pickup'],enabled)
+            self.assertEqual(item['selection']['options']['transfer'],int(enabled))
+            self.assertEqual(item['selection']['options']['photo'],1)
+            self.assertEqual(item['total_minor'],13500 if enabled else 11000)
+            self.assertNotIn('correct',result['text'])
+
+    def test_per_person_pickup_tracks_party_changes_but_per_unit_does_not_guess(self):
+        self.pickup_catalog('per_person')
+        self.turn(response('add',[{'product_id':'fixture-cruise','date':'2026-10-15','pickup':True,'pickup_location':'Synthetic Hotel'}], {'name':'Calvin','ages':[35]}))
+        item_id = self.active()['items'][0]['id']
+        for ages in [[35,34,33],[35,34]]:
+            self.turn(response('update',[{'item_id':item_id,'guest_ages':ages}]))
+            self.assertEqual(self.active()['items'][0]['selection']['options']['transfer'],len(ages))
+            self.assertEqual(self.active()['items'][0]['total_minor'],12500*len(ages))
+        self.pickup_catalog('per_unit')
+        result,_ = self.turn(response('new',[{'product_id':'fixture-cruise','date':'2026-10-16','pickup':True,'pickup_location':'Synthetic Hotel'}]))
+        self.assertEqual(self.active()['items'],[])
+        self.assertIn('required extras',result['text'])
+        self.turn(response('update',[{'options':{'transfer':2}}]))
+        item_id = self.active()['items'][0]['id']
+        self.turn(response('update',[{'item_id':item_id,'guest_ages':[35,34,33]}]))
+        self.assertEqual(self.active()['items'][0]['selection']['options']['transfer'],2)
+
+    def publish_new_source_and_price(self):
+        from shared.isluno_catalog import CatalogStore
+        catalog = CatalogStore(self.catalog_path)
+        current = catalog.snapshot()
+        prices = copy.deepcopy(current['catalog']['products'][0]['price_rules'])
+        prices['age_bands'][-1]['amount_minor'] = 20000
+        return catalog.publish([{'id':'fixture-cruise','changes':{'summary':'A newly published source description.','price_rules':prices}}],current['revision'])
+
+    def test_catalog_publish_during_understanding_keeps_source_and_price_bound(self):
+        from shared.isluno_catalog import CatalogStore
+        before = CatalogStore(self.catalog_path).snapshot()
+        decision = response('add',[{'product_id':'fixture-cruise','date':'2026-10-15'}],{'name':'Calvin','ages':[35]},language='nl')
+        result,calls = self.turn(decision,before_response=self.publish_new_source_and_price)
+        self.assertEqual(calls,1)
+        item = self.active()['items'][0]
+        self.assertEqual(item['catalog_revision'],before['revision'])
+        self.assertEqual(item['total_minor'],10000)
+        plan,_ = self.discovery.delivery_plan(result['media']['url'],self.scope().account_id,self.scope().conversation_id)
+        self.assertEqual(plan['catalog_revision'],before['revision'])
+        self.assertTrue(plan['catalog_superseded'])
+        self.assertIn('reisinformatie is gewijzigd',result['text'])
+        self.assertEqual(plan['body']['buttons'],[])
+
+    def test_crash_replay_does_not_retag_translation_or_reprice(self):
+        from shared.isluno_catalog import CatalogStore
+        before = CatalogStore(self.catalog_path).snapshot()
+        decision = response('add',[{'product_id':'fixture-cruise','date':'2026-10-15'}],{'name':'Calvin','ages':[35]},language='nl',question='Supported question')
+        decision['translations']['fixture-cruise']['summary'] = 'Oorspronkelijke beschrijving.'
+        with patch.object(self.discovery,'plan',side_effect=RuntimeError('Synthetic crash after apply')):
+            with self.assertRaises(RuntimeError):
+                self.turn(decision,trigger='snapshot-replay')
+        saved = self.active()
+        after = self.publish_new_source_and_price()
+        result,calls = self.turn(decision,trigger='snapshot-replay')
+        self.assertEqual(calls,0)
+        self.assertEqual(self.active(),saved)
+        plan,_ = self.discovery.delivery_plan(result['media']['url'],self.scope().account_id,self.scope().conversation_id)
+        self.assertEqual(plan['catalog_revision'],before['revision'])
+        self.assertEqual(plan['catalog_version'],before['catalog']['version'])
+        self.assertNotEqual(plan['catalog_revision'],after['revision'])
+        self.assertIn('Oorspronkelijke beschrijving.',result['text'])
+        self.assertTrue(plan['catalog_superseded'])
+
+    def test_unavailable_question_survives_edit_guest_and_document_changes(self):
+        self.initial()
+        item_id = self.active()['items'][0]['id']
+        decisions = [response('update',[{'item_id':item_id,'date':'2026-10-16'}],fact_keys=[],question='Unconfirmed wheelchair suitability?'),
+                     response(guest={'name':'Calvin Updated'},fact_keys=[],question='Unconfirmed supplier availability?'),
+                     response(document_language='nl',fact_keys=[],question='Unconfirmed safety guarantee?')]
+        for decision in decisions:
+            result,calls = self.turn(decision)
+            self.assertEqual(calls,1)
+            self.assertIn('saved',result['text'])
+            self.assertIn('confirmed information',result['text'])
+            plan,_ = self.discovery.delivery_plan(result['media']['url'],self.scope().account_id,self.scope().conversation_id)
+            self.assertEqual(plan['answer_status'],'unavailable')
+            self.assertEqual(plan['body']['buttons'][0]['title'],'Ask the team')
+        result,calls = self.turn(token=plan['body']['buttons'][0]['payload'])
+        self.assertEqual(calls,0)
+        self.assertIn('operator review',result['text'])
+        self.assertEqual(len(self.store.reviews(self.scope())),1)
+
+    def test_supported_question_and_edit_both_appear_in_reply(self):
+        self.initial()
+        item_id = self.active()['items'][0]['id']
+        result,calls = self.turn(response('update',[{'item_id':item_id,'date':'2026-10-16'}],fact_keys=['inclusion_0'],question='Is lunch included?'))
+        self.assertEqual(calls,1)
+        self.assertIn('Synthetic lunch',result['text'])
+        self.assertIn('2026-10-16',result['text'])
+        self.assertIn('saved',result['text'])
