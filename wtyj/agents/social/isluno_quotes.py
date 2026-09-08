@@ -42,6 +42,8 @@ def init_schema(db):
         CREATE TABLE IF NOT EXISTS isluno_discovery_pacing (recipient TEXT PRIMARY KEY, last_send REAL NOT NULL);
         CREATE TABLE IF NOT EXISTS isluno_discovery_latest (scope_key TEXT PRIMARY KEY, plan_id TEXT NOT NULL);
     ''')
+    from agents.social.isluno_payments import init_schema as init_payments
+    init_payments(db)
 
 
 def material(session, itinerary):
@@ -117,6 +119,11 @@ class QuoteStore:
             db.execute('INSERT INTO isluno_quote_actions VALUES(?,?,?)', (token, snapshot['id'], kind))
             parts.append({'accountId': scope.account_id, 'message': words[21] if stage == 'summary' else words[15],
                           'buttons': [{'type': 'postback', 'payload': token, 'title': words[13 if stage == 'summary' else 14]}]})
+        if stage == 'approved':
+            from agents.social.isluno_payments import mint_payment
+            from agents.social.isluno_payment_copy import COPY as PAYMENT_COPY
+            token = mint_payment(self, db, scope, snapshot['id'])
+            parts[-1]['buttons'] = [{'type':'postback','payload':token,'title':PAYMENT_COPY[snapshot['chat_language']][3]}]
         payload = {'id': job_id, 'quote_id': snapshot['id'], 'scope': json.loads(self.itinerary._scope(scope)),
                    'stage': stage, 'trigger_sent_at': sent_at, 'parts': parts}
         db.execute('INSERT INTO isluno_quote_jobs VALUES(?,?,?,?)', (job_id, scope.key, snapshot['id'], encoded(payload)))
@@ -234,7 +241,9 @@ class QuoteStore:
         # Random 128-bit capability, short expiry, revoked on correction. No indexes.
         with self.db() as db:
             row = db.execute('SELECT v.pdf,v.snapshot,j.payload FROM isluno_quote_versions v JOIN isluno_quote_jobs j ON j.quote_id=v.id WHERE v.id=? LIMIT 1', (quote_id,)).fetchone()
-            check(row is not None, 'quote_not_found')
+            if row is None:
+                from agents.social.isluno_payments import PaymentStore
+                return PaymentStore(self.conversation).document(quote_id)
             scope = JourneyScope(**json.loads(row['payload'])['scope'])
             _, stage = self._valid(db,scope,quote_id)
             check(stage in {'quote','approved'}, 'quote_not_confirmed')

@@ -60,4 +60,14 @@ def build_router(check_auth, itinerary_store_factory=ItineraryStore, conversatio
         except isluno_config.IslunoUnavailable as exc:
             raise HTTPException(status_code=403, detail="Isluno scope unavailable") from exc
 
+    @router.get("/payments")
+    def payments(response: Response, account_id: str, conversation_id: str, customer_ref: str):
+        from agents.social.isluno_payments import PaymentStore
+        try:
+            scope = isluno_config.verified_scope(account_id=account_id, conversation_id=conversation_id, customer_ref=customer_ref)
+            response.headers["Cache-Control"] = "no-store"
+            return {"payments": PaymentStore(conversation_store_factory()).records(scope)}
+        except isluno_config.IslunoUnavailable as exc:
+            raise HTTPException(status_code=403, detail="Isluno scope unavailable") from exc
+
     return router

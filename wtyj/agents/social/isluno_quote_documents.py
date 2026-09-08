@@ -99,8 +99,18 @@ def text_sections(snapshot, language=None):
 _FONT_LOCK = threading.Lock()
 
 
-def render_pdf(snapshot):
+def render_pdf(snapshot, *, kind="quote", reference=None, item_id=None):
     """Wrap all cells/long names, repeat table headings, and mark every page DEMO."""
+    import copy
+    if kind != 'quote':
+        from agents.social.isluno_payment_copy import COPY as PAID_COPY
+        snapshot = copy.deepcopy(snapshot)
+        if kind == 'ticket':
+            snapshot['itinerary']['items'] = [i for i in snapshot['itinerary']['items'] if i['id'] == item_id]
+            if len(snapshot['itinerary']['items']) != 1:
+                raise ValueError('ticket_item_missing')
+            snapshot['itinerary']['totals']['total_minor'] = snapshot['itinerary']['items'][0]['total_minor']
+            snapshot['guest']['name'] = snapshot['item_details'].get(item_id, {}).get('guest_name') or snapshot['guest']['name']
     import reportlab
     from reportlab.pdfbase import pdfmetrics
     from reportlab.pdfbase.ttfonts import TTFont
@@ -115,7 +125,10 @@ def render_pdf(snapshot):
             pdfmetrics.registerFont(TTFont('IslunoVera', str(root / 'Vera.ttf')))
             pdfmetrics.registerFont(TTFont('IslunoVeraBold', str(root / 'VeraBd.ttf')))
     data = projection(snapshot)
-    w = COPY[data['document_language']]
+    w = list(COPY[data['document_language']])
+    if kind != 'quote':
+        paid_words = PAID_COPY[data['document_language']]
+        w[1], w[17] = paid_words[1 if kind == 'ticket' else 0], paid_words[2]
     normal = ParagraphStyle('isluno', fontName='IslunoVera', fontSize=9, leading=13, spaceAfter=5, wordWrap='CJK')
     heading = ParagraphStyle('isluno-heading', parent=normal, fontName='IslunoVeraBold', fontSize=13, leading=18, textColor=colors.HexColor('#07535B'), spaceBefore=10)
     small = ParagraphStyle('isluno-small', parent=normal, fontSize=8, leading=11)
@@ -125,10 +138,12 @@ def render_pdf(snapshot):
     doc = SimpleDocTemplate(output, pagesize=A4, rightMargin=40, leftMargin=40, topMargin=53, bottomMargin=65, title='Isluno - ' + w[1], author='Isluno', invariant=1)
     story = [p(w[1], heading), p(f"{w[12]} {data['version']} | {data['quote_id']}"), p(w[17]),
              p(f"{w[2]}: {data['guest']['name']}"), p(f"{w[20]}: {data['document_language']}")]
+    if reference: story.append(p(reference, small))
     widths = [205, 70, 116, 124]
     for index, item in enumerate(data['items'], 1):
         unit = lambda amount: money(amount, item['currency'], item['currency_exponent'])
         item_story = [p(f"{index}. {item['name']}", heading), p(f"{w[2]}: {item['guest_name']}")]
+        if kind != 'quote': item_story.append(p(paid_words[1] + ': ' + snapshot['ticket_ids'][item['id']], small))
         for label, value in [(w[3], ', '.join(map(str, item['guest_ages']))), (w[5], departure(item['starts_at']) + ' (' + item['timezone'] + ')'),
                              (w[6], departure(item['check_in_at'])), (w[4], item['pickup_location'] or '-')]:
             item_story.append(p(label + ': ' + value))

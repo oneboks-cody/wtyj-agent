@@ -139,7 +139,10 @@ class ItineraryStore:
                     raise ItineraryConflict('itinerary_revision_changed', current_revision=current['revision'])
                 check(current['status'] == 'draft', 'itinerary_not_editable')
                 items = current['items']
-                if action == 'cancel':
+                if action == 'demo_pay':
+                    check(connection is not None, 'payment_requires_transaction')
+                    current['status'] = 'demo_paid'
+                elif action == 'cancel':
                     items = current['items']
                     current['status'] = 'cancelled'
                 elif action == 'remove':

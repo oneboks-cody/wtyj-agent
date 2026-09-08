@@ -298,6 +298,18 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
     timestamp = message.get('_zernio_sent_at', '')
     base_decision = None
     source_snapshot = None
+    token = str(message.get('_zernio_interactive_id', ''))
+    if token.startswith(('ip_', 'ie_')):
+        from agents.social.isluno_payments import PaymentStore, envelope as paid_envelope
+        payments = PaymentStore(store)
+        action = payments.complete if token.startswith('ip_') else payments.consent_email
+        try:
+            return paid_envelope(action(scope, trigger, timestamp, token, message.get('_zernio_interactive_type')))
+        except ItineraryError as exc:
+            if exc.code != 'expired_payment_action':
+                raise
+            from agents.social.isluno_quotes import envelope as quote_envelope
+            return quote_envelope(payments.refresh_pending(scope, trigger, timestamp, token))
     if str(message.get('_zernio_interactive_id', '')).startswith('iq_'):
         from agents.social.isluno_quotes import QuoteStore, envelope as quote_envelope
         return quote_envelope(QuoteStore(store).act(scope, trigger, timestamp, message['_zernio_interactive_id'], message.get('_zernio_interactive_type')))
@@ -327,6 +339,12 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
                 understanding.validate(decision, discovery_understanding.context(snapshot))
             store.record_decision(scope, trigger, decision)
         outcome = store.apply(scope, trigger, saved, decision, message.get('text', ''))
+    if decision['booking']['action'] in {'documents', 'email'}:
+        from agents.social.isluno_payments import PaymentStore, envelope as paid_envelope
+        payments = PaymentStore(store)
+        if decision['booking']['action'] == 'documents':
+            return paid_envelope(payments.resume(scope, timestamp))
+        return paid_envelope(payments.propose_email(scope, trigger, timestamp, decision['booking'].get('email_address', '')))
     with store.db() as db:
         existing_quote_reply = db.execute('SELECT job_id FROM isluno_quote_requests WHERE scope_key=? AND trigger_id=?', (scope.key, trigger)).fetchone()
         old_quote = db.execute('SELECT s.status FROM isluno_quote_latest l JOIN isluno_quote_state s ON s.quote_id=l.quote_id WHERE l.scope_key=?', (scope.key,)).fetchone()

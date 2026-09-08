@@ -93,7 +93,7 @@ def capabilities():
     except IslunoUnavailable:
         return response
     response.update({"enabled": True, "brand": brand_snapshot(profile), "document_languages": profile["document_languages"]})
-    response["capabilities"].update({"brand_profile": True, "isolated_context": True})
+    response["capabilities"].update({"brand_profile": True, "isolated_context": True, "itinerary_booking": True, "demo_payment": True})
     return response
 
 

@@ -122,7 +122,7 @@ class JourneyContextTests(unittest.TestCase):
             self.assertEqual(response.status_code, 200)
             self.assertEqual(response.headers['cache-control'], 'no-store')
             self.assertTrue(response.json()['enabled'])
-            self.assertFalse(response.json()['capabilities']['itinerary_booking'])
+            self.assertTrue(response.json()['capabilities']['itinerary_booking'])
             self.config['features'][identity.FEATURE] = False
             self.write_config(self.config)
             self.assertFalse(client.get(path, headers=headers).json()['enabled'])

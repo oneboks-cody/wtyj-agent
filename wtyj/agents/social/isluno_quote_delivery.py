@@ -28,11 +28,12 @@ def send_job(conversation_id, account_id, job_id, *, store=None, post=None, wind
             if state != 'queued': return False
             if window(conversation_id,account_id,job['trigger_sent_at']).get('open') is not True: return False
             body = copy.deepcopy(source)
-            if body.pop('document_quote_id', None):
+            document_id = body.pop('document_quote_id', None)
+            if document_id:
                 # Missing deployment configuration never silently downgrades a PDF.
-                store.document(job['quote_id'])
-                body.update({'attachmentUrl': store.document_url(job['quote_id']), 'attachmentType': 'file',
-                             'attachmentName': 'Isluno-quote.pdf'})
+                store.document(document_id)
+                body.update({'attachmentUrl': store.document_url(document_id), 'attachmentType': 'file',
+                             'attachmentName': body.get('attachmentName', 'Isluno-quote.pdf')})
             for attempt in range(2):
                 with store.db() as db, db:
                     db.execute('BEGIN IMMEDIATE')

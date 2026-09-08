@@ -137,7 +137,7 @@ def _message(
     message = EmailMessage(policy=SMTP)
     parsed_sender = Address(addr_spec=sender)
     message["From"] = Address(
-        display_name=_display_name(), username=parsed_sender.username,
+        display_name=_header(content["sender_display_name"]) if content.get("sender_display_name") else _display_name(), username=parsed_sender.username,
         domain=parsed_sender.domain,
     )
     message["To"] = recipient
