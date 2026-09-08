@@ -1286,6 +1286,8 @@ def process_model_turn(
     calendar_request = understood.get("calendar_request", "none")
     if calendar_request in response_policy.CALENDAR_REQUESTS or date_request:
         understood = {**understood, "fields": {k: v for k, v in (understood.get("fields") or {}).items() if k != "trip_date"}}
+    if understood.get('reminder_preference') in {'stop','resume'}:
+        flags['mermaid_reminders_opt_out'] = understood['reminder_preference'] == 'stop'
     action = understood.get("mermaid_action")
     if action == 'change_date' and reservation and reservation['state'] == 'quote_ready':
         action = 'details'

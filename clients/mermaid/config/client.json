@@ -43,7 +43,7 @@
     "dashboard_url": "https://dashboard.unboks.org"
   },
   "agent_persona": {
-    "reservation_demo_override": "MERMAID WHATSAPP RESERVATION DEMO - FINAL OVERRIDE\nFor WhatsApp, the deterministic Mermaid reservation workflow supersedes any older redirect-only booking wording below. TRACY keeps the guest in WhatsApp for intake, summary confirmation, quote PDF and the payment next step. The only external step is the signed no-money payment simulation page; it asks for no card or bank data. Demo seat availability is always assumed and must be described exactly as a demo assumption, never as a live inventory check. After the signed callback, send a payment receipt PDF and the server-generated MER-DEMO booking code, not a final confirmation PDF. Supported customer languages are English, Dutch, German, Spanish, Papiamentu and Portuguese. Reminders are disabled for this demo.",
+    "reservation_demo_override": "MERMAID WHATSAPP RESERVATION DEMO - FINAL OVERRIDE\nFor WhatsApp, the deterministic Mermaid reservation workflow supersedes any older redirect-only booking wording below. TRACY keeps the guest in WhatsApp for intake, summary confirmation, quote PDF and the payment next step. The only external step is the signed no-money payment simulation page; it asks for no card or bank data. Demo seat availability is always assumed and must be described exactly as a demo assumption, never as a live inventory check. After the signed callback, send a payment receipt PDF and the server-generated MER-DEMO booking code, not a final confirmation PDF. Supported customer languages are English, Dutch, German, Spanish, Papiamentu and Portuguese. Unfinished-booking reminders are scheduled by the server 6 and 18 hours after the last customer message.",
     "unsupported_attachment_handoff": {
       "enabled": true,
       "reply": "I can't safely interpret this attachment here. Mermaid's team needs to review it. Please don't send payment details, identity documents, or medical records in chat."
@@ -151,7 +151,7 @@
     "mermaid_demo_payment": true,
     "mermaid_dashboard_projection": true,
     "mermaid_customer_accounts": true,
-    "mermaid_reminders": false,
+    "mermaid_reminders": true,
     "approved_learnings_in_prompt": false,
     "info_updates_in_prompt": false,
     "knowledge_files_in_prompt": false
@@ -446,6 +446,38 @@
         "same": "Sua reserva já está para essa data. Pretendia indicar outro dia?",
         "held": "Há um pedido em aberto para nossa equipe nesta reserva, então a equipe precisará cuidar da mudança de data. Os dados da sua reserva e as notas anteriores estão salvos.",
         "cutoff": "Posso mudar a data por aqui até {hours} horas antes do passeio. Esse prazo já passou, então sua data atual continua a mesma.\n\nQuer que eu pergunte à nossa equipe quais opções ainda existem?"
+      }
+    }
+  },
+  "mermaid_abandoned_reminders": {
+    "hours": [
+      6,
+      18
+    ],
+    "messages": {
+      "nl": {
+        "6": "Mag ik u nog ergens mee helpen met uw reservering voor Klein Curaçao? ☀️🏝️\n\nUw reservering is nog niet afgerond. Als u wilt, help ik u graag verder waar we gebleven waren.",
+        "18": "Wilt u uw reservering voor Klein Curaçao nog afronden? 🏝️\n\nLaat gerust weten of u verder wilt gaan of nog een vraag heeft. Dit is mijn laatste herinnering; u bent altijd welkom om later weer contact op te nemen."
+      },
+      "en": {
+        "6": "May I help you with your Klein Curaçao reservation? ☀️🏝️\n\nYour reservation is still unfinished. If you would like to continue, I’ll be happy to help you pick up where we left off.",
+        "18": "Would you still like to complete your Klein Curaçao reservation? 🏝️\n\nLet me know if you would like to continue or have any questions. This is my last reminder; you’re always welcome to get back in touch later."
+      },
+      "de": {
+        "6": "Kann ich Ihnen bei Ihrer Reservierung für Klein Curaçao noch helfen? ☀️🏝️\n\nIhre Reservierung ist noch nicht abgeschlossen. Wenn Sie fortfahren möchten, helfe ich Ihnen gerne weiter.",
+        "18": "Möchten Sie Ihre Reservierung für Klein Curaçao noch abschließen? 🏝️\n\nGeben Sie mir gerne Bescheid, wenn Sie fortfahren möchten oder Fragen haben. Dies ist meine letzte Erinnerung. Sie können sich jederzeit wieder melden."
+      },
+      "es": {
+        "6": "¿Puedo ayudarle con su reserva para Klein Curaçao? ☀️🏝️\n\nSu reserva aún no está completa. Si desea continuar, con gusto le ayudo desde donde nos quedamos.",
+        "18": "¿Desea completar su reserva para Klein Curaçao? 🏝️\n\nDígame si quiere continuar o tiene alguna pregunta. Este es mi último recordatorio; puede volver a escribirnos cuando lo desee."
+      },
+      "pt": {
+        "6": "Posso ajudar com sua reserva para Klein Curaçao? ☀️🏝️\n\nSua reserva ainda não foi concluída. Se desejar continuar, será um prazer ajudar de onde paramos.",
+        "18": "Ainda gostaria de concluir sua reserva para Klein Curaçao? 🏝️\n\nSe desejar continuar ou tiver alguma dúvida, é só me dizer. Este é meu último lembrete; pode voltar a entrar em contato quando quiser."
+      },
+      "pap": {
+        "6": "Mi por yuda bo ku bo reserva pa Klein Curaçao? ☀️🏝️\n\nBo reserva no ta kompletá ainda. Si bo ke sigui, mi ta yuda bo ku plaser.",
+        "18": "Bo ke kompletá bo reserva pa Klein Curaçao ainda? 🏝️\n\nLaga mi sa si bo ke sigui òf si bo tin un pregunta. Esaki ta mi último rekordatorio; bo ta semper bon biní pa tuma kontakto atrobe."
       }
     }
   }

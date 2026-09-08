@@ -775,6 +775,11 @@ def _ali_inbound_recovery_loop(
             _recover_stale_ali_inbound_once(ali_workflow=ali_workflow)
         except Exception as exc:
             log("ali_inbound_recovery_failed", error=type(exc).__name__)
+        try:
+            from agents.social.mermaid_abandoned_reminders import run_once
+            run_once()
+        except Exception as exc:
+            log("mermaid_abandoned_reminder_scheduler_failed", error=type(exc).__name__)
         if ali_workflow:
             try:
                 _run_ali_reservation_v2_scheduled_once()
