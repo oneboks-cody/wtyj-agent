@@ -154,6 +154,9 @@ def _process_upload(file_bytes: bytes, photo_id: int) -> tuple:
 router = APIRouter(prefix="/dashboard/api", tags=["dashboard"])
 public_router = APIRouter(prefix="/r", tags=["ali-public"])
 
+from dashboard.isluno_api import build_router as build_isluno_router
+router.include_router(build_isluno_router(_check_auth))
+
 
 # --- Auth ---
 
