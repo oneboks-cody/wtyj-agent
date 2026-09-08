@@ -17,6 +17,7 @@ TOOL['input_schema']['properties'].update({
                            'pickup_location': {'type': 'string'}}, 'additionalProperties': False}},
                        'guest': {'type': 'object', 'properties': {'name': {'type': 'string'}, 'ages': {'type': 'array', 'items': {'type': 'integer'}}}, 'additionalProperties': False},
                        'email_address': {'type': 'string', 'maxLength': 254},
+                       'email_address_correction': {'type': 'boolean'},
                        'document_language': {'type': ['string', 'null'], 'enum': [None, *sorted(LANGUAGES)]}},
         'required': ['action', 'updates', 'guest', 'document_language']},
     'translations': {'type': 'object', 'additionalProperties': {'type': 'object', 'additionalProperties': {'type': 'string'}}},
@@ -31,7 +32,7 @@ def system_prompt():
         'booking.action add means an explicit new trip; update targets existing or pending item IDs; remove targets one item; '
         'cancel means an explicit unpaid whole-itinerary cancellation; new starts a separate itinerary only when explicitly requested. '
         'Use booking.action summary when the customer asks to review the complete itinerary or get a quote. '
-        'Use action documents to retrieve or resume paid demo documents. Use action email and email_address for an explicitly supplied receipt email address; an address alone is not consent. Never infer payment from text. '
+        'Use action documents to retrieve or resume paid demo documents. Use action email and email_address for an explicitly supplied receipt email address; an address alone is not consent. Set email_address_correction=true when the customer rejects, withdraws or replaces a previous address, even when no valid replacement is supplied. Ordinary requests to receive an email without an address do not imply correction. Never infer payment from text. '
         'Native reply buttons alone confirm summary details and approve a quote. '
         'Never infer approval from a question, acknowledgement or correction. approve is only explicit approval; the server owns quote stages. '
         'Use the supplied booking_rules for valid slot/option IDs and constraints. Do not invent identifiers. Capture all supplied guest names, exact ages, dates, slot IDs, options and pickup choices. Never invent an adult age from an adult count. '
@@ -50,9 +51,10 @@ def validate(result, catalog):
     base = {k: result[k] for k in discovery.TOOL['input_schema']['required']}
     discovery.validate(base, catalog)
     booking = result['booking']
-    check(isinstance(booking, dict) and {'action', 'updates', 'guest', 'document_language'} <= set(booking) <= {'action', 'updates', 'guest', 'document_language', 'email_address'}, 'invalid_booking_contract')
+    check(isinstance(booking, dict) and {'action', 'updates', 'guest', 'document_language'} <= set(booking) <= {'action', 'updates', 'guest', 'document_language', 'email_address', 'email_address_correction'}, 'invalid_booking_contract')
     check(isinstance(booking['action'], str) and booking['action'] in {'none', 'new', 'add', 'update', 'remove', 'cancel', 'human', 'approve', 'summary', 'documents', 'email'}, 'invalid_booking_action')
     check('email_address' not in booking or isinstance(booking['email_address'], str) and len(booking['email_address']) <= 254, 'invalid_email_address')
+    check('email_address_correction' not in booking or type(booking['email_address_correction']) is bool, 'invalid_email_correction')
     updates = booking['updates']
     check(not updates or booking['action'] in {'new','add','update','remove'}, 'updates_require_explicit_action')
     check(isinstance(updates, list) and len(updates) <= 10, 'invalid_booking_updates')

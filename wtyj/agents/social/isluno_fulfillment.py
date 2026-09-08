@@ -60,13 +60,22 @@ def send_pending_email(scope, *, store=None, transport=None, guard=None):
     return status=='accepted'
 
 
-def send_fulfillment(conversation_id, account_id, job_id, *, store=None, dispatch=None, schedule_email=None):
+def send_fulfillment(conversation_id, account_id, job_id, *, store=None, dispatch=None, schedule_email=None, send_question=None):
     store=store or PaymentStore()
     try:
         job=store.job(job_id,account_id,conversation_id)
     except (ItineraryError, PermissionError):
         return False
     scope=JourneyScope(**job['scope'])
+    if job['stage'] == 'composed':
+        if send_question is None:
+            from agents.social.isluno_delivery import send_plan
+            from agents.social.isluno_discovery import DiscoveryStore
+            discovery = DiscoveryStore(store.itinerary.db_path, store.itinerary.catalog_path, clock=store.clock)
+            send_question = lambda conversation, account, plan: send_plan(conversation, account, plan, store=discovery)
+        if not send_question(conversation_id, account_id, job['answer_plan_id']):
+            return False
+        return send_fulfillment(conversation_id, account_id, job['fulfillment_job_id'], store=store, dispatch=dispatch, schedule_email=schedule_email)
     result=(dispatch or send_job)(conversation_id,account_id,job_id,store=store)
     # An email failure can never alter the payment or suppress WhatsApp parts.
     with store.db() as db:

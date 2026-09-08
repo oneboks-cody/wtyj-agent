@@ -339,12 +339,16 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
                 understanding.validate(decision, discovery_understanding.context(snapshot))
             store.record_decision(scope, trigger, decision)
         outcome = store.apply(scope, trigger, saved, decision, message.get('text', ''))
+    prepared_fulfillment = None
     if decision['booking']['action'] in {'documents', 'email'}:
         from agents.social.isluno_payments import PaymentStore, envelope as paid_envelope
         payments = PaymentStore(store)
         if decision['booking']['action'] == 'documents':
-            return paid_envelope(payments.resume(scope, timestamp))
-        return paid_envelope(payments.propose_email(scope, trigger, timestamp, decision['booking'].get('email_address', '')))
+            prepared_fulfillment = payments.resume(scope, timestamp)
+        else:
+            prepared_fulfillment = payments.propose_email(scope, trigger, timestamp, decision['booking'].get('email_address', ''), replace=decision['booking'].get('email_address_correction', False))
+        if not decision['question']:
+            return paid_envelope(prepared_fulfillment)
     with store.db() as db:
         existing_quote_reply = db.execute('SELECT job_id FROM isluno_quote_requests WHERE scope_key=? AND trigger_id=?', (scope.key, trigger)).fetchone()
         old_quote = db.execute('SELECT s.status FROM isluno_quote_latest l JOIN isluno_quote_state s ON s.quote_id=l.quote_id WHERE l.scope_key=?', (scope.key,)).fetchone()
@@ -359,7 +363,7 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
     booking = decision['booking']
     response_text = None
     if booking['action'] != 'none' or booking['guest'] or booking['document_language']:
-        response_text = render(outcome, snapshot)
+        response_text = '' if prepared_fulfillment else render(outcome, snapshot)
         # A simultaneous supported question is answered from its selected,
         # versioned fact translations before the canonical operation result.
         facts = []
@@ -370,6 +374,8 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
         if facts and decision['question']:
             fact_text = '\n\n'.join(facts)[:max(0, 4096 - len(response_text) - 2)]
             response_text = fact_text + '\n\n' + response_text
+    if prepared_fulfillment and not response_text:
+        response_text = None
     if prepared_quote:
         from agents.social.isluno_quote_documents import REVIEW_READY
         response_text = (response_text or '') + '\n\n' + REVIEW_READY[decision['language']]
@@ -377,6 +383,8 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
     # ID for its application result so selection metadata cannot mask intake.
     reply_trigger = 'conversation-' + opaque(scope, trigger, 'reply')
     plan = discovery.plan(scope, reply_trigger, timestamp, base, translations=decision['translations'], response_text=response_text, catalog_snapshot=snapshot)
+    if prepared_fulfillment:
+        return paid_envelope(payments.compose(scope, trigger, timestamp, prepared_fulfillment, plan))
     return envelope(plan)
 
 

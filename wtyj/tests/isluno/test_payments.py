@@ -48,6 +48,128 @@ class PaymentTests(unittest.TestCase):
         return send_job(self.scope().conversation_id,self.scope().account_id,job['id'],store=self.payments,
                         post=post,window=lambda *a:{'open':True},sleep=self.sleep)
 
+    def deliver_composed(self, job, *, question_status='accepted', schedule=None):
+        from agents.social.isluno_delivery import send_plan
+        def post(scope, body, key):
+            self.posts.append((scope, body, key))
+            return {'status': question_status, 'provider_id': 'question-fixture' if question_status == 'accepted' else None}
+        return send_fulfillment(self.scope().conversation_id, self.scope().account_id, job['id'], store=self.payments,
+            send_question=lambda conversation, account, plan: send_plan(conversation, account, plan, store=self.discovery,
+                post=post, window=lambda *a: {'open': True}, sleep=self.sleep),
+            dispatch=lambda conversation, account, ident, **kw: self.deliver(self.payments.job(ident, account, conversation)),
+            schedule_email=schedule or (lambda *a: None))
+
+    def mixed_question(self, action, supported):
+        decision=response(action, question='Lunch included?' if supported else 'Unknown safety condition?',
+                          fact_keys=['inclusion_0'] if supported else [])
+        if action == 'email': decision['booking']['email_address']='guest@example.invalid'
+        result, calls=self.turn(decision, trigger='mixed-question')
+        self.assertEqual(calls, 1)
+        replay, calls=self.turn(decision, trigger='mixed-question')
+        self.assertEqual(calls, 0); self.assertEqual(result, replay)
+        return self.payments.job(result['media']['url'], self.scope().account_id, self.scope().conversation_id)
+
+    def assert_mixed_question(self, action, supported):
+        paid=self.pay(); self.assertTrue(self.deliver(paid)); count=len(self.posts)
+        composed=self.mixed_question(action, supported)
+        self.assertEqual(composed['stage'], 'composed')
+        self.assertTrue(self.deliver_composed(composed))
+        new=self.posts[count:]
+        self.assertEqual(len(new), 1 if action == 'documents' else 2)
+        self.assertTrue(all('attachmentUrl' not in row[1] for row in new))
+        if supported: self.assertIn('Synthetic lunch', new[0][1]['message'])
+        else:
+            help_token=new[0][1]['buttons'][0]['payload']
+            self.assertIn('Ask', new[0][1]['buttons'][0]['title'])
+        count=len(self.posts); self.assertTrue(self.deliver_composed(composed)); self.assertEqual(len(self.posts), count)
+        if not supported:
+            self.turn(token=help_token)
+            self.assertTrue(self.store.reviews(self.scope()))
+        if action == 'email':
+            self.assertIn('guest@example.invalid', new[-1][1]['message'])
+            self.turn(token=new[-1][1]['buttons'][0]['payload'])
+            self.assertEqual(self.payments.records(self.scope())[0]['emails'][0]['recipient'], 'guest@example.invalid')
+
+    def test_documents_with_supported_question(self): self.assert_mixed_question('documents', True)
+    def test_documents_with_unavailable_question_and_help(self): self.assert_mixed_question('documents', False)
+    def test_email_with_supported_question(self): self.assert_mixed_question('email', True)
+    def test_email_with_unavailable_question_and_help(self): self.assert_mixed_question('email', False)
+
+    def test_composed_actual_zernio_sender_uses_both_existing_ledgers(self):
+        from agents.social.senders.zernio import ZernioSender
+        from agents.social import isluno_fulfillment, isluno_delivery, zernio_dm_client
+        paid=self.pay(); self.assertTrue(self.deliver(paid))
+        composed=self.mixed_question('email', True); count=len(self.posts)
+        def post(scope, body, key, **kwargs):
+            self.posts.append((scope,body,key)); return {'status':'accepted','provider_id':'fixture-question'}
+        with patch.object(isluno_fulfillment,'PaymentStore',return_value=self.payments), \
+             patch.object(isluno_fulfillment,'send_job',side_effect=lambda conversation,account,ident,**kw:self.deliver(self.payments.job(ident,account,conversation))), \
+             patch.object(isluno_delivery,'post_once',side_effect=post), \
+             patch.object(isluno_delivery.time,'sleep',side_effect=self.sleep), \
+             patch.object(zernio_dm_client,'whatsapp_customer_service_window',return_value={'open':True}):
+            self.assertTrue(ZernioSender.send(self.scope().conversation_id,self.scope().account_id,'',composed['id'],'isluno_fulfillment'))
+            self.assertEqual(len(self.posts)-count,2)
+            self.assertTrue(ZernioSender.send(self.scope().conversation_id,self.scope().account_id,'',composed['id'],'isluno_fulfillment'))
+            self.assertEqual(len(self.posts)-count,2)
+
+    def test_composed_question_failure_preserves_pending_documents(self):
+        paid=self.pay(); composed=self.mixed_question('documents', True)
+        before=self.payments.records(self.scope())[0]['deliveries']
+        self.assertFalse(self.deliver_composed(composed, question_status='ambiguous'))
+        self.assertEqual(self.payments.records(self.scope())[0]['deliveries'], before)
+        count=len(self.posts); self.assertFalse(self.deliver_composed(composed)); self.assertEqual(len(self.posts), count)
+        self.assertTrue(self.deliver(paid))
+
+    def test_composed_question_resumes_only_pending_document_parts(self):
+        paid=self.pay()
+        with self.payments.db() as db, db:
+            db.execute("UPDATE isluno_quote_deliveries SET status='accepted',provider_id='prior' WHERE job_id=? AND part=0", (paid['id'],))
+        composed=self.mixed_question('documents', True); count=len(self.posts)
+        self.assertTrue(self.deliver_composed(composed)); self.assertEqual(len(self.posts)-count, len(paid['parts']))
+        count=len(self.posts); self.assertTrue(self.deliver_composed(composed)); self.assertEqual(len(self.posts), count)
+
+    def assert_invalid_email_correction(self, address, explicit):
+        self.pay(); old=self.email_proposal('old@example.invalid'); old_token=self.token(old)
+        self.turn(token=old_token)
+        unconsented=self.email_proposal('old@example.invalid')
+        decision=response('email'); decision['booking'].update(email_address=address, email_address_correction=explicit)
+        result,_=self.turn(decision, text='That old email is wrong. Change it to '+address, trigger='correction')
+        replay,calls=self.turn(decision, trigger='correction'); self.assertEqual(result,replay); self.assertEqual(calls,0)
+        self.assertIn('provide the email address', result['text'])
+        self.assertEqual(self.payments.records(self.scope())[0]['emails'][0]['status'], 'cancelled')
+        self.turn(token=old_token)
+        self.assertEqual(self.payments.records(self.scope())[0]['emails'][0]['status'], 'cancelled')
+        with self.assertRaises(ItineraryError):
+            self.payments.consent_email(self.scope(),'stale',self.now.isoformat(),self.token(unconsented),'button_reply')
+        scheduled=[]
+        self.assertTrue(send_fulfillment(self.scope().conversation_id,self.scope().account_id,result['media']['url'],store=self.payments,
+            dispatch=lambda *a,**kw:True,schedule_email=lambda *a:scheduled.append(a)))
+        self.assertEqual(scheduled,[])
+        self.assertTrue(send_pending_email(self.scope(),store=self.payments,guard=lambda:True,
+            transport=lambda *a,**kw:self.fail('rejected old recipient dispatched')))
+        replacement=self.email_proposal('new@example.invalid')
+        self.assertTrue(send_pending_email(self.scope(),store=self.payments,guard=lambda:True,
+            transport=lambda *a,**kw:self.fail('replacement dispatched without consent')))
+        self.turn(token=self.token(replacement)); sent=[]
+        self.assertTrue(send_pending_email(self.scope(),store=self.payments,guard=lambda:True,transport=lambda *a,**kw:sent.append(a[0])))
+        self.assertEqual(sent,['new@example.invalid'])
+
+    def test_invalid_supplied_replacement_revokes_old_email(self): self.assert_invalid_email_correction('new@',False)
+    def test_incomplete_explicit_correction_revokes_old_email(self): self.assert_invalid_email_correction('',True)
+
+    def test_ordinary_missing_address_offer_preserves_existing_consent(self):
+        self.pay(); proposal=self.email_proposal(); self.turn(token=self.token(proposal))
+        self.turn(response('email'))
+        self.assertEqual(self.payments.records(self.scope())[0]['emails'][0]['status'],'queued')
+
+    def test_correction_preserves_attempted_email_history(self):
+        self.pay(); proposal=self.email_proposal(); self.turn(token=self.token(proposal))
+        for status in ['claimed','ambiguous','failed','accepted']:
+            with self.payments.db() as db,db: db.execute('UPDATE isluno_paid_emails SET status=?',(status,))
+            decision=response('email'); decision['booking']['email_address']='new@'
+            self.turn(decision)
+            self.assertEqual(self.payments.records(self.scope())[0]['emails'][0]['status'],status)
+
     def test_actual_payment_receipt_and_unique_ticket_per_item(self):
         from pypdf import PdfReader
         job=self.pay(self.approved(multi=True));row=self.payments.records(self.scope())[0]

@@ -176,8 +176,31 @@ class PaymentStore(QuoteStore):
                      'deliveries':[dict(r) for r in db.execute('SELECT * FROM isluno_quote_deliveries WHERE job_id=?',(row['job_id'],))],
                      'emails':[dict(r) for r in db.execute('SELECT id,recipient,status,error,message_id FROM isluno_paid_emails WHERE payment_id=?',(row['id'],))]} for row in rows]
 
-    def propose_email(self, scope, trigger, sent_at, recipient):
+    def compose(self, scope, trigger, sent_at, fulfillment, answer):
+        """Reference existing ledgers; never copy accepted document parts into a new send."""
+        require_scope(scope); self._timestamp(sent_at)
+        check(fulfillment['scope'] == answer['scope'] == json.loads(self.itinerary._scope(scope)), 'wrong_quote_recipient')
+        event_key = 'composed:' + trigger
+        with self.db() as db, db:
+            db.execute('BEGIN IMMEDIATE')
+            old = db.execute('SELECT job_id FROM isluno_fulfillment_events WHERE scope_key=? AND event_key=?', (scope.key, event_key)).fetchone()
+            if old:
+                return json.loads(db.execute('SELECT payload FROM isluno_quote_jobs WHERE id=?', (old[0],)).fetchone()[0])
+            job_id = secrets.token_hex(16)
+            text = answer['body'].get('message') or answer['body']['interactive']['body']['text']
+            job = {'id': job_id, 'quote_id': fulfillment['quote_id'], 'payment_id': fulfillment['payment_id'],
+                   'scope': fulfillment['scope'], 'stage': 'composed', 'trigger_sent_at': sent_at,
+                   'answer_plan_id': answer['id'], 'fulfillment_job_id': fulfillment['id'],
+                   'parts': [{'message': text + '\n\n' + fulfillment['parts'][0].get('message', '')}]}
+            db.execute('INSERT INTO isluno_quote_jobs VALUES(?,?,?,?)', (job_id, scope.key, job['quote_id'], encoded(job)))
+            db.execute('INSERT INTO isluno_fulfillment_events VALUES(?,?,?)', (scope.key, event_key, job_id))
+            return job
+
+    def propose_email(self, scope, trigger, sent_at, recipient, *, replace=False):
         from agents.social.mermaid_reservation_email import normalize_email
+        check(type(replace) is bool, 'invalid_email_correction')
+        supplied = bool(recipient)
+        fingerprint = digest([recipient, replace])
         recipient=normalize_email(recipient) if recipient else None
         check(isinstance(trigger,str) and 0<len(trigger)<=512,'missing_verified_message_id')
         require_scope(scope);self._timestamp(sent_at)
@@ -187,20 +210,24 @@ class PaymentStore(QuoteStore):
             old=db.execute('SELECT job_id FROM isluno_fulfillment_events WHERE scope_key=? AND event_key=?',(scope.key,event_key)).fetchone()
             if old:
                 job=json.loads(db.execute('SELECT payload FROM isluno_quote_jobs WHERE id=?',(old[0],)).fetchone()[0])
-                check(job.get('email_recipient')==recipient,'email_proposal_conflict')
+                check(job.get('email_proposal_fingerprint')==fingerprint,'email_proposal_conflict')
                 return job
+            if supplied or replace:
+                # Revoke the rejected destination before asking for a usable replacement.
+                db.execute("UPDATE isluno_paid_emails SET status='cancelled',error='address_changed' WHERE payment_id=? AND status='queued' AND (? OR ? IS NULL OR recipient!=?)", (paid['id'], replace, recipient, recipient))
+                db.execute('DELETE FROM isluno_email_consents WHERE scope_key=? AND consent_trigger IS NULL', (scope.key,))
             if recipient is None:
                 job=self._notice(db,scope,paid,sent_at,COPY[snapshot['chat_language']][8])
+                job['email_proposal_fingerprint'] = fingerprint
+                db.execute('UPDATE isluno_quote_jobs SET payload=? WHERE id=?', (encoded(job), job['id']))
                 db.execute('INSERT INTO isluno_fulfillment_events VALUES(?,?,?)',(scope.key,event_key,job['id']))
                 return job
-            db.execute("UPDATE isluno_paid_emails SET status='cancelled',error='address_changed' WHERE payment_id=? AND status='queued' AND recipient!=?",(paid['id'],recipient))
-            # New address proposal invalidates old, unconsented confirmations.
-            db.execute('DELETE FROM isluno_email_consents WHERE scope_key=? AND consent_trigger IS NULL',(scope.key,))
             token='ie_'+secrets.token_hex(16)
             db.execute('INSERT INTO isluno_email_consents VALUES(?,?,?,?,?,NULL)',(token,scope.key,paid['id'],recipient,(self.clock()+timedelta(hours=1)).isoformat()))
             job=self._notice(db,scope,paid,sent_at,COPY[snapshot['chat_language']][6]+' '+recipient,
                              [{'type':'postback','payload':token,'title':COPY[snapshot['chat_language']][7]}])
             job['email_recipient']=recipient
+            job['email_proposal_fingerprint']=fingerprint
             db.execute('UPDATE isluno_quote_jobs SET payload=? WHERE id=?',(encoded(job),job['id']))
             db.execute('INSERT INTO isluno_fulfillment_events VALUES(?,?,?)',(scope.key,event_key,job['id']))
             return job
