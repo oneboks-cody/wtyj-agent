@@ -122,13 +122,17 @@ class Operations:
                     'emails':[dict(e) for e in db.execute('SELECT id,recipient,status,message_id,error FROM isluno_paid_emails WHERE payment_id=?',(paid['id'],))]}
                 documents += [dict(d) for d in db.execute('SELECT id,kind,item_id,ticket_id,sha256,expires_at FROM isluno_paid_documents WHERE payment_id=? ORDER BY rowid',(paid['id'],))]
                 events.append({'kind':'Demo payment completed','at':snapshot['paid_at'],'reference':paid['id']})
-            quote_ids={q['id'] for q in quotes};deliveries=[]
+            quote_by_id={q['id']:q for q in quotes};document_by_id={d['id']:d for d in documents};deliveries=[]
             for j in db.execute('SELECT * FROM isluno_quote_jobs WHERE scope_key=? ORDER BY rowid',(scope.key,)):
-                if j['quote_id'] not in quote_ids:continue
+                if j['quote_id'] not in quote_by_id:continue
+                quote_record=quote_by_id[j['quote_id']]
                 job=decode(j['payload'])
                 for d in db.execute('SELECT * FROM isluno_quote_deliveries WHERE job_id=? ORDER BY part',(j['id'],)):
                     body=job['parts'][d['part']]
-                    deliveries.append({'job_id':j['id'],'part':d['part'],'stage':job['stage'],'status':d['status'],'provider_id':d['provider_id'],
+                    document=document_by_id.get(body.get('document_quote_id'),{})
+                    deliveries.append({'quote_id':j['quote_id'],'quote_version':quote_record['version'],'quote_status':quote_record['status'],
+                        'document_kind':document.get('kind'),'item_id':document.get('item_id'),'ticket_id':document.get('ticket_id'),'part_count':len(job['parts']),
+                        'job_id':j['id'],'part':d['part'],'stage':job['stage'],'status':d['status'],'provider_id':d['provider_id'],
                         'document_id':body.get('document_quote_id'),'label':body.get('attachmentName') or 'WhatsApp '+job['stage'].replace('_',' '),'delivered_at':None})
             versions=[decode(v[0]) for v in db.execute('SELECT payload_json FROM isluno_itinerary_versions WHERE scope_key=? AND itinerary_id=? ORDER BY revision',(scope.key,itinerary_id))]
             for version in versions:events.append({'kind':'Itinerary revision','at':version['updated_at'],'revision':version['revision'],'status':version['status']})

@@ -80,6 +80,54 @@ class OperationsTests(unittest.TestCase):
         self.assertEqual(added['item_details'][second_id]['guest_name'],'Second Party')
 
 
+    def test_pending_guest_replacement_survives_invalid_date_then_completion(self):
+        self.approved(multi=True)
+        first,second=[item['id'] for item in self.active()['items']]
+        row=self.listing()['items'][0]
+        frozen=copy.deepcopy(self.get('journeys/'+row['id']).json()['quotes'][-1]['snapshot'])
+        self.turn(response('update',[{'item_id':first,'date':'2026-02-30'}],guest={'name':'First party revised'}))
+        invalid=self.get('journeys/'+row['id']).json()
+        self.assertEqual(invalid['item_details'][first]['guest_name'],'Calvin')
+        self.turn(response('update',[{'item_id':first,'date':'2026-10-19'}]))
+        completed=self.get('journeys/'+row['id']).json()
+        self.assertEqual(completed['item_details'][first]['guest_name'],'First party revised')
+        self.assertEqual(completed['item_details'][second]['guest_name'],'Second Party')
+        self.assertEqual(completed['quotes'][-1]['snapshot']['item_details'][first]['guest_name'],'First party revised')
+        self.assertEqual(next(q['snapshot'] for q in completed['quotes'] if q['id']==frozen['id']),frozen)
+
+    def test_incomplete_new_trip_keeps_its_party_when_another_party_changes(self):
+        self.approved(multi=True)
+        first,second=[item['id'] for item in self.active()['items']]
+        self.turn(response('add',[{'product_id':'fixture-cruise'}],guest={'name':'Third Party'}))
+        pending=self.store.session(self.scope())['pending']
+        third=next(iter(pending))
+        self.turn(response('update',[{'item_id':first}],guest={'name':'First party revised'}))
+        self.turn(response('update',[{'item_id':third,'date':'2026-10-22'}]))
+        row=self.listing()['items'][0];detail=self.get('journeys/'+row['id']).json()
+        self.assertEqual(detail['item_details'][first]['guest_name'],'First party revised')
+        self.assertEqual(detail['item_details'][second]['guest_name'],'Second Party')
+        self.assertEqual(detail['item_details'][third]['guest_name'],'Third Party')
+        self.assertEqual(detail['quotes'][-1]['snapshot']['item_details'][third]['guest_name'],'Third Party')
+
+    def test_delivery_parts_identify_superseded_and_current_quote_versions(self):
+        summary=self.summary();self.send_quote(summary['id'])
+        old_quote=self.tap(summary);self.assertFalse(self.send_quote(old_quote['id'],['ambiguous']))
+        result,_=self.turn(response('update',[{'date':'2026-10-19'}]))
+        summary=self.job(result);self.send_quote(summary['id'])
+        new_quote=self.tap(summary);self.send_quote(new_quote['id'])
+        row=self.listing()['items'][0];detail=self.get('journeys/'+row['id']).json()
+        old=[d for d in detail['deliveries'] if d['quote_id']==old_quote['quote_id']]
+        new=[d for d in detail['deliveries'] if d['quote_id']==new_quote['quote_id']]
+        self.assertTrue(old and new)
+        self.assertTrue(all(d['quote_version']==1 and d['quote_status']=='superseded' for d in old))
+        self.assertTrue(all(d['quote_version']==2 and d['quote_status']=='quote' for d in new))
+        self.assertIn('ambiguous',{d['status'] for d in old})
+        self.assertEqual({d['status'] for d in new},{'accepted'})
+        for d in old+new:
+            self.assertGreater(d['part_count'],d['part'])
+            if d['document_id']:
+                self.assertEqual(d['document_id'],d['quote_id']);self.assertEqual(d['document_kind'],'quote')
+
     def test_reads_do_not_modify_snapshots_or_create_delivery(self):
         self.pay();before=self.payments.records(self.scope());row=self.listing()['items'][0]
         for _ in range(2):self.get('journeys/'+row['id'])

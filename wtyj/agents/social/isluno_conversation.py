@@ -155,7 +155,7 @@ class ConversationStore:
                     updates = booking['updates'] or [{'product_id': p} for p in decision['product_ids']]
                     for index, update in enumerate(updates):
                         item_id = opaque(scope, trigger, 'item-' + str(index))
-                        session['pending'][item_id] = {'item_id': item_id, **{k:v for k,v in update.items() if k != 'item_id'}}
+                        session['pending'][item_id] = {'item_id': item_id, 'guest_name': session['guest'].get('name'), **{k:v for k,v in update.items() if k != 'item_id'}}
                 elif action in {'update', 'remove'}:
                     check(active is not None, 'no_active_itinerary')
                     for update in booking['updates']:
@@ -176,6 +176,8 @@ class ConversationStore:
                             pending.update(update)
                             pending['options'] = options
                             pending['item_id'] = item_id
+                            if booking['guest'].get('name'):
+                                pending['guest_name'] = booking['guest']['name']
                 # Guests and incomplete selections persist even when pricing rejects
                 # a correction; all item writes from this turn roll back together.
                 db.execute('SAVEPOINT item_updates')
@@ -192,7 +194,8 @@ class ConversationStore:
                         active = self.itinerary._apply(scope, active['id'], opaque(scope, trigger, 'save-' + item_id), active['revision'],
                             {'action': 'update' if exists else 'add', 'selection': selection}, connection=db, catalog_snapshot=snapshot)
                         prior_name = session['item_details'].get(item_id, {}).get('guest_name')
-                        item_guest = session['guest']['name'] if booking['guest'].get('name') or not prior_name else prior_name
+                        # Keep the selected party through incomplete/invalid corrections.
+                        item_guest = pending.get('guest_name') or prior_name or session['guest']['name']
                         session['item_details'][item_id] = {'guest_name': item_guest, 'pickup_location': pending.get('pickup_location')}
                         del session['pending'][item_id]
                 except (ItineraryError, CatalogError) as exc:
