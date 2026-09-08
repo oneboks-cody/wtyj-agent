@@ -1,0 +1,102 @@
+{
+  "schema_version": "isluno.v1",
+  "fixture_only": true,
+  "tenant_slug": "mermaid",
+  "journey_type": "isluno_itinerary_demo_v1",
+  "customer_ref": "synthetic-customer-001",
+  "catalog_version": "synthetic-catalog-v1",
+  "products": [
+    {
+      "id": "synthetic-cruise",
+      "name": "Synthetic coastal cruise",
+      "supplier_ref": "demo-only",
+      "source": {"kind": "synthetic", "url": "https://example.invalid/isluno/cruise"},
+      "currency": "USD",
+      "currency_exponent": 2,
+      "timezone": "America/Curacao",
+      "duration_minutes": 180,
+      "guest_rules": {"minimum_party_size": 1, "adult_ages_required": false},
+      "age_bands": [
+        {"key": "infant", "min_age": 0, "max_age": 5, "amount_minor": 0},
+        {"key": "child", "min_age": 6, "max_age": 12, "amount_minor": 5000},
+        {"key": "adult", "min_age": 13, "max_age": null, "amount_minor": 10000}
+      ],
+      "options": [{"id": "synthetic-pickup", "basis": "per_booking", "amount_minor": 2500}],
+      "gallery": [
+        {"id": "cruise-photo-1", "delivery_url": "https://example.invalid/isluno/cruise-1.jpg", "order": 1, "caption": "Synthetic gallery fixture one"},
+        {"id": "cruise-photo-2", "delivery_url": "https://example.invalid/isluno/cruise-2.jpg", "order": 2, "caption": "Synthetic gallery fixture two"}
+      ],
+      "tax_treatment": "included",
+      "payment_terms": "full_demo_payment",
+      "readiness": {"discoverable": true, "quotable": true, "synthetic_media": true}
+    },
+    {
+      "id": "synthetic-museum",
+      "name": "Synthetic island museum",
+      "supplier_ref": "demo-only",
+      "source": {"kind": "synthetic", "url": "https://example.invalid/isluno/museum"},
+      "currency": "USD",
+      "currency_exponent": 2,
+      "timezone": "America/Curacao",
+      "duration_minutes": 90,
+      "guest_rules": {"minimum_party_size": 1, "adult_ages_required": false},
+      "age_bands": [
+        {"key": "child", "min_age": 0, "max_age": 9, "amount_minor": 0},
+        {"key": "adult", "min_age": 10, "max_age": null, "amount_minor": 2000}
+      ],
+      "options": [],
+      "gallery": [{"id": "museum-photo-1", "delivery_url": "https://example.invalid/isluno/museum-1.jpg", "order": 1, "caption": "Synthetic museum fixture"}],
+      "tax_treatment": "included",
+      "payment_terms": "full_demo_payment",
+      "readiness": {"discoverable": true, "quotable": true, "synthetic_media": true}
+    }
+  ],
+  "party": {"adults_count": 2, "child_ages": [8]},
+  "items": [
+    {"id": "synthetic-item-1", "product_id": "synthetic-cruise", "starts_at": "2026-10-15T09:00:00-04:00", "ends_at": "2026-10-15T12:00:00-04:00", "option_ids": ["synthetic-pickup"], "availability_source": "demo_assumed"},
+    {"id": "synthetic-item-2", "product_id": "synthetic-museum", "starts_at": "2026-10-16T14:00:00-04:00", "ends_at": "2026-10-16T15:30:00-04:00", "option_ids": [], "availability_source": "demo_assumed"}
+  ],
+  "quotes": [
+    {
+      "id": "synthetic-quote-single", "itinerary_id": "synthetic-itinerary-single", "version": 1, "itinerary_revision": 3,
+      "currency": "USD", "currency_exponent": 2, "mode": "demo", "approval_state": "awaiting_approval",
+      "lines": [
+        {"item_id": "synthetic-item-1", "basis": "adult", "quantity": 2, "unit_minor": 10000, "amount_minor": 20000},
+        {"item_id": "synthetic-item-1", "basis": "child", "quantity": 1, "unit_minor": 5000, "amount_minor": 5000},
+        {"item_id": "synthetic-item-1", "basis": "synthetic-pickup", "quantity": 1, "unit_minor": 2500, "amount_minor": 2500}
+      ],
+      "total_minor": 27500, "payable_minor": 27500
+    },
+    {
+      "id": "synthetic-quote-multi", "itinerary_id": "synthetic-itinerary-multi", "version": 2, "itinerary_revision": 7,
+      "currency": "USD", "currency_exponent": 2, "mode": "demo", "approval_state": "approved",
+      "lines": [
+        {"item_id": "synthetic-item-1", "basis": "adult", "quantity": 2, "unit_minor": 10000, "amount_minor": 20000},
+        {"item_id": "synthetic-item-1", "basis": "child", "quantity": 1, "unit_minor": 5000, "amount_minor": 5000},
+        {"item_id": "synthetic-item-1", "basis": "synthetic-pickup", "quantity": 1, "unit_minor": 2500, "amount_minor": 2500},
+        {"item_id": "synthetic-item-2", "basis": "adult", "quantity": 2, "unit_minor": 2000, "amount_minor": 4000},
+        {"item_id": "synthetic-item-2", "basis": "child", "quantity": 1, "unit_minor": 0, "amount_minor": 0}
+      ],
+      "total_minor": 31500, "payable_minor": 31500
+    }
+  ],
+  "demo_payment_action": {
+    "id": "synthetic-action-pay-v2", "kind": "complete_demo_payment", "itinerary_id": "synthetic-itinerary-multi", "expected_revision": 7,
+    "quote_id": "synthetic-quote-multi", "quote_version": 2, "customer_ref": "synthetic-customer-001",
+    "expires_at": "2026-10-01T13:00:00-04:00", "consumed": false, "mode": "demo"
+  },
+  "negative_action_cases": [
+    {"name": "ordinary_paid_text", "verified_interactive_action": false, "expected_result": "no_payment_transition"},
+    {"name": "wrong_customer", "customer_ref": "synthetic-customer-002", "expected_result": "invalid_action"},
+    {"name": "stale_quote", "quote_version": 1, "expected_result": "invalid_action"},
+    {"name": "expired", "now": "2026-10-01T13:00:01-04:00", "expected_result": "action_expired"},
+    {"name": "repeat_successful_action", "consumed": true, "expected_result": "recorded_result_without_new_side_effects"}
+  ],
+  "demo_receipt": {
+    "id": "synthetic-receipt", "itinerary_id": "synthetic-itinerary-multi", "quote_id": "synthetic-quote-multi", "quote_version": 2,
+    "brand": "isluno", "mode": "demo", "currency": "USD", "total_minor": 31500,
+    "supplier_booking_status": "simulated_confirmed", "real_money_moved": false,
+    "tickets": [{"id": "synthetic-ticket-1", "item_id": "synthetic-item-1", "demo": true}, {"id": "synthetic-ticket-2", "item_id": "synthetic-item-2", "demo": true}],
+    "email_consent": false, "email_delivery": "not_requested"
+  }
+}

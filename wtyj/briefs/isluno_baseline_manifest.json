@@ -1,0 +1,852 @@
+{
+  "schema_version": "isluno.baseline.v1",
+  "observed_date": "2026-09-08",
+  "status": "candidate_review_pending",
+  "external_test_budget_usd": 0,
+  "backend": {
+    "repository": "BensonOpas/wtyj-agent",
+    "initial_base": "41feb09c2c6742e8a6f3826d8bcd98bf90de134e",
+    "cache_source_commit": "1dea90de0ede6919485b9f79a54db50042c8bdf5",
+    "frozen_base": "e43d0d174d10b82ee0fd4a394828ea720d3996ad",
+    "candidate_branch": "codex/isluno-whatsapp-demo",
+    "review_base_branch": "codex/isluno-baseline-20260908",
+    "proposed_demo_integration_target": "release/isluno-demo-v1",
+    "refs_published": false,
+    "main_observed": "c42adcbd5efdfca75bd8c22c93fc21ec93cad924",
+    "main_merge_base": "e66d12d6c95fcfff5073472528c9df506454ae2c",
+    "inherited_delta": {
+      "files": 274,
+      "insertions": 50603,
+      "deletions": 2088
+    },
+    "main_integration_hold": "Preserve the newer shared Despertares pricing fix; main integration is outside demo setup.",
+    "runtime": {
+      "container": "wtyj-mermaid",
+      "image": "wtyj-agent:tracy-reminders-a095665",
+      "image_digest": "sha256:ed146176bbf4e116270b55a04771af5fb3cd5d0f62d124d8650aa7e1bac97552",
+      "started_at": "2026-09-08T13:38:46.139199144Z",
+      "python_manifest_scope": "Runtime .py files excluding tests, docs, briefs, tmp, config, data, logs and dependency directories; paths relative to application root. No modules imported.",
+      "source_comparison": {
+        "runtime_files": 112,
+        "matched": 112,
+        "different": [],
+        "not_in_candidate": [],
+        "candidate_source_base": "e43d0d174d10b82ee0fd4a394828ea720d3996ad"
+      },
+      "python_files": [
+        {
+          "path": "agents/__init__.py",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "agents/marina/__init__.py",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "agents/marina/email_adapter.py",
+          "sha256": "5cf1e2bc8ff95e29299c0d95a950a96ae36977b212d11a28bc0dc9b7511f5c0c",
+          "bytes": 10773
+        },
+        {
+          "path": "agents/marina/email_poller.py",
+          "sha256": "cda1c2d3dd71219e02cb7d5da579bd856c46986be189bff71a7180094e88f2f1",
+          "bytes": 86373
+        },
+        {
+          "path": "agents/marina/format_sheets.py",
+          "sha256": "94643f187b2bb39bf45966f6622525b38b78104beb8eeb15b825ec6feb676e80",
+          "bytes": 12193
+        },
+        {
+          "path": "agents/marina/gws_calendar.py",
+          "sha256": "3369ac4aa54a9fafe036197fde3d0403133ec954f6038b105ba52f51021397a8",
+          "bytes": 12052
+        },
+        {
+          "path": "agents/marina/hold_reaper.py",
+          "sha256": "1d00b690abccb027ba3a08b63ded9bcf54b582e26f3ead04b6ec674827ece614",
+          "bytes": 6117
+        },
+        {
+          "path": "agents/marina/marina_agent.py",
+          "sha256": "51f205b80f5c008dfb176396657252205d1635d97a4b280179589be06ed207c6",
+          "bytes": 127292
+        },
+        {
+          "path": "agents/marina/payment_stub.py",
+          "sha256": "70c8ba27dbb3903cf7b6d1331fcaab13db8c3fa4dc467e6330b48ae0c2147a21",
+          "bytes": 1457
+        },
+        {
+          "path": "agents/marina/sheets_writer.py",
+          "sha256": "5c158ef15ae8d567beee172921c6eef2e4f21332e2476fbcf8355abbdb91ef20",
+          "bytes": 5390
+        },
+        {
+          "path": "agents/social/__init__.py",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "agents/social/ali_customer_dossier.py",
+          "sha256": "2ac46f8486ad98478dc62dcec8c284c23abe405e5f7e2f1a19044f6f3e7d4cf4",
+          "bytes": 156583
+        },
+        {
+          "path": "agents/social/ali_lead_follow_up.py",
+          "sha256": "5df2edbfd4500b04aca997508c26d347a1a4f0127668edefd832d7e505a1d154",
+          "bytes": 21767
+        },
+        {
+          "path": "agents/social/ali_media_first.py",
+          "sha256": "8251569d85efd682c715075cc4ebc5bb17b688409d2ba8037f2724fcb4a91e83",
+          "bytes": 64458
+        },
+        {
+          "path": "agents/social/ali_quote_brand_card.py",
+          "sha256": "684ffc2602eee09f813eecfed3beabc4690515fe862944c703ff2f3b2a82d85c",
+          "bytes": 5423
+        },
+        {
+          "path": "agents/social/ali_quote_delivery.py",
+          "sha256": "bd7b253e94785596771d53b6d359522df7b917eb87128a093c2b799a3a2d629c",
+          "bytes": 35741
+        },
+        {
+          "path": "agents/social/ali_quote_download.py",
+          "sha256": "f321a6985acb2846635b37d2dafdfdac8a40805d1e19d848d468f2e7b18c3914",
+          "bytes": 4847
+        },
+        {
+          "path": "agents/social/ali_quote_pdf.py",
+          "sha256": "4065955bc1ec2bb12047691932ce180c184d53554d4f56b89eca3c8ab6f22d75",
+          "bytes": 15751
+        },
+        {
+          "path": "agents/social/ali_quote_presentation.py",
+          "sha256": "6f2d811273f32e50c44655dc7ef8caa31e3f7490c22f2a7a2415880ed4b55974",
+          "bytes": 5485
+        },
+        {
+          "path": "agents/social/ali_quote_recovery.py",
+          "sha256": "2d51b8ffaf46da0509db420c9ddf26aa193f2bb8b36856a7304139e29c79d6c7",
+          "bytes": 15907
+        },
+        {
+          "path": "agents/social/ali_quote_workflow.py",
+          "sha256": "9643c3ced3cea83dab77c0de70b2bf17bb651d96d5f20e8be0bc6f9b25c38195",
+          "bytes": 153670
+        },
+        {
+          "path": "agents/social/ali_reservation_confirmation_pdf.py",
+          "sha256": "dcc4faddc2ac0fc2f5760a410a32cba65f27e314eb5e84140ecc17d7aef499eb",
+          "bytes": 11233
+        },
+        {
+          "path": "agents/social/ali_reservation_v2.py",
+          "sha256": "fe6100f1a976b0463c4cb2682bcbbe60a04882c18f99909194312adf3e11b5f8",
+          "bytes": 69747
+        },
+        {
+          "path": "agents/social/ali_reservation_v2_automation.py",
+          "sha256": "3e888552155888e08aabad0f964a152e0a2b14d114a951860b5f44e46bb6744a",
+          "bytes": 14916
+        },
+        {
+          "path": "agents/social/ali_reservation_v2_inbound.py",
+          "sha256": "75768f75e962e3e364b9c991d9c36dd4b78c2a14ae9c1b38d0427e67a8a62942",
+          "bytes": 28141
+        },
+        {
+          "path": "agents/social/ali_reservation_workflow.py",
+          "sha256": "6b383089a739741bdecbaa79fae5ce8b9918a93ab751d6c634388ec97cb85dd4",
+          "bytes": 58101
+        },
+        {
+          "path": "agents/social/ali_vehicle_recommendations.py",
+          "sha256": "8d43474b15aa252bec2b64d22cf4857a52809608e5ad5d9fcc236bf54aa48c42",
+          "bytes": 25980
+        },
+        {
+          "path": "agents/social/ali_vehicle_selection.py",
+          "sha256": "6414f1e730d69cd2c50c6ebf28e8080118e57ede7f89c19212059bdb4f62fa58",
+          "bytes": 6099
+        },
+        {
+          "path": "agents/social/auto_poster.py",
+          "sha256": "d9666c94234fe1bdb8a2230e89f9dd207d4cae47adb1bfe987d1f373e7ed2ec9",
+          "bytes": 8170
+        },
+        {
+          "path": "agents/social/channels/__init__.py",
+          "sha256": "daf5fe4a8e3e75e13de286c4a848298e80af1fda8e490a40500f3088b4e32344",
+          "bytes": 1000
+        },
+        {
+          "path": "agents/social/channels/base.py",
+          "sha256": "a4170d83f958591d9650b726d7e15da8533cba439aad43574706dec469dd17b8",
+          "bytes": 1099
+        },
+        {
+          "path": "agents/social/channels/whatsapp_zernio.py",
+          "sha256": "f5e5df996a4a6b9ba885e25ba329ec90b0f08c290b20051a2a4f8c6476ebc81b",
+          "bytes": 2159
+        },
+        {
+          "path": "agents/social/channels/zernio_dm.py",
+          "sha256": "3a521166edd657c26e7672d7f9f9eaad6f159d03e9f3c45af57e242ffd1f15a1",
+          "bytes": 892
+        },
+        {
+          "path": "agents/social/content_agent.py",
+          "sha256": "8cdfa9f6ad1a85302938a8f5a4862dd5f7227efc5befb6205ccba8184b803618",
+          "bytes": 26166
+        },
+        {
+          "path": "agents/social/dm_agent.py",
+          "sha256": "7271d2baff53eb1277225376f9fb21c3d20c78122ac7e771c31c42bace92a29e",
+          "bytes": 19684
+        },
+        {
+          "path": "agents/social/graphics_engine.py",
+          "sha256": "34a76a450fe93ecbe2435c62e511d73aada5400c7486a11aab91b83128c4206a",
+          "bytes": 11637
+        },
+        {
+          "path": "agents/social/mermaid_abandoned_reminders.py",
+          "sha256": "06b06625712511895c9bd314a07a8378a5e31772ed96125ad0060f62e25e0f75",
+          "bytes": 7095
+        },
+        {
+          "path": "agents/social/mermaid_autoreply_guard.py",
+          "sha256": "f12eec76c8f04b912074810493779ff75295e89f1510686301196335f888556a",
+          "bytes": 1680
+        },
+        {
+          "path": "agents/social/mermaid_crew_assistance.py",
+          "sha256": "844478e764dcf436e74b0834251fdc588dce5c4459dfa7b453d3b7ffaa852479",
+          "bytes": 54129
+        },
+        {
+          "path": "agents/social/mermaid_date_changes.py",
+          "sha256": "31886e886b94d03e8e7ab0fb53a77e6536b9468d4be723b218535c98b22f3249",
+          "bytes": 16841
+        },
+        {
+          "path": "agents/social/mermaid_delivery_reconciliation.py",
+          "sha256": "f0569e55a919ec30107712aea24aaa007992ec625ddf906f87caf09f4c7c82c8",
+          "bytes": 7199
+        },
+        {
+          "path": "agents/social/mermaid_demo_payment.py",
+          "sha256": "3e4d3757222f52b8ee1974a7367c2804d339944a7d2ac11d8a755e185aa23db8",
+          "bytes": 12263
+        },
+        {
+          "path": "agents/social/mermaid_document_cards.py",
+          "sha256": "3969c6dc94ce9691593d78dda013ac9248dc9bf810f32658fde0503c34c0ba53",
+          "bytes": 12996
+        },
+        {
+          "path": "agents/social/mermaid_document_copy.py",
+          "sha256": "1f1bc9772739e0cbd001260fdae39639d8ea2965ae3a2f7eefcb3c5b35bf55f2",
+          "bytes": 1316
+        },
+        {
+          "path": "agents/social/mermaid_document_language.py",
+          "sha256": "97d1a6c85843cf4d7bee7e657e921379213e8092c8ec9ab1300213192dbb9a2f",
+          "bytes": 5339
+        },
+        {
+          "path": "agents/social/mermaid_documents.py",
+          "sha256": "f5338e134bf3288d8a08590ccd18546cbc270720f239c31cb633a911838bcfc9",
+          "bytes": 44953
+        },
+        {
+          "path": "agents/social/mermaid_email_template.py",
+          "sha256": "87e2308a37d708d5134c33932634d502b49c61d13630734e4aba1792fd571ae5",
+          "bytes": 11225
+        },
+        {
+          "path": "agents/social/mermaid_email_transport.py",
+          "sha256": "8274b190ae252c9e84dab8fc05381d59bc5981303e7fc765856aa3e9a47c86c5",
+          "bytes": 8604
+        },
+        {
+          "path": "agents/social/mermaid_guest_experience.py",
+          "sha256": "d4eccf15b91a59571da02fb6a129cff880654a9be88f518cbfbcd67e03b3b912",
+          "bytes": 4662
+        },
+        {
+          "path": "agents/social/mermaid_model_recovery.py",
+          "sha256": "c0bc2844f6218e41701a787441a442dc89358f1b5612f7ba6798e1b9aa9dd446",
+          "bytes": 33931
+        },
+        {
+          "path": "agents/social/mermaid_pdf_structure.py",
+          "sha256": "5d432d1db06c3922b958e073be0779d64014583eac87b4146102abf189044d19",
+          "bytes": 5606
+        },
+        {
+          "path": "agents/social/mermaid_reply_planning.py",
+          "sha256": "312110258a39fa9c8508b4c19f01cce24dbb2b2fe458af17ad0d3e9a368e602c",
+          "bytes": 3121
+        },
+        {
+          "path": "agents/social/mermaid_reservation_email.py",
+          "sha256": "8ab5e35b28eb02f655293240e7947bb3174a5c46d5af68b34d9c5471ce2feb72",
+          "bytes": 16548
+        },
+        {
+          "path": "agents/social/mermaid_reservation_store.py",
+          "sha256": "32959f8a7aa0b81666915eb04b53d56218f751cb056d0a1206b37f7a811d96f3",
+          "bytes": 37971
+        },
+        {
+          "path": "agents/social/mermaid_reservation_workflow.py",
+          "sha256": "57af5404041025ffb3783f9c7021482da7d9d65d522a85ae9e04313f26c5837f",
+          "bytes": 125297
+        },
+        {
+          "path": "agents/social/mermaid_response_policy.py",
+          "sha256": "7dc532d1b06df4738fe9be7cabdeb8d0247306bfb2a3ed3217ce2ca227d92580",
+          "bytes": 13631
+        },
+        {
+          "path": "agents/social/mermaid_understanding.py",
+          "sha256": "7f8a766e526f849c1f60cdd4d0699684a50913e3d1dee606ee51ab1d184fd058",
+          "bytes": 51648
+        },
+        {
+          "path": "agents/social/rental_catalog_preview.py",
+          "sha256": "1ab17f4334c1f38e64f24ce09fc095812a1aa25f40d84f54ee8357b126b1d29d",
+          "bytes": 6752
+        },
+        {
+          "path": "agents/social/scheduler.py",
+          "sha256": "ddaa309915b28637372ebad7ccd77dcd2432ab7ea7d5f9ed293f72f7d1c8dd17",
+          "bytes": 7314
+        },
+        {
+          "path": "agents/social/senders/__init__.py",
+          "sha256": "fb7a85a25248b87c2e8005aa002fd4cf0eec59b1c28e2bb4304ccd1d88a2a06c",
+          "bytes": 1953
+        },
+        {
+          "path": "agents/social/senders/base.py",
+          "sha256": "c67f91422f5457aaed4ebfb36029fe04550ab814e36ac76d2d6907919137d966",
+          "bytes": 1805
+        },
+        {
+          "path": "agents/social/senders/zernio.py",
+          "sha256": "5461e7353fa31f4ff8d5ac622e9828febde6d492e5cce03ea8725347de0a54ef",
+          "bytes": 2318
+        },
+        {
+          "path": "agents/social/social_agent.py",
+          "sha256": "59847bf78ca1737e929a025daa9d19788ca3192afc01061a5c6cf6cfe90d2000",
+          "bytes": 140717
+        },
+        {
+          "path": "agents/social/social_publisher.py",
+          "sha256": "ba56c7c7b0eb7fa77e45e823cf733e7918f957adc3a047900b5cdf0d88a39836",
+          "bytes": 13663
+        },
+        {
+          "path": "agents/social/webhook_server.py",
+          "sha256": "3b3e3f1cbe3a0e8c2e22f9a6d70a800bf7da730087475a88c0eaaccfb93b6d7c",
+          "bytes": 157180
+        },
+        {
+          "path": "agents/social/whatsapp_client.py",
+          "sha256": "dbf45254a6bcbbb496dcf052838d684d188b94435dfa50143685549aa115472a",
+          "bytes": 16339
+        },
+        {
+          "path": "agents/social/zernio_dm_client.py",
+          "sha256": "f288a11d7db62883163cb2e5e5a5aa7152db27fc044826a3b02d8c7c6ed75e20",
+          "bytes": 96976
+        },
+        {
+          "path": "agents/social/zernio_whatsapp_media.py",
+          "sha256": "30cd88a3915be20361c9bb0a185ab24dce775e426af4d46dcd7aba4fb51257f7",
+          "bytes": 4209
+        },
+        {
+          "path": "dashboard/__init__.py",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "dashboard/api.py",
+          "sha256": "a6676a168f45e1b14685c741745ab205eb3d6e21126148343caf8ae18d2f2f46",
+          "bytes": 328388
+        },
+        {
+          "path": "dashboard/escalation_summary.py",
+          "sha256": "a3b88d26ec30e4c3c08725391f2566e9ff5287d22308d11a895c99e10aa43db9",
+          "bytes": 15312
+        },
+        {
+          "path": "dashboard/knowledge_extract.py",
+          "sha256": "f1c9f5e1f1880314c3c8476e1fdf1a17c46ab15c330f2e50687d9d2e2fec1295",
+          "bytes": 5000
+        },
+        {
+          "path": "dashboard/operator_delivery.py",
+          "sha256": "c93ec54a7a323a6eff430ffc2dc4694d62f550fe387b2088d5fcdfe5666e1397",
+          "bytes": 24287
+        },
+        {
+          "path": "dashboard/tasks_api.py",
+          "sha256": "66fc70b45f4ead5ffe4379c4b5e4c58b68dae096258beece15b17886bc677f1e",
+          "bytes": 6291
+        },
+        {
+          "path": "scripts/ensure_dashboard_nginx.py",
+          "sha256": "5fddb9fdb3e027d85d95974c11f11a54ce4095b8ea61c9fbe229a1516149b5a7",
+          "bytes": 28825
+        },
+        {
+          "path": "scripts/mermaid_release_canary.py",
+          "sha256": "ce6985983a2cd54b347a27c9d9a8a606780105891ec5408e195bdc7da6dd348d",
+          "bytes": 7047
+        },
+        {
+          "path": "scripts/migrate_callback_followups.py",
+          "sha256": "cf4af66eb6652c37f1ca66b1008e849b51c3214ee212934d2f76dd013cf92dd9",
+          "bytes": 3631
+        },
+        {
+          "path": "scripts/off_hours_check.py",
+          "sha256": "153c6c95797006211cfff2338d9a6c581ba0a5797c9d7df4804ff35ac5b2b6a1",
+          "bytes": 1815
+        },
+        {
+          "path": "scripts/prepare_mermaid_reservation_release.py",
+          "sha256": "c8506aeb78cbd46bcbb02ac4f32d95574d8d957c32ae9fd2e4b730e2d4423cad",
+          "bytes": 15373
+        },
+        {
+          "path": "scripts/queue_enqueue.py",
+          "sha256": "fa9562a93bb3c49ff05ae7de015a72a79ccf2094253a930d0fafb14217d121e7",
+          "bytes": 928
+        },
+        {
+          "path": "scripts/refresh_mermaid_pdf_presentation.py",
+          "sha256": "a8f7b4ad9044da1079a8047274d465f7d420acb9cc0495e989016c9adc5cc399",
+          "bytes": 3003
+        },
+        {
+          "path": "scripts/render_mermaid_pdf_audit_samples.py",
+          "sha256": "1e34b166d376bde62fd91745b072238b3576adf208d31dba233f5ea6b0bdb56a",
+          "bytes": 3987
+        },
+        {
+          "path": "scripts/render_mermaid_pdf_samples.py",
+          "sha256": "ef817e051220b5800c88e0844d99279cfc16792fe9132ef925433f6443321675",
+          "bytes": 1908
+        },
+        {
+          "path": "scripts/repair_customer_email_case.py",
+          "sha256": "6167d03298a3ec637d9554d89cdfff3bb7fa1e4062abf079eb5ee42a29f5327a",
+          "bytes": 3301
+        },
+        {
+          "path": "scripts/rotate_mermaid_exposed_demo_credentials.py",
+          "sha256": "3a248c92afff5684ed3e6f700f9113b14b033678a0d94eee89a3080ebaa9678d",
+          "bytes": 2946
+        },
+        {
+          "path": "scripts/sync_mermaid_config_fields.py",
+          "sha256": "e1b031687d8efb76013e1ac983b2b883e3204aa6c28accc9e060b2a67eced63e",
+          "bytes": 25182
+        },
+        {
+          "path": "scripts/tracy_contact_number_canary.py",
+          "sha256": "c6d2f900e0e77f99671554f97880dacdd01dfc48c3217edcfb6b2d65bcc5751e",
+          "bytes": 3017
+        },
+        {
+          "path": "scripts/tracy_pickup_time_canary.py",
+          "sha256": "302c4c08a1ad7fa46e5690417ce258cf020ab9f1ae7900d6f1d2a92c2d9a699c",
+          "bytes": 4332
+        },
+        {
+          "path": "scripts/tracy_pickup_vehicle_canary.py",
+          "sha256": "3d89e2b73e5b17dd2dc5de45d3ca7382d0b4e50269a16fb31d51483d03f6d695",
+          "bytes": 4075
+        },
+        {
+          "path": "scripts/tracy_ux_canary.py",
+          "sha256": "b758dc84c5b39beb747f82e64b99c16523628ad7d797f47f8f15ab301ec9d3e2",
+          "bytes": 4175
+        },
+        {
+          "path": "scripts/verify_icp_overrides.py",
+          "sha256": "d07a1f6f79869a30c048b6fb199d1b60f3fae1d3a8fb11e2ab1c9e16883e6e91",
+          "bytes": 8612
+        },
+        {
+          "path": "shared/__init__.py",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "shared/agent_identity.py",
+          "sha256": "5e02862def68afcbaea36609991e8d341025e14bee40dddd088898a42dacc91c",
+          "bytes": 3537
+        },
+        {
+          "path": "shared/appointment_detector.py",
+          "sha256": "2e81ce6f0b87594ec49d80f693a7d3c79937ca83bf24a7bdd9e1730e932e3b85",
+          "bytes": 5693
+        },
+        {
+          "path": "shared/auto_block.py",
+          "sha256": "b021341b1e8942f0bcd92107e6d43406c36a514b79f8d74bd8329af96bf1c2dd",
+          "bytes": 18272
+        },
+        {
+          "path": "shared/bm_logger.py",
+          "sha256": "a1676c1e5c8fc80e92fccc44f6c25211d45d558e172246b983928bb8c30bd1de",
+          "bytes": 737
+        },
+        {
+          "path": "shared/config_loader.py",
+          "sha256": "4625542e3d701e0da325d71d0d5ac6fc073c44df3aca00b140ce8c4f26aa2964",
+          "bytes": 15174
+        },
+        {
+          "path": "shared/dashboard_prompts.py",
+          "sha256": "a14610df081930230ab798c1e712588af613197817e5d764cc1cc4dcf9130aae",
+          "bytes": 1449
+        },
+        {
+          "path": "shared/deploy_queue.py",
+          "sha256": "a7f190a9cf7a097e6749678bf3cc7ad5a7809f8e84994ca06afd15346eec1326",
+          "bytes": 5459
+        },
+        {
+          "path": "shared/escalation_dispatcher.py",
+          "sha256": "13a53734ca5890fcbf2b291dffcd09096f388c1f78ed6fbb8d5c898155f3e354",
+          "bytes": 5378
+        },
+        {
+          "path": "shared/icp_overrides.py",
+          "sha256": "364174bb1aaf97b9c4c6926d8d1a5e0bfadeb25599163ba8e0856952988444a8",
+          "bytes": 21117
+        },
+        {
+          "path": "shared/mermaid_catalog.py",
+          "sha256": "d33435c2ee67f9f01aa06e6a3e2878f608703fb7beca05a4b5ee2077f85664fc",
+          "bytes": 14025
+        },
+        {
+          "path": "shared/mermaid_contact.py",
+          "sha256": "eccf429028331960dc2b4065c363603fda2b3c8adf430825e4abccb7980edc1d",
+          "bytes": 611
+        },
+        {
+          "path": "shared/mermaid_customers.py",
+          "sha256": "f25d8265542856bd21bad11fd6e90d0e5a4184376b585427acea121b1bd3e3ca",
+          "bytes": 11737
+        },
+        {
+          "path": "shared/mermaid_guest_ages.py",
+          "sha256": "cf570143a2bb32b847c6b8fe21f0f6290966165171549b97df5ccaf769082bde",
+          "bytes": 1015
+        },
+        {
+          "path": "shared/public_business_config.py",
+          "sha256": "d08a081062ce56b65eef3ad6e602dd6a784b778a6d8419b2c1f07de461d0f297",
+          "bytes": 7496
+        },
+        {
+          "path": "shared/rental_catalog.py",
+          "sha256": "385f49da7050a17686d5c5ba0fc9c633eb247a5c079797d9efa10d16ff271d45",
+          "bytes": 48006
+        },
+        {
+          "path": "shared/response_timing.py",
+          "sha256": "3ed836e47d650f40d4a6bf6fcf4503361005ead39aac0d12c0c6d7ffa393bb4e",
+          "bytes": 6433
+        },
+        {
+          "path": "shared/runtime_prompt_manifest.py",
+          "sha256": "d5bc0e782487db2d131f39ae756aae42d1e08ab961900f98efc6a4427293ac06",
+          "bytes": 8063
+        },
+        {
+          "path": "shared/state_registry.py",
+          "sha256": "f3e3fb3e91c95bf2a7fecab61d1def2ac09dde0d2716b52e947908d0579b94b3",
+          "bytes": 404279
+        },
+        {
+          "path": "shared/tenant_guard.py",
+          "sha256": "9a14c0d92eb7c31f836694491cc8e71cf68fa7a98a3deb1af12ce68d3ec97552",
+          "bytes": 4695
+        },
+        {
+          "path": "shared/tenant_hard_rules.py",
+          "sha256": "625349995d56b819768f8259e1474720776889defe9274872eb341274b94fb14",
+          "bytes": 45806
+        }
+      ],
+      "safe_config_projection": {
+        "slug": "mermaid",
+        "business_slug": "mermaid",
+        "business_name": "Mermaid Boat Trips Cura\u00e7ao",
+        "workflow_type": "mermaid_reservation_demo",
+        "features": {
+          "mermaid_reservation_demo": true,
+          "mermaid_quote_delivery": true,
+          "mermaid_demo_payment": true,
+          "mermaid_dashboard_projection": true,
+          "mermaid_reminders": true
+        },
+        "allowlist": {
+          "mode": "strict",
+          "account_count": 1,
+          "matches_verified_mermaid_account": true
+        },
+        "catalog": {
+          "version": "mermaid-demo-v7-2026-09-04",
+          "tenant_slug": "mermaid",
+          "sha256": "a664ab237015279a22a21c1d7284c901e0ebe4fe3d08baa6244812e80a865e6f"
+        },
+        "projection_sha256": "dc49e70e8affffe1c5118a7ec5371a9fd8ee1a800da00d04b11fd6e577486be7"
+      },
+      "config_content_digests": [
+        {
+          "path": "client.json",
+          "bytes": 43998,
+          "sha256": "1e8db71ac4fbe60d0a2eba42b96e066c77dce78d42e06cc493156c3dab5796a6",
+          "contents_copied": false
+        },
+        {
+          "path": "reservation_catalog.json",
+          "bytes": 25703,
+          "sha256": "a664ab237015279a22a21c1d7284c901e0ebe4fe3d08baa6244812e80a865e6f",
+          "contents_copied": false
+        },
+        {
+          "path": "reservation_email.json",
+          "bytes": 37184,
+          "sha256": "12008f00da591b5fe4139ba30b15807e7887379b6e16d70ec05a3f4e3d57b61e",
+          "contents_copied": false
+        },
+        {
+          "path": "response_policy.json",
+          "bytes": 27744,
+          "sha256": "4d960a12722a356afe3ceea1b6fd8ac306db597ca3bb0d1e20c6336176dae2e5",
+          "contents_copied": false
+        }
+      ],
+      "config_exclusions": "Secret/env material, old backup and lock files are not reproduced in this manifest. Active config is retained in protected runtime; only the allowlisted projection and opaque active JSON hashes are published."
+    }
+  },
+  "frontend": {
+    "repository": "unboks-org/unboks-dashboard-api",
+    "frozen_base": "2e41f4a209fbafc602419408696a25fa9791dc34",
+    "candidate_branch": "codex/isluno-dashboard-demo",
+    "review_base_branch": "codex/isluno-baseline-20260908",
+    "proposed_demo_integration_target": "release/isluno-demo-v1",
+    "refs_published": false,
+    "main_observed": "7e071647ac7451f912032d237d97dc55820575fe",
+    "main_is_ancestor": true,
+    "inherited_delta": {
+      "files": 49,
+      "insertions": 4292,
+      "deletions": 497
+    },
+    "deployed_release": "2e41f4a209fbafc602419408696a25fa9791dc34",
+    "matching_assets": [
+      {
+        "path": "index.html",
+        "sha256": "0b8ce2fd1a6e93d93648b0ebb37b69a149d06ee399aab53fb1000b9109fd78fd"
+      },
+      {
+        "path": "assets/index-LhrQCX2T.js",
+        "sha256": "e7e958c69ab6af35638d66d540237d90bc7ab0d9b0bd66260a6f9b3a4d38f97c"
+      },
+      {
+        "path": "assets/index-C6GIBlmS.css",
+        "sha256": "28b443621ab3d487acab2d9da0f2eee95af03c31e23c2e939d58c650873696ea"
+      }
+    ]
+  },
+  "contracts": {
+    "version": "isluno.v1",
+    "tenant_slug": "mermaid",
+    "journey_type": "isluno_itinerary_demo_v1",
+    "fixtures": "wtyj/tests/isluno/fixtures/contracts.v1.json"
+  },
+  "dependency_map": [
+    {
+      "key": "ISL-01",
+      "url": "https://github.com/BensonOpas/wtyj-agent/issues/346",
+      "depends_on": [],
+      "deferred": false
+    },
+    {
+      "key": "ISL-02",
+      "url": "https://github.com/BensonOpas/wtyj-agent/issues/347",
+      "depends_on": [
+        "ISL-01"
+      ],
+      "deferred": false
+    },
+    {
+      "key": "ISL-03",
+      "url": "https://github.com/BensonOpas/wtyj-agent/issues/348",
+      "depends_on": [
+        "ISL-01"
+      ],
+      "deferred": false
+    },
+    {
+      "key": "ISL-04",
+      "url": "https://github.com/BensonOpas/wtyj-agent/issues/349",
+      "depends_on": [
+        "ISL-02",
+        "ISL-03"
+      ],
+      "deferred": false
+    },
+    {
+      "key": "ISL-05",
+      "url": "https://github.com/BensonOpas/wtyj-agent/issues/350",
+      "depends_on": [
+        "ISL-02",
+        "ISL-03"
+      ],
+      "deferred": false
+    },
+    {
+      "key": "ISL-06",
+      "url": "https://github.com/BensonOpas/wtyj-agent/issues/351",
+      "depends_on": [
+        "ISL-04",
+        "ISL-05"
+      ],
+      "deferred": false
+    },
+    {
+      "key": "ISL-07",
+      "url": "https://github.com/BensonOpas/wtyj-agent/issues/352",
+      "depends_on": [
+        "ISL-06"
+      ],
+      "deferred": false
+    },
+    {
+      "key": "ISL-08",
+      "url": "https://github.com/BensonOpas/wtyj-agent/issues/353",
+      "depends_on": [
+        "ISL-07"
+      ],
+      "deferred": false
+    },
+    {
+      "key": "ISL-09",
+      "url": "https://github.com/unboks-org/unboks-dashboard-api/issues/164",
+      "depends_on": [
+        "ISL-02",
+        "ISL-03"
+      ],
+      "deferred": false
+    },
+    {
+      "key": "ISL-10",
+      "url": "https://github.com/unboks-org/unboks-dashboard-api/issues/165",
+      "depends_on": [
+        "ISL-04",
+        "ISL-08"
+      ],
+      "deferred": false
+    },
+    {
+      "key": "ISL-11",
+      "url": "https://github.com/unboks-org/unboks-dashboard-api/issues/166",
+      "depends_on": [
+        "ISL-03",
+        "ISL-09",
+        "ISL-10"
+      ],
+      "deferred": false
+    },
+    {
+      "key": "ISL-12",
+      "url": "https://github.com/BensonOpas/wtyj-agent/issues/354",
+      "depends_on": [
+        "ISL-06",
+        "ISL-08"
+      ],
+      "deferred": false
+    },
+    {
+      "key": "ISL-13",
+      "url": "https://github.com/BensonOpas/wtyj-agent/issues/355",
+      "depends_on": [
+        "ISL-05",
+        "ISL-06",
+        "ISL-07",
+        "ISL-08",
+        "ISL-09",
+        "ISL-10",
+        "ISL-11",
+        "ISL-12"
+      ],
+      "deferred": false
+    },
+    {
+      "key": "ISL-14",
+      "url": "https://github.com/BensonOpas/wtyj-agent/issues/356",
+      "depends_on": [
+        "ISL-01",
+        "ISL-13"
+      ],
+      "deferred": false
+    },
+    {
+      "key": "ISL-F1",
+      "url": "https://github.com/BensonOpas/wtyj-agent/issues/357",
+      "depends_on": [
+        "ISL-13"
+      ],
+      "deferred": true
+    },
+    {
+      "key": "ISL-F2",
+      "url": "https://github.com/BensonOpas/wtyj-agent/issues/358",
+      "depends_on": [
+        "ISL-13"
+      ],
+      "deferred": true
+    },
+    {
+      "key": "ISL-F3",
+      "url": "https://github.com/BensonOpas/wtyj-agent/issues/359",
+      "depends_on": [
+        "ISL-13"
+      ],
+      "deferred": true
+    }
+  ],
+  "verification": {
+    "command": "python3 wtyj/scripts/verify_isluno_baseline_offline.py",
+    "result": "contract example checks pass; 7 inherited SDK cache tests pass",
+    "external_api_calls": 0,
+    "network": "socket/DNS denied; synthetic config; pytest plugin autoload disabled; root fixtures excluded"
+  },
+  "limitations": [
+    "Source and known dashboard artifact identity, not an audit of dependency binaries or server/OS configuration.",
+    "Protected credentials and customer records are not cloned or included; runtime config hashes do not assert semantic completeness.",
+    "Old PRs remain unmerged evidence; release targets are proposed local refs, not merge/deployment authority.",
+    "No current Meta/provider liveness, native-language acceptance or live delivery was tested.",
+    "Contract examples do not prove the final application journey; dependent issues must implement and test it."
+  ]
+}
