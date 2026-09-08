@@ -24,7 +24,7 @@ class RecoveryTests(unittest.TestCase):
         self.calls=[]
     def plan(self):
         result=self.t.initial();self.assertTrue(send_plan(self.t.scope().conversation_id,self.t.scope().account_id,result['media']['url'],store=self.t.discovery,post=lambda *a:{'status':'accepted','provider_id':'original-reply'},window=lambda *a:{'open':True}))
-        with self.store.db() as db:return [dict(r) for r in db.execute('SELECT * FROM isluno_reminders ORDER BY due_at')]
+        with self.store.db() as db:return [dict(r) for r in db.execute('SELECT * FROM isluno_reminders WHERE scope_key=? ORDER BY due_at',(self.t.scope().key,))]
     def send(self,identifier,**kwargs):
         def post(*args):self.calls.append(args);return {'status':'accepted','provider_id':'reminder-fixture'}
         return self.store.dispatch(identifier,post=kwargs.pop('post',post),guard=kwargs.pop('guard',lambda scope:True),window=kwargs.pop('window',lambda *a:{'open':True}),**kwargs)
@@ -43,13 +43,20 @@ class RecoveryTests(unittest.TestCase):
                 # Each condition owns its own durable customer scope.
                 self.t.scope=lambda condition=condition:__import__('shared.isluno_config',fromlist=['verified_scope']).verified_scope(account_id='synthetic-account',conversation_id='recovery-'+condition,customer_ref='guest-'+condition)
                 rows=self.plan();identifier=rows[0]['id']
+                self.assertEqual(rows[0]['scope_key'],self.t.scope().key);self.assertEqual(rows[0]['status'],'queued')
                 if condition=='reply':self.t.turn(response(question='Details?'))
-                if condition=='opt_out':self.t.turn(response('stop_reminders'))
-                if condition=='human':self.t.turn(response('human'))
+                if condition=='opt_out':self.store.opt_out(self.t.scope())
+                if condition=='human':
+                    with self.store.db() as db,db:
+                        db.execute("INSERT INTO isluno_operator_requests(id,scope_key,itinerary_id,reason,request_json) VALUES(?,?,?,?,?)",('suppression-human',self.t.scope().key,self.t.active()['id'],'customer_request','{}'))
                 if condition=='completion':
                     active=self.t.active();self.t.itinerary._apply(self.t.scope(),active['id'],'cancel-for-test',active['revision'],{'action':'cancel'})
                 self.t.now+=timedelta(hours=6)
                 self.assertFalse(self.send(identifier,guard=lambda scope:condition!='control',window=lambda *a:{'open':condition!='window'}))
+                expected={'reply':'customer_reply','opt_out':'opt_out','human':'takeover','completion':'completed','window':'window_closed','control':'automation_or_takeover_unavailable'}[condition]
+                with self.store.db() as db:
+                    actual=db.execute('SELECT status,reason FROM isluno_reminders WHERE id=?',(identifier,)).fetchone()
+                self.assertEqual(tuple(actual),('suppressed',expected))
         self.assertEqual(self.calls,[])
     def test_ambiguous_exception_and_crash_never_retry(self):
         rows=self.plan();self.t.now+=timedelta(hours=6)
@@ -69,6 +76,7 @@ class RecoveryTests(unittest.TestCase):
         self.assertEqual(result,'');self.assertEqual(calls,0)
         with self.store.db() as db:
             incident=db.execute('SELECT * FROM isluno_recovery_incidents').fetchone();self.assertEqual(incident['kind'],'understanding_failure');self.assertEqual(incident['status'],'operator_review')
+        self.t.now+=timedelta(hours=2);self.assertEqual(len(self.store.audit()['incidents']),1)
         self.t.turn(response('update',[{'date':'2026-10-20'}]));self.assertEqual(self.t.active()['items'][0]['selection']['date'],'2026-10-20')
     def test_native_opt_out_acknowledgement_and_policy_off(self):
         self.plan();before=self.t.active();result,_=self.t.turn(response('stop_reminders'))
@@ -176,3 +184,72 @@ class RecoveryTests(unittest.TestCase):
         self.assertGreaterEqual(data['counts']['attention'],1)
         self.t.turn(response('update',[{'date':'2026-10-20'}]))
         self.assertEqual(self.t.get('today').json()['recovery']['incidents'][0]['status'],'progress_resumed_new_turn')
+
+    def test_abandoned_model_claim_surfaces_after_restart_without_replay(self):
+        self.t.initial();before=self.t.active()
+        class Crash(BaseException):pass
+        def crash():raise Crash()
+        with self.assertRaises(Crash):self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='crashed-model',before_response=crash)
+        self.assertEqual(self.store.audit()['incidents'],[])
+        self.t.now+=timedelta(hours=2);self.store=RecoveryStore(self.t.store)
+        # Recovery still runs when optional reminders are disabled.
+        policy=self.t.directory/'isluno_recovery.json';data=json.loads(policy.read_text());data['enabled']=False;policy.write_text(json.dumps(data))
+        self.assertEqual(run_once(store=self.store),0)
+        result,calls=self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='crashed-model')
+        self.assertEqual((result,calls),('',0));self.assertEqual(self.t.active(),before)
+        audit=self.store.audit();self.assertEqual(len(audit['incidents']),1)
+        incident=audit['incidents'][0];self.assertEqual(incident['code'],'stale_claim_outcome_unknown');self.assertEqual(incident['itinerary_id'],before['id'])
+        self.assertEqual(self.t.get('today').json()['counts']['attention'],1)
+        detail=self.t.get('journeys/'+self.t.scope().key+'.'+incident['itinerary_id'])
+        self.assertEqual(detail.status_code,200);self.assertEqual(detail.json()['itinerary'],before)
+        self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='new-progress')
+        self.assertEqual(self.store.audit()['incidents'][0]['status'],'progress_resumed_new_turn')
+        self.assertEqual(self.t.get('today').json()['counts']['attention'],0)
+
+    def test_currently_executing_model_claim_is_not_reported_as_abandoned(self):
+        self.t.initial()
+        def in_flight():
+            self.t.now+=timedelta(hours=2)
+            self.assertEqual(run_once(store=RecoveryStore(self.t.store)),0)
+            self.assertEqual(self.store.audit()['incidents'],[])
+        self.t.turn(response('update',[{'date':'2026-10-20'}]),before_response=in_flight)
+        self.assertEqual(self.store.audit()['incidents'],[])
+
+    def test_opt_out_with_corrections_keeps_acknowledgement_on_quote_paths(self):
+        for prepared in (False,True):
+            with self.subTest(prepared_quote=prepared):
+                from shared.isluno_config import verified_scope
+                self.t.scope=lambda:verified_scope(account_id='synthetic-account',conversation_id='combined-'+str(prepared),customer_ref='combined-'+str(prepared))
+                self.t.now=NOW;self.t.initial()
+                if prepared:
+                    result,_=self.t.turn(response('summary'));job=self.t.job(result);self.t.send_quote(job['id'])
+                    quote=self.t.tap(job);self.t.send_quote(quote['id'])
+                decision=response('stop_reminders',guest={'name':'Replacement Guest'},document_language='nl')
+                result,_=self.t.turn(decision,trigger='combined-opt-out')
+                self.assertIn('Reminders are stopped.',result['text']);self.assertNotIn('remain unchanged',result['text'])
+                saved=self.t.store.session(self.t.scope());self.assertEqual(saved['document_language'],'nl')
+                self.assertEqual(next(iter(saved['item_details'].values()))['guest_name'],'Replacement Guest')
+                with self.store.db() as db:self.assertEqual(db.execute('SELECT opt_out FROM isluno_recovery_contacts WHERE scope_key=?',(self.t.scope().key,)).fetchone()[0],1)
+                if prepared:
+                    with self.store.db() as db:self.assertIsNotNone(db.execute('SELECT job_id FROM isluno_quote_requests WHERE scope_key=? AND trigger_id=?',(self.t.scope().key,'combined-opt-out')).fetchone())
+                # Duplicate finds the already prepared quote: acknowledgement must survive.
+                replay,calls=self.t.turn(decision,trigger='combined-opt-out')
+                self.assertEqual(calls,0);self.assertIn('Reminders are stopped.',replay['text'])
+
+    def test_old_untimestamped_claim_waits_for_observed_staleness(self):
+        self.t.initial()
+        class Crash(BaseException):pass
+        def crash():raise Crash()
+        with self.assertRaises(Crash):self.t.turn(response(),trigger='old-model',before_response=crash)
+        with self.store.db() as db,db:db.execute("UPDATE isluno_conversation_turns SET claimed_at=NULL WHERE trigger_id='old-model'")
+        with self.store.db() as db,db:
+            original=db.execute('SELECT scope_json FROM isluno_recovery_contacts WHERE scope_key=?',(self.t.scope().key,)).fetchone()[0]
+            other=json.loads(original);other['account_id']='other-account'
+            db.execute('UPDATE isluno_recovery_contacts SET scope_json=? WHERE scope_key=?',(json.dumps(other),self.t.scope().key))
+        self.t.now+=timedelta(days=1);self.assertEqual(self.store.audit()['incidents'],[])
+        with self.store.db() as db,db:
+            self.assertIsNone(db.execute("SELECT claimed_at FROM isluno_conversation_turns WHERE trigger_id='old-model'").fetchone()[0])
+            db.execute('UPDATE isluno_recovery_contacts SET scope_json=? WHERE scope_key=?',(original,self.t.scope().key))
+        self.assertEqual(self.store.audit()['incidents'],[])
+        self.t.now+=timedelta(minutes=16)
+        self.assertEqual(len(self.store.audit()['incidents']),1)

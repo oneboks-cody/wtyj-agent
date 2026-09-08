@@ -28,6 +28,21 @@ def opaque(scope, trigger, suffix):
     return hashlib.sha256(encoded([scope.key, trigger, suffix]).encode()).hexdigest()[:32]
 
 
+# Process-local ownership only distinguishes an executing call from an unfinished
+# durable claim. Losing this set never authorizes another model invocation.
+_ACTIVE_UNDERSTANDING = set()
+
+def understanding_inflight(store,scope,trigger):
+    return (str(store.itinerary.db_path),scope.key,trigger) in _ACTIVE_UNDERSTANDING
+
+@contextmanager
+def understanding_claim(store,scope,trigger):
+    key=(str(store.itinerary.db_path),scope.key,trigger)
+    _ACTIVE_UNDERSTANDING.add(key)
+    try:yield
+    finally:_ACTIVE_UNDERSTANDING.discard(key)
+
+
 def default_session():
     return {'revision': 0, 'guest': {}, 'pending': {}, 'active_itinerary_id': None,
             'chat_language': 'en', 'document_language': None, 'history': [], 'item_details': {}}
@@ -45,11 +60,16 @@ class ConversationStore:
                 CREATE TABLE IF NOT EXISTS isluno_booking_sessions (scope_key TEXT PRIMARY KEY, payload TEXT NOT NULL);
                 CREATE TABLE IF NOT EXISTS isluno_conversation_turns (
                     scope_key TEXT NOT NULL, trigger_id TEXT NOT NULL, baseline TEXT NOT NULL,
-                    decision TEXT, outcome TEXT, PRIMARY KEY(scope_key,trigger_id));
+                    decision TEXT, outcome TEXT, claimed_at TEXT, PRIMARY KEY(scope_key,trigger_id));
                 CREATE TABLE IF NOT EXISTS isluno_operator_requests (
                     id TEXT PRIMARY KEY, scope_key TEXT NOT NULL, itinerary_id TEXT, reason TEXT NOT NULL,
                     request_json TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending');
             ''')
+            if 'claimed_at' not in {row[1] for row in db.execute('PRAGMA table_info(isluno_conversation_turns)')}:
+                with db:
+                    db.execute('BEGIN IMMEDIATE')
+                    if 'claimed_at' not in {row[1] for row in db.execute('PRAGMA table_info(isluno_conversation_turns)')}:
+                        db.execute('ALTER TABLE isluno_conversation_turns ADD COLUMN claimed_at TEXT')
             from agents.social.isluno_quotes import init_schema
             init_schema(db)
             yield db
@@ -74,7 +94,7 @@ class ConversationStore:
             snapshot = validate_snapshot(source_snapshot) if source_snapshot is not None else CatalogStore(self.itinerary.catalog_path).snapshot()
             db.execute('INSERT OR IGNORE INTO isluno_catalog_snapshots VALUES(?,?)', (snapshot['revision'], encoded(snapshot)))
             saved['catalog_revision'] = snapshot['revision']
-            db.execute('INSERT INTO isluno_conversation_turns(scope_key,trigger_id,baseline) VALUES(?,?,?)', (scope.key, trigger, encoded(saved)))
+            db.execute('INSERT INTO isluno_conversation_turns(scope_key,trigger_id,baseline,claimed_at) VALUES(?,?,?,?)', (scope.key, trigger, encoded(saved), self.itinerary.clock().isoformat()))
             return saved, None, None
 
     def source_snapshot(self, scope, baseline):
@@ -306,6 +326,7 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
     check(not quarantined_inbound([trigger],store.itinerary.db_path),'legacy_turn_quarantined')
     recovery=RecoveryStore(store)
     recovery.observe(scope,trigger,message.get('_zernio_sent_at',''))
+    recovery.reconcile_claims()
     token=str(message.get('_zernio_interactive_id',''))
     if token and not token.startswith(('ip_','ie_','iq_','isl_')):
         recovery.incident(scope,trigger,'legacy_action','quarantined_legacy_button')
@@ -362,13 +383,16 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
                 model_state = {**saved, 'itinerary': active, 'discovery': discovery.current_context(scope),
                                'current_time': store.itinerary.clock().isoformat(), 'timezone': 'America/Curacao'}
                 try:
-                    decision = (understand or understanding.understand)(scope, message.get('text', ''), model_state, snapshot)
-                    understanding.validate(decision, discovery_understanding.context(snapshot))
+                    with understanding_claim(store,scope,trigger):
+                        decision = (understand or understanding.understand)(scope, message.get('text', ''), model_state, snapshot)
+                        understanding.validate(decision, discovery_understanding.context(snapshot))
+                        store.record_decision(scope, trigger, decision)
                 except Exception as exc:
                     from agents.social.isluno_recovery import RecoveryStore
                     RecoveryStore(store).incident(scope,trigger,'understanding_failure',type(exc).__name__)
                     raise ItineraryError('understanding_unavailable') from exc
-            store.record_decision(scope, trigger, decision)
+            if base_decision is not None:
+                store.record_decision(scope, trigger, decision)
         outcome = store.apply(scope, trigger, saved, decision, message.get('text', ''))
     if decision['booking']['action']=='stop_reminders':
         from agents.social.isluno_recovery import RecoveryStore
@@ -391,7 +415,7 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
     if existing_quote_reply or ready and outcome['status'] != 'review' and (decision['booking']['action'] in {'summary', 'approve'} or old_quote and old_quote['status'] == 'superseded'):
         from agents.social.isluno_quotes import QuoteStore, envelope as quote_envelope
         prepared_quote = QuoteStore(store).prepare(scope, trigger, timestamp, expected_session_revision=outcome['session']['revision'])
-        if not decision['question']:
+        if not decision['question'] and decision['booking']['action']!='stop_reminders':
             return quote_envelope(prepared_quote)
     base = {key: decision[key] for key in discovery_understanding.TOOL['input_schema']['required']}
     booking = decision['booking']
@@ -400,6 +424,8 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
         if booking['action']=='stop_reminders':
             from agents.social.isluno_recovery_copy import STOP
             response_text=STOP[decision['language']]
+            if booking['guest'] or booking['document_language'] or booking['updates']:
+                response_text+='\n\n'+render(outcome,snapshot)
         else:
             response_text = '' if prepared_fulfillment else render(outcome, snapshot)
         # A simultaneous supported question is answered from its selected,

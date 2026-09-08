@@ -54,14 +54,45 @@ class RecoveryStore:
     def progress(self,scope,trigger):
         self.initialize();isluno_config.require_scope(scope)
         with self.db() as db,db:
-            db.execute("UPDATE isluno_recovery_incidents SET status='progress_resumed_new_turn' WHERE scope_key=? AND trigger_id!=? AND kind='understanding_failure' AND status='operator_review'",(scope.key,trigger))
+            db.execute("UPDATE isluno_recovery_incidents SET status='progress_resumed_new_turn' WHERE scope_key=? AND trigger_id!=? AND kind IN ('understanding_failure','understanding_stalled') AND status='operator_review'",(scope.key,trigger))
     def incident(self,scope,trigger,kind,code):
         self.initialize();isluno_config.require_scope(scope)
         session=self.conversation.session(scope);identifier=hashlib.sha256((scope.key+trigger+kind).encode()).hexdigest()
         with self.db() as db,db:
             db.execute('INSERT OR IGNORE INTO isluno_recovery_incidents VALUES(?,?,?,?,?,?,?,?)',(identifier,scope.key,session['active_itinerary_id'],trigger,kind,'operator_review',code,self.clock().isoformat()))
+    def reconcile_claims(self):
+        """Surface unfinished claims older than 15 minutes; never infer failure or retry.
+
+        Recent claims remain in flight. Pre-migration rows start their observation
+        clock on first scan; a missing timestamp is not evidence of abandonment.
+        """
+        self.initialize()
+        cutoff=(self.clock()-timedelta(minutes=15)).isoformat()
+        with self.db() as db,db:
+            rows=db.execute("SELECT t.*,c.scope_json FROM isluno_conversation_turns t JOIN isluno_recovery_contacts c ON c.scope_key=t.scope_key WHERE t.decision IS NULL AND t.outcome IS NULL AND (t.claimed_at IS NULL OR t.claimed_at<=?)",(cutoff,)).fetchall()
+        for row in rows:
+            scope=isluno_config.JourneyScope(**json.loads(row['scope_json']))
+            try:isluno_config.require_scope(scope)
+            except isluno_config.IslunoUnavailable:continue
+            from agents.social.isluno_conversation import understanding_inflight
+            if understanding_inflight(self.conversation,scope,row['trigger_id']):continue
+            with self.db() as db,db:
+                db.execute('BEGIN IMMEDIATE')
+                pending=db.execute('SELECT decision,outcome,claimed_at FROM isluno_conversation_turns WHERE scope_key=? AND trigger_id=?',(scope.key,row['trigger_id'])).fetchone()
+                if not pending or pending['decision'] is not None or pending['outcome'] is not None:continue
+                if pending['claimed_at'] is None:
+                    db.execute('UPDATE isluno_conversation_turns SET claimed_at=? WHERE scope_key=? AND trigger_id=?',(self.clock().isoformat(),scope.key,row['trigger_id']))
+                    continue
+                if pending['claimed_at']>cutoff:continue
+                if db.execute("SELECT 1 FROM isluno_recovery_incidents WHERE scope_key=? AND trigger_id=? AND kind IN ('understanding_failure','understanding_stalled')",(scope.key,row['trigger_id'])).fetchone():continue
+                baseline=json.loads(row['baseline'])
+                saved=db.execute('SELECT payload FROM isluno_booking_sessions WHERE scope_key=?',(scope.key,)).fetchone()
+                resumed=saved and json.loads(saved[0])['revision']>baseline['revision']
+                identifier=hashlib.sha256((scope.key+row['trigger_id']+'understanding_stalled').encode()).hexdigest()
+                db.execute('INSERT OR IGNORE INTO isluno_recovery_incidents VALUES(?,?,?,?,?,?,?,?)',(identifier,scope.key,baseline['active_itinerary_id'],row['trigger_id'],'understanding_stalled','progress_resumed_new_turn' if resumed else 'operator_review','stale_claim_outcome_unknown',self.clock().isoformat()))
+
     def audit(self):
-        isluno_config.active_profile();self.initialize()
+        isluno_config.active_profile();self.reconcile_claims()
         from shared import config_loader
         allowed=config_loader.get_raw()['channel_account_allowlist']['zernio_accounts'][0]
         with self.db() as db:
@@ -175,7 +206,7 @@ def run_once(*,store=None,post=None,guard=None,window=None):
         target=store.conversation.itinerary.db_path if store else None
         if blocked(target):rollback(target,store.clock() if store else None)
         return 0
-    store=store or RecoveryStore();ensure(store.conversation.itinerary.db_path,store.clock());store.initialize()
+    store=store or RecoveryStore();ensure(store.conversation.itinerary.db_path,store.clock());store.initialize();store.reconcile_claims()
     if not store.policy():return 0
     with store.db() as db:
         rows=db.execute("SELECT id FROM isluno_reminders WHERE status='queued' AND due_at<=? ORDER BY due_at LIMIT 10",(store.clock().isoformat(),)).fetchall()
