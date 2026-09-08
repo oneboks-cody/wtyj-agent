@@ -191,6 +191,14 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(report["discovered_product_count"], len(catalog["products"]))
         self.assertEqual(set(p["id"] for p in report["products"]), set(p["id"] for p in catalog["products"]))
         self.assertFalse(report["missing_assets"])
+        self.assertFalse(report["empty_product_descriptions"])
+        self.assertTrue(all(p["summary"].strip() and p["source_claims"]["description_word_count"] > 0 for p in catalog["products"]))
+        afternoon = next(p for p in catalog["products"] if p["id"] == "afternoon-explorer-tour")
+        self.assertEqual("Playa Daaibooi", afternoon["source_claims"]["published_facts"]["values"]["meeting_point"])
+        self.assertEqual(["13:00"], [s["start"] for s in afternoon["demo_rules"]["rules"]["schedule"]["slots"]])
+        jungle = next(p for p in catalog["products"] if p["id"] == "the-jungle-tour")
+        self.assertEqual([(0, 3, 0), (4, 11, 1000), (12, 120, 2000)],
+                         [(b["minimum_age"], b["maximum_age"], b["amount_minor"]) for b in jungle["demo_rules"]["rules"]["price_rules"]["age_bands"]])
         for product in catalog["products"]:
             for asset in product["gallery"]:
                 data = (root / "wtyj" / asset["delivery_path"]).read_bytes()

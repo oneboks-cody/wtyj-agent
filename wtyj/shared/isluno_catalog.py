@@ -213,7 +213,7 @@ def _validate_catalog(catalog):
         seen.add(product["id"])
         _text(product.get("name"), "product name", 200)
         _text(product.get("category"), "product category", 100)
-        _text(product.get("summary"), "product summary", 3000, empty=True)
+        _text(product.get("summary"), "product summary", 3000)
         _check(type(product.get("enabled")) is bool, "product enabled flag")
         source = product.get("source")
         _check(isinstance(source, dict), "product source")

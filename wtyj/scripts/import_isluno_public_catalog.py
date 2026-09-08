@@ -46,10 +46,15 @@ def allowed(url):
 
 
 class PublicOnlyRedirects(HTTPRedirectHandler):
-    def redirect_request(self, req, fp, code, msg, headers, newurl):
-        if not allowed(newurl):
-            raise ValueError("redirect outside public Isluno source allowlist")
-        return super().redirect_request(req, fp, code, msg, headers, newurl)
+    """Reject every redirect before urllib reads its body or dispatches a hop."""
+    def http_error_302(self, req, fp, code, msg, headers):
+        fp.close()
+        raise ValueError("public importer refuses redirects; review the canonical source URL")
+
+    http_error_301 = http_error_302
+    http_error_303 = http_error_302
+    http_error_307 = http_error_302
+    http_error_308 = http_error_302
 
 
 class Fetcher:
@@ -86,6 +91,18 @@ def words(text, maximum):
     return " ".join(text.split()[:maximum])
 
 
+def section_text(section):
+    if section is None:
+        return ""
+    content = section.select_one(".pages-tour-section-content")
+    if content is not None:
+        return content.get_text(" ", strip=True)
+    title = section.find(["h2", "h3"])
+    text = section.get_text(" ", strip=True)
+    prefix = title.get_text(" ", strip=True) if title else ""
+    return text[len(prefix):].strip() if prefix and text.startswith(prefix) else text
+
+
 def extract_product(html, url, observed_at):
     """Parse only product content; never import reviews, scripts or page prompts."""
     page = BeautifulSoup(html, "html.parser")
@@ -98,7 +115,10 @@ def extract_product(html, url, observed_at):
     overview = sections.get("Overview")
     includes = sections.get("What's included")
     additional = sections.get("Additional Information")
-    summary = words(" ".join(p.get_text(" ", strip=True) for p in overview.select("p")), 70) if overview else ""
+    overview_text = section_text(overview)
+    if not overview_text:
+        raise ValueError("unexpected empty product overview; review the source DOM")
+    summary = words(overview_text, 70)
     inclusions = []
     allowance = 50
     for item in includes.select("li") if includes else []:
@@ -135,7 +155,8 @@ def extract_product(html, url, observed_at):
         "source_claims": {
             "advertised_from": price.get_text(" ", strip=True) if price else None,
             "metadata": metadata,
-            "additional_information": words(" ".join(e.get_text(" ", strip=True) for e in additional.select("li")), 20) if additional else "",
+            "additional_information": words(section_text(additional), 50),
+            "description_word_count": len(overview_text.split()),
             "guarantees": words(" ".join(e.get_text(" ", strip=True) for e in page.select(".tour-sidebar-guarantee-text")), 30),
             "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation.",
         },
@@ -237,6 +258,7 @@ def main():
               "unique_image_bytes": sum((asset_dir / p).stat().st_size for p in {Path(a["delivery_path"]).name for product in products for a in product["gallery"] if a["validation_status"] == "verified"}),
               "missing_assets": [{"source_url": url, **result} for url, result in results.items() if result["validation_status"] != "verified"],
               "same_content_duplicates": duplicates,
+              "empty_product_descriptions": [p["id"] for p in products if not p["summary"].strip()],
               "products": [{"id": p["id"], "source_url": p["source"]["url"], "gallery_count": len(p["gallery"]), "readiness": p["readiness"]} for p in products],
               "public_get_requests": fetcher.requests, "public_bytes_read": fetcher.bytes,
               "supplier_api_calls": 0, "provider_calls": 0, "image_policy": "Original approved public trip image bytes, content-addressed and validated; short-lived URL query signatures omitted. Hosting/delivery is a later authorized stage."}

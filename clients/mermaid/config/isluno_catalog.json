@@ -2,19 +2,19 @@
   "schema_version": "isluno.v1",
   "tenant_slug": "mermaid",
   "brand": "isluno",
-  "version": "isluno-demo-sample-v1-20260908",
+  "version": "isluno-demo-v2-source-aligned-20260908",
   "products": [
     {
       "id": "afternoon-explorer-tour",
       "name": "Afternoon Explorer Tour",
       "category": "Boat trip",
-      "summary": "",
+      "summary": "See reefs and fish through a glass-bottom boat departing from Playa Daaibooi. The published afternoon trip runs from 13:00 to 14:30.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/afternoon-explorer-tour",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "a027ea4b39edebf618498a716896af2143133d17faf16be4fa3c3e5c1cc8b48b",
+        "content_sha256": "321924fe948fdc6389396acedf1eae0a874111338cedf3a478c17c61e5691ebb",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -137,7 +137,21 @@
         ],
         "additional_information": "",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 47,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/afternoon-explorer-tour",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "meeting_point": "Playa Daaibooi",
+            "departure_times": [
+              "13:00"
+            ],
+            "return_times": [
+              "14:30"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -164,9 +178,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -215,17 +230,12 @@
             ],
             "slots": [
               {
-                "id": "sample-0900",
-                "start": "09:00",
-                "duration_minutes": 90
-              },
-              {
-                "id": "sample-1400",
-                "start": "14:00",
+                "id": "departure-1300",
+                "start": "13:00",
                 "duration_minutes": 90
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -239,7 +249,7 @@
           ],
           "pickup": {
             "mode": "priced_option",
-            "meeting_point": "Demo meeting point — real meeting instructions are unverified",
+            "meeting_point": "Playa Daaibooi",
             "option_id": "sample-hotel-transfer"
           },
           "policies": {
@@ -249,20 +259,24 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "meeting_point",
+          "departure_times"
+        ]
       }
     },
     {
       "id": "all-west-beach-hopping",
       "name": "All West Beach Hopping",
       "category": "Bus Trip",
-      "summary": "",
+      "summary": "Visit Piskado, Kenepa and Cas Abao beaches, with stops at Shete Boka and the St. Willibrordus flamingo area. Hotel transport is included.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/all-west-beach-hopping",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "012917f80379e70dcd917d423efeb15bcf7cbb0bc8173b5d312a2e3430a89a0c",
+        "content_sha256": "9626a37b03ff777ea2a589c60f50e1b3c389c603c93f4792e2b643787e1b6906",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -426,9 +440,24 @@
           "7 hours of duration",
           "Westpunt"
         ],
-        "additional_information": "Pick-up and drop-off are included in the tour price",
+        "additional_information": "included",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 73,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/all-west-beach-hopping",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "pickup": "included",
+            "locations": [
+              "Piskado Beach",
+              "Kenepa Beach",
+              "Cas Abao Beach",
+              "Shete Boka",
+              "St. Willibrordus"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -455,9 +484,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -511,22 +541,12 @@
                 "duration_minutes": 420
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
-          "options": [
-            {
-              "id": "sample-hotel-transfer",
-              "name": "Demo hotel transfer",
-              "amount_minor": 2500,
-              "basis": "per_booking",
-              "max_quantity": 1,
-              "required": false
-            }
-          ],
+          "options": [],
           "pickup": {
-            "mode": "priced_option",
-            "meeting_point": "Demo meeting point — real meeting instructions are unverified",
-            "option_id": "sample-hotel-transfer"
+            "mode": "included",
+            "meeting_point": "Hotel pickup — collection details to be supplied for the demo"
           },
           "policies": {
             "verified": true,
@@ -535,20 +555,23 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "pickup"
+        ]
       }
     },
     {
       "id": "aquafari-curacao-snorkel",
       "name": "Aquafari Curaçao Snorkel",
       "category": "Water sports",
-      "summary": "",
+      "summary": "Explore underwater using a powered scooter with a professional diver. The listing specifies age 12+, a safety briefing and 45 minutes underwater.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/aquafari-curacao-snorkel",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "a761c2fd5873393330df4eac8765ef4c7dc71a4a196f8a98e8c803b5900fd071",
+        "content_sha256": "0458a28ef739557b856ae7398a44d20f619bafebe49a86c2eb0ef51dc3f3b5d3",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -587,7 +610,25 @@
         ],
         "additional_information": "",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 141,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/aquafari-curacao-snorkel",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "minimum_age": 12,
+            "departure_times": [
+              "09:00",
+              "10:00",
+              "11:45",
+              "13:30",
+              "14:45"
+            ],
+            "briefing_minutes": 15,
+            "underwater_minutes": 45,
+            "experience_required": false
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -614,13 +655,14 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
-            "minimum_age": 0,
+            "minimum_age": 12,
             "maximum_age": 120,
             "adult_min_age": 18
           },
@@ -632,14 +674,8 @@
             "payment_terms": "demo_full_payment",
             "age_bands": [
               {
-                "id": "infant",
-                "minimum_age": 0,
-                "maximum_age": 2,
-                "amount_minor": 0
-              },
-              {
                 "id": "child",
-                "minimum_age": 3,
+                "minimum_age": 12,
                 "maximum_age": 17,
                 "amount_minor": 6950
               },
@@ -665,17 +701,32 @@
             ],
             "slots": [
               {
-                "id": "sample-0900",
+                "id": "departure-0900",
                 "start": "09:00",
                 "duration_minutes": 45
               },
               {
-                "id": "sample-1400",
-                "start": "14:00",
+                "id": "departure-1000",
+                "start": "10:00",
+                "duration_minutes": 45
+              },
+              {
+                "id": "departure-1145",
+                "start": "11:45",
+                "duration_minutes": 45
+              },
+              {
+                "id": "departure-1330",
+                "start": "13:30",
+                "duration_minutes": 45
+              },
+              {
+                "id": "departure-1445",
+                "start": "14:45",
                 "duration_minutes": 45
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -699,20 +750,24 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "minimum_age",
+          "departure_times"
+        ]
       }
     },
     {
       "id": "atv-buggy-3-hours",
       "name": "AtV & Buggy - 3 Hours",
       "category": "Off-Road",
-      "summary": "",
+      "summary": "Ride eastern trails through the aloe plantation, Sint Joris Bay and Indian Cave, with a Playa Canoa swim stop and Natural Bridge visit.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/atv-buggy-3-hours",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "3d79a5eb2259b6b9c020896c8d8f1a5c1f646c0b1214a42d9d5848cc55971567",
+        "content_sha256": "6e3c49228711c943a80f852d27835f9c571da03c2704b0e22bdcd3e6d181188a",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -877,7 +932,22 @@
         ],
         "additional_information": "",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 61,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/atv-buggy-3-hours",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "departure_times": [
+              "10:00",
+              "14:00"
+            ],
+            "check_in_times": [
+              "09:30",
+              "13:30"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -904,9 +974,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -943,17 +1014,21 @@
             ],
             "slots": [
               {
-                "id": "sample-0900",
-                "start": "09:00",
+                "id": "departure-1000",
+                "start": "10:00",
                 "duration_minutes": 180
               },
               {
-                "id": "sample-1400",
+                "id": "departure-1400",
                 "start": "14:00",
                 "duration_minutes": 180
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata.",
+            "published_check_in_times": [
+              "09:30",
+              "13:30"
+            ]
           },
           "options": [
             {
@@ -977,20 +1052,24 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "departure_times",
+          "check_in_times"
+        ]
       }
     },
     {
       "id": "atv-buggy-4-hours",
       "name": "AtV & Buggy - 4 Hours",
       "category": "Off-Road",
-      "summary": "",
+      "summary": "Explore western off-road trails around Ricon Park, Hato and San Pedro, continuing to Smiling Rock, Voodoo Cave and Houtje Bay.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/atv-buggy-4-hours",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "32513cf28c47d505a2fe38f1349b404f419d40242fb79a96a10ab687e18974ff",
+        "content_sha256": "7358105b79894c48fdc93784fddb6d979cc17eb8b429d4fe45d80318d5983739",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -1155,7 +1234,20 @@
         ],
         "additional_information": "",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 53,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/atv-buggy-4-hours",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "departure_times": [
+              "10:00"
+            ],
+            "check_in_times": [
+              "09:30"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -1182,9 +1274,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -1221,17 +1314,15 @@
             ],
             "slots": [
               {
-                "id": "sample-0900",
-                "start": "09:00",
-                "duration_minutes": 240
-              },
-              {
-                "id": "sample-1400",
-                "start": "14:00",
+                "id": "departure-1000",
+                "start": "10:00",
                 "duration_minutes": 240
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata.",
+            "published_check_in_times": [
+              "09:30"
+            ]
           },
           "options": [
             {
@@ -1255,20 +1346,24 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "departure_times",
+          "check_in_times"
+        ]
       }
     },
     {
       "id": "atv-buggy-6-hours",
       "name": "AtV & Buggy - 6 Hours",
       "category": "Off-Road",
-      "summary": "",
+      "summary": "Take a longer western trail through Hato, San Pedro and San Antonio Cave, with turtle viewing, a Daaibooi swim and flamingo stop.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/atv-buggy-6-hours",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "493bd731a8482c9ea8136c279e7bad60471b2904cf1b8fd7afe331a511d06ac5",
+        "content_sha256": "ec44c77ce347ad0376a048dccd1e4b2422294082662ea5e8a02e7fce99ca7f96",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -1433,7 +1528,21 @@
         ],
         "additional_information": "",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 48,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/atv-buggy-6-hours",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "departure_times": [
+              "10:00"
+            ],
+            "check_in_times": [
+              "09:30"
+            ],
+            "swim_stop_minutes": 60
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -1460,9 +1569,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -1499,17 +1609,15 @@
             ],
             "slots": [
               {
-                "id": "sample-0900",
-                "start": "09:00",
-                "duration_minutes": 360
-              },
-              {
-                "id": "sample-1400",
-                "start": "14:00",
+                "id": "departure-1000",
+                "start": "10:00",
                 "duration_minutes": 360
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata.",
+            "published_check_in_times": [
+              "09:30"
+            ]
           },
           "options": [
             {
@@ -1533,20 +1641,24 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "departure_times",
+          "check_in_times"
+        ]
       }
     },
     {
       "id": "atv-buggy-7-hours",
       "name": "AtV & Buggy - 7 Hours",
       "category": "Off-Road",
-      "summary": "",
+      "summary": "Visit western trails and caves, with stops around Ascencion, the Blue Room and Williwood. The listing includes a two-hour swimming stop.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/atv-buggy-7-hours",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "b945b8133df4a8619a14d226317576c1adf1c961165f97b4b380c914b1eb2493",
+        "content_sha256": "1a2f7f173be816cc5202c108cc11c6e2a65e0c6d5e08ad30c6ca267af8efcfb2",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -1697,7 +1809,21 @@
         ],
         "additional_information": "",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 45,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/atv-buggy-7-hours",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "departure_times": [
+              "10:00"
+            ],
+            "check_in_times": [
+              "09:30"
+            ],
+            "swim_stop_minutes": 120
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -1724,9 +1850,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -1763,12 +1890,15 @@
             ],
             "slots": [
               {
-                "id": "sample-0800",
-                "start": "08:00",
+                "id": "departure-1000",
+                "start": "10:00",
                 "duration_minutes": 420
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata.",
+            "published_check_in_times": [
+              "09:30"
+            ]
           },
           "options": [
             {
@@ -1792,20 +1922,24 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "departure_times",
+          "check_in_times"
+        ]
       }
     },
     {
       "id": "curacao-city-highlights",
       "name": "Curaçao City Highlights",
       "category": "City tour",
-      "summary": "",
+      "summary": "A cruise-passenger tour of Willemstad's neighbourhoods, Chobolobo, viewpoints, flamingos and Que Tapa Beach. Meet at the Mega Pier cruise terminal.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/curacao-city-highlights",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "753b8395f20171a599d9f72a94f2bb3d442fe29ba762eba7e49f47817d12ea8b",
+        "content_sha256": "b7b6ad8bc950f0fc2faf3885b8996fa17fea642920ffff03de3fc404ba51b4ca",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -1968,9 +2102,18 @@
           "4 hours of duration",
           "Willemstad"
         ],
-        "additional_information": "The meeting point is at the Mega Pier cruise ship terminal",
+        "additional_information": "",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 115,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/curacao-city-highlights",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "meeting_point": "Mega Pier cruise ship terminal",
+            "audience": "cruise passengers"
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -1997,9 +2140,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -2058,7 +2202,7 @@
                 "duration_minutes": 240
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -2072,7 +2216,7 @@
           ],
           "pickup": {
             "mode": "priced_option",
-            "meeting_point": "Demo meeting point — real meeting instructions are unverified",
+            "meeting_point": "Mega Pier cruise ship terminal",
             "option_id": "sample-hotel-transfer"
           },
           "policies": {
@@ -2082,20 +2226,23 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "meeting_point"
+        ]
       }
     },
     {
       "id": "discover-scuba-dive",
       "name": "Discover Scuba Dive",
       "category": "Scuba diving",
-      "summary": "",
+      "summary": "An introductory dive combines theory, shallow-water practice and a reef visit with a PADI professional. Medical screening and flying restrictions apply.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/discover-scuba-dive",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "e0dffaaad6483b77df89e3592b78635c273e7dc313e72064355be4475ce81353",
+        "content_sha256": "3dc54a1eb3f8947e6966ff37d6638371b15673daa3ed6969753e3931e1561d96",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -2396,7 +2543,21 @@
         ],
         "additional_information": "",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 53,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/discover-scuba-dive",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "minimum_age": 10,
+            "separate_bubblemaker_program_age": 8,
+            "requirements": [
+              "Diver Medical Form assessment",
+              "Flying and diving restrictions apply"
+            ],
+            "age_caveat": "The age-eight Bubblemaker option is a separate program, not automatic eligibility for this product."
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -2423,13 +2584,14 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
-            "minimum_age": 18,
+            "minimum_age": 10,
             "maximum_age": 120,
             "adult_min_age": 18
           },
@@ -2440,6 +2602,12 @@
             "taxes_fees": "included",
             "payment_terms": "demo_full_payment",
             "age_bands": [
+              {
+                "id": "child",
+                "minimum_age": 10,
+                "maximum_age": 17,
+                "amount_minor": 6250
+              },
               {
                 "id": "adult",
                 "minimum_age": 18,
@@ -2472,7 +2640,7 @@
                 "duration_minutes": 180
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -2492,24 +2660,27 @@
           "policies": {
             "verified": true,
             "cancellation": "Demo only: cancel before simulated payment; paid changes go to the operator. No real booking exists.",
-            "safety": "These are sample eligibility rules, not real activity safety advice. Real age, health and participation requirements remain unverified.",
+            "safety": "Listing requires a Diver Medical Form assessment and observes flying/diving restrictions. Standard introduction starts at age 10; the age-8 Bubblemaker program is separate. Demo completion is not medical or supplier clearance.",
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "minimum_age"
+        ]
       }
     },
     {
       "id": "discover-willemstad",
       "name": "Discover Willemstad",
       "category": "City tour",
-      "summary": "",
+      "summary": "Explore Otrobanda, Scharloo, Fort Waakzaamheid and Chobolobo, then visit Plasa Bieu and Punda's market. Hotel transport is included; lunch costs extra.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/discover-willemstad",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "e180566b1d003be951121f488e5a0ff2290a8e62900718b9a5b76a8ec0c51bc5",
+        "content_sha256": "09e9f601763091e52e933024223e44ae32594d5b2ffe13acc69ad04322fb977e",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -2658,9 +2829,26 @@
           "4 hours of duration",
           "Willemstad"
         ],
-        "additional_information": "Pick-up and drop-off are included in the tour price Lunch is not included",
+        "additional_information": "included not included",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 159,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/discover-willemstad",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "pickup": "included",
+            "lunch": "not included",
+            "locations": [
+              "Otrobanda",
+              "Fort Waakzaamheid",
+              "Scharloo",
+              "Landhuis Chobolobo",
+              "Plasa Bieu",
+              "Round Market"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -2687,9 +2875,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -2748,22 +2937,12 @@
                 "duration_minutes": 240
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
-          "options": [
-            {
-              "id": "sample-hotel-transfer",
-              "name": "Demo hotel transfer",
-              "amount_minor": 2500,
-              "basis": "per_booking",
-              "max_quantity": 1,
-              "required": false
-            }
-          ],
+          "options": [],
           "pickup": {
-            "mode": "priced_option",
-            "meeting_point": "Demo meeting point — real meeting instructions are unverified",
-            "option_id": "sample-hotel-transfer"
+            "mode": "included",
+            "meeting_point": "Hotel pickup — collection details to be supplied for the demo"
           },
           "policies": {
             "verified": true,
@@ -2772,20 +2951,23 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "pickup"
+        ]
       }
     },
     {
       "id": "flyboard-experience",
       "name": "Flyboard Experience",
       "category": "Scuba diving",
-      "summary": "",
+      "summary": "Try flyboarding at Jan Thiel Beach with equipment and a safety briefing. The listing describes 30–40 minutes of flight time.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/flyboard-experience",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "5bd26a68d47bb50dad8563a3a6ae5b50b03475baa7d5f0fc07fdb5f92b03021f",
+        "content_sha256": "63273f44602d950934a2f5f4672a74800a413c275d86e5778a2d8090e5a1f493",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -2853,7 +3035,20 @@
         ],
         "additional_information": "",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 24,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/flyboard-experience",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "location": "Jan Thiel Beach",
+            "flight_minutes_range": [
+              30,
+              40
+            ],
+            "duration_caveat": "One-hour listing duration includes more than flight time."
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -2880,9 +3075,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -2929,7 +3125,7 @@
                 "duration_minutes": 60
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -2953,20 +3149,21 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": []
       }
     },
     {
       "id": "half-day-snorkel-lunch",
       "name": "Half Day Snorkel & Lunch",
       "category": "Water sports",
-      "summary": "",
+      "summary": "Cruise Spanish Water and the south coast, snorkel at the Tugboat and a shallow reef, and have a BBQ lunch aboard a catamaran.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/half-day-snorkel-lunch",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "d9e160e0c0374d96b9453156bb0ac3f8fbbe9eca65f65d551493667ac5c707be",
+        "content_sha256": "54504dd327387881c4c069c5dfb4d78314b8cbe34331c15387cc8f1ed14321d5",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -3130,9 +3327,21 @@
           "4.5 hours of duration",
           "Westpunt"
         ],
-        "additional_information": "Transfer options are available at an additional price—contact us to arrange yours!",
+        "additional_information": "available at additional unverified price",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 88,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/half-day-snorkel-lunch",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "pickup": "available at additional unverified price",
+            "locations": [
+              "Spanish Water",
+              "Tugboat"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -3159,9 +3368,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -3220,7 +3430,7 @@
                 "duration_minutes": 270
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -3244,20 +3454,23 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "pickup"
+        ]
       }
     },
     {
       "id": "jetski-tour-30-min",
       "name": "Jetski Tour 30 min",
       "category": "Water sports",
-      "summary": "",
+      "summary": "Join a guided coastal jet-ski ride past the Sea Aquarium and Mambo Beach after an operating tutorial. Arrive early for paperwork.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/jetski-tour-30-min",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "a93242ab7535141173cec74bec5367c80b47c513fd31beccd5dfe2791fa4d666",
+        "content_sha256": "3e3d3d9e3c71d7417c05def012a7309bb51ffe65c12079f8e0d68a1d9dd1e6b0",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -3320,9 +3533,21 @@
           "0.5 hours of duration",
           "Jan Thiel"
         ],
-        "additional_information": "We will teach you how to operate the machine safely We required you to be 20 min before your scheduled",
+        "additional_information": "20",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 119,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/jetski-tour-30-min",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "check_in_minutes_before": 20,
+            "locations": [
+              "Sea Aquarium",
+              "Mambo Beach"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -3349,9 +3574,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -3398,7 +3624,8 @@
                 "duration_minutes": 30
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata.",
+            "check_in_minutes_before": 20
           },
           "options": [
             {
@@ -3422,20 +3649,23 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "check_in_minutes_before"
+        ]
       }
     },
     {
       "id": "kadushi-utv-tours",
       "name": "Kadushi UtV Tours",
       "category": "Off-Road",
-      "summary": "",
+      "summary": "Drive rocky trails past windmills, the Indian Cave and Boca Patrick, then stop at Kokomo Beach for swimming.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/kadushi-utv-tours",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "cb288ef057703127f17d78aaf9d5ce7705952b5f7e3513d176e7d27cd16d5cae",
+        "content_sha256": "dd3474c9f660c168ab505ea36591ff907877f86e914f5db534228e0e49a8a623",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -3573,7 +3803,24 @@
         ],
         "additional_information": "",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 112,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/kadushi-utv-tours",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "locations": [
+              "Curaçao mini desert",
+              "Indian Cave",
+              "Boca Patrick",
+              "Kokomo Beach"
+            ],
+            "bring": [
+              "swimwear",
+              "sunblock"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -3600,9 +3847,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -3649,7 +3897,7 @@
                 "duration_minutes": 180
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -3673,20 +3921,21 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": []
       }
     },
     {
       "id": "klein-curacao-a-trip-to-paradise",
       "name": "Klein Curaçao - a trip to Paradise",
       "category": "Boat trip",
-      "summary": "",
+      "summary": "Mermaid's Klein Curaçao trip includes beach-house access, breakfast, BBQ lunch and snorkelling equipment. The page advertises departure from Fisherman's Pier at 06:45.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/klein-curacao-a-trip-to-paradise",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "2992d5a77eb6934714ff0cac210edb2d4bc8cc292e2a129a368790919e45050a",
+        "content_sha256": "2147fd05cf3f611fda768af00ac08a186ae33083bd019c4608f0f4847974c464",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -3894,9 +4143,36 @@
           "9 hours of duration",
           "Klein Curaçao"
         ],
-        "additional_information": "Transfer options are available at an additional price—contact us to arrange yours! Open bar is available at an additional cost,",
+        "additional_information": "['Hotel transfer: unverified extra price', 'Open bar or individual drinks: extra', 'Massage: extra', 'Scuba diving available daily']",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 136,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/klein-curacao-a-trip-to-paradise",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "meeting_point": "Fisherman's Pier",
+            "departure_times": [
+              "06:45"
+            ],
+            "operating_weekdays": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              6
+            ],
+            "excluded_weekday": "Saturday",
+            "extras": [
+              "Hotel transfer: unverified extra price",
+              "Open bar or individual drinks: extra",
+              "Massage: extra",
+              "Scuba diving available daily"
+            ],
+            "source_conflict": "This website's Saturday exclusion differs from the inherited Mermaid catalog's Thursday exclusion; no legacy rule was silently copied."
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -3923,9 +4199,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -3969,17 +4246,16 @@
               2,
               3,
               4,
-              5,
               6
             ],
             "slots": [
               {
-                "id": "sample-0800",
-                "start": "08:00",
+                "id": "departure-0645",
+                "start": "06:45",
                 "duration_minutes": 540
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -3993,7 +4269,7 @@
           ],
           "pickup": {
             "mode": "priced_option",
-            "meeting_point": "Demo meeting point — real meeting instructions are unverified",
+            "meeting_point": "Fisherman's Pier",
             "option_id": "sample-hotel-transfer"
           },
           "policies": {
@@ -4003,20 +4279,25 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "meeting_point",
+          "departure_times",
+          "operating_weekdays"
+        ]
       }
     },
     {
       "id": "klein-curacao-catamaran-day-trip",
       "name": "Klein Curaçao Catamaran Day Trip",
       "category": "Boat trip",
-      "summary": "",
+      "summary": "Travel to Klein Curaçao by catamaran for beach time, snorkelling, breakfast and BBQ lunch. The listing includes an open bar and beach beds.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/klein-curacao-catamaran-day-trip",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "d1e801ddd6db28f95fb6accf233085e60d1a4f015dc1bd26816f83e8d85c32b4",
+        "content_sha256": "3ae09a0692aa518f7f91470a8da05fc093897133df28329b13aeae25b7926640",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -4196,9 +4477,27 @@
           "Klein Curaçao",
           "Boarding point: Caracasbaai"
         ],
-        "additional_information": "Transfer options are available at an additional price—contact us to arrange yours!",
+        "additional_information": "available at additional unverified price",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 62,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/klein-curacao-catamaran-day-trip",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "meeting_point": "Caracasbaai",
+            "operating_weekdays": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "pickup": "available at additional unverified price"
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -4225,9 +4524,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -4281,7 +4581,7 @@
                 "duration_minutes": 540
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -4295,7 +4595,7 @@
           ],
           "pickup": {
             "mode": "priced_option",
-            "meeting_point": "Demo meeting point — real meeting instructions are unverified",
+            "meeting_point": "Caracasbaai",
             "option_id": "sample-hotel-transfer"
           },
           "policies": {
@@ -4305,20 +4605,25 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "meeting_point",
+          "operating_weekdays",
+          "pickup"
+        ]
       }
     },
     {
       "id": "klein-curacao-weekly-luxury-yacht-trip",
       "name": "Klein Curaçao - Weekly Luxury Yacht Trip",
       "category": "Boat trip",
-      "summary": "",
+      "summary": "Take the Serendipity yacht to Klein Curaçao with beach-house access. The listing describes a one-hour crossing and optional diving or massage.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/klein-curacao-weekly-luxury-yacht-trip",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "85b8d2008ebd084af9d81663ac5c21c75e45366725da1d680300bf9c2e8f0225",
+        "content_sha256": "454cb3daab7289074bb4e2e8d6a0c230e9976a0625bfcf86c739dd8781aa7c6c",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -4485,9 +4790,24 @@
           "9 hours of duration",
           "Klein Curaçao"
         ],
-        "additional_information": "Open bar available at an aditional cost Massages and diving are available at an additional cost Transfer options are available",
+        "additional_information": "['Open bar: extra', 'Massage: extra', 'Diving: extra', 'Hotel transfer: extra']",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 63,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/klein-curacao-weekly-luxury-yacht-trip",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "vessel": "Serendipity",
+            "crossing_minutes": 60,
+            "extras": [
+              "Open bar: extra",
+              "Massage: extra",
+              "Diving: extra",
+              "Hotel transfer: extra"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -4514,9 +4834,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -4570,7 +4891,7 @@
                 "duration_minutes": 540
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -4594,20 +4915,21 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": []
       }
     },
     {
       "id": "mid-day-reef-tour",
       "name": "Mid-day Reef Tour",
       "category": "Boat trip",
-      "summary": "",
+      "summary": "View reefs and marine life aboard a glass-bottom boat from Playa Daaibooi. The published midday departure is 11:00, returning at 12:30.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/mid-day-reef-tour",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "40f22a9f85324802261b81ff0853069103dca10a008d1652d7c47b569d2c7b7a",
+        "content_sha256": "8a46f7c483278533758f84cdef88dc0d5b288b69df64945d5d44033282bde3de",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -4730,7 +5052,21 @@
         ],
         "additional_information": "",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 47,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/mid-day-reef-tour",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "meeting_point": "Playa Daaibooi",
+            "departure_times": [
+              "11:00"
+            ],
+            "return_times": [
+              "12:30"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -4757,9 +5093,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -4808,17 +5145,12 @@
             ],
             "slots": [
               {
-                "id": "sample-0900",
-                "start": "09:00",
-                "duration_minutes": 90
-              },
-              {
-                "id": "sample-1400",
-                "start": "14:00",
+                "id": "departure-1100",
+                "start": "11:00",
                 "duration_minutes": 90
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -4832,7 +5164,7 @@
           ],
           "pickup": {
             "mode": "priced_option",
-            "meeting_point": "Demo meeting point — real meeting instructions are unverified",
+            "meeting_point": "Playa Daaibooi",
             "option_id": "sample-hotel-transfer"
           },
           "policies": {
@@ -4842,20 +5174,24 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "meeting_point",
+          "departure_times"
+        ]
       }
     },
     {
       "id": "miss-ann-klein-curacao",
       "name": "Klein Curaçao - Weekend Supreme Luxury Yacht",
       "category": "Boat trip",
-      "summary": "",
+      "summary": "The Serendipity yacht's Weekend Supreme package visits Klein Curaçao, with beach-house facilities and optional diving or massage.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/miss-ann-klein-curacao",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "699efa8aefae2952340a232a13469f27d02d32e3a3f65525bf0e51022086160b",
+        "content_sha256": "e54ab7186a5d59e1a4647afaf332943cfa85c8479f07fda4fd0ebc8797e6231a",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -5023,9 +5359,24 @@
           "9 hours of duration",
           "Klein Curaçao"
         ],
-        "additional_information": "Massages and diving are available at an additional cost Transfer options are available at an additional price—contact us to arrange",
+        "additional_information": "['Massage: extra', 'Diving: extra', 'Hotel transfer: extra']",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 72,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/miss-ann-klein-curacao",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "vessel": "Serendipity",
+            "package": "Weekend Supreme",
+            "crossing_minutes": 60,
+            "extras": [
+              "Massage: extra",
+              "Diving: extra",
+              "Hotel transfer: extra"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -5052,9 +5403,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -5093,11 +5445,6 @@
           "schedule": {
             "timezone": "America/Curacao",
             "weekdays": [
-              0,
-              1,
-              2,
-              3,
-              4,
               5,
               6
             ],
@@ -5108,7 +5455,7 @@
                 "duration_minutes": 540
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -5132,20 +5479,21 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": []
       }
     },
     {
       "id": "national-park-jeep-safari",
       "name": "National Park Jeep Safari",
       "category": "Historical tour",
-      "summary": "",
+      "summary": "Visit the north coast, Jan Kok and Christoffel National Park by open vehicle. The published tour runs 09:00–15:00; lunch is extra.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/national-park-jeep-safari",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "893607f358099d9a78f52b54fdb3946617af1aa643b1413a08b6d9556ed26771",
+        "content_sha256": "a909006cfb5b5f067c660af7408dc7780db4e7e744e9397a56915bb2d4a45956",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -5391,9 +5739,29 @@
           "6 hours of duration",
           "Westpunt"
         ],
-        "additional_information": "Lunch stop - (lunch itself not included) Participants must be at least 6 years old Participants should not be pregnant",
+        "additional_information": "included not included ['Pregnancy excluded by listing', 'Back problems excluded by listing']",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 215,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/national-park-jeep-safari",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "departure_times": [
+              "09:00"
+            ],
+            "return_times": [
+              "15:00"
+            ],
+            "minimum_age": 6,
+            "pickup": "included",
+            "lunch": "not included",
+            "participation_restrictions": [
+              "Pregnancy excluded by listing",
+              "Back problems excluded by listing"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -5420,13 +5788,14 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
-            "minimum_age": 0,
+            "minimum_age": 6,
             "maximum_age": 120,
             "adult_min_age": 18
           },
@@ -5438,14 +5807,8 @@
             "payment_terms": "demo_full_payment",
             "age_bands": [
               {
-                "id": "infant",
-                "minimum_age": 0,
-                "maximum_age": 2,
-                "amount_minor": 0
-              },
-              {
                 "id": "child",
-                "minimum_age": 3,
+                "minimum_age": 6,
                 "maximum_age": 17,
                 "amount_minor": 5450
               },
@@ -5471,54 +5834,45 @@
             ],
             "slots": [
               {
-                "id": "sample-0900",
+                "id": "departure-0900",
                 "start": "09:00",
-                "duration_minutes": 360
-              },
-              {
-                "id": "sample-1400",
-                "start": "14:00",
                 "duration_minutes": 360
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
-          "options": [
-            {
-              "id": "sample-hotel-transfer",
-              "name": "Demo hotel transfer",
-              "amount_minor": 2500,
-              "basis": "per_booking",
-              "max_quantity": 1,
-              "required": false
-            }
-          ],
+          "options": [],
           "pickup": {
-            "mode": "priced_option",
-            "meeting_point": "Demo meeting point — real meeting instructions are unverified",
-            "option_id": "sample-hotel-transfer"
+            "mode": "included",
+            "meeting_point": "Hotel pickup — collection details to be supplied for the demo"
           },
           "policies": {
             "verified": true,
             "cancellation": "Demo only: cancel before simulated payment; paid changes go to the operator. No real booking exists.",
-            "safety": "These are sample eligibility rules, not real activity safety advice. Real age, health and participation requirements remain unverified.",
+            "safety": "Published listing restrictions: Pregnancy excluded by listing; Back problems excluded by listing. This is a simulated booking, not an assessment of fitness or supplier approval.",
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "departure_times",
+          "minimum_age",
+          "pickup",
+          "participation_restrictions"
+        ]
       }
     },
     {
       "id": "open-fishing-trip",
       "name": "Open Fishing Trip",
       "category": "Boat trip",
-      "summary": "",
+      "summary": "Book a place on a shared fishing trip targeting wahoo, barracuda, tuna and mahi mahi. The crew cleans and packages the catch afterwards.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/open-fishing-trip",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "44c33857bf6398350c0812d180e7f586d557bd13d92fd4ac2b32b6d0b2185657",
+        "content_sha256": "59399e0f9e39b6a044f2baeafa3e3ff330e055c08b6ad04db01b7e14d6336790",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -5598,7 +5952,16 @@
         ],
         "additional_information": "",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 70,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/open-fishing-trip",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "basis": "per person",
+            "availability": "Contact the operator for availability"
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -5625,9 +5988,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -5686,7 +6050,7 @@
                 "duration_minutes": 240
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -5710,20 +6074,21 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": []
       }
     },
     {
       "id": "seatrek-underwater-walking-tour",
       "name": "Seatrek Underwater Walking Tour",
       "category": "Water sports",
-      "summary": "",
+      "summary": "Walk underwater among corals and fish. Photos or videos and hotel transport are optional extras with prices not stated on the page.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/seatrek-underwater-walking-tour",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "0d348c3d815d3e018b998beb080ad04aa4b31242041ad31caa352e12dc7b20e5",
+        "content_sha256": "28f0c3599303641534b1fc1f8b734252f55add16df0054fe7299f25cd3a09589",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -5858,9 +6223,20 @@
           "1 hour of duration",
           "Willemstad"
         ],
-        "additional_information": "Optional: underwater videos/photos at extra cost Paid pickup/drop-off available",
+        "additional_information": "['Underwater photos/video: extra', 'Hotel pickup/drop-off: extra']",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 55,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/seatrek-underwater-walking-tour",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "extras": [
+              "Underwater photos/video: extra",
+              "Hotel pickup/drop-off: extra"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -5887,9 +6263,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -5948,7 +6325,7 @@
                 "duration_minutes": 60
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -5972,20 +6349,21 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": []
       }
     },
     {
       "id": "snorkel-and-beach-adventures",
       "name": "Snorkel and Beach Adventures",
       "category": "Historical tour",
-      "summary": "",
+      "summary": "Combine a 4×4 trip to Shete Boka with snorkelling at Playa Piskado and time at Cas Abao. The listing gives 09:00–15:00.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/snorkel-and-beach-adventures",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "fecfb2540419c4b581b6c720d211cdb065b7896bc22cc9918fa1776c1e903fa1",
+        "content_sha256": "7a4ef040d92612edba6fa6b7ea3881d7ef9fbeb9dacaa62da7bed9f3f96d9f1d",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -6277,9 +6655,29 @@
           "6 hours of duration",
           "Westpunt"
         ],
-        "additional_information": "Participants must be at least 6 years old Participants should not be pregnant or have any back problems Participant who",
+        "additional_information": "included ['Pregnancy excluded by listing', 'Back problems excluded by listing', 'Participants who swim/snorkel must be able to swim']",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 136,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/snorkel-and-beach-adventures",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "departure_times": [
+              "09:00"
+            ],
+            "return_times": [
+              "15:00"
+            ],
+            "minimum_age": 6,
+            "pickup": "included",
+            "participation_restrictions": [
+              "Pregnancy excluded by listing",
+              "Back problems excluded by listing",
+              "Participants who swim/snorkel must be able to swim"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -6306,13 +6704,14 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
-            "minimum_age": 0,
+            "minimum_age": 6,
             "maximum_age": 120,
             "adult_min_age": 18
           },
@@ -6324,14 +6723,8 @@
             "payment_terms": "demo_full_payment",
             "age_bands": [
               {
-                "id": "infant",
-                "minimum_age": 0,
-                "maximum_age": 2,
-                "amount_minor": 0
-              },
-              {
                 "id": "child",
-                "minimum_age": 3,
+                "minimum_age": 6,
                 "maximum_age": 17,
                 "amount_minor": 5450
               },
@@ -6357,54 +6750,45 @@
             ],
             "slots": [
               {
-                "id": "sample-0900",
+                "id": "departure-0900",
                 "start": "09:00",
-                "duration_minutes": 360
-              },
-              {
-                "id": "sample-1400",
-                "start": "14:00",
                 "duration_minutes": 360
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
-          "options": [
-            {
-              "id": "sample-hotel-transfer",
-              "name": "Demo hotel transfer",
-              "amount_minor": 2500,
-              "basis": "per_booking",
-              "max_quantity": 1,
-              "required": false
-            }
-          ],
+          "options": [],
           "pickup": {
-            "mode": "priced_option",
-            "meeting_point": "Demo meeting point — real meeting instructions are unverified",
-            "option_id": "sample-hotel-transfer"
+            "mode": "included",
+            "meeting_point": "Hotel pickup — collection details to be supplied for the demo"
           },
           "policies": {
             "verified": true,
             "cancellation": "Demo only: cancel before simulated payment; paid changes go to the operator. No real booking exists.",
-            "safety": "These are sample eligibility rules, not real activity safety advice. Real age, health and participation requirements remain unverified.",
+            "safety": "Published listing restrictions: Pregnancy excluded by listing; Back problems excluded by listing; Participants who swim/snorkel must be able to swim. This is a simulated booking, not an assessment of fitness or supplier approval.",
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "departure_times",
+          "minimum_age",
+          "pickup",
+          "participation_restrictions"
+        ]
       }
     },
     {
       "id": "sunset-boat-trip",
       "name": "Sunset Boat Trip",
       "category": "Boat trip",
-      "summary": "",
+      "summary": "Take an evening glass-bottom boat trip from Playa Daaibooi to view the coastline and marine life. Advertised times are 18:00–19:30.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/sunset-boat-trip",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "e040b3503734ba0daace5c87e2908de813094818e30cfb3019c1ed595776faaf",
+        "content_sha256": "b7aa4734e93985607bda31cccd1304d9c03de73269078dd3facda04d85447451",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -6527,7 +6911,21 @@
         ],
         "additional_information": "",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 47,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/sunset-boat-trip",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "meeting_point": "Playa Daaibooi",
+            "departure_times": [
+              "18:00"
+            ],
+            "return_times": [
+              "19:30"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -6554,9 +6952,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -6605,12 +7004,12 @@
             ],
             "slots": [
               {
-                "id": "sample-1630",
-                "start": "16:30",
+                "id": "departure-1800",
+                "start": "18:00",
                 "duration_minutes": 90
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -6624,7 +7023,7 @@
           ],
           "pickup": {
             "mode": "priced_option",
-            "meeting_point": "Demo meeting point — real meeting instructions are unverified",
+            "meeting_point": "Playa Daaibooi",
             "option_id": "sample-hotel-transfer"
           },
           "policies": {
@@ -6634,20 +7033,24 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "meeting_point",
+          "departure_times"
+        ]
       }
     },
     {
       "id": "sunset-sail",
       "name": "Sunset Sail",
       "category": "Boat trip",
-      "summary": "",
+      "summary": "Sail aboard a catamaran on Curaçao's coast at sunset. Hotel transport is available separately; its price and departure time require confirmation.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/sunset-sail",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "b50fe219772ec34e139cf7fc464198cae424613da9f2f27a4f67ec5ecf340b0d",
+        "content_sha256": "3e19ed2691146b0a5cc1f40508810e9f2e0a8650d9756ac7aed1042dd73f2c7c",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -6809,9 +7212,17 @@
           "2.5 hours of duration",
           "Spanish Water"
         ],
-        "additional_information": "Transfer options are available at an additional price - contact us to arrange yours!",
+        "additional_information": "available at additional unverified price",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 79,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/sunset-sail",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "pickup": "available at additional unverified price"
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -6838,9 +7249,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -6894,7 +7306,7 @@
                 "duration_minutes": 150
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -6918,20 +7330,23 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "pickup"
+        ]
       }
     },
     {
       "id": "sup-curacao-paddle-boarding",
       "name": "SUP Curaçao Paddle Boarding",
       "category": "Scuba diving",
-      "summary": "",
+      "summary": "Paddle with a guide in groups of one to four. Ages 12+ can use their own board; younger children share an adult's board free.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/sup-curacao-paddle-boarding",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "16ba8afeee52bf003bd4352c4e14489e722b71395595462d238b8ada9b2d2f42",
+        "content_sha256": "2eb9927a4b3e52ab709ce943bf036f240ae4942ac1d56010b0b47a734c7d62d7",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -7067,9 +7482,27 @@
           "2 hours of duration",
           "Jan Thiel"
         ],
-        "additional_information": "Hotel pickup and drop-off (optional) extra payment.",
+        "additional_information": "optional at extra cost",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 64,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/sup-curacao-paddle-boarding",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "operating_window": {
+              "start": "10:00",
+              "end": "17:00"
+            },
+            "group_size_range": [
+              1,
+              4
+            ],
+            "own_board_minimum_age": 12,
+            "under_12": "Free when sharing an adult's board",
+            "pickup": "optional at extra cost"
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -7096,15 +7529,18 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
             "minimum_age": 0,
             "maximum_age": 120,
-            "adult_min_age": 18
+            "adult_min_age": 12,
+            "max_guests": 4,
+            "children_require_adult": true
           },
           "price_rules": {
             "currency": "USD",
@@ -7114,20 +7550,14 @@
             "payment_terms": "demo_full_payment",
             "age_bands": [
               {
-                "id": "infant",
+                "id": "shared-board-child",
                 "minimum_age": 0,
-                "maximum_age": 2,
+                "maximum_age": 11,
                 "amount_minor": 0
               },
               {
-                "id": "child",
-                "minimum_age": 3,
-                "maximum_age": 17,
-                "amount_minor": 3450
-              },
-              {
-                "id": "adult",
-                "minimum_age": 18,
+                "id": "own-board",
+                "minimum_age": 12,
                 "maximum_age": 120,
                 "amount_minor": 6900
               }
@@ -7147,8 +7577,8 @@
             ],
             "slots": [
               {
-                "id": "sample-0900",
-                "start": "09:00",
+                "id": "sample-1000",
+                "start": "10:00",
                 "duration_minutes": 120
               },
               {
@@ -7157,7 +7587,7 @@
                 "duration_minutes": 120
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -7177,24 +7607,29 @@
           "policies": {
             "verified": true,
             "cancellation": "Demo only: cancel before simulated payment; paid changes go to the operator. No real booking exists.",
-            "safety": "These are sample eligibility rules, not real activity safety advice. Real age, health and participation requirements remain unverified.",
+            "safety": "The listing allows ages under 12 free only when sharing an adult board; groups are 1–4. Demo rules do not replace supplier safety approval.",
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "operating_window",
+          "own_board_minimum_age",
+          "pickup"
+        ]
       }
     },
     {
       "id": "tandem-skydive-experience",
       "name": "Tandem Skydive Experience",
       "category": "Off-Road",
-      "summary": "",
+      "summary": "Tandem skydive from 10,000 feet, with approximately 45 seconds of freefall and seven minutes under the parachute. Photo/video packages cost extra.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/tandem-skydive-experience",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "fccc6fde4e34d47b5040c688e2bdaad9dea9afc07be088b2b1b6ac7564e9eac0",
+        "content_sha256": "1e08b5619277366d2888433bbce0a3697286a32a2425c1e111f71451644bdcf0",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -7329,9 +7764,23 @@
           "2 hours of duration",
           "St. Joris Bay"
         ],
-        "additional_information": "Optional photos and videos available for USD $80",
+        "additional_information": "",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 46,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/tandem-skydive-experience",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "altitude_feet": 10000,
+            "freefall_seconds": 45,
+            "parachute_minutes": 7,
+            "photo_video_extra": {
+              "currency": "USD",
+              "amount_minor": 8000
+            }
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -7358,9 +7807,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -7407,7 +7857,7 @@
                 "duration_minutes": 120
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -7415,6 +7865,14 @@
               "name": "Demo hotel transfer",
               "amount_minor": 2500,
               "basis": "per_booking",
+              "max_quantity": 1,
+              "required": false
+            },
+            {
+              "id": "published-photo-video",
+              "name": "Photo/video package (published USD 80)",
+              "amount_minor": 8000,
+              "basis": "per_person",
               "max_quantity": 1,
               "required": false
             }
@@ -7431,20 +7889,23 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "photo_video_extra"
+        ]
       }
     },
     {
       "id": "the-jungle-tour",
       "name": "The Jungle Tour",
       "category": "Historical tour",
-      "summary": "",
+      "summary": "Visit Amazonia's reptiles, birds and monkeys on a 45–60 minute animal experience. Published admission varies by age, and tickets are non-refundable.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/the-jungle-tour",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "de27c63c3d9193440e0a12047602906dd7e025307c3d4854ffcc74ecee102b56",
+        "content_sha256": "6788a7f9a063b518d0ff43fb6325d5be201453ed8f39c5edf8e5932801ce808e",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -7563,7 +8024,37 @@
         ],
         "additional_information": "",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 67,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/the-jungle-tour",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "duration_minutes_range": [
+              45,
+              60
+            ],
+            "advertised_price_bands": [
+              {
+                "minimum_age": 0,
+                "maximum_age": 3,
+                "amount": 0
+              },
+              {
+                "minimum_age": 4,
+                "maximum_age": 11,
+                "amount": 10
+              },
+              {
+                "minimum_age": 12,
+                "maximum_age": 120,
+                "amount": 20
+              }
+            ],
+            "currency_symbol": "$",
+            "cancellation": "Non-refundable"
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -7590,15 +8081,16 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
             "minimum_age": 0,
             "maximum_age": 120,
-            "adult_min_age": 18
+            "adult_min_age": 12
           },
           "price_rules": {
             "currency": "USD",
@@ -7610,18 +8102,18 @@
               {
                 "id": "infant",
                 "minimum_age": 0,
-                "maximum_age": 2,
+                "maximum_age": 3,
                 "amount_minor": 0
               },
               {
                 "id": "child",
-                "minimum_age": 3,
-                "maximum_age": 17,
+                "minimum_age": 4,
+                "maximum_age": 11,
                 "amount_minor": 1000
               },
               {
                 "id": "adult",
-                "minimum_age": 18,
+                "minimum_age": 12,
                 "maximum_age": 120,
                 "amount_minor": 2000
               }
@@ -7651,7 +8143,7 @@
                 "duration_minutes": 60
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -7670,25 +8162,29 @@
           },
           "policies": {
             "verified": true,
-            "cancellation": "Demo only: cancel before simulated payment; paid changes go to the operator. No real booking exists.",
+            "cancellation": "Published listing: Non-refundable. This demo moves no money and creates no real reservation; unpaid demo requests can be cancelled.",
             "safety": "These are sample eligibility rules, not real activity safety advice. Real age, health and participation requirements remain unverified.",
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "advertised_price_bands",
+          "cancellation"
+        ]
       }
     },
     {
       "id": "tugboat-seabob",
       "name": "TugBoat SEABOB",
       "category": "Water sports",
-      "summary": "",
+      "summary": "Use a Seabob to explore the Tugboat wreck, nearby corals and a dive wall in a small group of two or three.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/tugboat-seabob",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "5953d725f8ab9776be7b3152e251c65041beafd748ce397184e23c62c413b640",
+        "content_sha256": "73d4a9e847fcbc8f85172fa365d75f75f290e444cb8255387941259eb749c57d",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -7850,9 +8346,24 @@
           "1 hour of duration",
           "Jan Thiel"
         ],
-        "additional_information": "Option for photos & videos (available for an additional fee)",
+        "additional_information": "['Photos/video: unverified extra price']",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 54,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/tugboat-seabob",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "group_size_range": [
+              2,
+              3
+            ],
+            "location": "Tugboat Beach",
+            "extras": [
+              "Photos/video: unverified extra price"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -7879,15 +8390,17 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
             "minimum_age": 0,
             "maximum_age": 120,
-            "adult_min_age": 18
+            "adult_min_age": 18,
+            "max_guests": 3
           },
           "price_rules": {
             "currency": "USD",
@@ -7940,7 +8453,7 @@
                 "duration_minutes": 60
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -7964,20 +8477,21 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": []
       }
     },
     {
       "id": "west-coast-blue-room",
       "name": "West Coast Snorkeling, BBQ & Blue Room",
       "category": "Water sports",
-      "summary": "",
+      "summary": "Combine a catamaran cruise and open-air bus return, with beach stops, snorkelling and BBQ lunch. Blue Cave entry depends on conditions.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/west-coast-blue-room",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "c8030ae9fd2bb85315a88eba5e442e749d7b0dced94205193a802de9e21a89dc",
+        "content_sha256": "3959fdb477fecf4b3d92d750b8ac83b1d47aef934f72457ccee6522ed14fa210",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -8128,9 +8642,23 @@
           "9 hours of duration",
           "Westpunt"
         ],
-        "additional_information": "Transfer options are available at an additional price—contact us to arrange yours!",
+        "additional_information": "available at additional unverified price",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 75,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/west-coast-blue-room",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "locations": [
+              "Kokomo Beach",
+              "Cas Abao Beach",
+              "Blue Cave"
+            ],
+            "blue_cave_entry": "Conditions permitting",
+            "pickup": "available at additional unverified price"
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -8157,9 +8685,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -8213,7 +8742,7 @@
                 "duration_minutes": 540
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
           "options": [
             {
@@ -8237,20 +8766,23 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "pickup"
+        ]
       }
     },
     {
       "id": "wonders-of-curacao",
       "name": "Wonders Of Curaçao",
       "category": "Bus Trip",
-      "summary": "",
+      "summary": "Visit Hato Caves, snorkel at Playa Piskado, relax at Porto Marie and see the St. Willibrordus flamingo area. Hotel transport is included.",
       "enabled": true,
       "source": {
         "url": "https://isluno.com/tours/wonders-of-curacao",
-        "observed_at": "2026-09-08T15:52:16.361926+00:00",
+        "observed_at": "2026-09-08T16:11:43.004195+00:00",
         "fixture_only": false,
-        "content_sha256": "16f755168794febf6bdb33f30570e521a28639e57b033e2b810564b034d67278",
+        "content_sha256": "607d00664958e6b903157b7264c5d4d9c51b403d2a16a1ff71c28974552e54cc",
         "kind": "public_listing"
       },
       "supplier_ref": null,
@@ -8414,9 +8946,23 @@
           "7 hours of duration",
           "Sint Willibrordus"
         ],
-        "additional_information": "Pick-up and drop-off are included in the tour price",
+        "additional_information": "included",
         "guarantees": "Free cancellation up to 24 hours before the experience starts (local time) Only pay reservation deposit",
-        "disposition": "Listing claims support discovery only. Exact currency/age prices, schedule, extras, pickup and provider policies require verification before quotation."
+        "disposition": "Published facts are retained with provenance. Missing complete supplier pricing/eligibility/policy sets remain unresolved. Labelled demo rules reuse known facts and supply explicitly illustrative missing values.",
+        "description_word_count": 51,
+        "published_facts": {
+          "source_url": "https://isluno.com/tours/wonders-of-curacao",
+          "observed_at": "2026-09-08T16:11:43.004195+00:00",
+          "values": {
+            "pickup": "included",
+            "locations": [
+              "Hato Caves",
+              "Playa Piskado",
+              "Porto Marie Beach",
+              "St. Willibrordus"
+            ]
+          }
+        }
       },
       "import_notes": {
         "duplicate_gallery_urls": 0,
@@ -8443,9 +8989,10 @@
         "real_booking_eligible": false,
         "label": "DEMO SAMPLE RULES — prices, ages, times and extras are illustrative; no supplier reservation or money movement.",
         "assumptions": [
-          "Sample USD adult price uses the displayed starting amount; currency and exact fare remain unverified.",
-          "Sample child rate is 50% and ages 0–2 are free where sample child participation is enabled.",
-          "Sample daily departures, eligibility, transfer and cancellation terms are not supplier rules."
+          "Known published facts listed in source_fact_keys_used are retained; the remaining demo values are illustrative.",
+          "Unless an age fare is explicitly published, demo child fares are half the sample adult fare, and any sample infant fare is free.",
+          "Sample USD fare uses the public starting amount; exact currency/tax/guest terms remain unresolved where not published.",
+          "Unpublished departure days/times, age eligibility, extra prices and demo cancellation handling are sample rules, not supplier promises."
         ],
         "rules": {
           "guest_rules": {
@@ -8499,22 +9046,12 @@
                 "duration_minutes": 420
               }
             ],
-            "evidence": "User-approved sample departure times and daily operation. Duration copied from the public listing for demo scheduling only."
+            "evidence": "Published times/days are retained where source_fact_keys_used identifies them. Other slots/days are user-approved samples; durations follow listing metadata."
           },
-          "options": [
-            {
-              "id": "sample-hotel-transfer",
-              "name": "Demo hotel transfer",
-              "amount_minor": 2500,
-              "basis": "per_booking",
-              "max_quantity": 1,
-              "required": false
-            }
-          ],
+          "options": [],
           "pickup": {
-            "mode": "priced_option",
-            "meeting_point": "Demo meeting point — real meeting instructions are unverified",
-            "option_id": "sample-hotel-transfer"
+            "mode": "included",
+            "meeting_point": "Hotel pickup — collection details to be supplied for the demo"
           },
           "policies": {
             "verified": true,
@@ -8523,7 +9060,10 @@
             "evidence": "User-approved demo policy, not a supplier policy."
           }
         },
-        "version": "sample-v1-20260908"
+        "version": "sample-v2-source-aligned-20260908",
+        "source_fact_keys_used": [
+          "pickup"
+        ]
       }
     }
   ]

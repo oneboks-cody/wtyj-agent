@@ -2,6 +2,11 @@
 import importlib.util
 from pathlib import Path
 import unittest
+from unittest.mock import patch
+from email.message import Message
+from io import BytesIO
+from urllib.request import HTTPSHandler, build_opener
+from urllib.response import addinfourl
 
 script = Path(__file__).resolve().parents[2] / "scripts/import_isluno_public_catalog.py"
 spec = importlib.util.spec_from_file_location("isluno_public_import", script)
@@ -10,6 +15,57 @@ spec.loader.exec_module(module)
 
 
 class ImportTests(unittest.TestCase):
+    def test_redirect_cannot_dispatch_beyond_request_ceiling_or_read_large_body(self):
+        class Body(BytesIO):
+            reads = []
+            def read(self, size=-1):
+                self.reads.append(size)
+                return super().read(size)
+
+        body = Body(b"x" * 10000)
+        dispatched = []
+
+        class InMemoryHTTPS(HTTPSHandler):
+            def https_open(self, request):
+                dispatched.append(request.full_url)
+                headers = Message()
+                headers["Location"] = "https://isluno.com/final"
+                response = addinfourl(body, headers, request.full_url, 302)
+                response.msg = "Found"
+                return response
+
+        with patch.object(module, "MAX_REQUESTS", 1), patch.object(module, "MAX_TOTAL_BYTES", 100), \
+             patch.object(module, "build_opener", lambda *handlers: build_opener(InMemoryHTTPS(), *handlers)):
+            fetcher = module.Fetcher()
+            with self.assertRaisesRegex(ValueError, "refuses redirects"):
+                fetcher.get("https://isluno.com/start", 10)
+            self.assertEqual(["https://isluno.com/start"], dispatched)
+            self.assertEqual([], body.reads)
+            self.assertTrue(body.closed)
+            self.assertEqual(1, fetcher.requests)
+            self.assertEqual(0, fetcher.bytes)
+            with self.assertRaisesRegex(ValueError, "ceiling"):
+                fetcher.get("https://isluno.com/start", 10)
+            self.assertEqual(1, len(dispatched))
+
+    def test_real_rich_text_dom_shape_preserves_overview_and_plain_additional_info(self):
+        html = b'''<h1 class="pages-tour-title">Synthetic Boat</h1><div class="pages-tour-main">
+        <section><h2 class="pages-tour-section-title">Overview</h2>
+        <div class="pages-tour-section-content">A glass-bottom boat from Example Beach.
+        Time of departure: 1:00pm Return: 2:30pm</div></section>
+        <section><h2>Additional Information</h2><div class="pages-tour-section-content">Check in 20 minutes early.</div></section></div>'''
+        product = module.extract_product(html, "https://isluno.com/tours/synthetic", "2026-09-08T00:00:00+00:00")
+        self.assertIn("glass-bottom", product["summary"])
+        self.assertIn("1:00pm", product["summary"])
+        self.assertIn("2:30pm", product["summary"])
+        self.assertEqual("Check in 20 minutes early.", product["source_claims"]["additional_information"])
+        self.assertGreater(product["source_claims"]["description_word_count"], 0)
+
+    def test_present_heading_with_lost_overview_is_a_completeness_error(self):
+        with self.assertRaisesRegex(ValueError, "empty product overview"):
+            module.extract_product(b'<h1 class="pages-tour-title">Trip</h1><div class="pages-tour-main"><section><h2>Overview</h2></section></div>',
+                                   "https://isluno.com/tours/synthetic", "2026-09-08T00:00:00+00:00")
+
     def test_gallery_dedup_and_expiring_tokens_never_enter_source_records(self):
         html = b'''<h1 class="pages-tour-title">Synthetic Trip</h1>
         <ul class="pages-tour-metadata"><li><a href="/explore?category=x">Boat</a></li></ul>

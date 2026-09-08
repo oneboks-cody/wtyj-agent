@@ -646,5 +646,13 @@
   "public_bytes_read": 79063395,
   "supplier_api_calls": 0,
   "provider_calls": 0,
-  "image_policy": "Original approved public trip image bytes, content-addressed and validated; short-lived URL query signatures omitted. Hosting/delivery is a later authorized stage."
+  "image_policy": "Original approved public trip image bytes, content-addressed and validated; short-lived URL query signatures omitted. Hosting/delivery is a later authorized stage.",
+  "text_refresh": {
+    "observed_at": "2026-09-08T16:11:43.004195+00:00",
+    "product_page_gets": 31,
+    "image_gets": 0,
+    "empty_product_descriptions": [],
+    "reason": "Fix actual rich-text DOM parsing; retain and paraphrase available descriptions and booking facts."
+  },
+  "empty_product_descriptions": []
 }
