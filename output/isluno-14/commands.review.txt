@@ -1,0 +1,62 @@
+NON-EXECUTING REVIEW DOCUMENT — NOT A SCRIPT
+Do not copy this wholesale into a terminal. Remote fields are unverified. ISL-14
+execution requires separate approval after all inputs and the OCI digest exist.
+
+0. Local material (completed; no need to repeat for permission):
+   shasum -a 256 /Users/calvin/Projects/isluno-whatsapp-demo-20260908/tmp/isluno-release-artifacts/isluno-backend-source.tar.gz
+   shasum -a 256 /Users/calvin/Projects/isluno-whatsapp-demo-20260908/tmp/isluno-release-artifacts/isluno-config-default-off.tar.gz
+   shasum -a 256 /Users/calvin/Projects/isluno-whatsapp-demo-20260908/tmp/isluno-release-artifacts/isluno-frontend-static.tar.gz
+   Expected values are fixed in artifacts.json/ACTION.md.
+
+1. Approved read-only inventory on VERIFIED target, not run during preparation:
+   docker ps --format '{{.Names}}|{{.ID}}|{{.Image}}'
+   docker inspect --format '{{.Name}}|{{.Id}}|{{.Image}}|{{.State.StartedAt}}|{{.State.Running}}' "$VERIFIED_MERMAID_CONTAINER"
+   docker image inspect --format '{{.Id}}|{{.Os}}|{{.Architecture}}' "$VERIFIED_CURRENT_IMAGE"
+   readlink -f "$VERIFIED_FRONTEND_POINTER"
+   Do not print Config.Env, raw client.json, provider keys or guest rows.
+   These metadata commands alone do not establish number ownership or ingress retention.
+
+2. Candidate image build: BLOCKED, no approved base/platform/dependency image.
+   The repository Dockerfile has a floating python:3.12-slim base and unpinned
+   package installation. Do not invent an OCI digest or run a provider test.
+   Pin/review the image recipe and warranted offline image checks before step 3.
+
+3. Stage reviewed static files, AFTER approval of exact destination/owner:
+   install -d -m 0755 "$VERIFIED_NEW_FRONTEND_RELEASE"
+   tar -xzf "$VERIFIED_FRONTEND_ARCHIVE" -C "$VERIFIED_NEW_FRONTEND_RELEASE"
+   Check every staged relative path/sha256 against artifacts.json before switching.
+   No TypeScript API server is started.
+
+4. Ingress close/drain: BLOCKED until the existing mechanism and durable inbound
+   retention are verified. No guessed maintenance marker, nginx rewrite, queue
+   mutation or provider webhook change is offered as a substitute.
+
+5. Service stop/private consistent backup/config CAS: ONLY after approved drain:
+   docker compose -f "$VERIFIED_COMPOSE_FILE" stop --timeout "$APPROVED_DRAIN_TIMEOUT" "$VERIFIED_SERVICE"
+   Exact SQLite .backup destination/permissions and live client.json CAS commands
+   must be generated from the verified paths and approved snapshot digest first.
+   Do not use prepare_mermaid_reservation_release.py --apply/--rollback: its
+   staged file set and old-image rollback are not the approved Isluno action.
+
+6. Start guard-capable candidate, ONLY after image/config/volume diff approval:
+   docker compose -f "$VERIFIED_REVIEWED_COMPOSE_FILE" up -d --no-deps --force-recreate "$VERIFIED_SERVICE"
+   Verify container image digest, immutable code/config hashes, health, account
+   binding, cutover journal and retained inbound data under the approved checks.
+   The runtime/number must have exactly one owner/consumer.
+
+7. Static pointer switch, ONLY after compatible backend verification:
+   ln -s "$VERIFIED_NEW_FRONTEND_RELEASE" "$VERIFIED_TEMP_FRONTEND_POINTER"
+   mv -Tf "$VERIFIED_TEMP_FRONTEND_POINTER" "$VERIFIED_FRONTEND_POINTER"
+   This form is Linux-specific and requires verified pointer type/permissions.
+   Verify static hashes and canonical Python API routing; reopen ingress through
+   the verified mechanism. No global nginx rewrite or other-tenant restart.
+
+8. Rollback, ONLY through separately approved matching target bindings:
+   Restore approved client feature leaves with exact CAS; retain current guarded
+   runtime and database. Recreate the same service only if the approved reload
+   mechanism requires it. Do not point Compose back to a pre-guard image.
+   Restore a verified-compatible static pointer using step 7's atomic form with
+   the approved previous path. Keep the durable cutover marker, all new ledgers
+   and legacy quarantine. Never restore the pre-cutover DB over new records.
+
+No live provider canary/profile/name/number operation is in this command plan.

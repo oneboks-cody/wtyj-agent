@@ -1,0 +1,9 @@
+# ISL-14 preparation handoff
+
+ISL-13 is accepted at backend 4f62147871ada343edb7360c66fe8baae89eae90 and dashboard 2c99c3a13e01af625432e5f681d4c065e95dd1a8. This preparation changes no runtime source or tracked frontend files.
+
+Review `output/isluno-14/ACTION.md`, `commands.review.txt`, `artifacts.json` and `required-inputs.json`. Local source/default-off config/static archives are built and pinned, with safe member paths and frontend asset references verified. Frontend built with no env files and a cleared environment, 3.17 seconds. No unchanged test matrix or PDF rendering was repeated.
+
+Current target bindings remain unavailable. Authorized GitHub deployment metadata returned no records for either repository. Repository docs identify what to recheck but do not prove current host/image/account/number/consumer state. A sanitized inventory was requested; no production/provider access was attempted. OCI image digest is explicitly absent pending verified platform/base/dependencies. The existing deployment script's old-image rollback cannot be used unchanged for Isluno.
+
+Return the packet for preparation review, not execution acceptance. All ISL-14 live criteria remain unchecked. Missing inputs are precise in the JSON/packet; final execution approval must name exact image/target/config/database/static pointer/window/rollback after those are bound. Counts: 13/14 candidate accepted, 0/14 merged/verified, three deferred. No new tasks/agents, secrets/customer data, provider/test spend, service operation, deploy, merge, feature or number change.

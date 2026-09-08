@@ -1,0 +1,74 @@
+vite v7.3.2 building client environment for production...
+transforming...
+src/components/ui/tooltip.tsx (2:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
+src/components/ui/collapsible.tsx (2:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
+src/components/ui/label.tsx (2:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
+src/components/ui/progress.tsx (2:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
+src/components/ui/dropdown-menu.tsx (2:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
+✓ 2977 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/public/assets/unboks-login-logo-optimized_1778556585382-9bD9Tsfq.webp    5.46 kB
+dist/public/index.html                                                        6.62 kB │ gzip:   2.71 kB
+dist/public/assets/index-BvZm4rNm.css                                       194.50 kB │ gzip:  30.97 kB
+dist/public/assets/check-ByxfU9o0.js                                          0.12 kB │ gzip:   0.14 kB
+dist/public/assets/chevron-down-6_6bAK9z.js                                   0.13 kB │ gzip:   0.14 kB
+dist/public/assets/chevron-right-yfeP6oei.js                                  0.13 kB │ gzip:   0.14 kB
+dist/public/assets/clock-3-DzQcp3Jl.js                                        0.17 kB │ gzip:   0.17 kB
+dist/public/assets/arrow-left-C6hBn65p.js                                     0.17 kB │ gzip:   0.16 kB
+dist/public/assets/arrow-right-Cmg67HIo.js                                    0.17 kB │ gzip:   0.16 kB
+dist/public/assets/circle-check-DuVF77yk.js                                   0.17 kB │ gzip:   0.17 kB
+dist/public/assets/user-round-check-BoW8yd7P.js                               0.23 kB │ gzip:   0.20 kB
+dist/public/assets/copy-CRNDkhdH.js                                           0.23 kB │ gzip:   0.20 kB
+dist/public/assets/download-DOgmsffE.js                                       0.23 kB │ gzip:   0.19 kB
+dist/public/assets/circle-dollar-sign-By7VqOg5.js                             0.24 kB │ gzip:   0.20 kB
+dist/public/assets/circle-alert-gay3pSQO.js                                   0.25 kB │ gzip:   0.19 kB
+dist/public/assets/external-link-C52bS4Zr.js                                  0.25 kB │ gzip:   0.20 kB
+dist/public/assets/cloud-upload-DDkbBKMz.js                                   0.25 kB │ gzip:   0.21 kB
+dist/public/assets/archive-BywCczC-.js                                        0.25 kB │ gzip:   0.21 kB
+dist/public/assets/map-pin-CkQ9NPum.js                                        0.26 kB │ gzip:   0.22 kB
+dist/public/assets/triangle-alert-BWMnx1_b.js                                 0.27 kB │ gzip:   0.21 kB
+dist/public/assets/shield-check-JQAnoNtv.js                                   0.32 kB │ gzip:   0.25 kB
+dist/public/assets/printer-BQtG7SGA.js                                        0.32 kB │ gzip:   0.24 kB
+dist/public/assets/phone-BEpas4-0.js                                          0.32 kB │ gzip:   0.23 kB
+dist/public/assets/trash-2-Cs1YxLTb.js                                        0.33 kB │ gzip:   0.22 kB
+dist/public/assets/file-text-ts9nzEJj.js                                      0.33 kB │ gzip:   0.22 kB
+dist/public/assets/building-2-LDHZqFPx.js                                     0.38 kB │ gzip:   0.24 kB
+dist/public/assets/calendar-days-Tz_Y1O9e.js                                  0.50 kB │ gzip:   0.27 kB
+dist/public/assets/file-key-2-BbfV1lAl.js                                     0.55 kB │ gzip:   0.29 kB
+dist/public/assets/use-dashboard-identity-tqSZRQGm.js                         0.76 kB │ gzip:   0.42 kB
+dist/public/assets/input-BuAhAYjj.js                                          0.85 kB │ gzip:   0.51 kB
+dist/public/assets/useInfiniteQuery-Xg_hI_tz.js                               1.12 kB │ gzip:   0.47 kB
+dist/public/assets/index-9SfZQYrq.js                                          1.13 kB │ gzip:   0.61 kB
+dist/public/assets/index-CjZl_rek.js                                          1.33 kB │ gzip:   0.81 kB
+dist/public/assets/direct-whatsapp-reply-xfclvYXm.js                          1.61 kB │ gzip:   0.87 kB
+dist/public/assets/useMutation-Dni9uyyJ.js                                    2.21 kB │ gzip:   0.92 kB
+dist/public/assets/not-found-BuWtwcvl.js                                      2.40 kB │ gzip:   0.97 kB
+dist/public/assets/switch-R8oEDicn.js                                         2.96 kB │ gzip:   1.47 kB
+dist/public/assets/button-XxXWgE2p.js                                         3.60 kB │ gzip:   1.63 kB
+dist/public/assets/MermaidCustomers-BXfCNM9_.js                               3.87 kB │ gzip:   1.72 kB
+dist/public/assets/Login-BfhXExOL.js                                          5.46 kB │ gzip:   2.31 kB
+dist/public/assets/RentalCustomers-vQSJVR5t.js                                7.17 kB │ gzip:   2.85 kB
+dist/public/assets/MermaidCrewAssistance-B_9lGqCX.js                          7.18 kB │ gzip:   2.62 kB
+dist/public/assets/MermaidCustomerAccount-BVhBJXpf.js                         7.74 kB │ gzip:   3.03 kB
+dist/public/assets/MermaidReservations-BEhuuLWm.js                            8.72 kB │ gzip:   3.11 kB
+dist/public/assets/RentalCustomerWorkspace-Cdp_5giM.js                        8.74 kB │ gzip:   3.16 kB
+dist/public/assets/Images-0B9xBi6K.js                                        10.22 kB │ gzip:   3.24 kB
+dist/public/assets/RentalToday-A_IL0tWx.js                                   10.32 kB │ gzip:   3.58 kB
+dist/public/assets/Help-i-XuNWGO.js                                          10.63 kB │ gzip:   3.89 kB
+dist/public/assets/MermaidToday-BISswvff.js                                  11.29 kB │ gzip:   3.76 kB
+dist/public/assets/MermaidAttentionQueue-DvM9RpmS.js                         15.09 kB │ gzip:   5.27 kB
+dist/public/assets/IslunoOperations-CUqwvNWU.js                              15.74 kB │ gzip:   4.73 kB
+dist/public/assets/dialog-YV-ijJvG.js                                        23.72 kB │ gzip:   8.66 kB
+dist/public/assets/MermaidReservationWorkspace-Bpof0edr.js                   25.44 kB │ gzip:   7.44 kB
+dist/public/assets/AliCustomerFile-CbbqCDFa.js                               26.45 kB │ gzip:   7.57 kB
+dist/public/assets/Bookings-DzutuRRr.js                                      31.27 kB │ gzip:   7.61 kB
+dist/public/assets/FollowUps-hdrfQfJM.js                                     32.13 kB │ gzip:   9.88 kB
+dist/public/assets/DashboardShell-BcT_NHUh.js                                71.24 kB │ gzip:  23.79 kB
+dist/public/assets/Rental-CijxdWUI.js                                        92.28 kB │ gzip:  25.71 kB
+dist/public/assets/proxy-Ba0GUMhk.js                                        120.19 kB │ gzip:  39.49 kB
+dist/public/assets/Inbox-CMb8dToW.js                                        120.94 kB │ gzip:  34.39 kB
+dist/public/assets/Settings-C6a_R_Nr.js                                     217.55 kB │ gzip:  59.14 kB
+dist/public/assets/Analytics-NTLkvfiK.js                                    378.72 kB │ gzip: 104.87 kB
+dist/public/assets/index-9U9c-kde.js                                        410.52 kB │ gzip: 128.51 kB
+✓ built in 3.17s

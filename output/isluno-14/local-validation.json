@@ -1,0 +1,7 @@
+{
+  "archive_hashes_match": true,
+  "no_absolute_traversal_or_link_members": true,
+  "frontend_entry_assets_present": true,
+  "frontend_build_seconds": 3.17,
+  "production_or_provider_actions": 0
+}

@@ -1,0 +1,41 @@
+{
+  "github_deployments": {
+    "BensonOpas/wtyj-agent": [],
+    "unboks-org/unboks-dashboard-api": []
+  },
+  "meaning": "No GitHub deployment records returned; this does not establish that nothing is deployed.",
+  "repository_documentation": [
+    {
+      "path": "Dockerfile",
+      "sha256": "378f3e89c0565c2061238eaa46e5a4d1502b7e7187e124b849e90be751809948"
+    },
+    {
+      "path": "supervisord.conf",
+      "sha256": "c9f8641eb6d9198b94157426e2e4e13a687f43a8b0869ebc72e737a215e2e686"
+    },
+    {
+      "path": "wtyj/scripts/deploy_mermaid_release.sh",
+      "sha256": "e4f7abbe10cd94b686f8ce19a5d52c7141888c75d2b1f29e031c0e65bd5cde86"
+    },
+    {
+      "path": "wtyj/scripts/prepare_mermaid_reservation_release.py",
+      "sha256": "c8506aeb78cbd46bcbb02ac4f32d95574d8d957c32ae9fd2e4b730e2d4423cad"
+    },
+    {
+      "path": "wtyj/scripts/ensure_dashboard_nginx.py",
+      "sha256": "5fddb9fdb3e027d85d95974c11f11a54ce4095b8ea61c9fbe229a1516149b5a7"
+    }
+  ],
+  "documented_not_current": {
+    "backend_service": "agent",
+    "backend_container": "wtyj-mermaid",
+    "backend_live_dir": "/root/clients/mermaid",
+    "database_suffix": "data/state_registry.db",
+    "local_health": "http://127.0.0.1:8102/health",
+    "frontend_static_releases": "/var/www/unboks-dashboard/releases/*",
+    "frontend_api": "canonical Python tenant runtime; not artifacts/api-server"
+  },
+  "runtime_and_provider_contacted": false,
+  "local_node_version": "v24.20.0",
+  "frontend_readme_sha256": "56a184fe1c0a6c9cef503417a10f41d0035a740d787e6675fe893c84d87d514b"
+}

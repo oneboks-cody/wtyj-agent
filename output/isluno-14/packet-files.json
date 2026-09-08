@@ -1,0 +1,42 @@
+[
+  {
+    "file": "ACTION.md",
+    "sha256": "1da6b1699e3494d4be4da3083e34fc2b7c12d7dab398eb72d999b6f5499ca4a5"
+  },
+  {
+    "file": "BUILD.md",
+    "sha256": "784deb337f0eb5e7ce879126fdd2fd13cdd77780ce9b0b19008fea4bb5f6b48b"
+  },
+  {
+    "file": "artifacts.json",
+    "sha256": "b4b62ea9bec994d2d557454473586600746f8c359665133d2e95cddb660b5ea6"
+  },
+  {
+    "file": "commands.review.txt",
+    "sha256": "2742b8a236ec7d3f9f4a175dbb59f7452515d0ac6e8a403dab6d67b7fbfc0745"
+  },
+  {
+    "file": "frontend-build.config.ts",
+    "sha256": "4e23d132dc1cbc0a9b9582ea06051b56f6506ca7c9e4a301139ad2d431c29807"
+  },
+  {
+    "file": "frontend-build.txt",
+    "sha256": "fb32626ac4c19b9626f38c960ff3be2adafc1ac0427df7f3815a876cee972ee0"
+  },
+  {
+    "file": "local-validation.json",
+    "sha256": "ae6fc3418f195eef12402c4088f6ffeaef9e87899c0a477919f5f5ae94530610"
+  },
+  {
+    "file": "package-local-artifacts.py",
+    "sha256": "cd78b95a024d14cfcf44a769ae1dc5451dcdb1992cc5d9c0f211237ea88d99ec"
+  },
+  {
+    "file": "read-only-metadata.json",
+    "sha256": "e14c49936cc8c555818f333a12b796812eee0acc717625ca1445d385e5f005a2"
+  },
+  {
+    "file": "required-inputs.json",
+    "sha256": "c2dd511deca26646a26661d952cf35a2cb4b12181af5d33f44fbf472fddc8fac"
+  }
+]
