@@ -150,6 +150,39 @@ class Operations:
                 'delivery_notice':'Accepted means provider acceptance, not guest delivery. Send timestamps are unavailable in the current ledger.'})
             return result
 
+    def today(self):
+        from zoneinfo import ZoneInfo
+        with self.conversation.db() as db:
+            identifiers=[self.summary(db,row)['id'] for row in self.rows(db)]
+        journeys=[];attention=[];scheduled=[]
+        now=self.conversation.itinerary.clock()
+        for identifier in identifiers:
+            detail=self.detail(identifier)
+            journeys.append({key:detail[key] for key in ('id','guest_name','stage','stage_label','item_count','totals','updated_at','inbox_path')})
+            def add(kind, reference, status, label):
+                attention.append({'id':identifier+':'+kind+':'+reference,'journey_id':identifier,'guest_name':detail['guest_name'],
+                                  'kind':kind,'status':status,'label':label,'inbox_path':detail['inbox_path']})
+            if detail['stage']=='needs_review':add('quote',detail['itinerary_id'],'needs_review','Current quote needs review')
+            for request in detail['operator_requests']:
+                if request['status'] in {'pending','active'}:
+                    add('handover',request['id'],request['status'],request['reason'].replace('_',' '))
+            for delivery in detail['deliveries']:
+                if delivery['status'] not in {'accepted'}:
+                    add('delivery',delivery['job_id']+':'+str(delivery['part']),delivery['status'],
+                        'Quote '+str(delivery['quote_version'])+' · '+delivery['quote_status']+' · '+delivery['label']+' · part '+str(delivery['part']+1))
+            for email in (detail['payment'] or {}).get('emails',[]):
+                if email['status'] not in {'accepted','cancelled'}:
+                    add('email',email['id'],email['status'],'Consented email · '+email['recipient'])
+            if detail['stage']!='cancelled':
+                for item in detail['itinerary']['items']:
+                    if item['selection']['date']==now.astimezone(ZoneInfo(item['timezone'])).date().isoformat():
+                        scheduled.append({'journey_id':identifier,'item_id':item['id'],'guest_name':detail['item_details'].get(item['id'],{}).get('guest_name'),
+                            'product_name':item['product']['name'],'starts_at':item['starts_at'],'timezone':item['timezone'],'stage_label':detail['item_stages'][item['id']]['label']})
+        return {'as_of':now.isoformat(),'journeys':journeys,'attention':attention,'scheduled_today':scheduled,
+                'counts':{'itineraries':len(journeys),'trip_items':sum(j['item_count'] for j in journeys),
+                          'demo_paid':sum(j['stage']=='demo_paid' for j in journeys),'attention':len(attention)},
+                'availability':'assumed_demo','payment':'simulated','real_money_charged':False,'supplier_booking_made':False}
+
     def document(self, identifier, document_id):
         detail=self.detail(identifier)
         if not any(d['id']==document_id for d in detail['documents']):raise HTTPException(404,'Document unavailable')
@@ -166,6 +199,9 @@ def build_router(check_auth, factory=Operations):
         try:return getattr(factory(),method)(*args)
         except isluno_config.IslunoUnavailable as exc:raise HTTPException(403,'Isluno operations unavailable') from exc
         except ItineraryError as exc:raise HTTPException(400,exc.code) from exc
+    @router.get('/today')
+    def today(response:Response):
+        response.headers['Cache-Control']='no-store';return call('today')
     @router.get('/guests')
     def guests(response:Response,q:str=Query(default='',max_length=200),offset:int=Query(default=0,ge=0),limit:int=Query(default=50,ge=1,le=100)):
         response.headers['Cache-Control']='no-store';return call('guests',q,offset,limit)

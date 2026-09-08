@@ -13,7 +13,7 @@ sys.path[:0]=[str(ROOT/'wtyj'),str(ROOT/'wtyj/tests/isluno')]
 
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--port',type=int,default=8788);parser.add_argument('--manifest',required=True);args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--port',type=int,default=8788);parser.add_argument('--manifest',required=True);parser.add_argument('--workspace',action='store_true');args=parser.parse_args()
     from scripts.serve_isluno_catalog_fixture import denied,fixture_auth
     socket.socket.connect=denied;socket.socket.connect_ex=denied;socket.socket.sendto=denied;socket.create_connection=denied
     os.environ['ANTHROPIC_API_KEY']='offline-dummy-key'
@@ -41,10 +41,15 @@ def main():
     store=Operations(fixture.store);app=FastAPI();auth=fixture_auth()
     @app.middleware('http')
     async def headers(request,call_next):
-        result=await call_next(request);result.headers['X-Unboks-Tenant']='mermaid';result.headers['Cache-Control']='no-store';return result
+        result=await call_next(request);result.headers['X-Unboks-Tenant']='ali-car-rental' if request.url.path.startswith('/api/ali-car-rental/') else 'mermaid';result.headers['Cache-Control']='no-store';return result
     @app.get('/api/mermaid/dashboard/api/isluno/capabilities',dependencies=[Depends(auth)])
     def capabilities():return isluno_config.capabilities()
     app.include_router(build_router(auth,lambda:store),prefix='/api/mermaid/dashboard/api/isluno')
+    if args.workspace:
+        from scripts.isluno_workspace_fixture import install
+        install(app,auth,fixture)
+        from dashboard.isluno_catalog_api import build_router as catalog_router
+        app.include_router(catalog_router(auth,lambda:__import__('shared.isluno_catalog',fromlist=['CatalogStore']).CatalogStore(fixture.itinerary.catalog_path)),prefix='/api/mermaid/dashboard/api/isluno')
     Path(args.manifest).parent.mkdir(parents=True,exist_ok=True)
     Path(args.manifest).write_text(json.dumps({'directory':str(fixture.directory),'journeys':store.list(),'fixture_only':True},indent=2))
     try:uvicorn.run(app,host='127.0.0.1',port=args.port)
