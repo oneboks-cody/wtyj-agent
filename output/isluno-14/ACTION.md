@@ -15,7 +15,7 @@ Archives are retained locally at `/Users/calvin/Projects/isluno-whatsapp-demo-20
 
 The frontend was built locally from unchanged accepted source in a cleared process environment, with Vite envDir disabled and base `/`. Build passed in 3.17 seconds. Each archive hash and member path was checked; frontend HTML references resolve to packaged assets. No node API server is packaged or proposed for deployment. The source README identifies `artifacts/unboks` static files and canonical Python tenant APIs; `artifacts/api-server` is explicitly not the production backend.
 
-The accepted ISL-13 manifest/evidence remains in `../isluno-13`. Current preparation adds files only under output/isluno-14 and its brief; it does not alter the accepted application sources or configuration. Future OCI packaging must pin its immutable base/platform/dependencies, verify the packaged source and run warranted offline image checks before the execution packet can be approved.
+The accepted ISL-13 manifest/evidence remains in `../isluno-13`. Current preparation adds the output/isluno-14 packet, its brief and the isolated H1–H7 inspection script/tests; it does not alter the accepted customer-facing application sources or configuration. Future OCI packaging must pin its immutable base/platform/dependencies, verify the packaged source and run warranted offline image checks before the execution packet can be approved.
 
 ## Exact proposed changes
 
@@ -65,4 +65,4 @@ Native-language sign-off, outer login/webhook, live takeover and provider render
 
 ## Bounded inspection proposal
 
-`INSPECTION.md` extends command-plan step 1 with exact proposed target checks, selected output fields, execution limits, operator-only protected projections and provider-owned evidence. It is reviewable preparation, not an executable runner or access authorization. No host/provider inspection has occurred.
+`INSPECTION.md` extends command-plan step 1 with exact proposed target checks, selected output fields, execution limits, operator-only protected projections and provider-owned evidence. The H1–H7 runner is now implemented with offline/default transport disabled; see `runner-evidence.json` and `runner-tests.txt`. It remains preparation awaiting independent runner review and separate exact access authorization. No host/provider inspection has occurred.

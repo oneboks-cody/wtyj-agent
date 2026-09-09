@@ -1,7 +1,7 @@
 [
   {
     "file": "ACTION.md",
-    "sha256": "2c47147adb642a1ad9804cd173692598ad3b241862cc57569b77139b132233dd"
+    "sha256": "43e15a256a7e3e00c62f534616397cabb37aebfbb7818d1e1623be67ee7205a9"
   },
   {
     "file": "BUILD.md",
@@ -9,7 +9,7 @@
   },
   {
     "file": "INSPECTION.md",
-    "sha256": "a79226ebf169ea9c175aed853b763c0a1807a3eefffb136b7b294992d5a68530"
+    "sha256": "ff65d0b5320c42fa212f233bda1735ad31bb6cd9db50011e90c0a5b6815f53d0"
   },
   {
     "file": "artifacts.json",
@@ -42,6 +42,14 @@
   {
     "file": "required-inputs.json",
     "sha256": "a409423cf8be424ef2a510e5a9366841eb1971155e0f7601753a59ef014e3157"
+  },
+  {
+    "file": "runner-evidence.json",
+    "sha256": "7d9e314645c6e530e499aac8bd6d09923258b32f20dfe57f28cdf222397b5b94"
+  },
+  {
+    "file": "runner-tests.txt",
+    "sha256": "5b51f6e5f6f0ebe4265a8bf9b228ac38987c41943ca747339cb47e9a5ea1df17"
   },
   {
     "file": "target-discovery.json",

@@ -1,0 +1,17 @@
+test_bounded_process_and_failure_suppression (__main__.InspectionTests.test_bounded_process_and_failure_suppression) ... ok
+test_default_never_dispatches (__main__.InspectionTests.test_default_never_dispatches) ... ok
+test_full_h1_h7_fixture_and_escape (__main__.InspectionTests.test_full_h1_h7_fixture_and_escape) ... ok
+test_identity_and_mounts (__main__.InspectionTests.test_identity_and_mounts) ... ok
+test_manifest_and_ssh_policy (__main__.InspectionTests.test_manifest_and_ssh_policy) ... ok
+test_missing_authority_never_dispatches (__main__.InspectionTests.test_missing_authority_never_dispatches) ... ok
+test_network_denied (__main__.InspectionTests.test_network_denied) ... ok
+test_raw_failure_suppressed (__main__.InspectionTests.test_raw_failure_suppressed) ... ok
+test_remote_payload_and_hash_worker (__main__.InspectionTests.test_remote_payload_and_hash_worker) ... ok
+test_result_whitelist_and_main_suppression (__main__.InspectionTests.test_result_whitelist_and_main_suppression) ... ok
+test_safe_files_and_limits (__main__.InspectionTests.test_safe_files_and_limits) ... ok
+test_session_deadline_and_wrong_image (__main__.InspectionTests.test_session_deadline_and_wrong_image) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.219s
+
+OK

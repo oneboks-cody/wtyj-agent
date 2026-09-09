@@ -1,0 +1,24 @@
+{
+  "status": "offline_verification_pass",
+  "tests": 12,
+  "host_contacted": false,
+  "provider_contacted": false,
+  "external_test_spend_usd": 0,
+  "scope": "H1-H7 runner only; no accepted application source or artifact changes",
+  "files": [
+    {
+      "path": "wtyj/scripts/inspect_isluno_target.py",
+      "sha256": "ba65bbaf3a27148f6c5a3577950359cccad78d62d60723d69741f1ae228d3158"
+    },
+    {
+      "path": "wtyj/tests/isluno/test_target_inspection.py",
+      "sha256": "ca0dbfb5e1df3ff37066ee19a27be228a9b1fe00afea04aedf9ec1cadd07ab5c"
+    }
+  ],
+  "verification_command": "python3 wtyj/tests/isluno/test_target_inspection.py",
+  "default_result": {
+    "status": "offline_default",
+    "host_contacted": false
+  },
+  "authority": "Local preparation only. No SSH or protected/provider inspection authorized."
+}
