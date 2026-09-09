@@ -1,0 +1,24 @@
+{
+  "status": "pass",
+  "image": "sha256:7375faa0dd8484fa15b6d3095a54e014562cb20e9b622cceb294780fcd635bc6",
+  "focused_tests": 5,
+  "test_seconds": 1.148,
+  "fresh_process_cli": "pass",
+  "fresh_process_cli_wall_seconds": 1.6572070829999999,
+  "checks": [
+    "WAL_mode_detached_backup_closure",
+    "committed_uncheckpointed_WAL_original_physical_bytes_preserved",
+    "exact71_original_rows_preserved",
+    "snapshot_replacement_rejected",
+    "duplicate_dispatch_preserves_snapshots",
+    "fresh_main_socket_subprocess_thread_denials_with_config_loader_first_import"
+  ],
+  "helper_sha256": "a27d20d5b3045347b17ad0010e5cbde567051e24a263aaabd32bb8d830d34152",
+  "tests_sha256": "97f495799567c6cd79152d1876d5ff12a13760517307f6596dd6558ee08e81b4",
+  "cli_fixture_sha256": "a10659193eb08c5a2ddf5ef4205a2cbb5a8356bb50efcabcb57e654e19898a07",
+  "source_data": "synthetic_only",
+  "network": "none",
+  "provider_calls": 0,
+  "agent_messages": 0,
+  "root_host_calls": 0
+}

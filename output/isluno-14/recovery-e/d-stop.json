@@ -1,0 +1,23 @@
+{
+  "automatic_retry": false,
+  "code": "command_failed",
+  "events": [
+    {
+      "at": 1788955740.5219305,
+      "phase": "recovery_helper_staged_bindings_verified"
+    },
+    {
+      "at": 1788955740.524002,
+      "config_sha256": "dbb56a497007a7f52e6a31487803bd542bd7e01dfa0620ee5c5590af400d0fe1",
+      "db_bundle_sha256": "06d506ff40b091320a713a842d43fef7d113c1d517e71087920182f77d8e868a",
+      "phase": "quarantine_and_seal_dispatch"
+    }
+  ],
+  "state": {
+    "activated": false,
+    "gates_reopened": false,
+    "ingress_installed": true,
+    "mermaid_stopped": true
+  },
+  "status": "stopped"
+}

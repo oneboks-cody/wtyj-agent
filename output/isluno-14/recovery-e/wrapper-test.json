@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "helper_exit_1_fixed_json_preserved": {
+    "status": "stopped",
+    "phase": "not_started",
+    "automatic_retry": false
+  },
+  "docker_exit_code": 0,
+  "network_disabled": true
+}

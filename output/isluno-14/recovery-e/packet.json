@@ -1,0 +1,23 @@
+{
+  "run_id": "calvin-isluno-recovery-e",
+  "payload_sha256": "cca3a1d6e6ada98648b1e44e95cd3350b760529b8937e14291999979bd35039e",
+  "payload_bytes": 37043,
+  "helper_sha256": "a27d20d5b3045347b17ad0010e5cbde567051e24a263aaabd32bb8d830d34152",
+  "helper_bytes": 13514,
+  "ssh_dispatches": 1,
+  "new_helper_files": 1,
+  "overall_seconds": 360,
+  "remote_seconds": 330,
+  "helper_seconds": 45,
+  "activation_seal_seconds": 120,
+  "automatic_retries": 0,
+  "files": {
+    "wtyj/scripts/recover_isluno_staged_cutover_e.py": "a27d20d5b3045347b17ad0010e5cbde567051e24a263aaabd32bb8d830d34152",
+    "wtyj/scripts/inspect_isluno_target.py": "9a19b292999a1c20641f93bbaad9c7e7adbd984c355ea6325234651ceda4b60f",
+    "wtyj/tests/isluno/test_staged_recovery_e.py": "97f495799567c6cd79152d1876d5ff12a13760517307f6596dd6558ee08e81b4",
+    "wtyj/tests/isluno/recovery_e_cli_fixture.py": "a10659193eb08c5a2ddf5ef4205a2cbb5a8356bb50efcabcb57e654e19898a07",
+    "output/isluno-14/RECOVERY-E.md": "63f8079f4010748a766cc088e6539d2fe2fd590b736a1cbb0d4a64eee16bf82a",
+    "output/isluno-14/recovery-e/remote.py": "fe448ddc68d4441746f1c054dbc05e925373825ccf93e84257f53f09d5552d37",
+    "output/isluno-14/recovery-e/dispatch.py": "ff22c1f6d12fe80f239d79f478dcad44779399cf0c27f21ebb97671b6bba419d"
+  }
+}

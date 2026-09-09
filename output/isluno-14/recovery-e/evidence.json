@@ -1,0 +1,14 @@
+{
+  "files": {
+    "offline-tests.txt": "2f8e513f78fbb153e25b8756144b11a8b1398ccb6d0f1113e8f7178ed0665a24",
+    "fresh-cli.txt": "07b70613612cb3930f32b04f7d50ee2ec0f3a448cdde2d3f2aee38aeae9509bc",
+    "wrapper-test.json": "588696df47f69dc04e6326c205fc4f63113315eccaeed2430258a31ec4fd7e3b",
+    "independent-tests.json": "4925445da9389e8214c98b34182489c5e4912b8dcf5226670f72c45d5121f418",
+    "d-stop.json": "87e726c88a0f8f5a5beb4809abb1ed9b2f866935eab8f0f651ec319ac749f015",
+    "d-backup-inspection.json": "a1eb81e22c1fc961dbef68eaf6be0d1d4a3c7f4065d76a72cf98d12d9c67315b",
+    "d-failure-reproduction.txt": "16e655fa90e6bc2789840def0b9a509b2f1156cd80fa5d1f68acdda8de0b20c1"
+  },
+  "synthetic_tests_only": true,
+  "test_network_disabled": true,
+  "live_provider_verification": false
+}

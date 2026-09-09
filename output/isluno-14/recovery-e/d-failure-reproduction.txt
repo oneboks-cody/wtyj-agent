@@ -1,0 +1,23 @@
+test_wal_source_recovery_closes_detached_backup_before_projection (test_staged_recovery.RecoveryTests.test_wal_source_recovery_closes_detached_backup_before_projection) ... ERROR
+
+======================================================================
+ERROR: test_wal_source_recovery_closes_detached_backup_before_projection (test_staged_recovery.RecoveryTests.test_wal_source_recovery_closes_detached_backup_before_projection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/review/wtyj/tests/isluno/test_staged_recovery.py", line 65, in test_wal_source_recovery_closes_detached_backup_before_projection
+    result = self.recover()
+             ^^^^^^^^^^^^^^
+  File "/review/wtyj/tests/isluno/test_staged_recovery.py", line 45, in recover
+    args.update(changes); return m.recover(**args)
+                                 ^^^^^^^^^^^^^^^^^
+  File "/review/wtyj/scripts/recover_isluno_staged_cutover.py", line 160, in recover
+    current_aggregate = project(str(snapshot))
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "/review/wtyj/scripts/project_isluno_old_work.py", line 130, in project
+    raise ValueError('not_detached')
+ValueError: not_detached
+
+----------------------------------------------------------------------
+Ran 1 test in 0.336s
+
+FAILED (errors=1)
