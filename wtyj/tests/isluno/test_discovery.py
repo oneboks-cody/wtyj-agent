@@ -39,10 +39,7 @@ class FakeMedia:
 
 
 def replies(body):
-    if 'interactive' not in body:
-        return body.get('buttons', [])
-    return [{'title': b['quick_reply']['title'], 'payload': b['quick_reply']['id']}
-            for b in body['interactive']['action']['cards'][0]['action']['buttons']]
+    return body.get('buttons', [])
 
 
 class DiscoveryTests(unittest.TestCase):
@@ -92,10 +89,11 @@ class DiscoveryTests(unittest.TestCase):
                     if len(plan['asset_ids']) == 1:
                         self.assertEqual(body['attachmentType'], 'image')
                     else:
-                        cards = body['interactive']['action']['cards']
+                        cards = plan['parts'][0]['body']['interactive']['action']['cards']
                         self.assertTrue(2 <= len(cards) <= 10)
                         self.assertEqual([c['card_index'] for c in cards], list(range(len(cards))))
-                        self.assertEqual(len({len(c['action']['buttons']) for c in cards}), 1)
+                        self.assertTrue(all(c['action']['name']=='cta_url' and 'buttons' not in c['action'] for c in cards))
+                        self.assertTrue(plan['parts'][-1]['body'].get('buttons'))
                         self.assertTrue(all(len(b['payload']) <= 20 for b in replies(body)))
                     if not any(b['title'] == 'More photos' for b in replies(body)):
                         break
@@ -165,7 +163,7 @@ class DiscoveryTests(unittest.TestCase):
         self.assertEqual(plan['missing_asset_ids'], ['image-0', 'image-1'])
         self.assertEqual(plan['product_ids'], ['fixture-cruise'])
         self.assertEqual(len(plan['asset_ids']), 8)
-        self.assertIn('Photos unavailable: 2', plan['body']['interactive']['body']['text'])
+        self.assertIn('Photos unavailable: 2', plan['body']['message'])
         next_page = self.click(plan, 'More photos', 'last-photo')
         self.assertEqual(next_page['asset_ids'], ['image-10'])
 
@@ -203,10 +201,11 @@ class DiscoveryTests(unittest.TestCase):
         self.assertFalse(send_plan(*args, store=self.store(), post=post, window=lambda *a: {'open': False}))
         self.assertEqual(calls, [])
         self.assertFalse(send_plan(*args, store=self.store(), post=post, window=lambda *a: {'open': True}))
+        def advance(seconds):self.now+=timedelta(seconds=seconds)
         plan=self.plan('fresh-send');args=(args[0],args[1],plan['id'])
-        self.assertTrue(send_plan(*args, store=self.store(), post=post, window=lambda *a: {'open': True}))
-        self.assertTrue(send_plan(*args, store=self.store(), post=post, window=lambda *a: {'open': True}))
-        self.assertEqual(len(calls), 1)
+        self.assertTrue(send_plan(*args, store=self.store(), post=post, window=lambda *a: {'open': True},sleep=advance))
+        self.assertTrue(send_plan(*args, store=self.store(), post=post, window=lambda *a: {'open': True},sleep=advance))
+        self.assertEqual(len(calls), 2)
         next_plan = self.plan('next-send')
         pauses = []
         def sleep(seconds):
@@ -215,7 +214,7 @@ class DiscoveryTests(unittest.TestCase):
         self.assertFalse(send_plan(args[0], args[1], next_plan['id'], store=self.store(), post=lambda *a: {'status': 'ambiguous'}, window=lambda *a: {'open': True}, sleep=sleep))
         self.assertEqual(pauses, [6])
         self.assertFalse(send_plan(args[0], args[1], next_plan['id'], store=self.store(), post=post, window=lambda *a: {'open': True}))
-        self.assertEqual(len(calls), 1)
+        self.assertEqual(len(calls), 2)
 
     def test_documented_provider_errors_do_not_trigger_unproven_fallback(self):
         from agents.social import zernio_dm_client as client

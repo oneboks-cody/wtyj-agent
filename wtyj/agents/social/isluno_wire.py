@@ -49,7 +49,8 @@ def validate_body(body):
     interactive=body.get('interactive')
     if interactive is not None:
         check(isinstance(interactive,dict) and interactive.get('type')=='carousel','wire_interactive_type')
-        check(not buttons,'wire_conflicting_controls')
+        check(not buttons and not body.get('attachmentUrl') and not body.get('quickReplies'),'wire_conflicting_controls')
+        check(not interactive.get('header') and not interactive.get('footer'),'wire_carousel_outer_media')
         cards=interactive.get('action',{}).get('cards')
         check(isinstance(cards,list) and 2<=len(cards)<=10,'wire_carousel_cards')
         for index,card in enumerate(cards):
@@ -58,12 +59,13 @@ def validate_body(body):
             header=card.get('header',{})
             check(header.get('type')=='image' and isinstance(header.get('image',{}).get('link'),str)
                   and header['image']['link'].startswith('https://'),'wire_card_image')
-            choices=card.get('action',{}).get('buttons',[])
-            check(1<=len(choices)<=3,'wire_card_buttons')
-            for button in choices:
-                reply=button.get('quick_reply',{})
-                check(button.get('type')=='quick_reply' and isinstance(reply.get('title'),str) and 0<units(reply['title'])<=20
-                      and isinstance(reply.get('id'),str) and 0<len(reply['id'])<=256,'wire_card_button')
+            check(card.get('type')=='cta_url','wire_card_type')
+            action=card.get('action',{})
+            check(isinstance(action,dict) and set(action)=={'name','parameters'} and action.get('name')=='cta_url','wire_card_action')
+            parameters=action.get('parameters',{})
+            check(isinstance(parameters,dict) and set(parameters)=={'display_text','url'},'wire_card_parameters')
+            check(isinstance(parameters.get('display_text'),str) and 0<units(parameters['display_text'])<=20,'wire_card_label')
+            check(isinstance(parameters.get('url'),str) and parameters['url'].startswith('https://') and len(parameters['url'])<=2048,'wire_card_url')
     rich=bool(buttons or interactive or body.get('attachmentUrl'))
     check(units(text)<=(INTERACTIVE_LIMIT if rich else TEXT_LIMIT),'wire_text_length')
     if body.get('attachmentUrl'):
@@ -115,7 +117,12 @@ def response_metadata(response,data):
     """Keep actionable codes/shape, never provider prose, URLs or credentials."""
     result={'http_status':int(response.status_code)}
     code=data.get('code')
-    if isinstance(code,str) and re.fullmatch(r'[A-Za-z0-9_.-]{1,80}',code):result['provider_code']=code
+    if type(code) is int or isinstance(code,str) and re.fullmatch(r'[A-Za-z0-9_.-]{1,80}',code):result['provider_code']=code
+    # Known validation shape only; never persist free-form provider/customer prose.
+    error_object=data.get('error')
+    if isinstance(error_object,dict):
+        for key in ('code','error_subcode'):
+            if type(error_object.get(key)) is int:result['error_code' if key=='code' else 'error_subcode']=error_object[key]
     error=data.get('platformError')
     if isinstance(error,dict):
         for key in ('code','subcode'):

@@ -233,12 +233,17 @@ class DiscoveryStore:
                 if len(urls) == 1:
                     body.update(attachmentUrl=urls[0], attachmentType='image')
                 elif len(urls) >= 2:
-                    cards = [{'card_index': i, 'type': 'button', 'header': {'type': 'image', 'image': {'link': url}},
-                              'body': {'text': product['name'][:120] + ' · ' + str(positions[i] + 1)},
-                              'action': {'buttons': [{'type': 'quick_reply', 'quick_reply': {'id': b['payload'], 'title': b['title']}} for b in buttons]}}
-                             for i, url in enumerate(urls)]
-                    body = {'accountId': scope.account_id, 'interactive': {'type': 'carousel', 'body': {'text': text[:1024]}, 'action': {'cards': cards}}}
-            if response_text is not None and visual_parts is None:
+                    from agents.social.isluno_visual import carousel_card
+                    from agents.social.isluno_wire import messages
+                    cards=[carousel_card(product,url,i,locale) for i,url in enumerate(urls)]
+                    carousel_body={'accountId':scope.account_id,'interactive':{'type':'carousel','body':{'text':product['name']},'action':{'cards':cards}}}
+                    visual_parts=[{'body':carousel_body,'status':'queued','provider_id':None,'product_ids':[product['id']],
+                                   'assets':[{'product_id':product['id'],'asset_id':a} for a in asset_ids],
+                                   'button_meanings':{},'next_question':''}]
+                    visual_parts.extend({'body':b,'status':'queued','provider_id':None,'product_ids':[product['id']],
+                                         'assets':[],'button_meanings':{},'next_question':''}
+                                        for b in messages(body))
+            if response_text is not None and (visual_parts is None or not visual):
                 check(isinstance(response_text, str) and 0 < len(response_text) <= 4096, 'invalid_conversation_reply')
                 if hospitality:
                     if 'interactive' in body:
@@ -251,13 +256,20 @@ class DiscoveryStore:
                         response_text += '\n\n' + CLARIFICATIONS[locale][0]
                     body = {'accountId': scope.account_id, 'message': response_text, 'buttons': help_buttons}
                     asset_ids, missing, fallback = [], [], None
+                if visual_parts:
+                    if hospitality:
+                        visual_parts=visual_parts[:1]+[{'body':b,'status':'queued','provider_id':None,
+                            'product_ids':[product['id']],'assets':[],'button_meanings':{},'next_question':''}
+                            for b in messages(body,next_question)]
+                    else:
+                        visual_parts=None
             if not offer_selection:
                 forbidden = {token for token, meaning in actions.items() if meaning['kind'] == 'add'}
                 if 'buttons' in body:
                     body['buttons'] = [b for b in body['buttons'] if b['payload'] not in forbidden]
-                if 'interactive' in body:
-                    for card in body['interactive']['action']['cards']:
-                        card['action']['buttons'] = [b for b in card['action']['buttons'] if b['quick_reply']['id'] not in forbidden]
+                if visual_parts:
+                    for part in visual_parts:
+                        if 'buttons' in part['body']:part['body']['buttons']=[b for b in part['body']['buttons'] if b['payload'] not in forbidden]
                 actions = {token: meaning for token, meaning in actions.items() if token not in forbidden}
             superseded = snapshot['revision'] != current_snapshot['revision']
             if superseded:
@@ -283,8 +295,6 @@ class DiscoveryStore:
             if visual_parts:
                 for part in parts:
                     tokens={b['payload'] for b in part['body'].get('buttons',[])}
-                    for card in part['body'].get('interactive',{}).get('action',{}).get('cards',[]):
-                        tokens.update(b['quick_reply']['id'] for b in card['action']['buttons'])
                     part['button_meanings']={t:a for t,a in actions.items() if t in tokens}
             else:visual=False
             payload = {'detail_translation_required':translation_required,'detail_fact_keys':detail_keys,'visual_cards':visual,'source_trigger_id':source_trigger_id or trigger_id,'parts':parts,'id': plan_id, 'scope': scope.__dict__, 'trigger_id': trigger_id, 'trigger_sent_at': sent_at,

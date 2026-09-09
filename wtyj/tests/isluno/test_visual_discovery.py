@@ -127,12 +127,22 @@ class VisualDiscoveryTests(CommunicationWireTests):
         self.t.profile['gallery_mode']='carousel';self.t.write_profile(self.t.profile)
         reply=self.visual();self.assertTrue(self.send(reply));plan=self.plan(reply)
         carousel=[p for p in plan['parts'] if p['body'].get('interactive')]
-        self.assertEqual(len(carousel),2)
-        for part in carousel:
-            self.assertEqual(len(part['assets']),3)
-            self.assertEqual(len(part['body']['interactive']['action']['cards']),3)
-            self.assertTrue(part['button_meanings'])
-            self.assertTrue(all(a['product_id']==part['product_ids'][0] for a in part['button_meanings'].values()))
+        self.assertEqual(len(carousel),1)
+        part=carousel[0]
+        self.assertEqual(part['assets'],[{'product_id':'fixture-cruise','asset_id':'cruise-0'},
+                                        {'product_id':'fixture-beach','asset_id':'beach-0'}])
+        self.assertFalse(part['button_meanings'])
+        cards=part['body']['interactive']['action']['cards']
+        self.assertEqual(len(cards),2)
+        for card in cards:
+            self.assertEqual(card['type'],'cta_url')
+            self.assertEqual(card['action']['name'],'cta_url')
+            self.assertNotIn('buttons',card['action'])
+        controls=[p for p in plan['parts'] if p['body'].get('buttons')]
+        self.assertEqual([p['product_ids'] for p in controls],[['fixture-cruise'],['fixture-beach']])
+        for control in controls:
+            self.assertEqual({a['product_id'] for a in control['button_meanings'].values()},set(control['product_ids']))
+            self.assertEqual({a['kind'] for a in control['button_meanings'].values()},{'photos','info','add'})
         details=self.click_visual(plan,'fixture-cruise','info','carousel-details')
         self.assertEqual(details['product_ids'],['fixture-cruise'])
         self.assertTrue(self.send(envelope(details)))
@@ -140,9 +150,92 @@ class VisualDiscoveryTests(CommunicationWireTests):
     def test_carousel_rejection_never_replays_or_enables_buttons(self):
         self.t.profile['gallery_mode']='carousel';self.t.write_profile(self.t.profile)
         reply=self.visual()
-        self.assertFalse(self.send(reply,[(200,{'success':True,'data':{'messageId':'intro'}}),(400,{'code':'INVALID_MEDIA'})]))
+        self.assertFalse(self.send(reply,[(400,{'code':'INVALID_MEDIA'})]))
         before=len(self.requests);self.assertFalse(self.send(reply));self.assertEqual(len(self.requests),before)
-        self.assertEqual(self.plan(reply)['parts'][1]['status'],'rejected')
+        self.assertEqual(self.plan(reply)['parts'][0]['status'],'rejected')
+        self.assertEqual(len(self.requests),1)
+        token=next(t for t,a in self.plan(reply)['button_meanings'].items() if a['kind']=='add')
+        result,calls=self.t.turn(token=token,trigger='rejected-carousel-add')
+        self.assertTrue(result['generation_failed']);self.assertEqual(calls,0)
+        self.assertIsNone(self.t.store.session(self.t.scope())['active_itinerary_id'])
+
+    def test_carousel_three_trip_showroom_selects_third_trip_in_chat(self):
+        self.t.profile['gallery_mode']='carousel';self.t.write_profile(self.t.profile)
+        catalog=json.loads(self.t.catalog_path.read_text())
+        third=copy.deepcopy(catalog['products'][1]);third.update(id='fixture-land',name='Land adventure')
+        third['gallery']=[{**a,'id':'land-'+str(n)} for n,a in enumerate(third['gallery'])]
+        catalog['products'].append(third);self.t.catalog_path.write_text(json.dumps(catalog))
+        d=self.decision();d['product_ids'].append('fixture-land')
+        d['hospitality']['cards'].append({'product_id':'fixture-land','paragraphs':['{fact:fixture-land:summary}']})
+        reply=self.visual('carousel-showroom',d,text='Show me the trips');self.assertTrue(self.send(reply))
+        plan=self.plan(reply);self.assertEqual(len(plan['parts']),4)
+        cards=self.requests[0]['interactive']['action']['cards']
+        self.assertEqual([c['header']['image']['link'] for c in cards],
+                         ['https://example.invalid/'+p+'-0.jpg' for p in ('cruise','beach','land')])
+        self.assertEqual(sum(b.get('message','').count('Which appeals to you?') for b in self.requests),1)
+        token=next(t for t,a in plan['parts'][3]['button_meanings'].items() if a['kind']=='add')
+        result,calls=self.t.turn(token=token,trigger='third-trip-plan')
+        self.assertEqual(calls,0);self.assertNotIn('generation_failed',result)
+        session=self.t.store.session(self.t.scope())
+        self.assertEqual({p['product_id'] for p in session['pending'].values()},{'fixture-land'})
+        self.assertFalse(self.t.itinerary.get(self.t.scope(),session['active_itinerary_id'])['items'])
+
+    def test_carousel_second_trip_photos_keep_product_and_pagination(self):
+        self.t.profile['gallery_mode']='carousel';self.t.write_profile(self.t.profile)
+        reply=self.visual();self.assertTrue(self.send(reply))
+        photos=self.click_visual(self.plan(reply),'fixture-beach','photos','second-trip-photos')
+        self.assertEqual(photos['asset_ids'],['beach-1','beach-2','beach-3'])
+        self.assertTrue(self.send(envelope(photos)))
+        last=self.click_visual(photos,'fixture-beach','photos','second-trip-last-photo')
+        self.assertEqual(last['asset_ids'],['beach-4']);self.assertTrue(self.send(envelope(last)))
+        self.assertTrue(all('interactive' not in p['body'] for p in last['parts']))
+        self.assertIsNone(self.t.store.session(self.t.scope())['active_itinerary_id'])
+
+    def test_carousel_missing_asset_falls_back_before_dispatch(self):
+        self.t.profile['gallery_mode']='carousel';self.t.write_profile(self.t.profile)
+        self.t.discovery.media=FakeMedia(missing=['cruise-0'])
+        reply=self.visual();self.assertTrue(self.send(reply))
+        self.assertTrue(all('interactive' not in b for b in self.requests))
+        self.assertEqual([b['attachmentUrl'] for b in self.requests if b.get('attachmentUrl')],['https://example.invalid/beach-0.jpg'])
+        self.assertIn('Photos unavailable',''.join(b.get('message','') for b in self.requests))
+
+    def test_carousel_opt_out_and_foreign_or_stale_actions(self):
+        self.t.profile['gallery_mode']='carousel';self.t.write_profile(self.t.profile)
+        self.test_foreign_and_stale_card_buttons_do_not_apply()
+        reply=self.visual('carousel-opt-out',self.decision('none'));self.assertTrue(self.send(reply))
+        self.assertTrue(all('interactive' not in p['body'] and 'attachmentUrl' not in p['body'] for p in self.plan(reply)['parts']))
+
+    def test_carousel_partial_controls_and_ambiguous_send_never_replay(self):
+        self.t.profile['gallery_mode']='carousel';self.t.write_profile(self.t.profile)
+        reply=self.visual()
+        self.assertFalse(self.send(reply,[(200,{'success':True,'data':{'messageId':'carousel'}}),(400,{'code':'INVALID_BUTTON'})]))
+        self.assertEqual([p['status'] for p in self.plan(reply)['parts']],['accepted','rejected','queued'])
+        self.assertFalse(self.send(reply));self.assertEqual(len(self.requests),2)
+        token=next(t for t,a in self.plan(reply)['button_meanings'].items() if a['kind']=='add')
+        result,calls=self.t.turn(token=token,trigger='partial-carousel-add')
+        self.assertTrue(result['generation_failed']);self.assertEqual(calls,0)
+        self.requests=[]
+        reply=self.visual('new-uncertain-carousel')
+        self.assertFalse(self.send(reply,[TimeoutError('private provider text')]))
+        self.assertEqual(self.plan(reply)['parts'][0]['status'],'ambiguous')
+        self.assertFalse(self.send(reply));self.assertEqual(len(self.requests),1)
+
+    def test_carousel_contract_rejects_mixed_actions_and_sanitizes_codes(self):
+        from types import SimpleNamespace
+        from shared.isluno_pricing import ItineraryError
+        from agents.social.isluno_wire import response_metadata
+        self.t.profile['gallery_mode']='carousel';self.t.write_profile(self.t.profile)
+        body=self.plan(self.visual())['parts'][0]['body'];validate_body(body)
+        for mutate in (
+            lambda b:b['interactive']['action']['cards'][0]['action'].update(buttons=[]),
+            lambda b:b['interactive']['action']['cards'][0].update(type='button'),
+            lambda b:b.update(buttons=[{'type':'postback','title':'Choose','payload':'invalid'}]),
+            lambda b:b['interactive']['action']['cards'][0]['action']['parameters'].update(url='http://example.invalid'),
+        ):
+            invalid=copy.deepcopy(body);mutate(invalid)
+            with self.assertRaises(ItineraryError):validate_body(invalid)
+        actual=response_metadata(SimpleNamespace(status_code=400),{'code':100,'error':{'code':131009,'error_subcode':2,'message':'private'},'message':'private'})
+        self.assertEqual(actual,{'http_status':400,'provider_code':100,'error_code':131009,'error_subcode':2})
 
     def test_recommendation_cannot_accidentally_omit_images(self):
         d=self.decision('none');d['hospitality']['photo_opt_out']=False

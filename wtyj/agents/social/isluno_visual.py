@@ -1,10 +1,23 @@
-"""Ordinary image recommendations in one durable plan; no provider calls."""
+"""Native carousel and ordinary image recommendations in one durable plan; no provider calls."""
 import json
 from agents.social.isluno_wire import messages, text_of, units, MAX_PARTS
 from agents.social import isluno_understanding
 from shared.isluno_media import MediaUnavailable
 from shared.isluno_config import active_profile
 from shared.isluno_pricing import check
+
+PAGE_LABELS={'en':'Trip page','nl':'Reispagina','de':'Reiseseite','es':'Página del viaje','pt':'Página da viagem','pap':'Página di biahe'}
+PHOTO_LABELS={'en':'View photo','nl':'Bekijk foto','de':'Foto ansehen','es':'Ver foto','pt':'Ver foto','pap':'Mira potrèt'}
+
+def carousel_card(product,url,index,locale):
+    # URLs are optional browsing links. Only separate postbacks can select a trip.
+    source=product.get('source',{}).get('url','')
+    approved=isinstance(source,str) and source.startswith('https://')
+    return {'card_index':index,'type':'cta_url','header':{'type':'image','image':{'link':url}},
+            'body':{'text':product['name'][:120]},
+            'action':{'name':'cta_url','parameters':{'display_text':PAGE_LABELS[locale] if approved else PHOTO_LABELS[locale],
+                                                    'url':source if approved else url}}}
+
 
 # Native UI labels, not generated conversational prose or business claims.
 ACTIONS={
@@ -36,7 +49,7 @@ def build(store, db, scope, products, decision, button, labels, *, texts=None, c
     locale=decision['language'];titles=ACTIONS[locale];parts=[];assets=[];missing=[]
     translations=decision.get('translations') or {}
     gallery_mode=active_profile().get('gallery_mode','single')
-    carousel=gallery_mode=='carousel'
+    carousel=gallery_mode=='carousel';presentations=[]
     def append(body, product_id=None, asset=None, meanings=None, next_question=''):
         wire=messages(body,next_question)
         for index,item in enumerate(wire):
@@ -47,7 +60,7 @@ def build(store, db, scope, products, decision, button, labels, *, texts=None, c
                           'button_meanings':meanings or {} if item.get('buttons') else {},
                           'next_question':next_question if index==len(wire)-1 else ''})
     if question and common.endswith(question):common=common[:-len(question)].rstrip()
-    if common.strip():append({'accountId':scope.account_id,'message':common})
+    if common.strip() and not carousel:append({'accountId':scope.account_id,'message':common})
     for index,product in enumerate(products):
         product_id=product['id'];source=isluno_understanding.facts(product)
         known=source if locale=='en' else {k:translations.get(product_id,{})[k] for k in source if k in translations.get(product_id,{})}
@@ -70,7 +83,7 @@ def build(store, db, scope, products, decision, button, labels, *, texts=None, c
         if location:
             # Product captions identify a trip, not the stop depicted in the image.
             available=[(n,a) for n,a in available if a.get('location_id')==location and a.get('location_source_url')]
-        limit=3 if carousel else 2 if action_kind=='photos' or photo in {'more','all'} else 1
+        limit=(3 if len(products)==1 else 1) if carousel else 2 if action_kind=='photos' or photo in {'more','all'} else 1
         if gallery_mode=='gallery':limit=3 if len(products)==1 else 2 if len(products)==2 else 1
         page=available[:limit] if photo!='none' else []
         resolved=[]
@@ -86,24 +99,24 @@ def build(store, db, scope, products, decision, button, labels, *, texts=None, c
             choices.append(button('photos',product_id,titles[0],offset=cursor,photo_location=location))
         choices.append(button('info',product_id,titles[1],info_offset=info_offset+1 if action_kind=='info' and info_offset+1<len(chunks) else 0,photo_location=location))
         if offer_selection:choices.append(button('add',product_id,titles[2]))
-        if carousel and len(resolved)>=2:
-            final_question=question if index==len(products)-1 else ''
-            if final_question and units(text+'\n\n'+final_question)<=1024:text+='\n\n'+final_question
-            elif final_question:final_question=''
-            cards=[{'card_index':n,'type':'cta_url',
-                    'header':{'type':'image','image':{'link':url}},
-                    'body':{'text':product['name'][:120]},
-                    'action':{'buttons':[{'type':'quick_reply','quick_reply':{'id':b['payload'],'title':b['title']}} for b in choices]}}
-                   for n,(_,asset,url) in enumerate(resolved)]
-            body={'accountId':scope.account_id,'interactive':{'type':'carousel','body':{'text':text},'action':{'cards':cards}}}
-            from agents.social.isluno_wire import validate_body
-            validate_body(body)
-            parts.append({'body':body,'status':'queued','provider_id':None,'product_ids':[product_id],
-                          'assets':[{'product_id':product_id,'asset_id':a['id']} for _,a,_ in resolved],
-                          'button_meanings':{},'next_question':final_question})
-            if question and index==len(products)-1 and not final_question:
-                append({'accountId':scope.account_id,'message':question},next_question=question)
-            continue
+        presentations.append((product,text,resolved,choices,media_missing))
+    selected=[(product,asset,url) for product,_,resolved,_,_ in presentations for _,asset,url in resolved]
+    native=carousel and len(selected)>=2
+    if native:
+        intro=common if common.strip() else '\n'.join(p['name'] for p in products)
+        body={'accountId':scope.account_id,'interactive':{'type':'carousel','body':{'text':intro},
+              'action':{'cards':[carousel_card(p,url,n,locale) for n,(p,a,url) in enumerate(selected)]}}}
+        for item in messages(body):
+            rich=bool(item.get('interactive'))
+            parts.append({'body':item,'status':'queued','provider_id':None,
+                          'product_ids':list(dict.fromkeys(p['id'] for p,_,_ in selected)) if rich else [],
+                          'assets':[{'product_id':p['id'],'asset_id':a['id']} for p,a,_ in selected] if rich else [],
+                          'button_meanings':{},'next_question':''})
+    elif carousel and common.strip():append({'accountId':scope.account_id,'message':common})
+    for index,(product,text,resolved,choices,media_missing) in enumerate(presentations):
+        product_id=product['id']
+        # Every carousel is followed by required, exact-product in-chat controls.
+        if native:resolved=[]
         # Ordinary single-image fallback when fewer than two gallery assets resolve.
         for _,asset,url in resolved[:-1]:
             append({'accountId':scope.account_id,'message':product['name'],'attachmentUrl':url,'attachmentType':'image'},product_id,asset)
