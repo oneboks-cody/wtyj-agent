@@ -197,5 +197,14 @@
     "manifest": "current-artifacts.json",
     "source_archive_sha256": "d9841ef3070fed9cde8840a353ad7a9917400f7facfbd13d3ab50472c9b68c51",
     "oci_digest": null
+  },
+  "c1_observation": {
+    "status": "observed_pending_independent_review",
+    "evidence": "c1-execution.json",
+    "observed_at": "2026-09-09T03:34:14.723107+00:00",
+    "private_binding_reference": "tmp/isluno-c1-calvin-c1-once/binding.json",
+    "account_fingerprint": "ca117468b3369f1961ebc941f6774f539d98f82be488dd433c0a2df4eb6a8c09",
+    "public_exact_account_id_withheld": true,
+    "scope": "Configured intent only; provider ownership/sole consumer and loaded configuration remain unverified. Observation is not future CAS authority."
   }
 }

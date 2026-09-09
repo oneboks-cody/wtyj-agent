@@ -1,3 +1,5 @@
+CURRENT EXECUTION STATUS: C1 completed once under explicit approval; see C1-OUTCOME.md. Both H1–H7 approvals and C1 approval are consumed. Prior preparation text below is historical.
+
 Current C1 preparation: see **C1-APPROVAL.md** and **c1-evidence.json** for the offline runner candidate. No C1 execution is authorized or performed. Historical H1–H7 wording below describes its own scope; both attempts are consumed.
 
 # ISL-14 proposed current-state inspection

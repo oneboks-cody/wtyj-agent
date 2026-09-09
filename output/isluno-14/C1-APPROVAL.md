@@ -1,3 +1,5 @@
+CURRENT STATUS: the one explicitly approved attempt completed successfully; approval is consumed. See C1-OUTCOME.md and c1-execution.json. The request below is retained historical scope, not permission to rerun.
+
 # C1 protected-config inspection candidate — NOT AUTHORIZED TO EXECUTE
 
 Prepared offline after packaging PASS at 57552cc. This tool is separate from the accepted runtime e2deab8 and its 365-member archive; those artifacts are unchanged. Both H1–H7 approvals are consumed. No C1 read, host connection, provider access or release operation has occurred.

@@ -1,0 +1,46 @@
+{
+  "authorization_reference": "calvin-c1-once",
+  "authorization_consumed": true,
+  "attempts": 1,
+  "run_source_commit": "739fde5b3b683c416ce826039058e3c5d86db50e",
+  "approved_code_commit": "0d50899c7171255afc3626fe9c84dc2b3b36d43b",
+  "runner_sha256": "79ba19aeb59255193e104b7a9b12a7c47ba8fcce2ed11ab368c04776de2d0296",
+  "helper_sha256": "9a19b292999a1c20641f93bbaad9c7e7adbd984c355ea6325234651ceda4b60f",
+  "payload_sha256": "93e07609a784f2ef5ada797478c7d70a4c426f7d2eb8503c9d1ff3b32c7717f8",
+  "started_at": "2026-09-09T03:34:12.500193+00:00",
+  "finished_at": "2026-09-09T03:34:14.632838+00:00",
+  "duration_seconds": 2.151,
+  "exit_code": 0,
+  "outcome": {
+    "status": "observed",
+    "observed_at": "2026-09-09T03:34:14.723107+00:00",
+    "projection": {
+      "account_count": 1,
+      "account_fingerprint": "ca117468b3369f1961ebc941f6774f539d98f82be488dd433c0a2df4eb6a8c09",
+      "activation_generation": "missing",
+      "allowlist_mode": "strict",
+      "business_slug": "mermaid",
+      "byte_count": 43998,
+      "config_sha256": "1e8db71ac4fbe60d0a2eba42b96e066c77dce78d42e06cc493156c3dab5796a6",
+      "document_base_present": "missing",
+      "features": {
+        "isluno_itinerary_demo_v1": "missing",
+        "mermaid_cutover_coordination": "missing",
+        "mermaid_reminders": true,
+        "mermaid_reservation_demo": true
+      },
+      "media_base_present": "missing",
+      "native_carousels": "missing",
+      "slug": "mermaid"
+    }
+  },
+  "provider_calls": 0,
+  "release_authorized": false,
+  "private_binding_reference": "tmp/isluno-c1-calvin-c1-once/binding.json",
+  "duration_scope": "Local monotonic elapsed including result validation; started_at/finished_at bracket subprocess. Remote observed_at uses host clock; clocks are not assumed synchronized.",
+  "baseline_comparison": {
+    "config_sha256_matches_retained_september_8": true,
+    "byte_count_matches_retained_september_8": true,
+    "meaning": "Same-byte config observation only; not worker-loaded configuration, provider ownership, sole delivery or future write CAS."
+  }
+}

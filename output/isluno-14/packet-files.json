@@ -9,7 +9,11 @@
   },
   {
     "file": "C1-APPROVAL.md",
-    "sha256": "2f9c56ee41705b3f234416d07ee123aeeb76094baf99762986ffa309a6d09a12"
+    "sha256": "c0d3777f63f95f478c814f977d70b817fdb3b1efc2eff595c1680bcbb59561b3"
+  },
+  {
+    "file": "C1-OUTCOME.md",
+    "sha256": "e0b896c9a8cb6c2da2ef2b95cbc5a7e4f7cb3d4cecb718636452d807069d8c6d"
   },
   {
     "file": "IMAGE-RECIPE.md",
@@ -21,7 +25,7 @@
   },
   {
     "file": "INSPECTION.md",
-    "sha256": "09cf8e9ff8a0e345d6789765464f7155d4598dc4f8bc9362b1199f6b5c928f3f"
+    "sha256": "8bf94bf4ec1f117123c02988368b4347f0aa07e1702a2f92d06af6f0633e8106"
   },
   {
     "file": "MAINTENANCE.md",
@@ -34,6 +38,10 @@
   {
     "file": "c1-evidence.json",
     "sha256": "66867a2ac315bcb0dd7fb2951a23e89a792fe0315941c524e3ab7c6b5b77d107"
+  },
+  {
+    "file": "c1-execution.json",
+    "sha256": "0b5c2997b3608f6392913097f497398f0a1d4c0cd36d41d0904ebab0e2ceea15"
   },
   {
     "file": "c1-tests.txt",
@@ -109,7 +117,7 @@
   },
   {
     "file": "required-inputs.json",
-    "sha256": "0d72563d595b3d9face9a50952b2107d7076e2fea94c00212f6e522e72747ef6"
+    "sha256": "ce0c9ed808750639a6e8f26b69cdda3206cc7b531865bf160815875f1c94ca27"
   },
   {
     "file": "runner-evidence.json",
