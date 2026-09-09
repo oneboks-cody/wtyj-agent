@@ -149,7 +149,7 @@ class ConversationStore:
                 session.setdefault('browsing', {}).setdefault('guest', {}).update(booking['guest'])
             elif review:
                 request_id = opaque(scope, trigger, 'review')
-                reason = 'post_booking_change' if active and active['status'] != 'draft' else 'customer_request'
+                reason = 'post_booking_change' if active and active['status'] != 'draft' and action != 'human' and decision['intent'] != 'human' else 'customer_request'
                 existing_review = db.execute("SELECT id FROM isluno_operator_requests WHERE scope_key=? AND itinerary_id IS ? AND reason=? AND status IN ('pending','active')",
                                              (scope.key, session['active_itinerary_id'], reason)).fetchone()
                 if existing_review is None:
@@ -243,7 +243,7 @@ class ConversationStore:
             if action != 'none' or booking['document_language'] is not None:
                 invalidate_changed(db, scope, session, active)
             session['revision'] += 1
-            outcome = {'session': session, 'itinerary': active, 'status': status, 'error': error, 'catalog_revision': snapshot['revision']}
+            outcome = {'session': session, 'itinerary': active, 'status': status, 'error': error, 'review_reason': reason if review else None, 'catalog_revision': snapshot['revision']}
             session['history'] = (session['history'] + [{'role':'user','content':text or '[WhatsApp reply action]', 'trigger_id': trigger}])[-100:]
             db.execute('INSERT INTO isluno_booking_sessions VALUES(?,?) ON CONFLICT(scope_key) DO UPDATE SET payload=excluded.payload', (scope.key, encoded(session)))
             db.execute('UPDATE isluno_conversation_turns SET outcome=? WHERE scope_key=? AND trigger_id=?', (encoded(outcome), scope.key, trigger))
@@ -283,19 +283,22 @@ def complete_selection(pending, guest, snapshot):
 def render(outcome, snapshot):
     session, itinerary = outcome['session'], outcome['itinerary']
     words = COPY[session['chat_language']]
+    from shared.isluno_config import active_profile
+    outcomes = active_profile().get('conversation_outcomes', {}).get(session['chat_language'], {})
     if outcome['status'] == 'no_active':
         return {'en':'There is no active draft itinerary to cancel.', 'nl':'Er is geen actief conceptreisplan om te annuleren.',
                 'de':'Es gibt keinen aktiven Reiseentwurf zum Stornieren.', 'es':'No hay un borrador de itinerario activo para cancelar.',
                 'pt':'Não há itinerário em rascunho ativo para cancelar.', 'pap':'No tin un itinerario di borrador aktivo pa kanselá.'}[session['chat_language']]
     if outcome['status'] == 'choose_product': return CLARIFICATIONS[session['chat_language']][1]
     if outcome['status'] == 'choose_item': return words[11]
-    if outcome['status'] == 'review': return words[2]
+    if outcome['status'] == 'review':
+        return outcomes.get('human_requested', words[2]) if outcome.get('review_reason') == 'customer_request' else words[2]
     if outcome['status'] == 'cancelled': return words[1]
     if outcome['status'] == 'approval_unavailable': return words[13]
     error_field = {'schedule_overlap': 6, 'invalid_date': 6, 'date_in_past': 6, 'departure_in_past': 6,
                    'departure_day_unavailable': 6, 'invalid_guest_age': 5, 'guest_capacity_exceeded': 5,
                    'adult_required': 5, 'invalid_option_quantity': 10, 'pickup_option_mismatch': 8}.get(outcome['error'])
-    lines = [(words[12] + (': ' + words[error_field] if error_field else '')) if outcome['error'] else words[0]]
+    lines = [outcomes.get(outcome['error']) or (words[12] + (': ' + words[error_field] if error_field else '')) if outcome['error'] else words[0]]
     if itinerary:
         for item in itinerary['items'][:5]:
             lines.append(item['product']['name'] + ' · ' + item['selection']['date'] + ' · ' + item['starts_at'][11:16])
@@ -483,7 +486,7 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
     # ID for its application result so selection metadata cannot mask intake.
     reply_trigger = 'conversation-' + opaque(scope, trigger, 'reply')
     plan = discovery.plan(scope, reply_trigger, timestamp, base, translations=decision['translations'], response_text=response_text, catalog_snapshot=snapshot,
-                          hospitality=decision.get('hospitality'), next_question=next_question)
+                          hospitality=decision.get('hospitality'), next_question=next_question, offer_selection=booking['action'] == 'none')
     if prepared_quote and decision.get('hospitality'):
         from agents.social.isluno_quotes import QuoteStore, envelope as quote_envelope
         return quote_envelope(QuoteStore(store).compose_answer(scope, trigger, timestamp, prepared_quote, plan))

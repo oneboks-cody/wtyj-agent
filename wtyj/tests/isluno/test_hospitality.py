@@ -167,15 +167,18 @@ class HospitalityTests(unittest.TestCase):
         self.assertNotIn('Demo itinerary saved',json.dumps(saved['history']))
 
     def test_02_relaxed_couple(self):
-        self.turn('We are a couple looking for a relaxed day.',self.decision("For the slower pace you're after, I'd start with {name:fixture-cruise}. {fact:fixture-cruise:summary}",
-            'Would you like to see a few photos?',products=['fixture-cruise'],facts=['summary'],memory={'party':'Couple','pace':'Relaxed'}))
+        d=self.decision("For the slower pace you're after, I'd start with {name:fixture-cruise}. {fact:fixture-cruise:summary}",
+            'Would you like to see a few photos?',products=['fixture-cruise'],facts=['summary'],memory={'party':'Couple','pace':'Relaxed'})
+        d['hospitality']['discussed']=[{'product_id':'fixture-cruise','reason':'The couple requested a relaxed pace; the catalog describes a relaxed cruise.'}]
+        self.turn('We are a couple looking for a relaxed day.',d)
+        self.assertIn('relaxed',self.t.store.session(self.t.scope())['browsing']['discussed']['fixture-cruise'])
         self.turn('Yes please.',self.decision('Here is a photo of {name:fixture-cruise}.','Would you like more photos or trip details?',
             products=['fixture-cruise'],photo='initial'))
         self.no_bookings()
 
     def test_03_family_volunteers_details(self):
         self.turn('We are two adults and two children, 6 and 10, here for a week. We like relaxed outings and need no pickup.',
-            self.decision("Thanks, that helps narrow things down for your family. {fact:fixture-cruise:summary}",
+            self.decision("For the relaxed outing your family wants, I'd start with {name:fixture-cruise}. {fact:fixture-cruise:summary}",
                 'Would you like to explore this option?',products=['fixture-cruise'],facts=['summary'],
                 memory={'party':'Two adults, children 6 and 10','holiday':'One week','pace':'Relaxed','requirements':'No pickup'}))
         self.turn('Do they include lunch?',self.decision('{fact:fixture-cruise:inclusion_0}', 'Would you like to see the cruise photos?',
@@ -200,11 +203,16 @@ class HospitalityTests(unittest.TestCase):
             products=['fixture-cruise'],updates=[{'product_id':'fixture-cruise'}],guest={'name':'Calvin','ages':[35]},stage='booking_preparation'))
         self.turn('October 15 please.',self.decision('Happy to help.',action='update',evidence='October 15 please.',
             products=['fixture-cruise'],updates=[{'date':'2026-10-15'}],stage='booking_preparation'))
+        selection=self.t.active()['items'][0]['selection']
+        self.assertEqual(selection['slot_id'],'morning')
+        self.assertFalse(selection['pickup']);self.assertEqual(selection['options'],{})
+        self.assertIn('09:00',self.transcript['turns'][-1]['reply'])
+        self.transcript['default_provenance']='The application selected the catalog sole 09:00 departure, meeting-point pickup=false, and no optional extras. Neither scripted update supplied slot, pickup or options. The draft exposes 09:00; the combined native review exposes arrangements before approval.'
         self.assertEqual(self.t.active()['totals']['total_minor'],10000)
         self.assertEqual(self.t.store.session(self.t.scope())['pending'],{})
 
     def test_06_interest_is_not_consent(self):
-        self.turn('Tell me about the cruise.',self.decision('{fact:fixture-cruise:summary}', 'Does that pace suit you?',products=['fixture-cruise'],facts=['summary']))
+        self.turn('Tell me about the cruise.',self.decision('{name:fixture-cruise} is the trip you asked about. {fact:fixture-cruise:summary}', 'Does that pace suit you?',products=['fixture-cruise'],facts=['summary']))
         self.turn('That looks nice.',self.decision("It sounds like it appeals to you.",'Would you like to add this cruise to your itinerary?',products=['fixture-cruise']))
         self.no_bookings()
 
@@ -219,8 +227,8 @@ class HospitalityTests(unittest.TestCase):
         self.assertIn('ambiguous',json.dumps(self.last_model_request))
 
     def test_08_changed_preference(self):
-        self.turn('We want something active.',self.decision('{fact:fixture-walk:summary}', 'Does a walk appeal to you?',products=['fixture-walk'],facts=['summary'],memory={'pace':'Active'}))
-        self.turn('Actually, a relaxed outing would suit us better.',self.decision("Let's switch the pace. {fact:fixture-cruise:summary}",
+        self.turn('We want something active.',self.decision("For the active outing you want, I'd start with {name:fixture-walk}. {fact:fixture-walk:summary}", 'Does a walk appeal to you?',products=['fixture-walk'],facts=['summary'],memory={'pace':'Active'}))
+        self.turn('Actually, a relaxed outing would suit us better.',self.decision("Let's switch to the slower pace you now prefer. {name:fixture-cruise} could fit. {fact:fixture-cruise:summary}",
             'Would you like the cruise details?',products=['fixture-cruise'],facts=['summary'],memory={'pace':'Relaxed'}))
         self.assertEqual(self.t.store.session(self.t.scope())['browsing']['pace'],'Relaxed');self.no_bookings()
 
@@ -253,7 +261,7 @@ class HospitalityTests(unittest.TestCase):
         self.assertEqual(self.t.store.reviews(self.t.scope()),[]);self.no_bookings()
 
     def test_12_declined_recommendation(self):
-        self.turn('What is the cruise like?',self.decision('{fact:fixture-cruise:summary}', 'Would that suit your plans?',products=['fixture-cruise'],facts=['summary']))
+        self.turn('What is the cruise like?',self.decision('{name:fixture-cruise} offers this kind of outing: {fact:fixture-cruise:summary}', 'Would that suit your plans?',products=['fixture-cruise'],facts=['summary']))
         self.turn('No thanks, we do not want a boat trip.',self.decision("Thanks for telling me. We can leave boat trips out.",
             'Would you prefer an activity on land?',memory={'interests':'Land activities, no boat trips'}))
         self.no_bookings()
@@ -307,6 +315,19 @@ class HospitalityTests(unittest.TestCase):
         for lang,(guest,answer,question,second,reply,next_question) in [(language, samples[language])]:
             self.turn(guest,self.decision(answer,question,language=lang,guest={'name':'Calvin'},memory={'holiday':'One month'},stage='welcome'))
             self.turn(second,self.decision(reply,next_question,language=lang,memory={'party':'Two adults'}))
+        grounded={
+            'nl':('We willen iets rustigs. Wat raad je aan?', 'Voor jullie rustige uitstapje zou ik beginnen met {name:fixture-cruise}. {fact:fixture-cruise:summary}', 'Een rustige rondvaart van drie uur door de haven.', 'Wil je deze trip aan je reisplan toevoegen?', 'Ik wil graag een medewerker spreken.', 'Natuurlijk, ik begrijp dat je liever met iemand spreekt.'),
+            'de':('Wir möchten etwas Ruhiges. Was empfiehlst du?', 'Für euren ruhigen Ausflug würde ich mit {name:fixture-cruise} beginnen. {fact:fixture-cruise:summary}', 'Eine entspannte dreistündige Hafenrundfahrt.', 'Möchtest du diesen Ausflug zu deinem Reiseplan hinzufügen?', 'Ich möchte mit einer Person sprechen.', 'Natürlich, ich verstehe, dass du lieber mit jemandem sprechen möchtest.'),
+            'es':('Queremos algo tranquilo. ¿Qué recomiendas?', 'Para la salida tranquila que buscáis, empezaría con {name:fixture-cruise}. {fact:fixture-cruise:summary}', 'Un tranquilo crucero de tres horas por el puerto.', '¿Quieres añadir esta excursión al itinerario?', 'Quiero hablar con una persona.', 'Claro, entiendo que prefieras hablar con alguien.'),
+            'pt':('Queremos algo tranquilo. O que recomenda?', 'Para o passeio tranquilo que procuram, começaria com {name:fixture-cruise}. {fact:fixture-cruise:summary}', 'Um cruzeiro tranquilo de três horas pelo porto.', 'Quer adicionar este passeio ao itinerário?', 'Quero falar com uma pessoa.', 'Claro, compreendo que prefira falar com alguém.'),
+            'pap':('Nos ke algu trankil. Kiko bo ta rekomendá?', 'Pa e paseo trankil ku boso ke, mi lo kuminsá ku {name:fixture-cruise}. {fact:fixture-cruise:summary}', 'Un paseo trankil di tres ora den haf.', 'Bo ke agregá e paseo aki na bo itinerario?', 'Mi ke papia ku un persona.', 'Di akuerdo, mi ta komprondé ku bo ke papia ku un persona.')}
+        guest,answer,fact,question,request,ack=grounded[language]
+        d=self.decision(answer,question,language=language,products=['fixture-cruise'],facts=['summary'],photo='initial',memory={'pace':'Relaxed'})
+        d['translations']['fixture-cruise']['summary']=fact
+        self.turn(guest,d)
+        self.turn(request,self.decision(ack,language=language,action='human',evidence=request,
+            replies={'review':{'paragraphs':[ack,'{operation}'],'question':''},'error':{'paragraphs':['{operation}'],'question':''}}))
+        self.assertEqual(len(self.t.store.reviews(self.t.scope())),1)
         self.no_bookings()
 
     def test_17_structural_rejection_and_semantic_limit(self):
@@ -329,8 +350,8 @@ class HospitalityTests(unittest.TestCase):
         self.no_bookings()
 
     def test_18_pending_intake_greeting_never_completes_it(self):
-        self.turn('Add the cruise for October 15.',self.decision('Happy to help.',action='add',evidence='Add the cruise for October 15.',
-            products=['fixture-cruise'],updates=[{'product_id':'fixture-cruise','date':'2026-10-15'}]))
+        self.turn('Add the cruise. I am Calvin, age 35.',self.decision('Happy to help.',action='add',evidence='Add the cruise.',
+            products=['fixture-cruise'],updates=[{'product_id':'fixture-cruise'}],guest={'name':'Calvin','ages':[35]}))
         before=copy.deepcopy(self.t.active())
         pending=copy.deepcopy(self.t.store.session(self.t.scope())['pending'])
         self.turn('Hi, Calvin here, I am 35.',self.decision('Hi Calvin, good to hear from you.','Would you like to continue arranging the cruise?',guest={'name':'Calvin','ages':[35]}))
@@ -364,3 +385,13 @@ class HospitalityTests(unittest.TestCase):
     def test_16_es(self): self.language_conversation('es')
     def test_16_pt(self): self.language_conversation('pt')
     def test_16_pap(self): self.language_conversation('pap')
+
+    def test_21_answering_authorized_name_intake(self):
+        self.turn('Add the cruise on October 15.',self.decision('Happy to help.',action='add',evidence='Add the cruise on October 15.',
+            products=['fixture-cruise'],updates=[{'product_id':'fixture-cruise','date':'2026-10-15'}]))
+        self.assertIn('guest name',self.transcript['turns'][-1]['reply'])
+        item=next(iter(self.t.store.session(self.t.scope())['pending']))
+        self.turn('Calvin, age 35.',self.decision('Happy to help.',action='update',evidence='Calvin, age 35.',
+            products=['fixture-cruise'],updates=[{'item_id':item}],guest={'name':'Calvin','ages':[35]}))
+        self.assertEqual(len(self.t.active()['items']),1)
+        self.assertEqual(self.t.store.session(self.t.scope())['pending'],{})

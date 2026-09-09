@@ -81,7 +81,7 @@ class DiscoveryStore:
             row = db.execute('SELECT payload FROM isluno_discovery_plans WHERE scope_key=? AND trigger_id=?', (scope.key, trigger_id)).fetchone()
             return json.loads(row[0]) if row else None
 
-    def plan(self, scope, trigger_id, sent_at, decision=None, *, action_token=None, interactive_type=None, translations=None, response_text=None, catalog_snapshot=None, hospitality=None, next_question=""):
+    def plan(self, scope, trigger_id, sent_at, decision=None, *, action_token=None, interactive_type=None, translations=None, response_text=None, catalog_snapshot=None, hospitality=None, next_question="", offer_selection=True):
         require_scope(scope)
         check(isinstance(trigger_id, str) and 0 < len(trigger_id) <= 512, 'missing_verified_message_id')
         try:
@@ -223,6 +223,14 @@ class DiscoveryStore:
                         response_text += '\n\n' + CLARIFICATIONS[locale][0]
                     body = {'accountId': scope.account_id, 'message': response_text, 'buttons': help_buttons}
                     asset_ids, missing, fallback = [], [], None
+            if not offer_selection:
+                forbidden = {token for token, meaning in actions.items() if meaning['kind'] == 'add'}
+                if 'buttons' in body:
+                    body['buttons'] = [b for b in body['buttons'] if b['payload'] not in forbidden]
+                if 'interactive' in body:
+                    for card in body['interactive']['action']['cards']:
+                        card['action']['buttons'] = [b for b in card['action']['buttons'] if b['quick_reply']['id'] not in forbidden]
+                actions = {token: meaning for token, meaning in actions.items() if token not in forbidden}
             superseded = snapshot['revision'] != current_snapshot['revision']
             if superseded:
                 notice = {'en':'Trip information has changed. Please ask for the latest details before confirming.',

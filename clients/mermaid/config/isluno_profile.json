@@ -38,5 +38,43 @@
     "pap": "Esaki ta un demo. Algun regla di biahe ta ehèmpelnan indiká. No ta move sèn i no ta hasi un reservashon real serka un proveedor.",
     "pt": "Esta é uma demonstração. Algumas condições são exemplos identificados. Nenhum dinheiro é movimentado e nenhuma reserva real é feita com o fornecedor."
   },
-  "hospitality_voice": "A thoughtful Curaçao island host: warm, welcoming, attentive, relaxed in language and precise in arrangements. Holiday excitement is an atmosphere, never imposed on a worried or hurried guest. Recommend with judgment, avoid forced slang, hype, assumed party preferences and invented human experience. Choosing an experience should feel like part of the holiday."
+  "hospitality_voice": "A thoughtful Curaçao island host: warm, welcoming, attentive, relaxed in language and precise in arrangements. Holiday excitement is an atmosphere, never imposed on a worried or hurried guest. Recommend with judgment, avoid forced slang, hype, assumed party preferences and invented human experience. Choosing an experience should feel like part of the holiday.",
+  "conversation_outcomes": {
+    "en": {
+      "schedule_overlap": "Those trip times overlap. Choose a different day or a departure that does not conflict.",
+      "date_in_past": "That date is in the past. Please choose a future date.",
+      "departure_in_past": "That departure has already passed. Please choose a future departure.",
+      "human_requested": "Your request is recorded for operator review."
+    },
+    "nl": {
+      "schedule_overlap": "De tijden van die trips overlappen. Kies een andere dag of een vertrek dat niet overlapt.",
+      "date_in_past": "Die datum ligt in het verleden. Kies een toekomstige datum.",
+      "departure_in_past": "Dat vertrek is al voorbij. Kies een toekomstig vertrek.",
+      "human_requested": "Je verzoek is vastgelegd voor beoordeling door het team."
+    },
+    "de": {
+      "schedule_overlap": "Die Zeiten dieser Ausflüge überschneiden sich. Bitte wähle einen anderen Tag oder eine passende Abfahrt.",
+      "date_in_past": "Dieses Datum liegt in der Vergangenheit. Bitte wähle ein zukünftiges Datum.",
+      "departure_in_past": "Diese Abfahrt ist bereits vorbei. Bitte wähle eine zukünftige Abfahrt.",
+      "human_requested": "Deine Anfrage ist zur Prüfung durch das Team erfasst."
+    },
+    "es": {
+      "schedule_overlap": "Los horarios de esas excursiones se solapan. Elige otro día o una salida compatible.",
+      "date_in_past": "Esa fecha ya ha pasado. Elige una fecha futura.",
+      "departure_in_past": "Esa salida ya ha pasado. Elige una salida futura.",
+      "human_requested": "Tu solicitud está registrada para que la revise el equipo."
+    },
+    "pt": {
+      "schedule_overlap": "Os horários desses passeios sobrepõem-se. Escolha outro dia ou uma partida compatível.",
+      "date_in_past": "Essa data já passou. Escolha uma data futura.",
+      "departure_in_past": "Essa partida já passou. Escolha uma partida futura.",
+      "human_requested": "O pedido está registado para análise pela equipa."
+    },
+    "pap": {
+      "schedule_overlap": "E oranan di e biahenan ta kruza otro. Skohe un otro dia òf un ora di salida ku no ta kruza.",
+      "date_in_past": "E fecha ei a pasa kaba. Skohe un fecha den futuro.",
+      "departure_in_past": "E salida ei a pasa kaba. Skohe un salida den futuro.",
+      "human_requested": "Bo petishon ta registrá pa e ekipo revisá."
+    }
+  }
 }
