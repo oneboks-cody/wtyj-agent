@@ -1,0 +1,48 @@
+{
+  "version": "isluno-visual-locations-20260909",
+  "entries": {
+    "klein-curacao-a-trip-to-paradise": {
+      "text": "Klein Curaçao is an island reached by boat from Curaçao.",
+      "source_url": "https://isluno.com/tours/klein-curacao-catamaran-day-trip",
+      "evidence_kind": "public_listing_overview",
+      "observed_on": "2026-09-09"
+    },
+    "klein-curacao-catamaran-day-trip": {
+      "text": "Klein Curaçao is an island reached by boat from Curaçao.",
+      "source_url": "https://isluno.com/tours/klein-curacao-catamaran-day-trip",
+      "evidence_kind": "public_listing_overview",
+      "observed_on": "2026-09-09"
+    },
+    "klein-curacao-weekly-luxury-yacht-trip": {
+      "text": "Klein Curaçao is an island reached by boat from Curaçao.",
+      "source_url": "https://isluno.com/tours/klein-curacao-catamaran-day-trip",
+      "evidence_kind": "public_listing_overview",
+      "observed_on": "2026-09-09"
+    },
+    "miss-ann-klein-curacao": {
+      "text": "Klein Curaçao is an island reached by boat from Curaçao.",
+      "source_url": "https://isluno.com/tours/klein-curacao-catamaran-day-trip",
+      "evidence_kind": "public_listing_overview",
+      "observed_on": "2026-09-09"
+    },
+    "all-west-beach-hopping": {
+      "text": "Shete Boka is a national park; Playa Piskado and Cas Abao are beaches.",
+      "source_url": "https://isluno.com/es/tours/all-west-beach-hopping",
+      "evidence_kind": "public_listing_overview",
+      "observed_on": "2026-09-09"
+    },
+    "snorkel-and-beach-adventures": {
+      "text": "Shete Boka is a national park; Playa Piskado and Cas Abao are beaches.",
+      "source_url": "https://isluno.com/es/tours/all-west-beach-hopping",
+      "evidence_kind": "public_listing_overview",
+      "observed_on": "2026-09-09"
+    },
+    "atv-buggy-3-hours": {
+      "text": "On this route, Playa Canoa is the short swim stop.",
+      "source_url": "https://isluno.com/tours/atv-buggy-3-hours",
+      "evidence_kind": "public_listing_overview",
+      "observed_on": "2026-09-09"
+    }
+  },
+  "scope": "Add these provenance-backed place explanations only; preserve all existing fields, galleries, prices and rules. No image is identified as a specific stop."
+}

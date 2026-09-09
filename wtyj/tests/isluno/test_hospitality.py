@@ -41,7 +41,7 @@ class HospitalityTests(unittest.TestCase):
         p['summary'] = 'A relaxed three-hour cruise around the harbour.'
         p['inclusions'] = ['Lunch is included.']
         asset = json.loads((ROOT / 'clients/mermaid/config/isluno_catalog.json').read_text())['products'][0]['gallery'][0]
-        p['gallery'] = [dict(copy.deepcopy(asset), id='cruise-photo-' + str(i), order=i) for i in range(4)]
+        p['gallery'] = [dict(copy.deepcopy(asset), id='cruise-photo-' + str(i), order=i) for i in range(8)]
         other = copy.deepcopy(p)
         other.update(id='fixture-walk', name='Synthetic Walk', summary='A two-hour active guided walk.', gallery=[])
         other['schedule']['slots'][0]['duration_minutes'] = 120
@@ -104,13 +104,13 @@ class HospitalityTests(unittest.TestCase):
             def post(actual_scope, body, key):
                 self.assertEqual(actual_scope,scope)
                 outgoing.append(copy.deepcopy(body))
-                return {'status':status,'provider_id':'synthetic-'+trigger if status=='accepted' else None}
+                return {'status':status,'provider_id':'synthetic-'+trigger+'-'+str(len(outgoing)) if status=='accepted' else None}
             ok = send_plan(scope.conversation_id,scope.account_id,result['media']['url'],store=self.t.discovery,
-                           post=post,window=lambda *args:{'open':True},sleep=lambda _:None)
+                           post=post,window=lambda *args:{'open':True},sleep=lambda seconds:setattr(self,'now',self.now+timedelta(seconds=seconds)))
             self.assertEqual(ok,status=='accepted')
-            self.assertEqual(len(outgoing),1)
+            self.assertTrue(1<=len(outgoing)<=6)
             history = self.t.store.session(scope)['history']
-            self.assertEqual(history[-1]['content'],result['text'])
+            if status=='accepted':self.assertEqual(''.join(h['content'] for h in history[-len(outgoing):]),result['text'])
             self.assertEqual(history[-1]['delivery_status'],status)
             self.assertFalse(history[-1]['guest_receipt_verified'])
         elif result.get('media',{}).get('type') in {'isluno_quote','isluno_fulfillment'}:

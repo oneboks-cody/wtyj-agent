@@ -1,0 +1,285 @@
+{
+  "evidence": "Read-only public product HTML, max31pages/4concurrent/10sec each/1.5MB each. No video downloads or provider calls. A reference alone does not establish media use authorization.",
+  "products": [
+    {
+      "product_id": "afternoon-explorer-tour",
+      "url": "https://isluno.com/tours/afternoon-explorer-tour",
+      "html_sha256": "e6f45365ed6859b6339bc9afe01ce422fec6cae89d157f80f01c5c78b3e85ada",
+      "bytes": 140150,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "all-west-beach-hopping",
+      "url": "https://isluno.com/tours/all-west-beach-hopping",
+      "html_sha256": "0270d2facfad42bb00f671578f1a7b7e9c664ad7403d66bacc0a0019fec0026b",
+      "bytes": 157927,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "aquafari-curacao-snorkel",
+      "url": "https://isluno.com/tours/aquafari-curacao-snorkel",
+      "html_sha256": "000f979dc6f89ce0807071eeed85bc1e99198d36460bd41dea17347b3d0c53a7",
+      "bytes": 145080,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "atv-buggy-3-hours",
+      "url": "https://isluno.com/tours/atv-buggy-3-hours",
+      "html_sha256": "ac978660343dc17cba2eebfe24aa1f4cd3574d1c63d7ab0dde711523491aa180",
+      "bytes": 158734,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "atv-buggy-4-hours",
+      "url": "https://isluno.com/tours/atv-buggy-4-hours",
+      "html_sha256": "d524be6d3d4b165fe5dcf5f9390fe5f1dce2e65930acb85c07b48033a381eb43",
+      "bytes": 158521,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "atv-buggy-6-hours",
+      "url": "https://isluno.com/tours/atv-buggy-6-hours",
+      "html_sha256": "abd15af9075d67620031eabe921a768346d4689191d0cc3b8edbe8eb20a93986",
+      "bytes": 158557,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "atv-buggy-7-hours",
+      "url": "https://isluno.com/tours/atv-buggy-7-hours",
+      "html_sha256": "a967143c8386a272c06b2843aa7bf263abddf8b4f5516c914204abc076b774c9",
+      "bytes": 155221,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "curacao-city-highlights",
+      "url": "https://isluno.com/tours/curacao-city-highlights",
+      "html_sha256": "bad191617aca376a380fa8826ab83792a357fa04402854006b223b9c720b8f3c",
+      "bytes": 158470,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "discover-scuba-dive",
+      "url": "https://isluno.com/tours/discover-scuba-dive",
+      "html_sha256": "3fdbd2fe576fb1ecb587448829646d51874ebf5e11f0b76f34cf6673cc4e3703",
+      "bytes": 161121,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "discover-willemstad",
+      "url": "https://isluno.com/tours/discover-willemstad",
+      "html_sha256": "bff34a2da6e1265dd94ed9073d68b3c11d00152c050fa159eae8c708dfe0737f",
+      "bytes": 158032,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "flyboard-experience",
+      "url": "https://isluno.com/tours/flyboard-experience",
+      "html_sha256": "9b66ca9bc1873746b84f053e3e682be9118d12e1691de7b291b2af7172df85f2",
+      "bytes": 132960,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "half-day-snorkel-lunch",
+      "url": "https://isluno.com/tours/half-day-snorkel-lunch",
+      "html_sha256": "bbf302ebc998768c2f9e7db1714bc0d09f3e7caf51a88fd4a1c1e9e5bdcddb35",
+      "bytes": 157687,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "jetski-tour-30-min",
+      "url": "https://isluno.com/tours/jetski-tour-30-min",
+      "html_sha256": "0a44feb75dce611cf7a64c4d85bc6fc7b89f0d5f0fbb0e0bbe422f01aeb4a433",
+      "bytes": 135149,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "kadushi-utv-tours",
+      "url": "https://isluno.com/tours/kadushi-utv-tours",
+      "html_sha256": "f0a1188ef04a7a3fee48a696e4bd779fe31f507b6dcb5a80e2c731f1bec22681",
+      "bytes": 143124,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "klein-curacao-a-trip-to-paradise",
+      "url": "https://isluno.com/tours/klein-curacao-a-trip-to-paradise",
+      "html_sha256": "a011e4cc1e65592d2095fbba36d529aed9b28779b7c72f6db91349d56fe6f616",
+      "bytes": 165863,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "klein-curacao-catamaran-day-trip",
+      "url": "https://isluno.com/tours/klein-curacao-catamaran-day-trip",
+      "html_sha256": "803a9181fa41e4ae3ab23acb6f8c40f726748b9c7fdf4a481d992dadb37c81a5",
+      "bytes": 161447,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "klein-curacao-weekly-luxury-yacht-trip",
+      "url": "https://isluno.com/tours/klein-curacao-weekly-luxury-yacht-trip",
+      "html_sha256": "a4a961b97011602d017515fdff54ff33f8ce355d37a014b5d074ba3c9ffc57e3",
+      "bytes": 159786,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "mid-day-reef-tour",
+      "url": "https://isluno.com/tours/mid-day-reef-tour",
+      "html_sha256": "7f832b88ecc2d87e74477cc33c78d089d2b536dc50746b66ccb3f186ddbc5da0",
+      "bytes": 140056,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "miss-ann-klein-curacao",
+      "url": "https://isluno.com/tours/miss-ann-klein-curacao",
+      "html_sha256": "543d1ea98ff3248095967c2cef8ac917c500fb43d41884865305323405cc5cd5",
+      "bytes": 159878,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "national-park-jeep-safari",
+      "url": "https://isluno.com/tours/national-park-jeep-safari",
+      "html_sha256": "92671947cd185e89ee679363ee25ec0dfe34fe14514f1de50cd69e66feea36ec",
+      "bytes": 158871,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "open-fishing-trip",
+      "url": "https://isluno.com/tours/open-fishing-trip",
+      "html_sha256": "36f3fb8a933009afd7922b1c1ad3f1573b814e55e2ad68f923fdb5c4e7e6c284",
+      "bytes": 135280,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "seatrek-underwater-walking-tour",
+      "url": "https://isluno.com/tours/seatrek-underwater-walking-tour",
+      "html_sha256": "411f50f8f30478f728d8f22c018ea11facf873a45c0b17a04eed86e8e924c880",
+      "bytes": 153116,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "snorkel-and-beach-adventures",
+      "url": "https://isluno.com/tours/snorkel-and-beach-adventures",
+      "html_sha256": "95b0b5151f27bcbbaef72a6d7393efe1f74d997d1a6527a092d3e2dd382554ff",
+      "bytes": 162083,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "sunset-boat-trip",
+      "url": "https://isluno.com/tours/sunset-boat-trip",
+      "html_sha256": "12ad27f41e5963518eacb5a1c8e1d8ebca43eb2ceaa1c81b994041e3dd3cd5d7",
+      "bytes": 140110,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "sunset-sail",
+      "url": "https://isluno.com/tours/sunset-sail",
+      "html_sha256": "30f09b60db9642fbded48e546dc3516d402bc0f406df92a8026c056735f98f48",
+      "bytes": 157248,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "sup-curacao-paddle-boarding",
+      "url": "https://isluno.com/tours/sup-curacao-paddle-boarding",
+      "html_sha256": "cb161ac0e3f2e1cb12a180db4e90357bab63f6f81118911b5d6974c92c2b6537",
+      "bytes": 155210,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "tandem-skydive-experience",
+      "url": "https://isluno.com/tours/tandem-skydive-experience",
+      "html_sha256": "fc57cc2626b95adb8eb49e93ced13803e6a02c8096c9c19a2c7986793467e962",
+      "bytes": 141904,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "the-jungle-tour",
+      "url": "https://isluno.com/tours/the-jungle-tour",
+      "html_sha256": "7382ec80c7583167f2051f0ed690d30933bb1b8e9920c69ce0c06ee2ec1890ee",
+      "bytes": 149797,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "tugboat-seabob",
+      "url": "https://isluno.com/tours/tugboat-seabob",
+      "html_sha256": "4abe811989be5f55c02f8cb09af2f4717f61e9dfc98e591734add96cd22ec724",
+      "bytes": 156623,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "west-coast-blue-room",
+      "url": "https://isluno.com/tours/west-coast-blue-room",
+      "html_sha256": "e53fcf8b1803af5f8ba591658b59d56bd6b6394c2995038840bf1ee16ce6bfb0",
+      "bytes": 155929,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    },
+    {
+      "product_id": "wonders-of-curacao",
+      "url": "https://isluno.com/tours/wonders-of-curacao",
+      "html_sha256": "eb614d523201789cd4a529c87e564efbbe86d8754a245283a2cde3fd409c105f",
+      "bytes": 158921,
+      "video_elements": [],
+      "direct_video_references": [],
+      "status": "inspected"
+    }
+  ],
+  "activation": "none;images-first only"
+}

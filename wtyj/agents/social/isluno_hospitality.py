@@ -24,6 +24,10 @@ SCHEMA = {'type': 'object', 'additionalProperties': False, 'properties': {
         'properties': {'action': {'type': 'string'}, 'evidence': {'type': 'string', 'maxLength': 1500}},
         'required': ['action', 'evidence']},
     'photo': {'type': 'string', 'enum': ['none', 'initial', 'more', 'repeat', 'all']},
+    'cards': {'type':'array', 'maxItems':2, 'items':{'type':'object','additionalProperties':False,
+        'properties':{'product_id':{'type':'string'},'paragraphs':{'type':'array','minItems':1,'maxItems':2,'items':{'type':'string','maxLength':900}}},
+        'required':['product_id','paragraphs']}},
+    'photo_location': {'type':'string','maxLength':120},
     'estimate': {'type': 'object', 'additionalProperties': False, 'properties': {
         'product_id': {'type':'string'}, 'date': {'type':'string'}, 'slot_id': {'type':'string'},
         'guest_ages': {'type':'array','items':{'type':'integer'}}, 'options': {'type':'object','additionalProperties':{'type':'integer'}},
@@ -109,6 +113,31 @@ The replies.question is the final guest-facing next question, not an internal no
 The older question field is only an unanswered supplier-question signal: use a nonempty
 value for unsupported questions; use fact_keys for supported questions.
 
+VISUAL DISCOVERY:
+A broad first enquiry (name/holiday dates without activity preferences) needs a brief
+personal welcome and ONE easy question, e.g. travelling party. Set product_ids=[] and
+cards=[]; do not list three tours. When a guest specifies a trip or useful interests,
+answer directly; do not force a qualification questionnaire. Usually recommend one or
+at most two experiences. Use stage recommendation for suggestions and photo initial.
+For recommendations, supply cards [{product_id,paragraphs:[...]}], one card per selected
+product. Each card gives one short source-bound description and a natural reason it fits.
+Prefer the concise summary binding; long additional_information belongs behind Trip
+details or in an answer to an explicitly asked question, not a recommendation card.
+Use the existing name/fact bindings; do not add unsupported claims, prices or place lore.
+Include the location_context binding when supplied so unfamiliar place names are explained inline.
+Keep common browsing paragraphs brief and separate from card content; no duplicated tour
+summaries. Put a single next question in browsing.question. The server sends each card
+with its correctly associated ordinary gallery image and product-specific controls.
+For a specific trip enquiry use the same cards shape when helpful. photo none is for
+text-only answers or when images were declined; use intent details for such answers.
+More photos is exploration, never booking consent. Never ask guests to leave WhatsApp to
+understand a place or book. Explain unfamiliar place names inline ONLY with supplied
+verified facts; when the source does not identify a place, say this is unconfirmed.
+For a request to see a specific location/stop, set photo_location to that location ID/name.
+The server requires explicit asset location provenance; a general trip gallery is not
+proof of a specific stop. Do not claim a photo depicts a stop without that evidence.
+No video asset is currently approved for this flow. Offer available trip images instead.
+
 PHOTOS AND MEMORY:
 photo initial for a specific newly discussed product, more/all when requested, repeat
 only for explicit repeat. The server uses its real gallery, bounded batches and durable
@@ -133,7 +162,7 @@ def references(text):
 
 
 def validate(value, decision, catalog):
-    check(isinstance(value, dict) and set(SCHEMA['required']) <= set(value) <= set(SCHEMA['required']) | {'estimate'}, 'invalid_hospitality_contract')
+    check(isinstance(value, dict) and set(SCHEMA['required']) <= set(value) <= set(SCHEMA['required']) | {'estimate','cards','photo_location'}, 'invalid_hospitality_contract')
     check(value['stage'] in STAGES, 'invalid_conversation_stage')
     check(isinstance(value['memory'], dict) and not set(value['memory']) - set(MEMORY_KEYS), 'invalid_browsing_memory')
     check(all(v is None or isinstance(v, str) and len(v) <= 800 for v in value['memory'].values()), 'invalid_browsing_value')
@@ -151,6 +180,24 @@ def validate(value, decision, catalog):
         estimate = value['estimate']
         check(isinstance(estimate, dict) and set(estimate) == set(SCHEMA['properties']['estimate']['required'])
               and estimate['product_id'] in decision['product_ids'], 'invalid_price_estimate')
+    check(isinstance(value.get('photo_location',''),str) and len(value.get('photo_location',''))<=120, 'invalid_photo_location')
+    cards=value.get('cards',[])
+    check(isinstance(cards,list) and len(cards)<=2,'invalid_visual_cards')
+    seen=set()
+    for card in cards:
+        check(isinstance(card,dict) and set(card)=={'product_id','paragraphs'},'invalid_visual_card')
+        product_id=card['product_id']
+        check(product_id in decision['product_ids'] and product_id not in seen,'invalid_card_product')
+        seen.add(product_id)
+        check(isinstance(card['paragraphs'],list) and 1<=len(card['paragraphs'])<=2,'invalid_card_paragraphs')
+        for text in card['paragraphs']:
+            check(isinstance(text,str) and 0<len(text)<=900,'invalid_card_text')
+            for ref in references(text):
+                bits=ref.split(':')
+                check(len(bits) in {2,3} and bits[0] in {'name','fact'} and bits[1]==product_id,'invalid_card_reference')
+                check(bits[0]=='name' and len(bits)==2 or bits[0]=='fact' and len(bits)==3 and bits[2] in products[product_id]['facts'] and bits[2] in decision['fact_keys'],'unsupported_card_fact')
+    if cards:
+        check(decision['booking']['action']=='none' and seen==set(decision['product_ids']),'invalid_card_scope')
     replies = value['replies']
     check(isinstance(replies, dict) and 'browsing' in replies and not set(replies) - set(BRANCHES), 'invalid_hospitality_replies')
     for branch, reply in replies.items():
@@ -259,6 +306,9 @@ def present(value, decision, outcome, snapshot, *, now=None):
     fallback=branch not in value['replies']
     selected=copy.deepcopy(value['replies'].get(branch,value['replies']['browsing']))
     if fallback:selected['paragraphs'].append('{operation}')
+    if branch=='browsing' and action=='none' and not value.get('cards'):
+        moved={text for card in card_paragraphs(value) for text in card['paragraphs']}
+        selected['paragraphs']=[text for text in selected['paragraphs'] if text not in moved]
     products = {p['id']: p for p in snapshot['catalog']['products']}
     missing = None
     for pending in session['pending'].values():
@@ -322,7 +372,7 @@ def present(value, decision, outcome, snapshot, *, now=None):
             paragraphs.append({'en': 'Sample demo rules', 'nl': 'Voorbeeldregels voor de demo', 'de': 'Beispielregeln für die Demo',
                                'es': 'Reglas de ejemplo para la demo', 'pt': 'Regras de exemplo para a demo', 'pap': 'Reglanan di ehèmpel pa demo'}[decision['language']])
     text = '\n\n'.join(paragraphs)
-    check(0 < len(text) <= 4096, 'invalid_conversation_reply')
+    check(len(text)<=4096 and (bool(text) or branch=='browsing' and action=='none' and bool(card_paragraphs(value))), 'invalid_conversation_reply')
     return text, question, branch
 
 
@@ -350,3 +400,37 @@ def record_delivery(db, scope, delivery_id, body, status, *, assets=None, button
         session['last_accepted_question'] = question
     db.execute('UPDATE isluno_booking_sessions SET payload=? WHERE scope_key=?',
                (json.dumps(session, ensure_ascii=False), scope.key))
+
+
+def card_paragraphs(value):
+    if value.get('cards'):return value['cards']
+    # Compatibility: move already structured one-product paragraphs into that
+    # product's card. Keep shared comparisons/questions and result bindings intact.
+    grouped={}
+    for text in value['replies']['browsing']['paragraphs']:
+        refs=references(text)
+        if refs and all(r.split(':')[0] in {'fact','name'} for r in refs):
+            products={r.split(':')[1] for r in refs}
+            if len(products)==1:grouped.setdefault(next(iter(products)),[]).append(text)
+    return [{'product_id':p,'paragraphs':paragraphs} for p,paragraphs in grouped.items()]
+
+
+def render_cards(value, decision, snapshot):
+    products={p['id']:p for p in snapshot['catalog']['products']}
+    output={}
+    for card in card_paragraphs(value) if decision['booking']['action']=='none' else []:
+        product=products[card['product_id']]
+        facts=isluno_understanding.facts(product) if decision['language']=='en' else decision['translations'].get(product['id'],{})
+        paragraphs=[]
+        for text in card['paragraphs']:
+            for ref in references(text):
+                bits=ref.split(':');replacement=product['name'] if bits[0]=='name' else facts[bits[2]]
+                text=text.replace('{'+ref+'}',replacement)
+            paragraphs.append(presentation_text(text))
+        text='\n\n'.join(paragraphs)
+        from agents.social.isluno_wire import units
+        if units(text)>600 and decision['intent']=='discover':
+            summary=facts.get('summary','')
+            text=summary if units(summary)<=600 else ''
+        output[product['id']]=text
+    return output

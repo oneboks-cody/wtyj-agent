@@ -151,9 +151,9 @@ def send_plan(conversation_id, account_id, plan_id, *, store=None, post=None, wi
                 delivery_id='discovery:'+plan_id+('' if len(parts)==1 else ':part:'+str(index))
                 media=bool(part['body'].get('attachmentUrl') or part['body'].get('interactive'))
                 record_delivery(db,scope,delivery_id,part['body'],outcome,
-                    assets=[{'product_ids':plan['product_ids'],'asset_id':asset} for asset in plan['asset_ids']] if media else [],
-                    buttons=plan.get('button_meanings',{}) if index==len(parts)-1 else {},
-                    question=plan.get('next_question','') if aggregate=='accepted' else '')
+                    assets=part.get('assets',[]) if plan.get('visual_cards') else [{'product_ids':plan['product_ids'],'asset_id':asset} for asset in plan['asset_ids']] if media else [],
+                    buttons=part.get('button_meanings',{}) if plan.get('visual_cards') else plan.get('button_meanings',{}) if index==len(parts)-1 else {},
+                    question=part.get('next_question','') if plan.get('visual_cards') and aggregate=='accepted' else plan.get('next_question','') if aggregate=='accepted' else '')
             from agents.social.isluno_callbacks import reconcile
             reconcile(db,scope)
             actual=db.execute('SELECT status FROM isluno_discovery_plans WHERE id=?',(plan_id,)).fetchone()[0]

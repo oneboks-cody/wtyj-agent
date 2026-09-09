@@ -31,6 +31,7 @@ def system_prompt():
     from shared.isluno_config import active_profile
     voice = active_profile().get('hospitality_voice', '')
     return discovery.system_prompt() + '\nBrand voice: ' + voice + hospitality.PROMPT + (
+        ' A verified native_detail_request means the guest tapped Trip details for that exact product. Respond in saved chat language, product_ids containing only that product, booking.action none, no guest/itinerary/document mutations, photo none. Include the requested fact_keys and their faithful translations plus summary in the same response. Keep common prose brief; the server presents these source details in bounded pages. Do not treat this navigation as booking consent. '
         ' Also extract explicit itinerary changes in the SAME response; never make a second understanding call. '
         'Saved session and item IDs are authoritative. Preserve guest data unless explicitly corrected; ask only missing information. '
         'booking.action add means an explicit new trip; update targets existing or pending item IDs; remove targets one item; '
@@ -101,7 +102,7 @@ def validate_translations(translations, decision, catalog):
 def prompt_state(saved):
     """Project current conversational state; history has one separate owner."""
     keys=('revision','guest','pending','active_itinerary_id','chat_language','document_language',
-          'item_details','browsing','stage','last_accepted_question','current_time','timezone','discovery','quote_context')
+          'item_details','browsing','stage','native_detail_request','last_accepted_question','current_time','timezone','discovery','quote_context')
     result={k:copy.deepcopy(saved[k]) for k in keys if k in saved}
     itinerary=saved.get('itinerary')
     if itinerary:

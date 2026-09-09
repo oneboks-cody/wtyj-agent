@@ -381,6 +381,7 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
     trigger = message.get('message_id') or message.get('_ali_action_id')
     timestamp = message.get('_zernio_sent_at', '')
     base_decision = None
+    native_details = None
     source_snapshot = None
     token = str(message.get('_zernio_interactive_id', ''))
     if token.startswith(('ip_', 'ie_')):
@@ -399,12 +400,13 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
         return quote_envelope(QuoteStore(store).act(scope, trigger, timestamp, message['_zernio_interactive_id'], message.get('_zernio_interactive_type')))
     if message.get('_zernio_interactive_id'):
         action_plan = discovery.plan(scope, trigger, timestamp, action_token=message['_zernio_interactive_id'], interactive_type=message.get('_zernio_interactive_type'))
-        if not action_plan['selected_intent'] and not action_plan['requires_human']:
+        native_details=action_plan.get('detail_translation_required')
+        if not action_plan['selected_intent'] and not action_plan['requires_human'] and not native_details:
             return envelope(action_plan)
         with discovery.db() as db, db:
             db.execute("UPDATE isluno_discovery_plans SET status='consumed_action' WHERE id=?", (action_plan['id'],))
         source_snapshot = discovery.source_snapshot(scope, action_plan)
-        base_decision = {'language': action_plan['language'], 'product_ids': action_plan['product_ids'], 'fact_keys': action_plan['fact_keys'],
+        base_decision = None if native_details else {'language': action_plan['language'], 'product_ids': action_plan['product_ids'], 'fact_keys': action_plan['fact_keys'],
                          'intent': 'human' if action_plan['requires_human'] else 'add', 'question': '',
                          'translations': action_plan.get('translations') or {},
                          'booking': {'action': 'human' if action_plan['requires_human'] else 'add', 'updates': [], 'guest': {}, 'document_language': None}}
@@ -419,11 +421,18 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
                 active = store.itinerary.get(scope, saved['active_itinerary_id']) if saved['active_itinerary_id'] else None
                 model_history = [{**entry, 'delivery_status':'legacy_unverified'} if entry.get('role') == 'assistant' and 'delivery_status' not in entry else entry for entry in saved['history']]
                 model_state = {**saved, 'history':model_history, 'itinerary': active, 'discovery': discovery.current_context(scope),
-                               'current_time': store.itinerary.clock().isoformat(), 'timezone': 'America/Curacao'}
+                               'current_time': store.itinerary.clock().isoformat(), 'timezone': 'America/Curacao',
+                               'native_detail_request':{k:v for k,v in native_details.items() if k!='translations'} if native_details else None}
                 try:
                     with understanding_claim(store,scope,trigger):
                         decision = (understand or understanding.understand)(scope, message.get('text', ''), model_state, snapshot)
                         understanding.validate(decision, discovery_understanding.context(snapshot))
+                        if native_details:
+                            request=native_details;booking=decision['booking']
+                            check(decision['language']==request['language'] and decision['product_ids']==[request['product_id']] and booking['action']=='none' and not booking['updates'] and not booking['guest'] and booking['document_language'] is None,'native_detail_authority')
+                            check(set(request['fact_keys'])<=set(decision['fact_keys']),'native_detail_facts_missing')
+                            previous=request['translations'].get(request['product_id'],{})
+                            decision['translations'][request['product_id']]={**previous,**decision['translations'].get(request['product_id'],{})}
                         store.record_decision(scope, trigger, decision)
                 except Exception as exc:
                     from agents.social.isluno_recovery import RecoveryStore
@@ -507,7 +516,8 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
     selected_products = {i['product']['id'] for i in (outcome['itinerary'] or {}).get('items', [])} | {p.get('product_id') for p in outcome['session']['pending'].values()}
     offer_selection = booking['action'] == 'none' and not selected_products.intersection(decision['product_ids'])
     plan = discovery.plan(scope, reply_trigger, timestamp, base, translations=decision['translations'], response_text=response_text, catalog_snapshot=snapshot,
-                          hospitality=decision.get('hospitality'), next_question=next_question, offer_selection=offer_selection, source_trigger_id=trigger)
+                          hospitality=decision.get('hospitality'), next_question=next_question, offer_selection=offer_selection, source_trigger_id=trigger,
+                          card_texts=hospitality.render_cards(decision['hospitality'],decision,snapshot) if decision.get('hospitality') else None,detail_request=native_details)
     if prepared_quote and decision.get('hospitality'):
         from agents.social.isluno_quotes import QuoteStore, envelope as quote_envelope
         return quote_envelope(QuoteStore(store).compose_answer(scope, trigger, timestamp, prepared_quote, plan))

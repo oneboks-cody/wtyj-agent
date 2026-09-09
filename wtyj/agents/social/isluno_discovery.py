@@ -81,7 +81,7 @@ class DiscoveryStore:
             row = db.execute('SELECT payload FROM isluno_discovery_plans WHERE scope_key=? AND trigger_id=?', (scope.key, trigger_id)).fetchone()
             return json.loads(row[0]) if row else None
 
-    def plan(self, scope, trigger_id, sent_at, decision=None, *, action_token=None, interactive_type=None, translations=None, response_text=None, catalog_snapshot=None, hospitality=None, next_question="", offer_selection=True, source_trigger_id=None):
+    def plan(self, scope, trigger_id, sent_at, decision=None, *, action_token=None, interactive_type=None, translations=None, response_text=None, catalog_snapshot=None, hospitality=None, next_question="", offer_selection=True, source_trigger_id=None, card_texts=None, detail_request=None):
         require_scope(scope)
         check(isinstance(trigger_id, str) and 0 < len(trigger_id) <= 512, 'missing_verified_message_id')
         try:
@@ -98,6 +98,7 @@ class DiscoveryStore:
             snapshot = validate_snapshot(catalog_snapshot) if catalog_snapshot is not None and action_token is None else current_snapshot
             db.execute('INSERT OR IGNORE INTO isluno_catalog_snapshots VALUES(?,?)', (snapshot['revision'], dump(snapshot)))
             offset, info_offset, selected_intent, force_single = 0, 0, None, False
+            visual=bool(detail_request);action_kind='info' if detail_request else None;detail_keys=(detail_request or {}).get('fact_keys');translation_required=None;photo_location=(hospitality or {}).get('photo_location','')
             if action_token is not None:
                 check(interactive_type in {'button_reply', 'list_reply'}, 'unverified_discovery_action')
                 row = db.execute('SELECT a.action_json,p.payload,p.status,l.plan_id FROM isluno_discovery_actions a JOIN isluno_discovery_plans p ON p.id=a.plan_id JOIN isluno_discovery_latest l ON l.scope_key=p.scope_key WHERE a.token=? AND p.scope_key=?',
@@ -108,6 +109,8 @@ class DiscoveryStore:
                 offer_selection = old.get('offer_selection', True)
                 check(row['status'] == 'accepted' and row['plan_id'] == old['id'] and old['catalog_revision'] == snapshot['revision']
                       and datetime.fromisoformat(old['expires_at']) > self.clock(), 'stale_discovery_action')
+                visual=old.get('visual_cards',False);action_kind=action['kind']
+                photo_location=action.get('photo_location','')
                 selected_product = action['product_id']
                 selected_keys = old.get('product_fact_keys', {}).get(selected_product, [])
                 if action['kind'] == 'choose':
@@ -118,6 +121,12 @@ class DiscoveryStore:
                 offset = action.get('offset', 0)
                 force_single = action.get('fallback') is True
                 info_offset = action.get('info_offset', 0)
+                if visual and action_kind=='info':
+                    detail_keys=old.get('detail_fact_keys') if info_offset else None
+                    if old['language']!='en' and info_offset==0:
+                        product=next(p for p in snapshot['catalog']['products'] if p['id']==selected_product)
+                        absent=[k for k in isluno_understanding.facts(product) if k not in (translations or {}).get(selected_product,{})]
+                        if absent:translation_required={'product_id':selected_product,'language':old['language'],'fact_keys':absent[:4],'translations':translations or {}}
                 if action['kind'] == 'add':
                     selected_intent = {'kind': 'add_trip', 'product_id': action['product_id'], 'catalog_revision': snapshot['revision']}
             decision = isluno_understanding.validate(decision, isluno_understanding.context(snapshot))
@@ -141,7 +150,16 @@ class DiscoveryStore:
             answer_status = ('human_requested' if decision['intent'] == 'human' else
                              'no_match' if not chosen else
                              'unavailable' if not decision['fact_keys'] and decision['question'].strip() else 'source_backed')
-            if answer_status != 'source_backed':
+            visual=visual or bool(hospitality and chosen and selected_intent is None and (card_texts or decision['intent']=='discover' or hospitality['photo']!='none'))
+            visual_parts=None
+            if visual and answer_status=='source_backed' and selected_intent is None:
+                from agents.social.isluno_visual import build
+                visual_parts,asset_ids,missing=build(self,db,scope,chosen,{**decision,'translations':translations},button,labels,
+                    texts=card_texts,common=response_text or '',question=next_question,photo=(hospitality or {}).get('photo','more' if action_kind=='photos' else 'none' if action_kind=='info' else 'initial'),
+                    location=photo_location,offset=offset,info_offset=info_offset,action_kind=action_kind,offer_selection=offer_selection,detail_keys=detail_keys)
+                body={'accountId':scope.account_id,'message':''.join(p['body']['message'] for p in visual_parts)}
+                fallback=None
+            elif answer_status != 'source_backed':
                 clarification = CLARIFICATIONS[locale]
                 text = clarification[{'unavailable': 0, 'no_match': 1, 'human_requested': 2}[answer_status]]
                 clarification_buttons = ([button('human', chosen[0]['id'] if len(chosen) == 1 else None, clarification[3])]
@@ -210,7 +228,7 @@ class DiscoveryStore:
                               'action': {'buttons': [{'type': 'quick_reply', 'quick_reply': {'id': b['payload'], 'title': b['title']}} for b in buttons]}}
                              for i, url in enumerate(urls)]
                     body = {'accountId': scope.account_id, 'interactive': {'type': 'carousel', 'body': {'text': text[:1024]}, 'action': {'cards': cards}}}
-            if response_text is not None:
+            if response_text is not None and visual_parts is None:
                 check(isinstance(response_text, str) and 0 < len(response_text) <= 4096, 'invalid_conversation_reply')
                 if hospitality:
                     if 'interactive' in body:
@@ -242,9 +260,15 @@ class DiscoveryStore:
                 content = body.get('message') or body['interactive']['body']['text']
                 body = {'accountId': scope.account_id, 'message': content + '\n\n' + notice, 'buttons': []}
                 asset_ids, missing, fallback = [], [], None
+                visual_parts=None;visual=False;actions={}
             from agents.social.isluno_wire import messages
-            parts=[{'body':b,'status':'queued','provider_id':None} for b in messages(body,next_question)]
-            payload = {'source_trigger_id':source_trigger_id or trigger_id,'parts':parts,'id': plan_id, 'scope': scope.__dict__, 'trigger_id': trigger_id, 'trigger_sent_at': sent_at,
+            parts=visual_parts or [{'body':b,'status':'queued','provider_id':None} for b in messages(body,next_question)]
+            if visual_parts:
+                for part in parts:
+                    tokens={b['payload'] for b in part['body'].get('buttons',[])}
+                    part['button_meanings']={t:a for t,a in actions.items() if t in tokens}
+            else:visual=False
+            payload = {'detail_translation_required':translation_required,'detail_fact_keys':detail_keys,'visual_cards':visual,'source_trigger_id':source_trigger_id or trigger_id,'parts':parts,'id': plan_id, 'scope': scope.__dict__, 'trigger_id': trigger_id, 'trigger_sent_at': sent_at,
                        'catalog_revision': snapshot['revision'], 'catalog_version': snapshot['catalog']['version'], 'catalog_superseded': superseded,
                        'product_ids': decision['product_ids'], 'language': locale, 'fact_keys': decision['fact_keys'],
                        'product_fact_keys': fact_association, 'answer_status': answer_status, 'translations': translations,

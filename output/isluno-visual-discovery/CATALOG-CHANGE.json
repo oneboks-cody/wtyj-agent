@@ -1,0 +1,16 @@
+{
+  "before_sha256": "1d64f391daeaae93cdd16be9ce18f3abb94162eba0f7321132f2c2626ea5bdd3",
+  "after_sha256": "b9733d8e45ea6525a11b476ce5e6cc85554211b7c9b6194bc380edeaa5a03a0b",
+  "before_version": "isluno-demo-v2-source-aligned-20260908",
+  "after_version": "isluno-demo-v3-visual-context-20260909",
+  "products_with_added_context": [
+    "all-west-beach-hopping",
+    "atv-buggy-3-hours",
+    "klein-curacao-a-trip-to-paradise",
+    "klein-curacao-catamaran-day-trip",
+    "klein-curacao-weekly-luxury-yacht-trip",
+    "miss-ann-klein-curacao",
+    "snorkel-and-beach-adventures"
+  ],
+  "all_other_fields_unchanged": true
+}

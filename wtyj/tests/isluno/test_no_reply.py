@@ -16,7 +16,7 @@ class NoReplyTests(unittest.TestCase):
         self.t=ConversationTests('test_conversation_sdk_uses_single_existing_model_request')
         self.t.setUp();self.addCleanup(self.t.doCleanups)
 
-    def call(self, decision, trigger, *, scope=None, webhook=False, text="Synthetic request"):
+    def call(self, decision, trigger, *, scope=None, webhook=False, text="Synthetic request", interactive_id=""):
         from agents.marina import marina_agent
         from agents.social import social_agent,isluno_conversation
         scope=scope or self.t.scope()
@@ -26,7 +26,7 @@ class NoReplyTests(unittest.TestCase):
                             evidence='Synthetic request' if decision['booking']['action'] != 'none' else '', replies=operation_replies()))
         message=WhatsAppZernioChannel.from_zernio({'conversation_id':scope.conversation_id,
             'account_id':scope.account_id,'sender_id':scope.customer_ref,'message_id':trigger,
-            'channel':'whatsapp','text':text,'sent_at':NOW.isoformat()})
+            'channel':'whatsapp','text':text,'sent_at':NOW.isoformat(),'interactive_id':interactive_id,'interactive_type':'button_reply' if interactive_id else ''})
         with ExitStack() as stack:
             for obj,name,value in [(social_agent.state_registry,'match_ignored_contact',None),
                                     (social_agent.auto_block,'evaluate_inbound',{}),

@@ -2,7 +2,7 @@
   "schema_version": "isluno.v1",
   "tenant_slug": "mermaid",
   "brand": "isluno",
-  "version": "isluno-demo-v2-source-aligned-20260908",
+  "version": "isluno-demo-v3-visual-context-20260909",
   "products": [
     {
       "id": "afternoon-explorer-tour",
@@ -457,6 +457,12 @@
               "St. Willibrordus"
             ]
           }
+        },
+        "location_context": {
+          "text": "Shete Boka is a national park; Playa Piskado and Cas Abao are beaches.",
+          "source_url": "https://isluno.com/es/tours/all-west-beach-hopping",
+          "evidence_kind": "public_listing_overview",
+          "observed_on": "2026-09-09"
         }
       },
       "import_notes": {
@@ -947,6 +953,12 @@
               "13:30"
             ]
           }
+        },
+        "location_context": {
+          "text": "On this route, Playa Canoa is the short swim stop.",
+          "source_url": "https://isluno.com/tours/atv-buggy-3-hours",
+          "evidence_kind": "public_listing_overview",
+          "observed_on": "2026-09-09"
         }
       },
       "import_notes": {
@@ -4172,6 +4184,12 @@
             ],
             "source_conflict": "This website's Saturday exclusion differs from the inherited Mermaid catalog's Thursday exclusion; no legacy rule was silently copied."
           }
+        },
+        "location_context": {
+          "text": "Klein Curaçao is an island reached by boat from Curaçao.",
+          "source_url": "https://isluno.com/tours/klein-curacao-catamaran-day-trip",
+          "evidence_kind": "public_listing_overview",
+          "observed_on": "2026-09-09"
         }
       },
       "import_notes": {
@@ -4497,6 +4515,12 @@
             ],
             "pickup": "available at additional unverified price"
           }
+        },
+        "location_context": {
+          "text": "Klein Curaçao is an island reached by boat from Curaçao.",
+          "source_url": "https://isluno.com/tours/klein-curacao-catamaran-day-trip",
+          "evidence_kind": "public_listing_overview",
+          "observed_on": "2026-09-09"
         }
       },
       "import_notes": {
@@ -4807,6 +4831,12 @@
               "Hotel transfer: extra"
             ]
           }
+        },
+        "location_context": {
+          "text": "Klein Curaçao is an island reached by boat from Curaçao.",
+          "source_url": "https://isluno.com/tours/klein-curacao-catamaran-day-trip",
+          "evidence_kind": "public_listing_overview",
+          "observed_on": "2026-09-09"
         }
       },
       "import_notes": {
@@ -5376,6 +5406,12 @@
               "Hotel transfer: extra"
             ]
           }
+        },
+        "location_context": {
+          "text": "Klein Curaçao is an island reached by boat from Curaçao.",
+          "source_url": "https://isluno.com/tours/klein-curacao-catamaran-day-trip",
+          "evidence_kind": "public_listing_overview",
+          "observed_on": "2026-09-09"
         }
       },
       "import_notes": {
@@ -6677,6 +6713,12 @@
               "Participants who swim/snorkel must be able to swim"
             ]
           }
+        },
+        "location_context": {
+          "text": "Shete Boka is a national park; Playa Piskado and Cas Abao are beaches.",
+          "source_url": "https://isluno.com/es/tours/all-west-beach-hopping",
+          "evidence_kind": "public_listing_overview",
+          "observed_on": "2026-09-09"
         }
       },
       "import_notes": {

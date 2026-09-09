@@ -84,7 +84,7 @@ class CommunicationWireTests(unittest.TestCase):
         self.assertFalse(self.send(reply,[(200,{'success':True,'data':{'messageId':'partial','messageIds':['partial'],'partialFailure':True},'warnings':['private provider prose']})]))
         plan=self.plan(reply);self.assertEqual(plan['parts'][0]['result']['provider_ids'],['partial'])
         self.assertNotIn('private provider prose',json.dumps(plan))
-        self.assertFalse(self.send(reply));self.assertEqual(len(self.requests),1)
+        before=len(self.requests);self.assertFalse(self.send(reply));self.assertEqual(len(self.requests),before)
     def test_callback_before_http_result_correlates_and_stops_remaining_parts(self):
         reply=self.reply();self.assertFalse(self.send(reply,callback_before_response=True));self.assertEqual(len(self.requests),1)
         self.assertEqual(self.plan(reply)['parts'][0]['status'],'provider_failed')
@@ -97,7 +97,7 @@ class CommunicationWireTests(unittest.TestCase):
         self.assertTrue(self.callback('message.delivered','provider-1'));self.assertEqual(self.plan(reply)['parts'][0]['provider_delivery_status'],'read')
         self.assertTrue(self.callback('message.failed','provider-1'));self.assertTrue(self.callback('message.delivered','provider-1'))
         self.assertEqual(self.plan(reply)['parts'][0]['status'],'provider_failed')
-        self.assertFalse(self.send(reply));self.assertEqual(len(self.requests),1)
+        before=len(self.requests);self.assertFalse(self.send(reply));self.assertEqual(len(self.requests),before)
     def test_wrong_account_or_unknown_id_never_changes_send(self):
         reply=self.reply(500);self.assertTrue(self.send(reply))
         self.assertFalse(self.callback('message.failed','provider-1','foreign'))
@@ -128,13 +128,13 @@ class CommunicationWireTests(unittest.TestCase):
 
     def test_stale_button_returns_operational_notice_without_model_or_mutation(self):
         first=self.reply(500,'one');self.assertTrue(self.send(first));self.reply(500,'two')
-        token=self.plan(first)['body']['buttons'][0]['payload'];before=self.t.store.session(self.t.scope())['revision']
+        token=next(b['payload'] for part in self.plan(first)['parts'] for b in part['body'].get('buttons',[]) if self.plan(first)['button_meanings'][b['payload']]['kind']=='add');before=self.t.store.session(self.t.scope())['revision']
         reply,calls=self.t.turn(token=token,trigger='stale')
         self.assertEqual(calls,0);self.assertTrue(reply['text']);self.assertTrue(reply['generation_failed'])
         self.assertEqual(self.t.store.session(self.t.scope())['revision'],before)
     def test_unaccepted_native_control_cannot_apply_an_action(self):
         first=self.reply(500,'unsent')
-        token=self.plan(first)['body']['buttons'][0]['payload']
+        token=next(b['payload'] for part in self.plan(first)['parts'] for b in part['body'].get('buttons',[]) if self.plan(first)['button_meanings'][b['payload']]['kind']=='add')
         reply,calls=self.t.turn(token=token,trigger='unsent-click')
         self.assertEqual(calls,0);self.assertTrue(reply['generation_failed'])
         self.assertIsNone(self.t.store.session(self.t.scope())['active_itinerary_id'])
