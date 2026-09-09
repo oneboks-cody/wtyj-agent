@@ -72,6 +72,16 @@ class VisualDiscoveryTests(CommunicationWireTests):
         self.assertEqual(len(self.requests),1);self.assertNotIn('attachmentUrl',self.requests[0]);self.assertNotIn('buttons',self.requests[0])
         self.assertIsNone(self.t.store.session(self.t.scope())['active_itinerary_id'])
 
+    def test_intake_can_send_only_one_question(self):
+        d=response(products=[],fact_keys=[])
+        d['hospitality']=hospitality('','How old are the children?',stage='exploration')
+        d['hospitality']['replies']['browsing']['paragraphs']=[]
+        d['hospitality']['memory']={'party':'Three adults and two children'}
+        reply=self.visual('short-intake',d,text='3 adults and 2 kids');self.assertTrue(self.send(reply))
+        self.assertEqual([b['message'] for b in self.requests],['How old are the children?'])
+        self.assertTrue(all('attachmentUrl' not in b and 'interactive' not in b for b in self.requests))
+        self.assertIsNone(self.t.store.session(self.t.scope())['active_itinerary_id'])
+
     def test_missing_local_media_and_unverified_location_are_truthful_text(self):
         self.t.discovery.media=FakeMedia(missing=['cruise-0','beach-0'])
         reply=self.visual();self.assertTrue(self.send(reply))

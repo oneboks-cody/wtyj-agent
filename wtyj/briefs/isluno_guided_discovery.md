@@ -40,3 +40,11 @@ offline and public image URLs read-only, then let Calvin test customer rendering
 
 Calvin also authorized a clean slate after deployment, without a customer backup.
 Use the existing tenant-scoped reset, retaining payload-free replay-prevention IDs.
+
+## Short intake correction
+
+Calvin's screenshot showed duplicated questions, group recaps and emojis during
+qualification. Allow empty reply paragraphs in the schema and validator so the
+model can send only its single next question. Direct the model to use that shape
+for ordinary intake, with no emojis or praise; answer mixed guest questions briefly.
+Keep rich language for trip pitches. Deploy and reset the same test tenant again.

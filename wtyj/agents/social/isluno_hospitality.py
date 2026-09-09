@@ -35,7 +35,7 @@ SCHEMA = {'type': 'object', 'additionalProperties': False, 'properties': {
         'pickup': {'type':'boolean'}}, 'required':['product_id','date','slot_id','guest_ages','options','pickup']},
     'replies': {'type': 'object', 'additionalProperties': False, 'properties': {
         k: {'type': 'object', 'additionalProperties': False, 'properties': {
-            'paragraphs': {'type': 'array', 'minItems': 1, 'maxItems': 4,
+            'paragraphs': {'type': 'array', 'minItems': 0, 'maxItems': 4,
                            'items': {'type': 'string', 'maxLength': 1800}},
             'question': {'type': 'string', 'maxLength': 500}},
             'required': ['paragraphs', 'question']} for k in BRANCHES}},
@@ -71,6 +71,19 @@ Never claim a price inquiry created a booking. Ask missing pricing details if ne
 
 NATURAL PRESENTATION:
 replies maps actual outcome branches to {paragraphs:[...], question:"one next question"}.
+QUICK INTAKE: after the first welcome, ordinary qualification turns should contain
+only the next short question. Use browsing.paragraphs=[] and put the question ONCE
+in browsing.question. No emojis, praise, party recap, sales pitch or explanation of
+why you are asking. Never put the same question or a paraphrase in paragraphs.
+For example: "How many adults and children?", "How old are the children?", or
+"What would you enjoy most: sea, beaches, adventure or exploring the island?"
+Adapt the question to known answers, including corrections. Acknowledge a correction
+only when needed to remove ambiguity, in a few words. Do not call an age or group
+size ideal for activities without verified suitability. Ask one detail, then move on.
+The first welcome may briefly introduce Tracy and explain the quick questions once.
+Save atmosphere, emojis and descriptive language for actual trip recommendations.
+If the guest also asks a question, answer it briefly before the next intake question;
+never suppress a requested answer just to keep intake short.
 Always supply browsing as a neutral shared answer: answer the guest's questions and
 acknowledge their request without claiming an operation has succeeded. For any booking
 action also supply error with {operation}. Other outcome branches are OPTIONAL; do not
@@ -245,7 +258,7 @@ def validate(value, decision, catalog):
     check(isinstance(replies, dict) and 'browsing' in replies and not set(replies) - set(BRANCHES), 'invalid_hospitality_replies')
     for branch, reply in replies.items():
         check(isinstance(reply, dict) and set(reply) == {'paragraphs', 'question'}, 'invalid_hospitality_reply')
-        check(isinstance(reply['paragraphs'], list) and 1 <= len(reply['paragraphs']) <= 4, 'invalid_reply_paragraphs')
+        check(isinstance(reply['paragraphs'], list) and 0 <= len(reply['paragraphs']) <= 4, 'invalid_reply_paragraphs')
         texts = [*reply['paragraphs'], reply['question']]
         check(all(isinstance(t, str) for t in texts), 'invalid_reply_text_type')
         check(all(len(t) <= 1800 for t in texts), 'invalid_reply_text_length')
