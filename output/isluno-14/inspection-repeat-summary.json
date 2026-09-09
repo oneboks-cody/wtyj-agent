@@ -1,0 +1,26 @@
+{
+  "status": "observed",
+  "started_at": "2026-09-09T02:05:52.412316+00:00",
+  "completed_at": "2026-09-09T02:05:54.959347+00:00",
+  "platform": "linux/amd64",
+  "image_matches_baseline": true,
+  "start_matches_baseline": true,
+  "runtime_files_compared": 112,
+  "runtime_files_matching": 112,
+  "runtime_missing": 0,
+  "runtime_changed": 0,
+  "frontend_release_matches_baseline": true,
+  "frontend_hashes_match": true,
+  "expected_mounts_verified": true,
+  "private_modes": [
+    "0o700",
+    "0o600"
+  ],
+  "code_sha": "8a43d94a4a9341192f7a7d2b2fb1bbb8d13dfa66",
+  "runner_sha256": "9a19b292999a1c20641f93bbaad9c7e7adbd984c355ea6325234651ceda4b60f",
+  "authorization_reference": "calvin-gatekeeper-h1h7-repeat-approved",
+  "attempts_under_this_approval": 1,
+  "private_evidence": "tmp/isluno-h1h7-repeat-approved/run.json",
+  "scope": "Selected H1-H7 metadata/source/static hashes only. No protected/provider/operator projections or mutations.",
+  "limitation": "Selected files and image identity at observation time, not all runtime dependencies, provider liveness, public routing or release authority."
+}

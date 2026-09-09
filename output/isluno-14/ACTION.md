@@ -71,3 +71,10 @@ Native-language sign-off, outer login/webhook, live takeover and provider render
 ## Authorized inspection attempt
 
 Calvin approved one H1–H7 inspection using runner digest `6e2741055558f8075aafcc3f583fe0a82926be751501d6fc2d0e0b6390d1292d` at code `80e6c86cacfc793ebe724e0a377553ce46818776`. The single attempt stopped at H4 and returned no partial checks. See `inspection-attempt.json` for sanitized status/time/scope; detailed runner output remains private locally. No current binding can be promoted from this result and the specific failure cause is not established. No retry, alternate access or broader inspection was attempted. Earlier no-access statements describe preparation before this explicitly approved attempt; no provider access, protected-data read or mutation occurred.
+
+
+## Additional authorized H1–H7 outcome
+
+The separately approved corrected-runner attempt completed on 2026-09-09 at 02:05:54 UTC in approximately 2.55 seconds. `inspection-repeat-summary.json` records sanitized comparisons only; full selected metadata remains private. Linux/AMD64 and the expected three bind mounts were verified. Image/start identity matches the September 8 baseline; all 112 inspected Python files match, with none missing or different. The existing frontend release pointer and three checked asset hashes also match. Final container identity validation passed. This does not retroactively establish the cause of the first H4 stop.
+
+`required-inputs.json` now binds ten directly observed metadata fields with timestamps and scope; the original failed attempt remains unchanged. Backend/frontend source SHA fields remain unbound: the selected comparisons support the historical baseline but are not complete source/dependency/build attestation. Protected config/account projection, public API/number/consumer routing, admission/drain/retention, media/document bases, compatible immutable candidate image, backup/config diff/window and exact release authorization remain unresolved. No additional host access, protected/provider reads, sends or mutations are authorized by this successful inspection.

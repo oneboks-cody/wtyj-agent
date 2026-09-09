@@ -4,20 +4,20 @@
   "brand": "Isluno",
   "number_intended": "+1 223 276 0075",
   "inputs": {
-    "target_host_or_project": null,
-    "target_platform": null,
+    "target_host_or_project": "108.61.192.52",
+    "target_platform": "linux/amd64",
     "current_backend_source_sha": null,
-    "current_backend_image_digest": null,
+    "current_backend_image_digest": "sha256:ed146176bbf4e116270b55a04771af5fb3cd5d0f62d124d8650aa7e1bac97552",
     "approved_candidate_base_image_digest": null,
-    "current_compose_path": null,
-    "current_compose_service": null,
-    "current_container_name": null,
-    "current_database_path": null,
-    "current_config_directory": null,
+    "current_compose_path": "/root/clients/mermaid/docker-compose.yml",
+    "current_compose_service": "agent",
+    "current_container_name": "wtyj-mermaid",
+    "current_database_path": "/root/clients/mermaid/data/state_registry.db",
+    "current_config_directory": "/root/clients/mermaid/config",
     "current_frontend_host": null,
-    "current_frontend_release_path": null,
+    "current_frontend_release_path": "/var/www/unboks-dashboard/releases/2e41f4a209fbafc602419408696a25fa9791dc34",
     "current_frontend_source_sha": null,
-    "current_frontend_pointer_path": null,
+    "current_frontend_pointer_path": "/var/www/unboks-dashboard/current",
     "current_frontend_api_route": null,
     "current_strict_account_id": null,
     "number_ownership_evidence": null,
@@ -115,19 +115,72 @@
       "source": "Candidate deploy_mermaid_release.sh"
     }
   },
-  "inputs_semantics": "inputs remain null until verified for the proposed action. discovered_candidates contains sourced historical/documented values, not missing user inventory requests or approved execution values.",
+  "inputs_semantics": "Non-null inputs are the ten metadata facts verified in the separately approved second H1-H7 attempt. Nulls remain unresolved; discovered_candidates are historical/documented only. Source SHA fields remain null because selected source/static hashes are not complete runtime/dependency/build attestation.",
   "remaining_verification": [
-    "Fresh sanitized host/platform/image/mount/pointer metadata and comparison with the September 8 baseline. Exact strict account binding must be verified without reading secrets or customer records.",
-    "Current ownership and sole webhook consumer; ingress admission/drain and durable retention evidence. Project history is not provider-current proof.",
-    "Approved public media/document bases and their actual tenant route mapping; existing domain does not imply Isluno endpoints are exposed.",
-    "Pinned compatible OCI base/platform/dependencies and final candidate image digest. Historical current image digest is not an approved candidate base.",
-    "Fresh protected config digest and exact CAS diff; private backup/restore plan; exact action authorization and change window."
+    "Complete source/dependency/image recipe binding:112 selected Python hashes and3 frontend assets match baseline, but do not establish every runtime dependency or asset. Pin compatible immutable candidate base/dependencies and final OCI image digest.",
+    "C1: protected current strict account/feature projection and fresh config digest; exact CAS diff. Existing historical config hash is not freshly verified.",
+    "R1/P1/I1/I2: actual public routing, number ownership/sole consumer and ingress admission/drain/durable retention evidence. H1-H7 does not establish these.",
+    "Approved HTTPS media/document bases and exact tenant route mapping.",
+    "Private backup/restore plan, exact release authorization and change window; the two completed read-only approvals do not authorize mutation."
   ],
   "current_state_inspection": {
-    "record": "inspection-attempt.json",
-    "status": "stopped_at_H4",
-    "usable_bindings": 0,
-    "authorization_consumed": "calvin-gatekeeper-h1h7-approved; one attempt only",
-    "next_step": "Gatekeeper review of sanitized failure; no retry or broader access authorized."
+    "record": "inspection-repeat-summary.json",
+    "status": "observed",
+    "verified_metadata_bindings": 10,
+    "first_attempt_preserved": "inspection-attempt.json",
+    "authorization_consumed": "calvin-gatekeeper-h1h7-repeat-approved; one additional attempt only",
+    "next_step": "Review observed bindings; protected/operator/provider facts and exact release action remain separately gated."
+  },
+  "verified_binding_scope": {
+    "target_host_or_project": {
+      "observed_at": "2026-09-09T02:05:54.959347+00:00",
+      "source": "inspection-repeat-summary.json / private approved H1-H7 record",
+      "limitation": "Point-in-time metadata; reverify at action. Not execution authority."
+    },
+    "target_platform": {
+      "observed_at": "2026-09-09T02:05:54.959347+00:00",
+      "source": "inspection-repeat-summary.json / private approved H1-H7 record",
+      "limitation": "Point-in-time metadata; reverify at action. Not execution authority."
+    },
+    "current_backend_image_digest": {
+      "observed_at": "2026-09-09T02:05:54.959347+00:00",
+      "source": "inspection-repeat-summary.json / private approved H1-H7 record",
+      "limitation": "Point-in-time metadata; reverify at action. Not execution authority."
+    },
+    "current_compose_path": {
+      "observed_at": "2026-09-09T02:05:54.959347+00:00",
+      "source": "inspection-repeat-summary.json / private approved H1-H7 record",
+      "limitation": "Point-in-time metadata; reverify at action. Not execution authority."
+    },
+    "current_compose_service": {
+      "observed_at": "2026-09-09T02:05:54.959347+00:00",
+      "source": "inspection-repeat-summary.json / private approved H1-H7 record",
+      "limitation": "Point-in-time metadata; reverify at action. Not execution authority."
+    },
+    "current_container_name": {
+      "observed_at": "2026-09-09T02:05:54.959347+00:00",
+      "source": "inspection-repeat-summary.json / private approved H1-H7 record",
+      "limitation": "Point-in-time metadata; reverify at action. Not execution authority."
+    },
+    "current_database_path": {
+      "observed_at": "2026-09-09T02:05:54.959347+00:00",
+      "source": "inspection-repeat-summary.json / private approved H1-H7 record",
+      "limitation": "Point-in-time metadata; reverify at action. Not execution authority."
+    },
+    "current_config_directory": {
+      "observed_at": "2026-09-09T02:05:54.959347+00:00",
+      "source": "inspection-repeat-summary.json / private approved H1-H7 record",
+      "limitation": "Point-in-time metadata; reverify at action. Not execution authority."
+    },
+    "current_frontend_pointer_path": {
+      "observed_at": "2026-09-09T02:05:54.959347+00:00",
+      "source": "inspection-repeat-summary.json / private approved H1-H7 record",
+      "limitation": "Point-in-time metadata; reverify at action. Not execution authority."
+    },
+    "current_frontend_release_path": {
+      "observed_at": "2026-09-09T02:05:54.959347+00:00",
+      "source": "inspection-repeat-summary.json / private approved H1-H7 record",
+      "limitation": "Point-in-time metadata; reverify at action. Not execution authority."
+    }
   }
 }

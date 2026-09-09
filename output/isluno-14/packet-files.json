@@ -1,7 +1,7 @@
 [
   {
     "file": "ACTION.md",
-    "sha256": "6dfd42c6da2c4319912ebbff6e9ad5a0e09932ee444b5f3f3a7ef876baf9bf7d"
+    "sha256": "9b1e73c034c88fb2aaf2556a73b676dbb39ee473936665027df613f4d65c2011"
   },
   {
     "file": "BUILD.md",
@@ -32,6 +32,10 @@
     "sha256": "39056ae14f8840dfb2c89b9f94dcfc3263809900d59bf54f9be216ff13a9f912"
   },
   {
+    "file": "inspection-repeat-summary.json",
+    "sha256": "c663a744335ccc6d1af8e3981a26d00b5ecb5aaeb1493a9c6ca9dc819fe73110"
+  },
+  {
     "file": "local-validation.json",
     "sha256": "ae6fc3418f195eef12402c4088f6ffeaef9e87899c0a477919f5f5ae94530610"
   },
@@ -45,7 +49,7 @@
   },
   {
     "file": "required-inputs.json",
-    "sha256": "e16bf71adf151b678d6146e0b30185cb49e9a1d9370b915a9c665f477c08ce77"
+    "sha256": "eee331ae9b315977df850a0672bf7bd95b04a2458099ce0209d11d7c669fa56a"
   },
   {
     "file": "runner-evidence.json",
