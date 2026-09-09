@@ -1,11 +1,15 @@
 [
   {
     "file": "ACTION.md",
-    "sha256": "d2a48c1f947b33f4cdb0dd4bba38c802cefe26fb946776dc2a4222a80987d0f7"
+    "sha256": "2c47147adb642a1ad9804cd173692598ad3b241862cc57569b77139b132233dd"
   },
   {
     "file": "BUILD.md",
     "sha256": "784deb337f0eb5e7ce879126fdd2fd13cdd77780ce9b0b19008fea4bb5f6b48b"
+  },
+  {
+    "file": "INSPECTION.md",
+    "sha256": "82e76f16dff23611291c00747fd695fc4a4e9906ef228259d4b12bc51c431652"
   },
   {
     "file": "artifacts.json",

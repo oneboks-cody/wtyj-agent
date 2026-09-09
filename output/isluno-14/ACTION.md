@@ -61,3 +61,8 @@ Current GitHub environments and deployments are empty for both repos; repository
 The remaining step is a narrowly scoped, separately authorized sanitized target inspection and ownership/routing evidence, followed by exact OCI/config/backup/window binding. Historical image and config hashes must not be used as fresh compare-and-swap values. Host access, provider inspection and execution are not granted by this discovery. Public media/document bases, ingress retention/drain, current exclusive number routing and the compatible immutable image recipe remain unresolved. No application rebuild or unchanged acceptance suite was repeated.
 
 Native-language sign-off, outer login/webhook, live takeover and provider rendering/delivery remain separate evidence gaps, with no invented pass. No production SSH, database/config reads, Docker service operations, deploy, merge, provider call, feature activation or live message was performed during preparation.
+
+
+## Bounded inspection proposal
+
+`INSPECTION.md` extends command-plan step 1 with exact proposed target checks, selected output fields, execution limits, operator-only protected projections and provider-owned evidence. It is reviewable preparation, not an executable runner or access authorization. No host/provider inspection has occurred.
