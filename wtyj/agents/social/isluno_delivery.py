@@ -82,10 +82,16 @@ def send_plan(conversation_id, account_id, plan_id, *, store=None, post=None, wi
             result = {'status': 'window_closed'}
         else:
             result = post(scope, plan['body'], 'isluno-discovery-' + plan_id + ('-fallback' if plan.get('fallback_active') else ''))
+        if result.get('status') == 'accepted' and not result.get('provider_id'):
+            result = {'status': 'ambiguous'}
         # A remote rejection does not establish safe automatic fallback.
         with store.db() as db, db:
             db.execute('UPDATE isluno_discovery_plans SET status=?,provider_id=? WHERE id=?',
                        (result.get('status', 'ambiguous'), result.get('provider_id'), plan_id))
+            from agents.social.isluno_hospitality import record_delivery
+            record_delivery(db, scope, 'discovery:' + plan_id, plan['body'], result.get('status', 'ambiguous'),
+                            assets=[{'product_ids': plan['product_ids'], 'asset_id': asset} for asset in plan['asset_ids']],
+                            buttons=plan.get('button_meanings', {}), question=plan.get('next_question', ''))
         return result.get('status') == 'accepted'
     except (ItineraryError, PermissionError):
         return False

@@ -2223,7 +2223,7 @@ def process_message(
             return fallback
         result = dict(tool_use_block.input)
         if response_contract == "isluno_conversation":
-            return isluno_conversation_understanding.validate(result, thread_fields["catalog"])
+            return isluno_conversation_understanding.validate(result, thread_fields["catalog"], require_hospitality=True)
         if response_contract == "isluno_discovery":
             return isluno_understanding.validate(result, thread_fields["catalog"])
         # A real Mermaid FAQ response used an empty string for no extracted

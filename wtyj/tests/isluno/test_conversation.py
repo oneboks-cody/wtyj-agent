@@ -211,8 +211,9 @@ class ConversationTests(unittest.TestCase):
     def test_recorded_outcome_recovers_without_second_model_call(self):
         decision = response('add', [{'product_id':'fixture-cruise','date':'2026-10-15'}], {'name':'Calvin','ages':[35]})
         with patch.object(self.discovery, 'plan', side_effect=RuntimeError('Synthetic reply persistence interruption')):
-            with self.assertRaises(RuntimeError):
-                self.turn(decision, trigger='crash-after-commit')
+            failed,calls = self.turn(decision, trigger='crash-after-commit')
+            self.assertTrue(failed['generation_failed'])
+            self.assertTrue(failed['text'])
         result, calls = self.turn(decision, trigger='crash-after-commit')
         self.assertEqual(calls, 0)
         self.assertIn('saved', result['text'])
@@ -244,6 +245,8 @@ class ConversationTests(unittest.TestCase):
         from agents.social import isluno_conversation_understanding
         from shared.isluno_catalog import CatalogStore
         decision = response('add', [{'product_id':'fixture-cruise'}])
+        from hospitality_fixtures import hospitality, operation_replies
+        decision['hospitality'] = hospitality('Happy to help.', action='add', evidence='Book a trip', replies=operation_replies())
         sdk_response = SimpleNamespace(content=[SimpleNamespace(type='tool_use',input=decision)],usage=None)
         with patch.object(marina_agent.anthropic,'Anthropic') as sdk:
             sdk.return_value.messages.create.return_value = sdk_response
@@ -370,8 +373,9 @@ class ConversationTests(unittest.TestCase):
         decision = response('add',[{'product_id':'fixture-cruise','date':'2026-10-15'}],{'name':'Calvin','ages':[35]},language='nl',question='Supported question')
         decision['translations']['fixture-cruise']['summary'] = 'Oorspronkelijke beschrijving.'
         with patch.object(self.discovery,'plan',side_effect=RuntimeError('Synthetic crash after apply')):
-            with self.assertRaises(RuntimeError):
-                self.turn(decision,trigger='snapshot-replay')
+            failed,calls = self.turn(decision,trigger='snapshot-replay')
+            self.assertTrue(failed['generation_failed'])
+            self.assertTrue(failed['text'])
         saved = self.active()
         after = self.publish_new_source_and_price()
         result,calls = self.turn(decision,trigger='snapshot-replay')
@@ -393,7 +397,10 @@ class ConversationTests(unittest.TestCase):
         for decision in decisions:
             result,calls = self.turn(decision)
             self.assertEqual(calls,1)
-            self.assertIn('saved',result['text'])
+            if decision['booking']['action'] != 'none':
+                self.assertIn('saved',result['text'])
+            else:
+                self.assertNotIn('saved',result['text'])
             self.assertIn('confirmed information',result['text'])
             plan,_ = self.discovery.delivery_plan(result['media']['url'],self.scope().account_id,self.scope().conversation_id)
             self.assertEqual(plan['answer_status'],'unavailable')

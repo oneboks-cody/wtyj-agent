@@ -20,6 +20,17 @@ def send_job(conversation_id, account_id, job_id, *, store=None, post=None, wind
     try:
         job = store.job(job_id,account_id,conversation_id)
         scope = JourneyScope(**job['scope'])
+        if job.get('answer_plan_id') and job.get('followup_job_id'):
+            from agents.social.isluno_delivery import send_plan
+            from agents.social.isluno_discovery import DiscoveryStore
+            discovery = DiscoveryStore(store.itinerary.db_path, store.itinerary.catalog_path, clock=store.clock)
+            if not send_plan(conversation_id, account_id, job['answer_plan_id'], store=discovery, post=post, window=window, sleep=sleep):
+                return False
+            completed = send_job(conversation_id, account_id, job['followup_job_id'], store=store, post=post, window=window, sleep=sleep)
+            if completed:
+                with store.db() as db, db:
+                    db.execute("UPDATE isluno_quote_deliveries SET status='accepted' WHERE job_id=? AND part=0", (job_id,))
+            return completed
         recipient = hashlib.sha256(dump([scope.tenant_slug, scope.account_id, scope.customer_ref]).encode()).hexdigest()
         for index, source in enumerate(job['parts']):
             # Recheck the exact quote and bound recipient before EVERY part.
@@ -63,6 +74,9 @@ def send_job(conversation_id, account_id, job_id, *, store=None, post=None, wind
             if status == 'accepted' and not result.get('provider_id'): status = 'ambiguous'
             with store.db() as db, db:
                 db.execute('UPDATE isluno_quote_deliveries SET status=?,provider_id=? WHERE job_id=? AND part=?', (status,result.get('provider_id'),job_id,index))
+                from agents.social.isluno_hospitality import record_delivery
+                record_delivery(db, scope, 'quote:' + job_id + ':' + str(index), body, status,
+                                assets=[{'document_quote_id': document_id, 'type': body.get('attachmentType')}] if document_id else [])
             if status != 'accepted': return False
         return True
     except (ItineraryError, PermissionError):

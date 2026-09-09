@@ -5,6 +5,7 @@ from agents.social import isluno_understanding as discovery
 from shared.isluno_config import LANGUAGES
 from shared.isluno_catalog import quote_rules
 from shared.isluno_pricing import check
+from agents.social import isluno_hospitality as hospitality
 
 TOOL = copy.deepcopy(discovery.TOOL)
 TOOL['input_schema']['properties'].update({
@@ -22,11 +23,14 @@ TOOL['input_schema']['properties'].update({
         'required': ['action', 'updates', 'guest', 'document_language']},
     'translations': {'type': 'object', 'additionalProperties': {'type': 'object', 'additionalProperties': {'type': 'string'}}},
 })
-TOOL['input_schema']['required'] += ['booking', 'translations']
+TOOL['input_schema']['properties']['hospitality'] = hospitality.SCHEMA
+TOOL['input_schema']['required'] += ['booking', 'translations', 'hospitality']
 
 
 def system_prompt():
-    return discovery.system_prompt() + (
+    from shared.isluno_config import active_profile
+    voice = active_profile().get('hospitality_voice', '')
+    return discovery.system_prompt() + '\nBrand voice: ' + voice + hospitality.PROMPT + (
         ' Also extract explicit itinerary changes in the SAME response; never make a second understanding call. '
         'Saved session and item IDs are authoritative. Preserve guest data unless explicitly corrected; ask only missing information. '
         'booking.action add means an explicit new trip; update targets existing or pending item IDs; remove targets one item; '
@@ -42,12 +46,12 @@ def system_prompt():
         'For non-English replies, translate summary and every selected source fact for each recommended product into the chat language in translations. '
         'Translations are faithful to those facts only: preserve numbers, restrictions, uncertainty and demo labels; never add new claims. '
         'Product names stay recognizable. All money, changes, cancellation and operator status are rendered by the server. '
-        'If saved itinerary is paid or no longer editable, request human recovery; never claim a refund or completed change. '
+        'Only explicit changes to a paid or noneditable itinerary request human recovery; a greeting, name or read-only question never requests handoff. Never claim a refund or completed change. '
         'Use booking.action stop_reminders when the guest asks to stop reminders or follow-up messages. Do not infer opt-in. Use booking.action human for an explicit operator request. Supplier/safety questions with unconfirmed answers use the unavailable-answer path.')
 
 
-def validate(result, catalog):
-    check(isinstance(result, dict) and set(result) == set(discovery.TOOL['input_schema']['required']) | {'booking', 'translations'}, 'invalid_conversation_result')
+def validate(result, catalog, *, require_hospitality=False):
+    check(isinstance(result, dict) and set(discovery.TOOL['input_schema']['required']) | {'booking', 'translations'} <= set(result) <= set(discovery.TOOL['input_schema']['required']) | {'booking', 'translations', 'hospitality'}, 'invalid_conversation_result')
     base = {k: result[k] for k in discovery.TOOL['input_schema']['required']}
     discovery.validate(base, catalog)
     booking = result['booking']
@@ -75,6 +79,9 @@ def validate(result, catalog):
     language = booking['document_language']
     check(language is None or isinstance(language, str) and language in LANGUAGES, 'invalid_document_language')
     validate_translations(result['translations'], base, catalog)
+    check(not require_hospitality or 'hospitality' in result, 'missing_hospitality_contract')
+    if 'hospitality' in result:
+        hospitality.validate(result['hospitality'], result, catalog)
     return result
 
 
@@ -103,4 +110,7 @@ def understand(scope, text, saved, snapshot):
         thread_fields={'catalog': catalog, **saved}, thread_flags={}, channel='whatsapp',
         messages=saved.get('history', []), response_contract='isluno_conversation')
     check(not result.get('generation_failed'), (result.get('model_error') or {}).get('code') or 'conversation_generation_failed')
-    return validate(result, catalog)
+    validated = validate(result, catalog)
+    if 'hospitality' in validated:
+        hospitality.authorize(validated['hospitality'], text)
+    return validated

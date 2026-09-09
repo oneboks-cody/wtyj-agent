@@ -116,7 +116,8 @@ class PaymentStore(QuoteStore):
             session,_=self._current(db,scope)
             session['revision']+=1;session['payment_context']={'payment_id':payment_id,'status':'demo_paid'}
             session['quote_context']={'quote_id':quote['id'],'stage':'demo_paid'}
-            session['history']=(session['history']+[{'role':'user','content':'[Verified Complete demo payment action]'}, {'role':'assistant','content':COPY[quote['chat_language']][2]}])[-100:]
+            session['stage']='after_booking'
+            session['history']=(session['history']+[{'role':'user','content':'[Verified Complete demo payment action]'}])[-100:]
             db.execute('UPDATE isluno_booking_sessions SET payload=? WHERE scope_key=?',(encoded(session),scope.key))
             db.execute('DELETE FROM isluno_discovery_latest WHERE scope_key=?',(scope.key,))
             check(_provider_mutation_account_allowed(scope.account_id,'isluno_demo_payment'),'payment_automation_paused')

@@ -10,8 +10,17 @@
     "website": "https://isluno.com",
     "primary_color": "#125055"
   },
-  "document_languages": ["en", "nl", "de", "es", "pap", "pt"],
-  "native_review_pending": ["pap"],
+  "document_languages": [
+    "en",
+    "nl",
+    "de",
+    "es",
+    "pap",
+    "pt"
+  ],
+  "native_review_pending": [
+    "pap"
+  ],
   "mode": "demo",
   "greetings": {
     "en": "Welcome to Isluno! I’m TRACY, your virtual trip assistant.",
@@ -28,5 +37,6 @@
     "es": "Esta es una demostración. Algunas condiciones son ejemplos identificados. No se mueve dinero ni se realiza una reserva real con el proveedor.",
     "pap": "Esaki ta un demo. Algun regla di biahe ta ehèmpelnan indiká. No ta move sèn i no ta hasi un reservashon real serka un proveedor.",
     "pt": "Esta é uma demonstração. Algumas condições são exemplos identificados. Nenhum dinheiro é movimentado e nenhuma reserva real é feita com o fornecedor."
-  }
+  },
+  "hospitality_voice": "A thoughtful Curaçao island host: warm, welcoming, attentive, relaxed in language and precise in arrangements. Holiday excitement is an atmosphere, never imposed on a worried or hurried guest. Recommend with judgment, avoid forced slang, hype, assumed party preferences and invented human experience. Choosing an experience should feel like part of the holiday."
 }

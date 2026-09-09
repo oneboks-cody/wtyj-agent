@@ -168,6 +168,7 @@ class QuoteStore:
                 snapshot = {**copy.deepcopy(value), 'id': secrets.token_hex(16), 'version': version,
                     'catalog_revision': catalog_revision, 'chat_language': session['chat_language'], 'created_at': self.clock().isoformat(),
                     'demo_only': True, 'real_booking_eligible': False}
+                session['stage'] = 'review_approval'
                 session['quote_context'] = {'quote_id': snapshot['id'], 'version': version, 'stage': 'summary'}
                 db.execute('UPDATE isluno_booking_sessions SET payload=? WHERE scope_key=?', (encoded(session), scope.key))
                 raw = render_pdf(snapshot)
@@ -209,8 +210,9 @@ class QuoteStore:
                 check(not db.execute("SELECT 1 FROM isluno_quote_deliveries WHERE job_id=? AND status!='accepted'", (latest,)).fetchone(), 'quote_not_fully_accepted')
                 session, _ = self._current(db, scope)
                 session['revision'] += 1
+                session['stage'] = 'payment_confirmation' if target == 'approved' else 'review_approval'
                 session['quote_context'] = {'quote_id': snapshot['id'], 'version': snapshot['version'], 'stage': target}
-                session['history'] = (session['history'] + [{'role': 'user', 'content': '[Verified WhatsApp action: ' + row['kind'] + ']'}, {'role': 'assistant', 'content': COPY[snapshot['chat_language']][15 if target == 'quote' else 16]}])[-100:]
+                session['history'] = (session['history'] + [{'role': 'user', 'content': '[Verified WhatsApp action: ' + row['kind'] + ']'}])[-100:]
                 db.execute('UPDATE isluno_booking_sessions SET payload=? WHERE scope_key=?', (encoded(session), scope.key))
                 field = 'summary_confirmed_at' if target == 'quote' else 'approved_at'
                 db.execute(f'UPDATE isluno_quote_state SET status=?,{field}=? WHERE quote_id=?', (target,self.clock().isoformat(),snapshot['id']))
@@ -230,6 +232,21 @@ class QuoteStore:
             check(scope.account_id == account_id and scope.conversation_id == conversation_id, 'wrong_quote_recipient')
             snapshot, stage = self._valid(db,scope,job['quote_id'])
             check(job['stage'] == stage, 'stale_quote_job')
+            return job
+
+    def compose_answer(self, scope, trigger, sent_at, fulfillment, answer):
+        """A new answer references the original quote ledger; never clones sends."""
+        require_scope(scope)
+        check(fulfillment['scope'] == answer['scope'] == scope.__dict__, 'wrong_quote_recipient')
+        ident = hashlib.sha256(encoded([scope.key, trigger, 'hospitality-answer']).encode()).hexdigest()[:32]
+        with self.db() as db, db:
+            old = db.execute('SELECT payload FROM isluno_quote_jobs WHERE id=? AND scope_key=?', (ident, scope.key)).fetchone()
+            if old:
+                return json.loads(old[0])
+            job = {**fulfillment, 'id':ident, 'parts':[{'message':answer['body'].get('message') or answer['body']['interactive']['body']['text']}],
+                   'answer_plan_id':answer['id'], 'followup_job_id':fulfillment['id'], 'trigger_sent_at':sent_at}
+            db.execute('INSERT INTO isluno_quote_jobs VALUES(?,?,?,?)', (ident, scope.key, fulfillment['quote_id'], encoded(job)))
+            db.execute("INSERT INTO isluno_quote_deliveries VALUES(?,0,'queued',NULL)", (ident,))
             return job
 
     def document_url(self, quote_id):

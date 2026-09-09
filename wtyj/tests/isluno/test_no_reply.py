@@ -20,6 +20,10 @@ class NoReplyTests(unittest.TestCase):
         from agents.marina import marina_agent
         from agents.social import social_agent,isluno_conversation
         scope=scope or self.t.scope()
+        from hospitality_fixtures import hospitality, operation_replies
+        decision = copy.deepcopy(decision)
+        decision.setdefault('hospitality', hospitality('Happy to help you explore.', action=decision['booking']['action'],
+                            evidence='Synthetic request' if decision['booking']['action'] != 'none' else '', replies=operation_replies()))
         message=WhatsAppZernioChannel.from_zernio({'conversation_id':scope.conversation_id,
             'account_id':scope.account_id,'sender_id':scope.customer_ref,'message_id':trigger,
             'channel':'whatsapp','text':'Synthetic request','sent_at':NOW.isoformat()})
@@ -60,7 +64,7 @@ class NoReplyTests(unittest.TestCase):
                 decision=response('update',[{'date':'2026-10-20'}]);decision['fact_keys']=keys
                 trigger='invalid-'+str(index)
                 reply,calls,logs=self.call(decision,trigger)
-                self.assertEqual(reply,{'text':PROCESSING_FAILED['en'],'generation_failed':True})
+                self.assertEqual(reply['text'],PROCESSING_FAILED['en']);self.assertTrue(reply['generation_failed'])
                 self.assertEqual(calls,1);self.assertEqual(self.t.active(),before)
                 diagnostic=next(c.kwargs for c in logs if c.args==('isluno_model_contract_failed',))
                 self.assertEqual(diagnostic['code'],'invalid_discovery_facts')

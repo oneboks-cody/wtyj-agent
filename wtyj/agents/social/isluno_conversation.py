@@ -9,6 +9,7 @@ from agents.social.isluno_itinerary import ItineraryStore, encoded
 from agents.social.isluno_discovery import DiscoveryStore, CLARIFICATIONS
 from agents.social import isluno_understanding as discovery_understanding
 from agents.social import isluno_conversation_understanding as understanding
+from agents.social import isluno_hospitality as hospitality
 from shared.isluno_catalog import CatalogStore, CatalogError, quote_rules, validate_snapshot
 from shared.isluno_config import require_scope, verified_scope
 from shared.isluno_pricing import check, ItineraryError
@@ -45,7 +46,7 @@ def understanding_claim(store,scope,trigger):
 
 def default_session():
     return {'revision': 0, 'guest': {}, 'pending': {}, 'active_itinerary_id': None,
-            'chat_language': 'en', 'document_language': None, 'history': [], 'item_details': {}}
+            'chat_language': 'en', 'document_language': None, 'history': [], 'item_details': {}, 'browsing': {}, 'stage': 'welcome'}
 
 
 class ConversationStore:
@@ -135,11 +136,18 @@ class ConversationStore:
                 session['document_language'] = booking['document_language']
             active = self.itinerary._current(db, scope, session['active_itinerary_id']) if session['active_itinerary_id'] else None
             action = booking['action']
+            if decision.get('hospitality'):
+                hospitality.authorize(decision['hospitality'], text)
+                hospitality.remember(session, decision['hospitality'])
             if action in {'summary', 'approve'} and session['document_language'] is None:
                 session['document_language'] = session['chat_language']
-            review = action == 'human' or decision['intent'] == 'human' or (active and active['status'] != 'draft' and (action in {'add', 'update', 'remove', 'cancel'} or (booking['guest'] and action != 'new')))
+            review = action == 'human' or decision['intent'] == 'human' or (active and active['status'] != 'draft' and (action in {'add', 'update', 'remove', 'cancel'} or (booking['guest'] and action in {'update', 'remove'})))
             status, error = 'saved', None
-            if review:
+            if action == 'none':
+                # Browsing information cannot complete pending intake, alter booked
+                # guest records, request review, or invalidate an existing quote.
+                session.setdefault('browsing', {}).setdefault('guest', {}).update(booking['guest'])
+            elif review:
                 request_id = opaque(scope, trigger, 'review')
                 reason = 'post_booking_change' if active and active['status'] != 'draft' else 'customer_request'
                 existing_review = db.execute("SELECT id FROM isluno_operator_requests WHERE scope_key=? AND itinerary_id IS ? AND reason=? AND status IN ('pending','active')",
@@ -166,6 +174,9 @@ class ConversationStore:
                     session['pending'] = {}
                 status = 'cancelled' if active else 'no_active'
             else:
+                if action in {'add', 'new', 'update'}:
+                    for key, value in session.get('browsing', {}).get('guest', {}).items():
+                        session['guest'].setdefault(key, value)
                 session['guest'].update(booking['guest'])
                 if action in {'add', 'new'}:
                     if active is None or action == 'new':
@@ -205,7 +216,7 @@ class ConversationStore:
                 active_before = copy.deepcopy(active)
                 details_before = copy.deepcopy(session['item_details'])
                 try:
-                    for item_id, pending in (list(session['pending'].items()) if action in {'add', 'update', 'new'} or booking['guest'] else []):
+                    for item_id, pending in (list(session['pending'].items()) if action in {'add', 'update', 'new'} else []):
                         missing = complete_selection(pending, session['guest'], snapshot)
                         if missing:
                             continue
@@ -225,15 +236,15 @@ class ConversationStore:
                     error = exc.code if isinstance(exc, ItineraryError) else 'product_rules_unavailable'
                 db.execute('RELEASE item_updates')
             from agents.social.isluno_quotes import invalidate_changed
-            if booking['guest'].get('name') and action not in {'new', 'add', 'update'} and status != 'review':
+            if booking['guest'].get('name') and action not in {'none', 'new', 'add', 'update'} and status != 'review':
                 for detail in [*session['item_details'].values(), *session['pending'].values()]:
                     if detail.get('guest_name') == current['guest'].get('name'):
                         detail['guest_name'] = booking['guest']['name']
-            invalidate_changed(db, scope, session, active)
+            if action != 'none' or booking['document_language'] is not None:
+                invalidate_changed(db, scope, session, active)
             session['revision'] += 1
             outcome = {'session': session, 'itinerary': active, 'status': status, 'error': error, 'catalog_revision': snapshot['revision']}
-            reply = render(outcome, snapshot)
-            session['history'] = (session['history'] + [{'role':'user','content':text or '[WhatsApp reply action]'}, {'role':'assistant','content':reply}])[-100:]
+            session['history'] = (session['history'] + [{'role':'user','content':text or '[WhatsApp reply action]', 'trigger_id': trigger}])[-100:]
             db.execute('INSERT INTO isluno_booking_sessions VALUES(?,?) ON CONFLICT(scope_key) DO UPDATE SET payload=excluded.payload', (scope.key, encoded(session)))
             db.execute('UPDATE isluno_conversation_turns SET outcome=? WHERE scope_key=? AND trigger_id=?', (encoded(outcome), scope.key, trigger))
             return outcome
@@ -331,7 +342,15 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
     if token and not token.startswith(('ip_','ie_','iq_','isl_')):
         recovery.incident(scope,trigger,'legacy_action','quarantined_legacy_button')
         raise ItineraryError('legacy_action_quarantined')
-    result=_handle_message(message,store=store,discovery=discovery,understand=understand)
+    try:
+        result=_handle_message(message,store=store,discovery=discovery,understand=understand)
+    except PermissionError:
+        raise
+    except Exception as exc:
+        if isinstance(exc, ItineraryError) and exc.code in {'understanding_already_claimed', 'invalid_discovery_action', 'stale_discovery_action', 'unverified_discovery_action', 'invalid_quote_action', 'invalid_payment_action'}:
+            raise
+        recovery.incident(scope,trigger,'conversation_failure',exc.code if isinstance(exc, ItineraryError) else type(exc).__name__)
+        result=failure_reply(store, discovery, scope, trigger, message)
     if not result.get('generation_failed'):
         recovery.progress(scope,trigger)
         recovery.schedule(scope,trigger,result)
@@ -381,7 +400,8 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
                 decision = base_decision
             else:
                 active = store.itinerary.get(scope, saved['active_itinerary_id']) if saved['active_itinerary_id'] else None
-                model_state = {**saved, 'itinerary': active, 'discovery': discovery.current_context(scope),
+                model_history = [{**entry, 'delivery_status':'legacy_unverified'} if entry.get('role') == 'assistant' and 'delivery_status' not in entry else entry for entry in saved['history']]
+                model_state = {**saved, 'history':model_history, 'itinerary': active, 'discovery': discovery.current_context(scope),
                                'current_time': store.itinerary.clock().isoformat(), 'timezone': 'America/Curacao'}
                 try:
                     with understanding_claim(store,scope,trigger):
@@ -396,8 +416,7 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
                     # This turn was claimed exactly once. Leave its decision and
                     # outcome unresolved; a duplicate must never call the model
                     # or resend this acknowledgement. A fresh guest turn may proceed.
-                    return {'text': PROCESSING_FAILED.get(saved['chat_language'], PROCESSING_FAILED['en']),
-                            'generation_failed': True}
+                    return failure_reply(store, discovery, scope, trigger, message, understanding_failed=True)
             if base_decision is not None:
                 store.record_decision(scope, trigger, decision)
         outcome = store.apply(scope, trigger, saved, decision, message.get('text', ''))
@@ -408,26 +427,33 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
     if decision['booking']['action'] in {'documents', 'email'}:
         from agents.social.isluno_payments import PaymentStore, envelope as paid_envelope
         payments = PaymentStore(store)
-        if decision['booking']['action'] == 'documents':
-            prepared_fulfillment = payments.resume(scope, timestamp)
-        else:
-            prepared_fulfillment = payments.propose_email(scope, trigger, timestamp, decision['booking'].get('email_address', ''), replace=decision['booking'].get('email_address_correction', False))
-        if not decision['question']:
+        try:
+            if decision['booking']['action'] == 'documents':
+                prepared_fulfillment = payments.resume(scope, timestamp)
+            else:
+                prepared_fulfillment = payments.propose_email(scope, trigger, timestamp, decision['booking'].get('email_address', ''), replace=decision['booking'].get('email_address_correction', False))
+        except ItineraryError as exc:
+            if not decision.get('hospitality'):
+                raise
+            outcome = {**outcome, 'error':exc.code}
+            from agents.social.isluno_recovery import RecoveryStore
+            RecoveryStore(store).incident(scope,trigger,'fulfillment_failure',exc.code)
+        if not decision['question'] and not decision.get('hospitality'):
             return paid_envelope(prepared_fulfillment)
     with store.db() as db:
         existing_quote_reply = db.execute('SELECT job_id FROM isluno_quote_requests WHERE scope_key=? AND trigger_id=?', (scope.key, trigger)).fetchone()
         old_quote = db.execute('SELECT s.status FROM isluno_quote_latest l JOIN isluno_quote_state s ON s.quote_id=l.quote_id WHERE l.scope_key=?', (scope.key,)).fetchone()
     ready = outcome['itinerary'] and outcome['itinerary']['status'] == 'draft' and outcome['itinerary']['items'] and not outcome['session']['pending']
     prepared_quote = None
-    if existing_quote_reply or ready and outcome['status'] != 'review' and (decision['booking']['action'] in {'summary', 'approve'} or old_quote and old_quote['status'] == 'superseded'):
+    if existing_quote_reply or ready and outcome['status'] != 'review' and (decision['booking']['action'] in {'summary', 'approve'} or (decision['booking']['action'] != 'none' or decision['booking']['document_language'] is not None) and old_quote and old_quote['status'] == 'superseded'):
         from agents.social.isluno_quotes import QuoteStore, envelope as quote_envelope
         prepared_quote = QuoteStore(store).prepare(scope, trigger, timestamp, expected_session_revision=outcome['session']['revision'])
-        if not decision['question'] and decision['booking']['action']!='stop_reminders':
+        if not decision['question'] and not decision.get('hospitality') and decision['booking']['action']!='stop_reminders':
             return quote_envelope(prepared_quote)
     base = {key: decision[key] for key in discovery_understanding.TOOL['input_schema']['required']}
     booking = decision['booking']
     response_text = None
-    if booking['action'] != 'none' or booking['guest'] or booking['document_language']:
+    if booking['action'] != 'none':
         if booking['action']=='stop_reminders':
             from agents.social.isluno_recovery_copy import STOP
             response_text=STOP[decision['language']]
@@ -445,15 +471,22 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
         if facts and decision['question']:
             fact_text = '\n\n'.join(facts)[:max(0, 4096 - len(response_text) - 2)]
             response_text = fact_text + '\n\n' + response_text
+    next_question = ''
+    if decision.get('hospitality'):
+        response_text, next_question, presentation_branch = hospitality.present(decision['hospitality'], decision, outcome, snapshot, now=store.itinerary.clock())
     if prepared_fulfillment and not response_text:
         response_text = None
-    if prepared_quote:
+    if prepared_quote and not decision.get('hospitality'):
         from agents.social.isluno_quote_documents import REVIEW_READY
         response_text = (response_text or '') + '\n\n' + REVIEW_READY[decision['language']]
     # Action resolution used this trigger already; use a distinct durable reply
     # ID for its application result so selection metadata cannot mask intake.
     reply_trigger = 'conversation-' + opaque(scope, trigger, 'reply')
-    plan = discovery.plan(scope, reply_trigger, timestamp, base, translations=decision['translations'], response_text=response_text, catalog_snapshot=snapshot)
+    plan = discovery.plan(scope, reply_trigger, timestamp, base, translations=decision['translations'], response_text=response_text, catalog_snapshot=snapshot,
+                          hospitality=decision.get('hospitality'), next_question=next_question)
+    if prepared_quote and decision.get('hospitality'):
+        from agents.social.isluno_quotes import QuoteStore, envelope as quote_envelope
+        return quote_envelope(QuoteStore(store).compose_answer(scope, trigger, timestamp, prepared_quote, plan))
     if prepared_fulfillment:
         return paid_envelope(payments.compose(scope, trigger, timestamp, prepared_fulfillment, plan))
     return envelope(plan)
@@ -462,3 +495,25 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
 def envelope(plan):
     return {'text': plan['body'].get('message') or plan['body']['interactive']['body']['text'],
             'media': {'url': plan['id'], 'type': 'isluno_discovery', 'caption': 'Isluno itinerary'}}
+
+
+def failure_reply(store, discovery, scope, trigger, message, *, understanding_failed=False):
+    """Persist a bounded failure acknowledgement, never retry the failed action."""
+    from agents.social.isluno_recovery_copy import PROCESSING_FAILED, RESPONSE_FAILED
+    discovery = discovery or DiscoveryStore(store.itinerary.db_path, store.itinerary.catalog_path, clock=store.itinerary.clock)
+    with store.db() as db, db:
+        row = db.execute('SELECT payload FROM isluno_booking_sessions WHERE scope_key=?', (scope.key,)).fetchone()
+        session = json.loads(row[0]) if row else default_session()
+        if not any(h.get('trigger_id') == trigger for h in session['history']):
+            session['history'] = (session['history'] + [{'role':'user','content':message.get('text',''), 'trigger_id':trigger}])[-100:]
+        db.execute('INSERT INTO isluno_booking_sessions VALUES(?,?) ON CONFLICT(scope_key) DO UPDATE SET payload=excluded.payload', (scope.key, encoded(session)))
+    copy = PROCESSING_FAILED if understanding_failed else RESPONSE_FAILED
+    text = copy.get(session['chat_language'], copy['en'])
+    base = {'language':session['chat_language'], 'product_ids':[], 'fact_keys':[], 'intent':'discover', 'question':''}
+    try:
+        plan = discovery.plan(scope, 'failure-' + opaque(scope,trigger,'ack'), message.get('_zernio_sent_at',''), base, response_text=text)
+        return {**envelope(plan), 'generation_failed':True}
+    except Exception:
+        # Storage itself may be unavailable. The already-claimed inbound retains
+        # its one-attempt webhook send boundary; do not fabricate delivery history.
+        return {'text':text, 'generation_failed':True}

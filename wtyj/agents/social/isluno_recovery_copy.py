@@ -17,3 +17,15 @@ PROCESSING_FAILED = {
     'pt': 'Não consegui processar a tua mensagem. Envia uma nova mensagem para tentar novamente.',
     'pap': 'Mi no por a prosesá bo mensahe. Por fabor manda un mensahe nobo pa purba atrobe.',
 }
+
+
+# An action may have committed before presentation failed. Never assert that it
+# did not happen or invite a blind booking/payment replay.
+RESPONSE_FAILED = {
+    'en': "I couldn’t finish this reply. Please ask me to check your itinerary before repeating a booking or payment action.",
+    'nl': 'Ik kon dit antwoord niet afronden. Vraag me je reisplan te controleren voordat je een boeking of betaling herhaalt.',
+    'de': 'Ich konnte diese Antwort nicht abschließen. Bitte lass mich deinen Reiseplan prüfen, bevor du eine Buchung oder Zahlung wiederholst.',
+    'es': 'No pude terminar esta respuesta. Pídeme que revise tu itinerario antes de repetir una reserva o un pago.',
+    'pt': 'Não consegui terminar esta resposta. Peça-me para verificar o itinerário antes de repetir uma reserva ou um pagamento.',
+    'pap': 'Mi no por a kaba e kontesta aki. Puntra mi pa kontrolá bo itinerario promé ku ripití un reservashon òf pago.',
+}

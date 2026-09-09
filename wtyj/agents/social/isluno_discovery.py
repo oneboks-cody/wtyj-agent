@@ -81,7 +81,7 @@ class DiscoveryStore:
             row = db.execute('SELECT payload FROM isluno_discovery_plans WHERE scope_key=? AND trigger_id=?', (scope.key, trigger_id)).fetchone()
             return json.loads(row[0]) if row else None
 
-    def plan(self, scope, trigger_id, sent_at, decision=None, *, action_token=None, interactive_type=None, translations=None, response_text=None, catalog_snapshot=None):
+    def plan(self, scope, trigger_id, sent_at, decision=None, *, action_token=None, interactive_type=None, translations=None, response_text=None, catalog_snapshot=None, hospitality=None, next_question=""):
         require_scope(scope)
         check(isinstance(trigger_id, str) and 0 < len(trigger_id) <= 512, 'missing_verified_message_id')
         try:
@@ -171,14 +171,24 @@ class DiscoveryStore:
                 gallery = product['gallery']
                 check(type(offset) is int and 0 <= offset <= len(gallery), 'invalid_gallery_page')
                 native = not force_single and (config_loader.get_raw().get('isluno') or {}).get('native_carousels') is True
-                page = gallery[offset:offset + (10 if native else 1)]
-                next_offset = offset + len(page)
+                excluded_assets = set()
+                if hospitality and hospitality['photo'] != 'repeat':
+                    for sent in db.execute("SELECT payload FROM isluno_discovery_plans WHERE scope_key=? AND status IN ('accepted','claimed','ambiguous')", (scope.key,)):
+                        prior = json.loads(sent[0])
+                        if prior.get('product_ids') == [product['id']]:
+                            excluded_assets.update(prior.get('asset_ids', []))
+                positions_page = [(i, asset) for i, asset in enumerate(gallery) if i >= offset and asset['id'] not in excluded_assets]
+                positions_page = positions_page[:10 if native else 1]
+                if hospitality and hospitality['photo'] == 'none':
+                    positions_page = []
+                page = [asset for _, asset in positions_page]
+                next_offset = positions_page[-1][0] + 1 if positions_page else len(gallery)
                 if next_offset < len(gallery):
                     buttons.append(button('photos', product['id'], labels[2], offset=next_offset, fallback=force_single))
                 if info_offset + 1 < len(chunks):
                     buttons.append(button('info', product['id'], labels[3], offset=offset, info_offset=info_offset + 1))
                 asset_ids, missing, urls, positions = [], [], [], []
-                for position, asset in enumerate(page, start=offset):
+                for position, asset in positions_page:
                     try:
                         url = self.media.url(asset)
                     except (MediaUnavailable, OSError, ValueError):
@@ -201,11 +211,18 @@ class DiscoveryStore:
                     body = {'accountId': scope.account_id, 'interactive': {'type': 'carousel', 'body': {'text': text[:1024]}, 'action': {'cards': cards}}}
             if response_text is not None:
                 check(isinstance(response_text, str) and 0 < len(response_text) <= 4096, 'invalid_conversation_reply')
-                help_buttons = body.get('buttons', []) if answer_status == 'unavailable' else []
-                if answer_status == 'unavailable':
-                    response_text += '\n\n' + CLARIFICATIONS[locale][0]
-                body = {'accountId': scope.account_id, 'message': response_text, 'buttons': help_buttons}
-                asset_ids, missing, fallback = [], [], None
+                if hospitality:
+                    if 'interactive' in body:
+                        check(len(response_text) <= 1024, 'carousel_text_too_long')
+                        body['interactive']['body']['text'] = response_text
+                    else:
+                        body['message'] = response_text
+                else:
+                    help_buttons = body.get('buttons', []) if answer_status == 'unavailable' else []
+                    if answer_status == 'unavailable':
+                        response_text += '\n\n' + CLARIFICATIONS[locale][0]
+                    body = {'accountId': scope.account_id, 'message': response_text, 'buttons': help_buttons}
+                    asset_ids, missing, fallback = [], [], None
             superseded = snapshot['revision'] != current_snapshot['revision']
             if superseded:
                 notice = {'en':'Trip information has changed. Please ask for the latest details before confirming.',
@@ -221,7 +238,7 @@ class DiscoveryStore:
                        'catalog_revision': snapshot['revision'], 'catalog_version': snapshot['catalog']['version'], 'catalog_superseded': superseded,
                        'product_ids': decision['product_ids'], 'language': locale, 'fact_keys': decision['fact_keys'],
                        'product_fact_keys': fact_association, 'answer_status': answer_status, 'translations': translations,
-                       'body': body, 'fallback': fallback, 'asset_ids': asset_ids, 'missing_asset_ids': missing,
+                       'body': body, 'next_question': next_question, 'button_meanings': actions, 'fallback': fallback, 'asset_ids': asset_ids, 'missing_asset_ids': missing,
                        'selected_intent': selected_intent, 'requires_human': decision['intent'] == 'human',
                        'created_at': self.clock().isoformat(), 'expires_at': (self.clock() + timedelta(hours=24)).isoformat()}
             db.execute('INSERT INTO isluno_discovery_plans(id,scope_key,trigger_id,payload) VALUES(?,?,?,?)', (plan_id, scope.key, trigger_id, dump(payload)))

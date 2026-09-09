@@ -253,7 +253,7 @@ class QuoteTests(unittest.TestCase):
 
     def test_document_language_guest_only_and_incomplete_corrections_revoke(self):
         summary=self.summary()
-        result,_=self.turn(conversation.response(guest={'name':'New guest'}))
+        result,_=self.turn(conversation.response('update',[{'item_id':self.active()['items'][0]['id']}],guest={'name':'New guest'}))
         self.assertEqual(self.job(result)['stage'],'summary')
         rows=self.quotes.list(self.scope())
         self.assertEqual(rows[0]['projection']['guest']['name'],'New guest')
