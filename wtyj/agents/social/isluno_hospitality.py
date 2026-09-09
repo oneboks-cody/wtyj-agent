@@ -64,7 +64,11 @@ Always supply browsing as a neutral shared answer: answer the guest's questions 
 acknowledge their request without claiming an operation has succeeded. For any booking
 action also supply error with {operation}. Other outcome branches are OPTIONAL; do not
 write every speculative branch. If omitted, the server combines the common answer with
-the actual authoritative outcome and actual missing-field question. Include a branch only
+the actual authoritative outcome. For add/new/update, supply one natural localized
+preparation question containing {missing_field}, in pending.question if that branch is
+supplied, otherwise in browsing.question. The server binds the actual missing detail,
+product and departure times, and omits this question when nothing is missing. This
+question must not claim the itinerary is saved. Include a branch only
 when a materially different natural response is needed. Keep common prose concise.
 For a first general introduction without concrete activity preferences, welcome the guest,
 recognize their holiday, and ask one easy question about interests or company. Empty
@@ -166,12 +170,17 @@ def validate(value, decision, catalog):
                 check(len(parts) == 2 and parts[1] in decision['product_ids'], 'unsupported_reply_product')
             else:
                 check(ref in {'total', 'items', 'missing_field', 'operation', 'estimate_total'}, 'unsupported_reply_result')
-                check(branch != 'browsing' or ref == 'estimate_total' and 'estimate' in value, 'transaction_claim_in_browsing')
+                check(branch != 'browsing' or ref == 'estimate_total' and 'estimate' in value
+                      or ref == 'missing_field' and decision['booking']['action'] in {'add','new','update'}
+                      and all(ref not in references(t) for t in reply['paragraphs']), 'transaction_claim_in_browsing')
         if branch in {'error', 'review', 'cancelled', 'no_active', 'choose_item', 'choose_product', 'approval_unavailable'}:
             check('operation' in refs, 'missing_authoritative_outcome')
     if 'estimate' in value:
         check('error' in replies, 'missing_estimate_error_reply')
     action = decision['booking']['action']
+    if action in {'add','new','update'}:
+        preparation = replies.get('pending', replies['browsing'])
+        check('missing_field' in references(preparation['question']), 'missing_preparation_question')
     if action == 'stop_reminders' and 'saved' in replies:
         check('operation' in [r for t in replies.get('saved', {}).get('paragraphs', []) for r in references(t)], 'missing_reminder_result')
     check(decision['intent'] != 'add' or action in {'add','new'}, 'contradictory_selection_authority')
@@ -263,13 +272,16 @@ def present(value, decision, outcome, snapshot, *, now=None):
                 'missing_field': COPY[decision['language']][missing] if missing else ''}
     if fallback and branch=='pending' and missing:
         from agents.social.isluno_conversation import missing_prompt
-        question=missing_prompt(session,snapshot)
-        bindings['operation']='\n\n'.join(line for line in bindings['operation'].split('\n\n') if line!=question+'.')
-        selected['question']=question+'?'
+        # Keep the model's neutral answer and preparation question; no saved claim.
+        selected['paragraphs']=[t for t in selected['paragraphs'] if t!='{operation}']
+        prefix=COPY[session['chat_language']][3]+': '
+        bindings['missing_field']=missing_prompt(session,snapshot).removeprefix(prefix)
     elif fallback and branch in {'choose_item','choose_product'}:
         selected['paragraphs']=[t for t in selected['paragraphs'] if t!='{operation}']
         selected['question']='{operation}'
     elif fallback and branch not in {'saved','browsing'}:
+        selected['question']=''
+    if branch != 'pending' and 'missing_field' in references(selected['question']):
         selected['question']=''
     if branch == 'error':
         bindings['operation'] = bindings['operation'].replace('\n\n', '\n')

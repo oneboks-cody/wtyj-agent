@@ -113,8 +113,19 @@ class CommunicationWireTests(unittest.TestCase):
         decision=response('add',[{'product_id':'fixture-cruise'}]);decision['hospitality']=hospitality('Happy to help.',action='add',evidence='Add this trip',replies={'error':{'paragraphs':['{operation}'],'question':''}})
         reply,calls,_=self.h.call(decision,'missing-fields',text='Add this trip')
         self.assertEqual(calls,1);self.assertNotIn('generation_failed',reply)
+        self.assertEqual(reply['text'], 'Happy to help.\n\nCould you share the guest name?')
         self.assertEqual(reply['text'].count('?'),1)
+        self.assertNotIn('saved',reply['text'])
         self.assertNotIn('slot_',reply['text'])
+    def test_preparation_binding_is_question_only(self):
+        decision=response('add',[{'product_id':'fixture-cruise'}])
+        value=hospitality('Happy to help.',action='add',evidence='Add this trip',replies={'error':{'paragraphs':['{operation}'],'question':''}})
+        # Actual handler validation rejects a transactional binding in shared prose.
+        bad=copy.deepcopy(decision);bad['hospitality']=copy.deepcopy(value)
+        bad['hospitality']['replies']['browsing']['paragraphs']=['The {missing_field}']
+        reply,calls,_=self.h.call(bad,'bad-preparation',text='Add this trip')
+        self.assertTrue(reply.get('generation_failed'));self.assertEqual(calls,1)
+
     def test_stale_button_returns_operational_notice_without_model_or_mutation(self):
         first=self.reply(500,'one');self.assertTrue(self.send(first));self.reply(500,'two')
         token=self.plan(first)['body']['buttons'][0]['payload'];before=self.t.store.session(self.t.scope())['revision']
