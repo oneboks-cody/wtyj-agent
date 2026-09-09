@@ -16,6 +16,10 @@
     "sha256": "aa549a256dad6a633e6cfccb9118c592bb424a1075c44b7dc74d51036c1f33eb"
   },
   {
+    "file": "EVIDENCE-ACQUISITION.md",
+    "sha256": "fbab234da14860f9538041ad0bfb86a89c2e9cf93bdfcbd10558bf8438bd93b5"
+  },
+  {
     "file": "IMAGE-RECIPE.md",
     "sha256": "121cc0365a2a90672877d8eab17b95cafcb6fa87e0cc55f998ef9a421e4ea4f3"
   },
