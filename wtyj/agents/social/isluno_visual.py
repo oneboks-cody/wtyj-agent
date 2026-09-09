@@ -35,7 +35,8 @@ def build(store, db, scope, products, decision, button, labels, *, texts=None, c
     """Render product-bound parts. Existing sender owns all durable dispatch states."""
     locale=decision['language'];titles=ACTIONS[locale];parts=[];assets=[];missing=[]
     translations=decision.get('translations') or {}
-    carousel=active_profile().get('gallery_mode')=='carousel'
+    gallery_mode=active_profile().get('gallery_mode','single')
+    carousel=gallery_mode=='carousel'
     def append(body, product_id=None, asset=None, meanings=None, next_question=''):
         wire=messages(body,next_question)
         for index,item in enumerate(wire):
@@ -70,6 +71,7 @@ def build(store, db, scope, products, decision, button, labels, *, texts=None, c
             # Product captions identify a trip, not the stop depicted in the image.
             available=[(n,a) for n,a in available if a.get('location_id')==location and a.get('location_source_url')]
         limit=3 if carousel else 2 if action_kind=='photos' or photo in {'more','all'} else 1
+        if gallery_mode=='gallery':limit=3 if len(products)==1 else 2 if len(products)==2 else 1
         page=available[:limit] if photo!='none' else []
         resolved=[]
         for position,asset in page:

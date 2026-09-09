@@ -6,7 +6,7 @@ from shared.isluno_pricing import check
 TOOL = {'name': 'marina_response', 'description': 'Select source-backed Isluno trip information.',
         'input_schema': {'type': 'object', 'additionalProperties': False,
           'properties': {'language': {'type': 'string', 'enum': sorted(LANGUAGES)},
-                         'product_ids': {'type': 'array', 'maxItems': 2, 'items': {'type': 'string'}},
+                         'product_ids': {'type': 'array', 'maxItems': 3, 'items': {'type': 'string'}},
                          'fact_keys': {'type': 'array', 'maxItems': 5, 'items': {'type': 'string'},
                                        'description': 'One flat array of at most five fact-key strings shared across selected products; never an object or a nested array. Use [] when no fact is selected.'},
                          'intent': {'type': 'string', 'enum': ['discover', 'details', 'add', 'human']},
@@ -49,7 +49,7 @@ def system_prompt():
             'All business facts are rendered by the server from your selected keys; never invent a product or fact key. '
             'fact_keys must be a flat JSON array of zero to five strings, for example ["summary","inclusion_0"]. '
             'Never group fact_keys by product or use objects, nested arrays, or more than five entries. '
-            'Return at most two relevant matching products; a broad introduction without useful preferences uses no products and one easy next question. Use details for one trip, discover for recommendations, add only for an explicit '
+            'Return up to three relevant products when asked to show the range or what trips are available. That explicit browsing request takes priority over qualification: select real products now. An ordinary greeting without a request to see trips uses no products and one easy next question. Use details for one trip, discover for recommendations, add only for an explicit '
             'request to start arranging that trip, human for an explicit person request. Discovery never books or pays. '
             'Use question only for a short clarifying question if no product matches; no prices, facts or promises in question. '
             'For a question whose answer is not in supplied facts, return no fact_keys and a nonempty question to request the server-owned unavailable-answer prompt. The server safely localizes clarification; your prose is not shown as fact. '

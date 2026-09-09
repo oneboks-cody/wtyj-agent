@@ -82,6 +82,27 @@ class VisualDiscoveryTests(CommunicationWireTests):
         self.assertTrue(all('attachmentUrl' not in b and 'interactive' not in b for b in self.requests))
         self.assertIsNone(self.t.store.session(self.t.scope())['active_itinerary_id'])
 
+    def test_showroom_shows_three_trips_before_one_preference_question(self):
+        self.t.profile['gallery_mode']='gallery';self.t.write_profile(self.t.profile)
+        catalog=json.loads(self.t.catalog_path.read_text())
+        third=copy.deepcopy(catalog['products'][1]);third.update(id='fixture-land',name='Land adventure')
+        third['gallery']=[{**a,'id':'land-'+str(n)} for n,a in enumerate(third['gallery'])]
+        catalog['products'].append(third);self.t.catalog_path.write_text(json.dumps(catalog))
+        d=self.decision();d['product_ids'].append('fixture-land')
+        d['hospitality']['cards'].append({'product_id':'fixture-land','paragraphs':['{fact:fixture-land:summary}']})
+        d['hospitality']['replies']['browsing']={'paragraphs':['Of course. Here are three different island experiences.'],'question':'Which feels most like your kind of day?'}
+        reply=self.visual('showroom',d,text='Show me what you have');self.assertTrue(self.send(reply))
+        parts=self.plan(reply)['parts'];photos=[p for p in parts if p['body'].get('attachmentUrl')]
+        self.assertEqual([p['product_ids'][0] for p in photos],d['product_ids'])
+        self.assertTrue(all(not p['body'].get('interactive') for p in parts))
+        self.assertEqual(sum(p['body']['message'].count('Which feels most like') for p in parts),1)
+        self.assertIsNone(self.t.store.session(self.t.scope())['active_itinerary_id'])
+
+    def test_source_bound_card_fact_does_not_need_duplicate_fact_key(self):
+        d=self.decision();d['fact_keys']=[]
+        reply=self.visual('card-source-key',d);self.assertTrue(self.send(reply))
+        self.assertIn('A relaxed coastal cruise.',''.join(b['message'] for b in self.requests))
+
     def test_missing_local_media_and_unverified_location_are_truthful_text(self):
         self.t.discovery.media=FakeMedia(missing=['cruise-0','beach-0'])
         reply=self.visual();self.assertTrue(self.send(reply))

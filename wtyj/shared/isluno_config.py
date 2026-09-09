@@ -74,7 +74,7 @@ def active_profile():
                 or not 1 <= welcome["width"] <= 4096 or not 1 <= welcome["height"] <= 4096):
             raise ValueError("profile welcome media")
         copies = profile.get('product_copy', {})
-        if profile.get('gallery_mode','single') not in {'single','carousel'}:
+        if profile.get('gallery_mode','single') not in {'single','carousel','gallery'}:
             raise ValueError('profile gallery mode')
         if not isinstance(copies, dict) or len(copies) > 50:
             raise ValueError('profile product copy')

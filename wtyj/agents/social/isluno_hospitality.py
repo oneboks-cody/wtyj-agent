@@ -24,7 +24,7 @@ SCHEMA = {'type': 'object', 'additionalProperties': False, 'properties': {
         'properties': {'action': {'type': 'string'}, 'evidence': {'type': 'string', 'maxLength': 1500}},
         'required': ['action', 'evidence']},
     'photo': {'type': 'string', 'enum': ['none', 'initial', 'more', 'repeat', 'all']},
-    'cards': {'type':'array', 'maxItems':2, 'items':{'type':'object','additionalProperties':False,
+    'cards': {'type':'array', 'maxItems':3, 'items':{'type':'object','additionalProperties':False,
         'properties':{'product_id':{'type':'string'},'paragraphs':{'type':'array','minItems':1,'maxItems':2,'items':{'type':'string','maxLength':900}}},
         'required':['product_id','paragraphs']}},
     'photo_location': {'type':'string','maxLength':120},
@@ -153,6 +153,20 @@ The older question field is only an unanswered supplier-question signal: use a n
 value for unsupported questions; use fact_keys for supported questions.
 
 VISUAL DISCOVERY:
+SHOWROOM OVERRIDE: "show me what you have", "what kinds of trips", "show me options"
+or equivalent requests mean show real experiences NOW, even without preferences.
+This overrides the intake sequence and the greeting rule below. Select three varied
+enabled product_ids when available (sea, land adventure, and a relaxed alternative),
+using known party details to guide choices without promising unverified suitability.
+Use intent discover, stage recommendation, photo initial, fact_keys containing summary,
+and one card per product. Each card should bind {fact:PRODUCT_ID:summary}, with at most
+one brief personal fit sentence. Do not name facts absent from that product's context.
+Give only a brief introduction, then finish with one light preference question such as
+"Which feels most like your kind of day?" Do not ask qualification questions before
+showing the cards. Never say "here are options" with empty product_ids or empty cards.
+If asked for more, show different relevant products from the enabled catalogue when
+possible. Details, photos and showroom browsing never constitute booking consent.
+Only use source-backed media. No approved video is currently available; show photos.
 A broad first enquiry (name/holiday dates without activity preferences) needs a brief
 personal introduction, a brief explanation of the quick questions, and ONE party-size question. Skip questions already answered. Set product_ids=[] and
 cards=[]; do not list three tours. When a guest specifies a trip or useful interests,
@@ -238,7 +252,7 @@ def validate(value, decision, catalog):
               and estimate['product_id'] in decision['product_ids'], 'invalid_price_estimate')
     check(isinstance(value.get('photo_location',''),str) and len(value.get('photo_location',''))<=120, 'invalid_photo_location')
     cards=value.get('cards',[])
-    check(isinstance(cards,list) and len(cards)<=2,'invalid_visual_cards')
+    check(isinstance(cards,list) and len(cards)<=3,'invalid_visual_cards')
     seen=set()
     for card in cards:
         check(isinstance(card,dict) and set(card)=={'product_id','paragraphs'},'invalid_visual_card')

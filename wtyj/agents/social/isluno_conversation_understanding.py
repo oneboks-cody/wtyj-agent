@@ -57,6 +57,24 @@ def validate(result, catalog, *, require_hospitality=False):
     check(isinstance(result, dict) and set(discovery.TOOL['input_schema']['required']) | {'booking', 'translations'} <= set(result) <= set(discovery.TOOL['input_schema']['required']) | {'booking', 'translations', 'hospitality'}, 'invalid_conversation_result')
     base = {k: result[k] for k in discovery.TOOL['input_schema']['required']}
     discovery.validate(base, catalog)
+    # A card already names an exact source fact. Keep its selection list consistent
+    # without inventing facts or accepting cross-product/unknown references.
+    result=copy.deepcopy(result)
+    products={p['id']:p for p in catalog['products']}
+    cards=(result.get('hospitality') or {}).get('cards',[])
+    if isinstance(cards,list):
+        for card in cards:
+            if not isinstance(card,dict) or not isinstance(card.get('paragraphs'),list):continue
+            for paragraph in card['paragraphs']:
+                if not isinstance(paragraph,str):continue
+                for ref in hospitality.references(paragraph):
+                    bits=ref.split(':')
+                    if (len(bits)==3 and bits[0]=='fact' and bits[1]==card.get('product_id')
+                            and bits[1] in result['product_ids'] and bits[2] in products[bits[1]]['facts']
+                            and bits[2] not in result['fact_keys']):
+                        result['fact_keys'].append(bits[2])
+    base={k:result[k] for k in discovery.TOOL['input_schema']['required']}
+    discovery.validate(base,catalog)
     booking = result['booking']
     check(isinstance(booking, dict) and {'action', 'updates', 'guest', 'document_language'} <= set(booking) <= {'action', 'updates', 'guest', 'document_language', 'email_address', 'email_address_correction'}, 'invalid_booking_contract')
     check(isinstance(booking['action'], str) and booking['action'] in {'none', 'new', 'add', 'update', 'remove', 'cancel', 'human', 'approve', 'summary', 'documents', 'email', 'stop_reminders'}, 'invalid_booking_action')
