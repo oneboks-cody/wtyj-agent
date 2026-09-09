@@ -148,7 +148,8 @@ def validate(value, decision, catalog):
         check(isinstance(reply, dict) and set(reply) == {'paragraphs', 'question'}, 'invalid_hospitality_reply')
         check(isinstance(reply['paragraphs'], list) and 1 <= len(reply['paragraphs']) <= 4, 'invalid_reply_paragraphs')
         texts = [*reply['paragraphs'], reply['question']]
-        check(all(isinstance(t, str) and len(t) <= 1800 and '\u2014' not in t and '\u2013' not in t for t in texts), 'invalid_reply_style')
+        check(all(isinstance(t, str) for t in texts), 'invalid_reply_text_type')
+        check(all(len(t) <= 1800 for t in texts), 'invalid_reply_text_length')
         check(len(reply['question']) <= 500, 'invalid_next_question')
         refs = [r for t in texts for r in references(t)]
         for ref in refs:
@@ -202,6 +203,36 @@ def remember(session, value):
     discussed = browsing.setdefault('discussed', {})
     discussed.update({d['product_id']: d['reason'] for d in value['discussed']})
     session['stage'] = value['stage']
+
+
+def presentation_text(text):
+    """Mechanical typography after binding expansion, never an intent classifier.
+
+    ASCII hyphens preserve ranges and names; no prose truncation or model retry.
+    """
+    return text.translate(str.maketrans({'\u2014': '-', '\u2013': '-'}))
+
+
+def reply_diagnostics(result):
+    """Bounded structural metadata only; no model prose or source/guest values."""
+    value = result.get('hospitality', {}) if isinstance(result, dict) else {}
+    replies = value.get('replies', {}) if isinstance(value, dict) else {}
+    texts = []
+    branches = []
+    if isinstance(replies, dict):
+        for branch in BRANCHES:
+            reply = replies.get(branch)
+            if not isinstance(reply, dict):
+                continue
+            branches.append(branch)
+            paragraphs = reply.get('paragraphs')
+            if isinstance(paragraphs, list):
+                texts.extend(paragraphs[:4])
+            texts.append(reply.get('question'))
+    strings = [t for t in texts if isinstance(t, str)]
+    return {'reply_branches': branches, 'reply_nonstring_count': sum(not isinstance(t, str) for t in texts),
+            'reply_max_text_length': max((len(t) for t in strings), default=0),
+            'reply_unicode_dash_count': sum(t.count('\u2014') + t.count('\u2013') for t in strings)}
 
 
 def present(value, decision, outcome, snapshot, *, now=None):
@@ -259,7 +290,7 @@ def present(value, decision, outcome, snapshot, *, now=None):
             return bindings[ref]
         for ref in references(text):
             text = text.replace('{' + ref + '}', resolve(ref))
-        return text
+        return presentation_text(text)
     paragraphs = [expand(t) for t in selected['paragraphs']]
     question = expand(selected['question'])
     if question:

@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_unicode_punctuation_at_actual_sdk_boundary_keeps_intro_browsing (test_presentation_tolerance.PresentationToleranceTests.test_unicode_punctuation_at_actual_sdk_boundary_keeps_intro_browsing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/wtyj/tests/isluno/test_presentation_tolerance.py", line 20, in test_unicode_punctuation_at_actual_sdk_boundary_keeps_intro_browsing
+    self.assertNotIn('generation_failed',reply);self.assertEqual(calls,1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'generation_failed' unexpectedly found in {'text': 'I couldn’t process your message. Please send a new message to try again.', 'media': {'url': '058c4320f4d5ab37cec13590ffedf703', 'type': 'isluno_discovery', 'caption': 'Isluno itinerary'}, 'generation_failed': True}
+
+----------------------------------------------------------------------
+Ran 1 test in 2.644s
+
+FAILED (failures=1)

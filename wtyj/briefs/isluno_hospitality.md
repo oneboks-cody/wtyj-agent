@@ -1,5 +1,5 @@
 # Isluno hospitality conversation rewrite
-Status: Implemented and independently reviewed offline at source 3a5f524. Not deployed. Issues: #351, #356. Existing draft PR360.
+Status: Source 3a5f524 deployed on 2026-09-09. Two live introduction failures under investigation; typography correction in progress. Issues: #351, #356. Existing draft PR360.
 
 ## Context
 The controlling 19-section user brief is preserved in isluno_hospitality_user_brief.md.
@@ -45,12 +45,11 @@ Publish complete synthetic transcripts, six reasoned quality dimensions and limi
 Gatekeeper independently reviews the exact candidate, not builder scores alone.
 
 ## Release and rollback (section 19)
-Current live source c04512c stays in place. The previous no-reply deployment approval
-is consumed; this rewrite requires an exact reviewed candidate and new situational
-release authorization. Before any deployment, verify current tenant/account/image,
-Nr2 session where applicable, both ingress gates, worker drain and live data preserving
-maintenance capability. Old single-turn preservation proofs must not be reused against
-fresh conversations. Build/upload bounds, image hashes, operational rollback and
-maintenance evidence must be reviewed as a concrete packet. Preserve all fresh data.
-Rollback uses the prior verified image and compatible session JSON, never a database
-restore. Deployment does not itself prove real customer conversation quality.
+Source 3a5f524 is live; the preserving-data deployment receipt is in output/isluno-hospitality/deployment/RECEIPT.md. Any correction requires independent exact-candidate review and a freshly bound preserving-data operator packet. Existing authority applies only within its verified scope. Preserve fresh failures and customer records; no replay, cleanup or database restore. Deployment does not prove live model quality.
+
+## Live incident: invalid_reply_style (2026-09-09)
+Both fresh introduction turns failed at hospitality.validate before normal rendering, with invalid_reply_style at16:18:17UTC and16:18:55UTC. Output usage was876 and808tokens. No tool input/stop reason or style subpredicate was retained. The failing predicate combines nonstrings, overlength text and Unicode dash punctuation; the exact live subcause cannot be recovered from that evidence.
+
+The offline SDK-boundary regression reproduces the same failure from a synthetic otherwise-valid dash-bearing welcome. This is a tested variant of the known boundary, not a claim that model output was captured. Existing scripted fixtures supplied compliant text and did not test cosmetic deviations.
+
+Corrective scope: keep type/size/authority/fact/result validation, split type and length diagnostic codes, and mechanically normalize em/en dashes to ASCII hyphens only after binding expansion in final presentation. This preserves range/name meaning and binding identifiers. Do not truncate text or add model calls. Persist/send the normalized final text and question. Log bounded structural counts and an allowlisted SDK stop reason for structural failures without guest/model/source content. Add SDK-boundary checks for normal/unused-branch punctuation, final delivery history, source bindings, no booking/payment mutation and malformed data still failing safely. Provider/model/token limits stay unchanged; tests run network-disabled with mocked SDK and transport.

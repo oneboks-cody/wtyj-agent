@@ -2309,6 +2309,11 @@ def process_message(
                     if isinstance(_keys, list):
                         diagnostic.update(fact_keys_count=len(_keys),
                                           fact_keys_nonstring_count=sum(not isinstance(k, str) for k in _keys))
+                if _exc.code in {"invalid_reply_text_type", "invalid_reply_text_length", "invalid_next_question"}:
+                    from agents.social.isluno_hospitality import reply_diagnostics
+                    diagnostic.update(reply_diagnostics(result))
+                    _reason = getattr(locals().get("response"), "stop_reason", None)
+                    diagnostic["stop_reason"] = _reason if isinstance(_reason, str) and _reason in {"tool_use", "end_turn", "max_tokens", "stop_sequence", "pause_turn", "refusal"} else "unavailable"
                 bm_logger.log("isluno_model_contract_failed", code=_exc.code,
                               channel=channel, **diagnostic)
                 return fallback
