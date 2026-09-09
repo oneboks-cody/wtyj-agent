@@ -67,7 +67,7 @@ def validate_body(body):
     return body
 
 
-def messages(body,question=''):
+def messages(body,question='',media_first=False):
     """Keep controls/media on final part and never omit or shorten the answer."""
     original=copy.deepcopy(body)
     if original.get('buttons')==[]:original.pop('buttons')
@@ -80,6 +80,15 @@ def messages(body,question=''):
         return bodies
     if units(text)<=INTERACTIVE_LIMIT:
         return [validate_body(original)]
+    if media_first:
+        check(bool(original.get('attachmentUrl')) and not original.get('buttons') and not original.get('interactive'), 'wire_media_first_shape')
+        chunks=split_text(text,INTERACTIVE_LIMIT)
+        first=copy.deepcopy(original);first['message']=chunks[0]
+        bodies=[first]+[{'accountId':original['accountId'],'message':part} for part in split_text(''.join(chunks[1:]),TEXT_LIMIT)]
+        check(len(bodies)<=MAX_PARTS,'wire_part_count')
+        for item in bodies:validate_body(item)
+        check(''.join(text_of(item) for item in bodies)==text,'wire_content_changed')
+        return bodies
     # The model's next question belongs with its controls, after the full answer.
     if question and units(question)<=INTERACTIVE_LIMIT and text.endswith(question):
         prefix,suffix=text[:-len(question)],question

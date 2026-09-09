@@ -517,9 +517,13 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
     reply_trigger = 'conversation-' + opaque(scope, trigger, 'reply')
     selected_products = {i['product']['id'] for i in (outcome['itinerary'] or {}).get('items', [])} | {p.get('product_id') for p in outcome['session']['pending'].values()}
     offer_selection = booking['action'] == 'none' and not selected_products.intersection(decision['product_ids'])
+    delivered = understanding.delivery_context(saved)['confirmed_message_ids']
+    welcome_image = (not delivered and saved.get('stage') == 'welcome' and booking['action'] == 'none'
+                     and not decision['product_ids'] and decision.get('hospitality', {}).get('stage') in {'welcome', 'exploration'})
     plan = discovery.plan(scope, reply_trigger, timestamp, base, translations=decision['translations'], response_text=response_text, catalog_snapshot=snapshot,
                           hospitality=decision.get('hospitality'), next_question=next_question, offer_selection=offer_selection, source_trigger_id=trigger,
-                          card_texts=hospitality.render_cards(decision['hospitality'],decision,snapshot) if decision.get('hospitality') else None,detail_request=native_details)
+                          card_texts=hospitality.render_cards(decision['hospitality'],decision,snapshot) if decision.get('hospitality') else None,detail_request=native_details,
+                          welcome_image=welcome_image)
     if prepared_quote and decision.get('hospitality'):
         from agents.social.isluno_quotes import QuoteStore, envelope as quote_envelope
         return quote_envelope(QuoteStore(store).compose_answer(scope, trigger, timestamp, prepared_quote, plan))

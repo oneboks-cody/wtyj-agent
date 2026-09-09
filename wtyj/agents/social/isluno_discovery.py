@@ -81,7 +81,7 @@ class DiscoveryStore:
             row = db.execute('SELECT payload FROM isluno_discovery_plans WHERE scope_key=? AND trigger_id=?', (scope.key, trigger_id)).fetchone()
             return json.loads(row[0]) if row else None
 
-    def plan(self, scope, trigger_id, sent_at, decision=None, *, action_token=None, interactive_type=None, translations=None, response_text=None, catalog_snapshot=None, hospitality=None, next_question="", offer_selection=True, source_trigger_id=None, card_texts=None, detail_request=None):
+    def plan(self, scope, trigger_id, sent_at, decision=None, *, action_token=None, interactive_type=None, translations=None, response_text=None, catalog_snapshot=None, hospitality=None, next_question="", offer_selection=True, source_trigger_id=None, card_texts=None, detail_request=None, welcome_image=False):
         require_scope(scope)
         check(isinstance(trigger_id, str) and 0 < len(trigger_id) <= 512, 'missing_verified_message_id')
         try:
@@ -261,8 +261,15 @@ class DiscoveryStore:
                 body = {'accountId': scope.account_id, 'message': content + '\n\n' + notice, 'buttons': []}
                 asset_ids, missing, fallback = [], [], None
                 visual_parts=None;visual=False;actions={}
+            brand_asset_id=None
+            if welcome_image and visual_parts is None and not body.get('buttons') and not body.get('interactive'):
+                try:
+                    welcome_url,brand_asset_id=self.media.welcome_url()
+                    body.update(attachmentUrl=welcome_url,attachmentType='image')
+                except (MediaUnavailable,OSError,ValueError):
+                    brand_asset_id=None
             from agents.social.isluno_wire import messages
-            parts=visual_parts or [{'body':b,'status':'queued','provider_id':None} for b in messages(body,next_question)]
+            parts=visual_parts or [{'body':b,'status':'queued','provider_id':None} for b in messages(body,next_question,media_first=bool(brand_asset_id))]
             if visual_parts:
                 for part in parts:
                     tokens={b['payload'] for b in part['body'].get('buttons',[])}
@@ -273,7 +280,7 @@ class DiscoveryStore:
                        'product_ids': decision['product_ids'], 'language': locale, 'fact_keys': decision['fact_keys'],
                        'product_fact_keys': fact_association, 'answer_status': answer_status, 'translations': translations,
                        'body': body, 'offer_selection': offer_selection, 'next_question': next_question, 'button_meanings': actions, 'fallback': fallback, 'asset_ids': asset_ids, 'missing_asset_ids': missing,
-                       'selected_intent': selected_intent, 'requires_human': decision['intent'] == 'human',
+                       'selected_intent': selected_intent, 'requires_human': decision['intent'] == 'human', 'brand_asset_id': brand_asset_id,
                        'created_at': self.clock().isoformat(), 'expires_at': (self.clock() + timedelta(hours=24)).isoformat()}
             db.execute('INSERT INTO isluno_discovery_plans(id,scope_key,trigger_id,payload) VALUES(?,?,?,?)', (plan_id, scope.key, trigger_id, dump(payload)))
             for token, action in actions.items():

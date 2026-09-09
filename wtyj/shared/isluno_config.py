@@ -7,6 +7,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 
 from shared import config_loader, tenant_guard
 
@@ -65,6 +66,13 @@ def active_profile():
         for key in ("assistant_name", "website", "primary_color"):
             if not isinstance(brand.get(key), str) or not brand[key].strip() or len(brand[key]) > 300:
                 raise ValueError("profile public identity")
+        welcome = profile.get("welcome_media")
+        if welcome is not None and (not isinstance(welcome, dict) or set(welcome) != {"sha256", "format", "bytes", "width", "height"}
+                or not isinstance(welcome.get("sha256"), str) or not re.fullmatch(r"[a-f0-9]{64}", welcome["sha256"])
+                or welcome.get("format") != "png" or type(welcome.get("bytes")) is not int or not 1 <= welcome["bytes"] <= 5 * 1024 * 1024
+                or type(welcome.get("width")) is not int or type(welcome.get("height")) is not int
+                or not 1 <= welcome["width"] <= 4096 or not 1 <= welcome["height"] <= 4096):
+            raise ValueError("profile welcome media")
         if not isinstance(profile.get("profile_version"), str) or not profile["profile_version"].strip():
             raise ValueError("profile version")
         return copy.deepcopy(profile)

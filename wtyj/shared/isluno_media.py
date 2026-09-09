@@ -29,8 +29,16 @@ class MediaLibrary:
         asset = next((a for p in catalog['products'] for a in p['gallery']
                       if a.get('sha256') == digest and a['validation_status'] == 'verified'), None)
         if asset is None:
-            raise MediaUnavailable('media_not_in_catalog')
-        path = self.asset_root / (digest + '.' + asset['format'])
+            try:
+                welcome = active_profile().get('welcome_media', {})
+            except IslunoUnavailable as exc:
+                raise MediaUnavailable('media_not_in_catalog') from exc
+            if welcome.get('sha256') != digest:
+                raise MediaUnavailable('media_not_approved')
+            asset = welcome
+            path = self.asset_root / 'brand' / (digest + '.' + asset['format'])
+        else:
+            path = self.asset_root / (digest + '.' + asset['format'])
         try:
             if path.is_symlink() or path.stat().st_size != asset['bytes']:
                 raise MediaUnavailable('media_integrity_failed')
@@ -60,6 +68,12 @@ class MediaLibrary:
             raise MediaUnavailable('media_delivery_base_unconfigured')
         self.jpeg(asset.get('sha256'))  # Preflight stored bytes; no remote fetch.
         return base.rstrip('/') + '/' + asset['sha256'] + '.jpg'
+
+    def welcome_url(self):
+        asset = active_profile().get('welcome_media')
+        if not isinstance(asset, dict):
+            raise MediaUnavailable('welcome_media_unconfigured')
+        return self.url(asset), asset['sha256']
 
 
 def build_public_router(library_factory=MediaLibrary):

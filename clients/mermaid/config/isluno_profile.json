@@ -2,7 +2,7 @@
   "schema_version": "isluno.v1",
   "tenant_slug": "mermaid",
   "journey_type": "isluno_itinerary_demo_v1",
-  "profile_version": "isluno-profile-v1-20260908",
+  "profile_version": "isluno-profile-v1-welcome-media-20260909",
   "brand": {
     "id": "isluno",
     "name": "Isluno",
@@ -22,6 +22,13 @@
     "pap"
   ],
   "mode": "demo",
+  "welcome_media": {
+    "sha256": "cdc5d181bc940131b48d1e4b7cd64e0a46ccf00d2295e377bebc7a96420f5ded",
+    "format": "png",
+    "bytes": 109599,
+    "width": 1200,
+    "height": 630
+  },
   "greetings": {
     "en": "Welcome to Isluno! I’m TRACY, your virtual trip assistant.",
     "nl": "Welkom bij Isluno! Ik ben TRACY, uw virtuele reisassistent.",
