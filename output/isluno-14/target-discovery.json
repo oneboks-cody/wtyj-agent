@@ -1,0 +1,135 @@
+{
+  "observed_date": "2026-09-08",
+  "scope": "Project/GitHub read-only discovery; no production or provider connection, no secrets or customer data copied into this packet. Historical observations are not execution bindings.",
+  "local_source_head": "7578bc88a147a14ee806eef236cf3ab747ca0aa1",
+  "sources": [
+    {
+      "path": "wtyj/briefs/isluno_baseline_manifest.json",
+      "sha256": "b5640966715761b0c82ca3c773af8b06a4ac4915344c34a853ad2fe87f5fa2dd"
+    },
+    {
+      "path": "wtyj/scripts/deploy_mermaid_release.sh",
+      "sha256": "e4f7abbe10cd94b686f8ce19a5d52c7141888c75d2b1f29e031c0e65bd5cde86"
+    },
+    {
+      "path": "wtyj/scripts/prepare_mermaid_reservation_release.py",
+      "sha256": "c8506aeb78cbd46bcbb02ac4f32d95574d8d957c32ae9fd2e4b730e2d4423cad"
+    },
+    {
+      "path": "wtyj/scripts/ensure_dashboard_nginx.py",
+      "sha256": "5fddb9fdb3e027d85d95974c11f11a54ce4095b8ea61c9fbe229a1516149b5a7"
+    },
+    {
+      "path": "wtyj/briefs/marina_brief_146_adamus_second_client_deployment.md",
+      "sha256": "8339cdac80884c9e8113b8bc2e1a5719634aa7a2e0a777db26eb3a3018986b7c"
+    }
+  ],
+  "baseline": {
+    "observed_date": "2026-09-08",
+    "backend": {
+      "container": "wtyj-mermaid",
+      "image": "wtyj-agent:tracy-reminders-a095665",
+      "image_digest": "sha256:ed146176bbf4e116270b55a04771af5fb3cd5d0f62d124d8650aa7e1bac97552",
+      "started_at": "2026-09-08T13:38:46.139199144Z",
+      "source_comparison": {
+        "runtime_files": 112,
+        "matched": 112,
+        "different": [],
+        "not_in_candidate": [],
+        "candidate_source_base": "e43d0d174d10b82ee0fd4a394828ea720d3996ad"
+      }
+    },
+    "frontend": {
+      "deployed_release": "2e41f4a209fbafc602419408696a25fa9791dc34",
+      "matching_assets": [
+        {
+          "path": "index.html",
+          "sha256": "0b8ce2fd1a6e93d93648b0ebb37b69a149d06ee399aab53fb1000b9109fd78fd"
+        },
+        {
+          "path": "assets/index-LhrQCX2T.js",
+          "sha256": "e7e958c69ab6af35638d66d540237d90bc7ab0d9b0bd66260a6f9b3a4d38f97c"
+        },
+        {
+          "path": "assets/index-C6GIBlmS.css",
+          "sha256": "28b443621ab3d487acab2d9da0f2eee95af03c31e23c2e939d58c650873696ea"
+        }
+      ]
+    },
+    "strict_allowlist": {
+      "mode": "strict",
+      "account_count": 1,
+      "matches_verified_mermaid_account": true
+    },
+    "client_config_sha256": "1e8db71ac4fbe60d0a2eba42b96e066c77dce78d42e06cc493156c3dab5796a6"
+  },
+  "github": {
+    "workflow": {
+      "git_blob_sha": "a2b9686b50c2ca9d58e5719b907ae7310a7280f8",
+      "url": "https://github.com/BensonOpas/wtyj-agent/blob/main/.github/workflows/deploy-dashboard.yml",
+      "selected_lines": [
+        {
+          "line": 43,
+          "text": "ref: main"
+        },
+        {
+          "line": 79,
+          "text": "host: ${{ secrets.VPS_HOST }}"
+        },
+        {
+          "line": 88,
+          "text": "host: ${{ secrets.VPS_HOST }}"
+        },
+        {
+          "line": 96,
+          "text": "RELEASE_ROOT=/var/www/unboks-dashboard/releases"
+        },
+        {
+          "line": 97,
+          "text": "CURRENT_LINK=/var/www/unboks-dashboard/current"
+        }
+      ]
+    },
+    "local_workflow_blob": "c695a7a89ce30c6caecf7844118a17933bbc7e18",
+    "workflow_warning": "Current default-branch workflow differs from candidate workflow. Selected release root/current pointer agree; neither is running-server proof.",
+    "deploy_script_default_branch": "GET contents/wtyj/scripts/deploy_mermaid_release.sh returned 404. Candidate script is historical branch evidence, not current main deployment authority.",
+    "deployments": {
+      "BensonOpas/wtyj-agent": [],
+      "unboks-org/unboks-dashboard-api": []
+    },
+    "environment_counts": {
+      "BensonOpas/wtyj-agent": 0,
+      "unboks-org/unboks-dashboard-api": 0
+    },
+    "repository_variables": "403 for both repositories in discovery; not retried with alternate credentials.",
+    "backend_ci": {
+      "url": "https://github.com/BensonOpas/wtyj-agent/actions/runs/33863502429",
+      "created_at": "2026-09-04T10:29:48Z",
+      "head_sha": "045bd8ddb3856bb3de9710b9963e56a24d7abd7e",
+      "test": "success",
+      "deploy-production": "skipped",
+      "deploy-canary": "skipped",
+      "backend-deployment-status": "skipped"
+    },
+    "dashboard_workflow_run": {
+      "url": "https://github.com/BensonOpas/wtyj-agent/actions/runs/33779191039",
+      "created_at": "2026-09-03T16:32:01Z",
+      "conclusion": "success",
+      "control_repository_head": "e66d12d6c95fcfff5073472528c9df506454ae2c",
+      "artifacts": [],
+      "limitation": "Workflow separately checks out dashboard main; control SHA does not identify deployed dashboard source. September 8 baseline is newer point-in-time release evidence."
+    }
+  },
+  "project_host_corroboration": {
+    "candidate": "108.61.192.52",
+    "historical_repository_source": "wtyj/briefs/marina_brief_146_adamus_second_client_deployment.md",
+    "recent_record": {
+      "task_id": "01a069af-6430-7691-ab43-c255b747d636",
+      "title": "Mermaid reservations & chat",
+      "turn_id": "01a08188-7dd3-7fe2-9002-e2725f9fed14",
+      "date": "2026-09-08",
+      "finding": "Completed command record addresses this host and wtyj-mermaid. No command payload, recipient, customer content or old operational approval is reproduced."
+    },
+    "limitation": "Historical task evidence only; host not contacted in discovery."
+  }
+}

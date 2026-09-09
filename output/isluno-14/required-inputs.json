@@ -32,5 +32,95 @@
     "ingress_retry_or_durable_buffer_evidence": null
   },
   "provider_profile_change_proposed": false,
-  "live_canary_proposed": false
+  "live_canary_proposed": false,
+  "discovered_candidates": {
+    "target_host_or_project": {
+      "value": "108.61.192.52",
+      "status": "historical project record corroborated on September 8; not contacted",
+      "source": "target-discovery.json project_host_corroboration"
+    },
+    "target_platform": {
+      "value": "Linux VPS with Docker Compose; architecture unknown",
+      "status": "documented; current verification required",
+      "source": "Mermaid deployment script and dashboard workflow"
+    },
+    "current_backend_source_sha": {
+      "value": "e43d0d174d10b82ee0fd4a394828ea720d3996ad",
+      "status": "September 8 observation; must recheck before use",
+      "source": "target-discovery.json baseline / wtyj/briefs/isluno_baseline_manifest.json observed 2026-09-08"
+    },
+    "current_backend_image_digest": {
+      "value": "sha256:ed146176bbf4e116270b55a04771af5fb3cd5d0f62d124d8650aa7e1bac97552",
+      "status": "September 8 observation; must recheck before use",
+      "source": "target-discovery.json baseline / wtyj/briefs/isluno_baseline_manifest.json observed 2026-09-08"
+    },
+    "current_container_name": {
+      "value": "wtyj-mermaid",
+      "status": "September 8 observation; must recheck before use",
+      "source": "target-discovery.json baseline / wtyj/briefs/isluno_baseline_manifest.json observed 2026-09-08"
+    },
+    "current_frontend_source_sha": {
+      "value": "2e41f4a209fbafc602419408696a25fa9791dc34",
+      "status": "September 8 observation; must recheck before use",
+      "source": "target-discovery.json baseline / wtyj/briefs/isluno_baseline_manifest.json observed 2026-09-08"
+    },
+    "config_compare_and_swap_digest": {
+      "value": "1e8db71ac4fbe60d0a2eba42b96e066c77dce78d42e06cc493156c3dab5796a6",
+      "status": "September 8 observation; must recheck before use",
+      "source": "target-discovery.json baseline / wtyj/briefs/isluno_baseline_manifest.json observed 2026-09-08"
+    },
+    "current_compose_path": {
+      "value": "/root/clients/mermaid/docker-compose.yml",
+      "status": "documented; current verification required",
+      "source": "Candidate deploy_mermaid_release.sh / prepare_mermaid_reservation_release.py; not present on default branch at inspected path"
+    },
+    "current_compose_service": {
+      "value": "agent",
+      "status": "documented; current verification required",
+      "source": "Candidate deploy_mermaid_release.sh / prepare_mermaid_reservation_release.py; not present on default branch at inspected path"
+    },
+    "current_database_path": {
+      "value": "/root/clients/mermaid/data/state_registry.db",
+      "status": "documented; current verification required",
+      "source": "Candidate deploy_mermaid_release.sh / prepare_mermaid_reservation_release.py; not present on default branch at inspected path"
+    },
+    "current_config_directory": {
+      "value": "/root/clients/mermaid/config",
+      "status": "documented; current verification required",
+      "source": "Candidate deploy_mermaid_release.sh / prepare_mermaid_reservation_release.py; not present on default branch at inspected path"
+    },
+    "current_frontend_host": {
+      "value": "dashboard.unboks.org",
+      "status": "documented; current verification required",
+      "source": "Current GitHub deploy-dashboard.yml blob a2b9686b50c2ca9d58e5719b907ae7310a7280f8"
+    },
+    "current_frontend_pointer_path": {
+      "value": "/var/www/unboks-dashboard/current",
+      "status": "documented; current verification required",
+      "source": "Current GitHub deploy-dashboard.yml blob a2b9686b50c2ca9d58e5719b907ae7310a7280f8"
+    },
+    "current_frontend_release_path": {
+      "value": "/var/www/unboks-dashboard/releases/2e41f4a209fbafc602419408696a25fa9791dc34",
+      "status": "inferred from two sources; readlink verification required",
+      "source": "GitHub release root + September 8 baseline release"
+    },
+    "current_frontend_api_route": {
+      "value": "Mermaid Python upstream http://127.0.0.1:8102/",
+      "status": "documented upstream; public prefix/current routing requires verification",
+      "source": "Candidate ensure_dashboard_nginx.py"
+    },
+    "backup_destination_and_restore_verification": {
+      "value": "/root/backups/mermaid-reservations/<new-release-id>",
+      "status": "documented private root only; no new backup destination or restore verification approved",
+      "source": "Candidate deploy_mermaid_release.sh"
+    }
+  },
+  "inputs_semantics": "inputs remain null until verified for the proposed action. discovered_candidates contains sourced historical/documented values, not missing user inventory requests or approved execution values.",
+  "remaining_verification": [
+    "Fresh sanitized host/platform/image/mount/pointer metadata and comparison with the September 8 baseline. Exact strict account binding must be verified without reading secrets or customer records.",
+    "Current ownership and sole webhook consumer; ingress admission/drain and durable retention evidence. Project history is not provider-current proof.",
+    "Approved public media/document bases and their actual tenant route mapping; existing domain does not imply Isluno endpoints are exposed.",
+    "Pinned compatible OCI base/platform/dependencies and final candidate image digest. Historical current image digest is not an approved candidate base.",
+    "Fresh protected config digest and exact CAS diff; private backup/restore plan; exact action authorization and change window."
+  ]
 }

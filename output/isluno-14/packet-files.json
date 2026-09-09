@@ -1,7 +1,7 @@
 [
   {
     "file": "ACTION.md",
-    "sha256": "1da6b1699e3494d4be4da3083e34fc2b7c12d7dab398eb72d999b6f5499ca4a5"
+    "sha256": "d2a48c1f947b33f4cdb0dd4bba38c802cefe26fb946776dc2a4222a80987d0f7"
   },
   {
     "file": "BUILD.md",
@@ -37,6 +37,10 @@
   },
   {
     "file": "required-inputs.json",
-    "sha256": "c2dd511deca26646a26661d952cf35a2cb4b12181af5d33f44fbf472fddc8fac"
+    "sha256": "a409423cf8be424ef2a510e5a9366841eb1971155e0f7601753a59ef014e3157"
+  },
+  {
+    "file": "target-discovery.json",
+    "sha256": "e5eef8f580c764825e23e91f82167f70ffaa4cefbe53369f4d3d0d7e230038ac"
   }
 ]
