@@ -1,0 +1,108 @@
+{
+  "source_commit": "3a5f5240f9d51e71fb47c47fbce8a16d1688f78e",
+  "baseline": "de829f6e905a349012bd37ef3167adfd04ab7308",
+  "network": "none",
+  "external_api_spend_usd": 0,
+  "live_provider_requests": 0,
+  "candidate_run": {
+    "tests": 97,
+    "seconds": 74.524,
+    "result": "PASS",
+    "log": "candidate-tests.txt",
+    "suites": [
+      "test_hospitality.HospitalityTests",
+      "test_hospitality_delivery.HospitalityDeliveryTests",
+      "test_no_reply.NoReplyTests",
+      "test_conversation.ConversationTests",
+      "test_discovery.DiscoveryTests",
+      "test_quotes.QuoteTests"
+    ]
+  },
+  "prior_broader_regression": {
+    "source_commit": "d8d361e00dd0ac153fa66fc81f0ca08e36b4d97a",
+    "tests": 140,
+    "seconds": 151.157,
+    "result": "PASS",
+    "log": "offline-tests.txt",
+    "includes_payments_and_recovery": true
+  },
+  "evidence_limit": "SDK decisions/prose and transport outcomes are scripted. No live generation, provider send or guest receipt verified.",
+  "files": [
+    {
+      "path": "clients/mermaid/config/isluno_profile.json",
+      "sha256": "5c90d1979c7599e9bdd82a809a6cebe07db150692ed949b7a88e1070b16616b3"
+    },
+    {
+      "path": "wtyj/agents/marina/marina_agent.py",
+      "sha256": "a119c3e11a55c220e24cb7367d76c1a400146cdfcdb6263268530c547a039a6a"
+    },
+    {
+      "path": "wtyj/agents/social/isluno_conversation.py",
+      "sha256": "02de5a1b7f3a0d84fba658acebb4a32e4eb3e028e424bb1a5cd5cae910f94b46"
+    },
+    {
+      "path": "wtyj/agents/social/isluno_conversation_understanding.py",
+      "sha256": "e64e9c38fc7196ca8210eb878a51f11f80f43986fb5505b73a3dec9f575fa4b8"
+    },
+    {
+      "path": "wtyj/agents/social/isluno_delivery.py",
+      "sha256": "9d7178bfdc629d9ab1f9ab2f0263e746b22dc97b34237c7603ea82cc8071b4a1"
+    },
+    {
+      "path": "wtyj/agents/social/isluno_discovery.py",
+      "sha256": "27a8af8491826c2e834c0c4540fdc74599a1602ba65dd0c4a56a355a6c7aca02"
+    },
+    {
+      "path": "wtyj/agents/social/isluno_hospitality.py",
+      "sha256": "5738523630368e6cd45e0a05039c8c002b9f5a13001568de538ca995d8bd206e"
+    },
+    {
+      "path": "wtyj/agents/social/isluno_payments.py",
+      "sha256": "f58b90ff319afb5dc0e600ef737bb2495b51690db4fed12963fb74a0516f34a7"
+    },
+    {
+      "path": "wtyj/agents/social/isluno_quote_delivery.py",
+      "sha256": "03c6d811995cbaf6abf350e6da9b1d171ef9dddd9000f8eeeb6f93d0faba6c96"
+    },
+    {
+      "path": "wtyj/agents/social/isluno_quotes.py",
+      "sha256": "3453635b0dc59350a451a651c13d9b87349d86a3a2232ad09b92719bc5c8a3d4"
+    },
+    {
+      "path": "wtyj/agents/social/isluno_recovery_copy.py",
+      "sha256": "19ca38d230e42725e5b9cc358d1a6cb7b54dff0f31378851ba909fa947d7ae30"
+    },
+    {
+      "path": "wtyj/briefs/isluno_hospitality.md",
+      "sha256": "b24aca4b68db125277f932360a1888fe12c5415455bebf07ecef14a13b1fe5c0"
+    },
+    {
+      "path": "wtyj/briefs/isluno_hospitality_user_brief.md",
+      "sha256": "e95d7100b79eed573204effcdf241e3644a261e13b6a7b847c82bc12d9387610"
+    },
+    {
+      "path": "wtyj/tests/isluno/hospitality_fixtures.py",
+      "sha256": "60d1d78def2a911f1cb0b587cfbe8d33cfeca94da29a94fe8ac947f823f14420"
+    },
+    {
+      "path": "wtyj/tests/isluno/test_conversation.py",
+      "sha256": "117a346fbaf2428db23e65b7a94a118bc8f11b57eeb46bffc6a3cace6d5b6acf"
+    },
+    {
+      "path": "wtyj/tests/isluno/test_hospitality.py",
+      "sha256": "57ddfef5d197e0d38eeec53ae3a67a6b6f33c510d35922354ff6ddb1d868847f"
+    },
+    {
+      "path": "wtyj/tests/isluno/test_hospitality_delivery.py",
+      "sha256": "7129ebdc17eee529bb504d24bb2d1a961c69b836a0f021a3c609bc71fc81d0bb"
+    },
+    {
+      "path": "wtyj/tests/isluno/test_no_reply.py",
+      "sha256": "2dfb74299b2686df8d71c7a1a3768b24c1e08802a42728102c9eca7f2da20a23"
+    },
+    {
+      "path": "wtyj/tests/isluno/test_quotes.py",
+      "sha256": "0f1a0448de21ecbb5e4ee4e0d4150191af3f939c31f6fb4daa1a25369f5c3f95"
+    }
+  ]
+}
