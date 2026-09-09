@@ -332,8 +332,9 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
         recovery.incident(scope,trigger,'legacy_action','quarantined_legacy_button')
         raise ItineraryError('legacy_action_quarantined')
     result=_handle_message(message,store=store,discovery=discovery,understand=understand)
-    recovery.progress(scope,trigger)
-    recovery.schedule(scope,trigger,result)
+    if not result.get('generation_failed'):
+        recovery.progress(scope,trigger)
+        recovery.schedule(scope,trigger,result)
     return result
 
 
@@ -389,8 +390,14 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
                         store.record_decision(scope, trigger, decision)
                 except Exception as exc:
                     from agents.social.isluno_recovery import RecoveryStore
-                    RecoveryStore(store).incident(scope,trigger,'understanding_failure',type(exc).__name__)
-                    raise ItineraryError('understanding_unavailable') from exc
+                    RecoveryStore(store).incident(scope,trigger,'understanding_failure',
+                                                  exc.code if isinstance(exc, ItineraryError) else type(exc).__name__)
+                    from agents.social.isluno_recovery_copy import PROCESSING_FAILED
+                    # This turn was claimed exactly once. Leave its decision and
+                    # outcome unresolved; a duplicate must never call the model
+                    # or resend this acknowledgement. A fresh guest turn may proceed.
+                    return {'text': PROCESSING_FAILED.get(saved['chat_language'], PROCESSING_FAILED['en']),
+                            'generation_failed': True}
             if base_decision is not None:
                 store.record_decision(scope, trigger, decision)
         outcome = store.apply(scope, trigger, saved, decision, message.get('text', ''))

@@ -2296,6 +2296,22 @@ def process_message(
         return result
 
     except Exception as _exc:
+        if response_contract in {"isluno_discovery", "isluno_conversation"}:
+            from shared.isluno_pricing import ItineraryError
+            if isinstance(_exc, ItineraryError):
+                # Keep only a fixed validator code and shape metadata; never log
+                # guest text, model output, fact values, or the prompt.
+                fallback["model_error"] = {"kind": "invalid_response", "code": _exc.code}
+                diagnostic = {}
+                if _exc.code == "invalid_discovery_facts":
+                    _keys = result.get("fact_keys") if isinstance(result, dict) else None
+                    diagnostic = {"fact_keys_type": type(_keys).__name__}
+                    if isinstance(_keys, list):
+                        diagnostic.update(fact_keys_count=len(_keys),
+                                          fact_keys_nonstring_count=sum(not isinstance(k, str) for k in _keys))
+                bm_logger.log("isluno_model_contract_failed", code=_exc.code,
+                              channel=channel, **diagnostic)
+                return fallback
         if response_contract == "mermaid_reservation_demo":
             from agents.social.mermaid_model_recovery import error_metadata
             fallback["model_error"] = error_metadata(_exc)

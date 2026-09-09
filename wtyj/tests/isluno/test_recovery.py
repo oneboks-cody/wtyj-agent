@@ -71,7 +71,7 @@ class RecoveryTests(unittest.TestCase):
         self.t.initial();before=self.t.active()
         def failure():raise RuntimeError('Synthetic model failure')
         result,calls=self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='failed-model',before_response=failure)
-        self.assertEqual(result,'');self.assertEqual(calls,1);self.assertEqual(self.t.active(),before)
+        self.assertTrue(result['text']);self.assertTrue(result['generation_failed']);self.assertEqual(calls,1);self.assertEqual(self.t.active(),before)
         result,calls=self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='failed-model')
         self.assertEqual(result,'');self.assertEqual(calls,0)
         with self.store.db() as db:
@@ -269,7 +269,7 @@ class RecoveryTests(unittest.TestCase):
                     with self.assertRaises(Crash):self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='later-failure',before_response=fail)
                 else:
                     reply,calls=self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='later-failure',before_response=fail)
-                    self.assertEqual((reply,calls),('',1))
+                    self.assertTrue(reply['text']);self.assertTrue(reply['generation_failed']);self.assertEqual(calls,1)
                 self.t.now+=timedelta(hours=2)
                 prior=self.t.get('today').json();self.assertEqual(prior['counts']['attention'],1)
                 incidents=[i for i in prior['recovery']['incidents'] if i['scope_key']==scope.key]

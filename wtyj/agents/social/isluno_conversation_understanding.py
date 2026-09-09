@@ -102,5 +102,5 @@ def understand(scope, text, saved, snapshot):
     result = marina_agent.process_message(from_email=scope.customer_ref, subject='Isluno itinerary', body=text,
         thread_fields={'catalog': catalog, **saved}, thread_flags={}, channel='whatsapp',
         messages=saved.get('history', []), response_contract='isluno_conversation')
-    check(not result.get('generation_failed'), 'conversation_generation_failed')
+    check(not result.get('generation_failed'), (result.get('model_error') or {}).get('code') or 'conversation_generation_failed')
     return validate(result, catalog)
