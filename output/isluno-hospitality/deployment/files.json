@@ -1,0 +1,62 @@
+{
+  "source_commit": "3a5f5240f9d51e71fb47c47fbce8a16d1688f78e",
+  "base_image": "sha256:8d63e4d77862d9832892e788ceafc0f4d425aacf6ac594b7ee034aa1547068e3",
+  "profile_merge_keys": [
+    "hospitality_voice",
+    "conversation_outcomes"
+  ],
+  "files": {
+    "Dockerfile": {
+      "bytes": 942,
+      "sha256": "b2226366499c7da7ed730394cc9965a130db15f9b2e72f57d69ee0f45c73a72c"
+    },
+    "agents/marina/marina_agent.py": {
+      "bytes": 129512,
+      "sha256": "a119c3e11a55c220e24cb7367d76c1a400146cdfcdb6263268530c547a039a6a"
+    },
+    "agents/social/isluno_conversation.py": {
+      "bytes": 39944,
+      "sha256": "02de5a1b7f3a0d84fba658acebb4a32e4eb3e028e424bb1a5cd5cae910f94b46"
+    },
+    "agents/social/isluno_conversation_understanding.py": {
+      "bytes": 10268,
+      "sha256": "e64e9c38fc7196ca8210eb878a51f11f80f43986fb5505b73a3dec9f575fa4b8"
+    },
+    "agents/social/isluno_delivery.py": {
+      "bytes": 5616,
+      "sha256": "9d7178bfdc629d9ab1f9ab2f0263e746b22dc97b34237c7603ea82cc8071b4a1"
+    },
+    "agents/social/isluno_discovery.py": {
+      "bytes": 24337,
+      "sha256": "27a8af8491826c2e834c0c4540fdc74599a1602ba65dd0c4a56a355a6c7aca02"
+    },
+    "agents/social/isluno_hospitality.py": {
+      "bytes": 19500,
+      "sha256": "5738523630368e6cd45e0a05039c8c002b9f5a13001568de538ca995d8bd206e"
+    },
+    "agents/social/isluno_payments.py": {
+      "bytes": 20167,
+      "sha256": "f58b90ff319afb5dc0e600ef737bb2495b51690db4fed12963fb74a0516f34a7"
+    },
+    "agents/social/isluno_quote_delivery.py": {
+      "bytes": 5224,
+      "sha256": "03c6d811995cbaf6abf350e6da9b1d171ef9dddd9000f8eeeb6f93d0faba6c96"
+    },
+    "agents/social/isluno_quotes.py": {
+      "bytes": 21907,
+      "sha256": "3453635b0dc59350a451a651c13d9b87349d86a3a2232ad09b92719bc5c8a3d4"
+    },
+    "agents/social/isluno_recovery_copy.py": {
+      "bytes": 1962,
+      "sha256": "19ca38d230e42725e5b9cc358d1a6cb7b54dff0f31378851ba909fa947d7ae30"
+    },
+    "profile-patch.json": {
+      "bytes": 2769,
+      "sha256": "f69142213839eef54f86c4c8141f79ec68dc0eb5cdd3ec204444c8e20efe5189"
+    }
+  },
+  "bundle": {
+    "bytes": 296960,
+    "sha256": "70333b571e96b3906a3b6a08e696c4bb4075c4add155eaf2c897d435933f82b7"
+  }
+}

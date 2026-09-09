@@ -1,0 +1,19 @@
+# Reviewed hospitality release packet
+
+Source: 3a5f5240f9d51e71fb47c47fbce8a16d1688f78e. Evidence head: 00d4e4b7299bbda6ad73029291d9ee0d417ebc2a.
+Calvin's explicit “deploy it , pu tit live” authority was independently verified by Gatekeeper (authority receipt in #356). Builder alone executes host operations; Gatekeeper reviews this immutable packet before dispatch.
+
+Packet: 8ae84786388fa987f0ae22c4e3cb8e06efd3dad9a148afd0df4709fa16cc08c3.
+One transfer, at most 296960 archive bytes, twelve regular reviewed members, 60-second transfer limit. One image build with no network/pull, 120 seconds. Cumulative dispatch maximum 900 seconds, including preflight/staging. No automatic retries, scope expansion, cleanup, customer replay, database restore, agent messages or paid calls.
+
+The bundle extends the exact current c04512c image with ten reviewed Python files and merges only hospitality_voice and conversation_outcomes into the current public profile. Technical tenant mermaid, Isluno identity, number/account, provider/model, payment/quote safeguards, dashboard and existing customer records stay intact. All archive/member, packaged/live source, config/profile, session-token and protected table hashes are checked. The unchanged dashboard release pointer and index are checked before disruption and during readiness.
+
+Fresh proof classifies two retained turns (one old failed claim, one completed browsing result) and one accepted discovery plan. The operator proof checks exact scope, message/plan linkage, terminal metadata, dedup markers and absence of queued/booking/payment work. It writes only maintenance phase/audit rows. The ordinary runtime guard remains unchanged. Any new history invalidates the proof; it is never silently accepted or cleaned away.
+
+Before disruption: validate exact runtime/container/ICP/config/account, build/hash image, acquire tenant/config fences, verify producers and idle queues. Fence watchdog and provisioning worker, close ICP then runtime, drain and atomically seal the reviewed exact history. Hash every customer/business table before and after stopping the old container. Activate the two-key profile update and image, verify effective runtime configuration, scoped capabilities/catalog31, health200, all protected rows/files and live source hashes, then reopen gates and producers.
+
+Failure handling: before activation, restore the unchanged running old service after binding/health checks. An unsealed drain may be cancelled without altering any pending IDs, workers or customer rows. A sealed old container may be restarted only with exact history and preserved-table proof. Activation failure permits exactly one image/profile rollback, never a DB restore. Reserve 500 seconds before disruption, 300 before activation and 180 for rollback. Unprovable or ambiguous state remains held with an explicit receipt; no blind retry.
+
+Nr2 browser verification: the existing session was checked by Gatekeeper and redirected to /login. The authenticated visual check is therefore unavailable. For this backend/profile-only rollout, Gatekeeper accepted unchanged dashboard/auth configuration, session-token bytes, account/tenant binding, capabilities/catalog and HTTP health as deployment checks; no login bypass or credential extraction. Authenticated visual and live customer/model quality checks remain unverified.
+
+Validation: 10 focused network-disabled operator/runner tests cover exact seal/readiness/reopen, stale hash, outbound uncertainty, active work, wrong plan binding, unsealed abort preserving unfinished workers, sealed abort refusal, atomic profile restore/drift, original-runtime abort binding, restoration budget/context and semantic host-configuration comparison. Application tests are already frozen in output/isluno-hospitality and are not rerun for unchanged source.
