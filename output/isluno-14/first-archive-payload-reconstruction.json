@@ -1,0 +1,7 @@
+{
+  "status": "exact_recorded_hash_reconstructed",
+  "payload_sha256": "1bbf3054f181c3435cfe253feed57c3ec890e81c764f0a144a9af2a507153a5c",
+  "before_after_delta": "After dispatch, REMOTE_COMMON gained def expired(*_):raise TimeoutError() and signal.signal(SIGALRM,expired);signal.alarm(25). Removing precisely those two lines reconstructs the recorded payload. No other delta required.",
+  "host_calls": 0,
+  "original_dispatch_receipt_unchanged": true
+}

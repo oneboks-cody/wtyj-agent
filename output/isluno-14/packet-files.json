@@ -61,7 +61,7 @@
   },
   {
     "file": "STAGING-RECOVERY.md",
-    "sha256": "178a6b99049789f8d9e694c4afe3243c0d1b4c427991c3a3e70af2a6b1ea9114"
+    "sha256": "114cf6c54ffa554d688bf6b496e2604f1fd4261b8216d85a12604709c52efaf0"
   },
   {
     "file": "artifacts.json",
@@ -118,6 +118,14 @@
   {
     "file": "direct-seal-image-tests.txt",
     "sha256": "c885ee817b05b5dbca1bb40df322f30cc9c442a98837bd023ece0f17a4a77410"
+  },
+  {
+    "file": "first-archive-exact-dispatched-payload.py.txt",
+    "sha256": "1bbf3054f181c3435cfe253feed57c3ec890e81c764f0a144a9af2a507153a5c"
+  },
+  {
+    "file": "first-archive-payload-reconstruction.json",
+    "sha256": "ba6d284d651485c388ef4f45b9d38c0993e5e88b817e78be0fab70dd830628ae"
   },
   {
     "file": "frontend-build.config.ts",
@@ -256,6 +264,10 @@
     "sha256": "8933cea358487c3f1d99e025dec54d448563d1e8a163448e85842895a714b30b"
   },
   {
+    "file": "staging-recovery-payload-test.txt",
+    "sha256": "a80fd0cffb277d9074aefebcd2c409b1a2291f4b2b77a390abfe31db42c97268"
+  },
+  {
     "file": "staging-recovery-reference-test.txt",
     "sha256": "439359ffc23e42ba462c7acae9f7324ac61412cddb361e88cd70c85d4b93564b"
   },
@@ -265,7 +277,7 @@
   },
   {
     "file": "staging-recovery.json",
-    "sha256": "4752cc1636b937328d7dac73149ef1be01c2a4c447a8619c5b20a50a63af59d0"
+    "sha256": "6c795bb1ba53764d2b4f31cd7b160b5034b9fd7289c85377ca15531238736019"
   },
   {
     "file": "target-discovery.json",

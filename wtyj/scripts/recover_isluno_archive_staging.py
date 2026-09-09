@@ -116,6 +116,15 @@ def first_complete(observation):
  return size==ARTIFACTS[0][2] and digest==ARTIFACTS[0][3]
 
 
+def preserve_payload(directory,phase,payload):
+ if payload is None:return {}
+ if phase not in ('inspect_only_first_archive','create_new_transfer_directory','verify_exact_artifacts') or not isinstance(payload,bytes):raise Failed('payload_scope')
+ name=phase+'.payload.py'
+ fd=os.open(directory/name,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+ with os.fdopen(fd,'wb') as f:f.write(payload);f.flush();os.fsync(f.fileno())
+ return {'payload_file':name,'payload_sha256':hashlib.sha256(payload).hexdigest(),'payload_bytes':len(payload)}
+
+
 def main(argv=None):
  argv=sys.argv[1:] if argv is None else argv
  if not argv:print('{"status":"offline_default","host_reads":false,"mutations":false}');return 0
@@ -138,7 +147,8 @@ def main(argv=None):
   def call(phase,args,limit,payload=None):
    left=OVERALL_SECONDS-(time.monotonic()-started)
    if left<=0:raise Failed('overall_timeout')
-   begin={'phase':phase,'at':datetime.datetime.now(datetime.timezone.utc).isoformat()};events.append(begin);save()
+   begin={'phase':phase,'at':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+   begin.update(preserve_payload(receipts,phase,payload));events.append(begin);save()
    try:raw,metrics=command(args,min(limit,left),data=payload)
    except Failed as e:begin.update(status='failed',code=e.code,**e.metrics);save();raise
    begin.update(status='complete',**metrics);save();print(json.dumps(begin),flush=True)

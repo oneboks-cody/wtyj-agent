@@ -3,11 +3,11 @@
   "reference": "calvin-isluno-staging-c",
   "runner": {
     "path": "wtyj/scripts/recover_isluno_archive_staging.py",
-    "sha256": "a37a54a4e74d8b04f45af0a3249d4b7838b5cc19d3f4441998f66a680d41e8cb"
+    "sha256": "490a59b701ac69a6a4c94461ea9f1a008fe1d588c4b81b03c1b9639c27d382bf"
   },
   "tests": {
     "path": "wtyj/tests/scripts/test_isluno_archive_recovery.py",
-    "sha256": "7b4064f5aeb7785c93d9317b93967497dc8f8e330804c2e40cdbc0d45afc93b6"
+    "sha256": "3998d430b32aff35e9cdf203cf288857dd920d6d26f518019cce4cdf4deab43b"
   },
   "maximum_uploads": 5,
   "upload_concurrency": 1,
@@ -40,5 +40,11 @@
   "host_actions_in_recovery_so_far": 0,
   "services_changed": false,
   "preflight_b": "passed; not rerun",
-  "conditional_deployment_authority": "retained; not requested again"
+  "conditional_deployment_authority": "retained; not requested again",
+  "dynamic_payloads_preserved_before_dispatch": true,
+  "payload_preservation_test": {
+    "count": 1,
+    "seconds": 0.001,
+    "unique_current_tests": 8
+  }
 }

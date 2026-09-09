@@ -33,6 +33,17 @@ class RecoveryTests(unittest.TestCase):
    with patch.object(m,'__file__',str(script)),patch.object(m,'ARTIFACTS',[]),patch.object(m,'command',side_effect=AssertionError('host call')),contextlib.redirect_stdout(io.StringIO()) as out:
     self.assertEqual(m.main(['--execute-approved-recovery','--approval-reference',m.REFERENCE]),1)
    self.assertEqual(prior.read_text(),'original');self.assertEqual(list(guard.iterdir()),[prior]);self.assertEqual(json.loads(out.getvalue())['code'],'recovery_already_dispatched')
+ def test_exact_dynamic_payload_is_preserved_before_dispatch(self):
+  with tempfile.TemporaryDirectory() as temp:
+   root=Path(temp);raw=b'print("synthetic payload")\n'
+   record=m.preserve_payload(root,'inspect_only_first_archive',raw)
+   self.assertEqual((root/record['payload_file']).read_bytes(),raw)
+   self.assertEqual(record['payload_sha256'],hashlib.sha256(raw).hexdigest())
+   self.assertEqual(record['payload_bytes'],len(raw))
+   self.assertEqual((root/record['payload_file']).stat().st_mode & 0o777,0o600)
+   with self.assertRaises(FileExistsError):m.preserve_payload(root,'inspect_only_first_archive',b'changed')
+   self.assertEqual((root/record['payload_file']).read_bytes(),raw)
+   with self.assertRaises(m.Failed):m.preserve_payload(root,'../other',raw)
  def test_remote_projector_preserves_bytes_and_rejects_links(self):
   import ast
   tree=ast.parse(m.REMOTE_COMMON)

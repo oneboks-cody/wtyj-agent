@@ -1,0 +1,6 @@
+test_exact_dynamic_payload_is_preserved_before_dispatch (__main__.RecoveryTests.test_exact_dynamic_payload_is_preserved_before_dispatch) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
