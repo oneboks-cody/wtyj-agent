@@ -19,7 +19,7 @@ class PresentationToleranceTests(unittest.TestCase):
   decision=self.decision();original=copy.deepcopy(decision)
   reply,calls,logs=self.h.call(decision,'intro-punctuation',text=INTRO)
   self.assertNotIn('generation_failed',reply);self.assertEqual(calls,1)
-  self.assertIn('Welcome, Calvin',reply['text']);self.assertNotIn('—',reply['text']);self.assertNotIn('–',reply['text'])
+  self.assertIn('Welcome, Calvin, happy to help you explore.',reply['text']);self.assertNotIn('—',reply['text']);self.assertNotIn('–',reply['text'])
   session=self.h.t.store.session(self.h.t.scope())
   self.assertIsNone(session['active_itinerary_id']);self.assertFalse(session['pending'])
   self.assertEqual(session['browsing']['holiday'],'Arriving next week, staying for a month')
@@ -31,7 +31,7 @@ class PresentationToleranceTests(unittest.TestCase):
   self.assertTrue(send_plan(scope.conversation_id,scope.account_id,reply['media']['url'],store=self.h.t.discovery,post=post,window=lambda *a:{'open':True},sleep=lambda _:None))
   session=self.h.t.store.session(scope)
   self.assertEqual(session['history'][-1]['content'],reply['text'])
-  self.assertIn(' - ',session['last_accepted_question'])
+  self.assertEqual(session['last_accepted_question'],'Would you prefer a relaxed day, or something active?')
   with self.h.t.store.db() as db:
    for table in ('isluno_itineraries','isluno_quote_jobs','isluno_payments'):
     if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?",(table,)).fetchone():
@@ -50,7 +50,7 @@ class PresentationToleranceTests(unittest.TestCase):
   d['product_ids']=['fixture-cruise'];d['fact_keys']=['summary']
   reply,calls,_=self.h.call(d,'source-typography',text=INTRO)
   self.assertNotIn('generation_failed',reply);self.assertEqual(calls,1)
-  self.assertIn('Harbour-Bay',reply['text']);self.assertIn('harbour - a relaxed trip',reply['text'])
+  self.assertIn('Harbour-Bay',reply['text']);self.assertIn('harbour, a relaxed trip',reply['text'])
  def test_unsupported_fact_still_fails_with_cosmetic_punctuation(self):
   d=self.decision('Welcome — {fact:invented:summary}')
   reply,calls,logs=self.h.call(d,'unsafe-fact',text=INTRO)
@@ -69,5 +69,5 @@ class PresentationToleranceTests(unittest.TestCase):
     self.assertNotIn('Calvin',str(diagnostic));self.assertNotIn('xxx',str(diagnostic))
  def test_typography_preserves_range_and_name_meaning(self):
   from agents.social.isluno_hospitality import presentation_text
-  self.assertEqual(presentation_text('Hours 10–12; Harbour–Bay — welcome.'), 'Hours 10-12; Harbour-Bay - welcome.')
+  self.assertEqual(presentation_text('Hours 10–12 and 10 – 12; Harbour–Bay — welcome.'), 'Hours 10-12 and 10-12; Harbour-Bay, welcome.')
 if __name__=='__main__':unittest.main()

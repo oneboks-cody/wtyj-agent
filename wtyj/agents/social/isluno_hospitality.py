@@ -1,6 +1,7 @@
 """Typed single-call hospitality; no intent or reply-language classification."""
 import copy
 import json
+import re
 from string import Formatter
 
 from shared.isluno_pricing import check
@@ -208,8 +209,11 @@ def remember(session, value):
 def presentation_text(text):
     """Mechanical typography after binding expansion, never an intent classifier.
 
-    ASCII hyphens preserve ranges and names; no prose truncation or model retry.
+    Commas replace spaced sentence breaks; hyphens preserve ranges and names.
+    No prose truncation, semantic classification or model retry.
     """
+    text = re.sub(r'(?<=\d)[ \t]*[\u2014\u2013][ \t]*(?=\d)', '-', text)
+    text = re.sub(r'[ \t]+[\u2014\u2013][ \t]+', ', ', text)
     return text.translate(str.maketrans({'\u2014': '-', '\u2013': '-'}))
 
 
