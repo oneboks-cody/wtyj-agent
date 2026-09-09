@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "recorded_at_utc": "2026-09-09 18:09:30 UTC",
+  "backend_source": "ab88343b325d3ee67a6dcdad5e15e1f6dd2d254f",
+  "frontend_source": "25dfebfb8688f76ef357b97c60c893fdf1bb8791",
+  "packet_sha256": "6f0a71adb17f5fd40ff9a55ed79d41188078ce8aeb339754cdd541fa14130bfe",
+  "url": "https://dashboard.unboks.org/today",
+  "tenant_label": "Isluno · Itinerary operations",
+  "method": "Gatekeeper authenticated browser reload, accessibility tree, screenshot, read-only DOM links/assets and browser error logs",
+  "counts": {
+    "itineraries": 0,
+    "trip_items": 0,
+    "demo_paid": 0,
+    "pending_review": 2
+  },
+  "historical_progress_labels_unverified": 3,
+  "rejected_reply_rows": 2,
+  "conversation_links_matching_retained_scope": 5,
+  "main_asset": "/assets/index-BGMwB8mS.js",
+  "browser_errors_or_warnings": [],
+  "conversation_opened": false,
+  "ui_action": "Expanded one delivery reference only",
+  "provider_reference": "unknown correctly retained for historical rejected replies",
+  "historical_part_metadata": "Absent in pre-correction records; no invented diagnostics",
+  "agent_messages_sent": 0,
+  "paid_engineering_requests": 0,
+  "rollback_required": false,
+  "real_customer_conversation_verified": false
+}

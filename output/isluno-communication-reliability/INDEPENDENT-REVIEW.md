@@ -1,6 +1,6 @@
 # Tracy communication audit, 9 September 2026
 
-Independent final application and deployment packet review: PASS at backend ab88343b325d3ee67a6dcdad5e15e1f6dd2d254f and frontend 25dfebfb8688f76ef357b97c60c893fdf1bb8791. One exact preserving rollout was technically cleared under Calvin's explicit deployment instruction. Execution and live verification remain pending. This is not proof of live customer or native-language quality.
+Deployed and independently verified at backend ab88343b325d3ee67a6dcdad5e15e1f6dd2d254f and frontend 25dfebfb8688f76ef357b97c60c893fdf1bb8791. Application, exact deployment packet, live source/runtime and authenticated Nr2 checks passed. Calvin can test the existing WhatsApp number. Real customer conversation and native-language quality acceptance remain pending.
 
 Live source at investigation start: f001cc7a73aaaac0679ba39d12cb60935035f97c. Target: Isluno on technical tenant mermaid and the existing WhatsApp account. Builder alone performs scoped host inspection and deployment. Gatekeeper inspects source, evidence and offline reproductions. No paid engineering probes, agent-sent messages, replay or cleanup.
 
@@ -81,5 +81,15 @@ Gatekeeper independently passed 24 communication/delivery tests in 18.397 second
 Final packet 6f0a71adb17f5fd40ff9a55ed79d41188078ce8aeb339754cdd541fa14130bfe binds archive d5c383222a336bba68af31105179af16b8e9f6a1c1405e306851fdec7ff62b5a and retained proof c20ab63aa42f4b705033ac0a59c1ee6b9334fa01d53c9d805499f844b5c9f6cc. Every archive member and generated payload hash was independently reverified. Gatekeeper cleared exactly one 900-second preserving deployment and the reviewed conditional rollback, with Builder as sole host executor. Paid testing, agent messages, replay and configuration changes remain outside the action. Authenticated UI verification is still required before claiming frontend readiness.
 
 ## Remaining verification limits
+
+## Deployment and authenticated verification result
+
+Builder executed the cleared packet once in 22.635 seconds. Backend image sha256:8ea85eb29ae6bea3ff64012cb276970a2daef15f5e0958c743df2c9bca5ac11d is running with the exact 16 packaged source files. Health returned 200; the catalog has 31 products; runtime generation 12 and ingress generation 11 are open; producers are restored. All 91 customer/business tables were preserved through activation, and the once-only post-deployment query-only proof matched c20ab63aa42f4b705033ac0a59c1ee6b9334fa01d53c9d805499f844b5c9f6cc. No retry or rollback occurred.
+
+Gatekeeper independently reloaded the signed-in Isluno Today page after activation. Counts remain 0 itineraries, 0 items, 0 demo-paid and 2 pending/review. Three historical incident labels now explicitly say delivery is unverified. Two rejected replies have review guidance and scoped conversation links; all five links match the retained conversation. The main asset matches the independently rebuilt frontend and browser errors/warnings were empty. Gatekeeper expanded a delivery reference but did not open a customer conversation. The historical provider IDs and part/error metadata are correctly unknown rather than fabricated. See AUTHENTICATED-UI-RECEIPT.json.
+
+No agent-sent customer message, paid engineering request, replay, cleanup or configuration change occurred. The next step is Calvin's manual WhatsApp conversation, progressing from introduction through discovery, photos, explicit trip selection, review and simulated payment. Remaining supplier, payment and native-language limits below still apply.
+
+## Evidence limits after deployment
 
 A full offline path with a strict fake transport can establish application handling and wire conformity. It cannot prove future model prose, network delivery or native-language quality. No claim that every possible external failure has been eliminated is supportable. The engineering goal is to prevent these defect classes and make remaining failures explicit and recoverable without unauthorized actions.
