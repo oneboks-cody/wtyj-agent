@@ -1,0 +1,6 @@
+test_consumed_guard_preserves_prior_receipt_and_blocks_commands (__main__.RecoveryTests.test_consumed_guard_preserves_prior_receipt_and_blocks_commands) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK

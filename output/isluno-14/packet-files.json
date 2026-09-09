@@ -60,6 +60,10 @@
     "sha256": "f1fc766d41cbb56e337a4048a5bfad2e325545187b766a5767729586426977cb"
   },
   {
+    "file": "STAGING-RECOVERY.md",
+    "sha256": "178a6b99049789f8d9e694c4afe3243c0d1b4c427991c3a3e70af2a6b1ea9114"
+  },
+  {
     "file": "artifacts.json",
     "sha256": "b4b62ea9bec994d2d557454473586600746f8c359665133d2e95cddb660b5ea6"
   },
@@ -250,6 +254,18 @@
   {
     "file": "runner-tests.txt",
     "sha256": "8933cea358487c3f1d99e025dec54d448563d1e8a163448e85842895a714b30b"
+  },
+  {
+    "file": "staging-recovery-reference-test.txt",
+    "sha256": "439359ffc23e42ba462c7acae9f7324ac61412cddb361e88cd70c85d4b93564b"
+  },
+  {
+    "file": "staging-recovery-tests.txt",
+    "sha256": "8fbd506fd63789acc121de3144b4916413a22a5f1a01d5f5adc1f19f49dc2600"
+  },
+  {
+    "file": "staging-recovery.json",
+    "sha256": "4752cc1636b937328d7dac73149ef1be01c2a4c447a8619c5b20a50a63af59d0"
   },
   {
     "file": "target-discovery.json",

@@ -1,0 +1,12 @@
+test_complete_requires_exact_size_and_digest (__main__.RecoveryTests.test_complete_requires_exact_size_and_digest) ... ok
+test_consumed_guard_preserves_prior_receipt_and_blocks_commands (__main__.RecoveryTests.test_consumed_guard_preserves_prior_receipt_and_blocks_commands) ... ok
+test_default_never_reads_host (__main__.RecoveryTests.test_default_never_reads_host) ... ok
+test_nonzero_exit_keeps_fixed_reason_exit_and_counts (__main__.RecoveryTests.test_nonzero_exit_keeps_fixed_reason_exit_and_counts) ... ok
+test_remote_projector_preserves_bytes_and_rejects_links (__main__.RecoveryTests.test_remote_projector_preserves_bytes_and_rejects_links) ... ok
+test_success_returns_only_stdout_and_measures_stderr (__main__.RecoveryTests.test_success_returns_only_stdout_and_measures_stderr) ... ok
+test_timeout_and_output_cap_have_measured_receipts (__main__.RecoveryTests.test_timeout_and_output_cap_have_measured_receipts) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.293s
+
+OK

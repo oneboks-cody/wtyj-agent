@@ -1,0 +1,44 @@
+{
+  "status": "proposed_not_dispatched",
+  "reference": "calvin-isluno-staging-c",
+  "runner": {
+    "path": "wtyj/scripts/recover_isluno_archive_staging.py",
+    "sha256": "a37a54a4e74d8b04f45af0a3249d4b7838b5cc19d3f4441998f66a680d41e8cb"
+  },
+  "tests": {
+    "path": "wtyj/tests/scripts/test_isluno_archive_recovery.py",
+    "sha256": "7b4064f5aeb7785c93d9317b93967497dc8f8e330804c2e40cdbc0d45afc93b6"
+  },
+  "maximum_uploads": 5,
+  "upload_concurrency": 1,
+  "maximum_original_artifact_bytes": 233957640,
+  "transfer_limit_seconds": [
+    900,
+    600,
+    60,
+    60,
+    60
+  ],
+  "overall_limit_seconds": 2100,
+  "original_partial_verification": {
+    "bytes": 79641600,
+    "sha256": "859cbdccb54fea793d1a4b2ba45e747081bfaf90c5f3b34ce1a341ec7092a27a",
+    "mode": "0o600",
+    "status": "partial_or_mismatched"
+  },
+  "local_prefix_proof": {
+    "verified_partial_bytes": 79641600,
+    "partial_sha256": "859cbdccb54fea793d1a4b2ba45e747081bfaf90c5f3b34ce1a341ec7092a27a",
+    "matches_exact_local_reviewed_archive_prefix": true,
+    "expected_full_bytes": 169445888,
+    "remaining_bytes": 89804288,
+    "expected_full_sha256": "b1ec5bb6733efb1cfa092ee7d7ac884b7715f73ebb340e3d66c7d98cd98151da",
+    "host_reads_for_this_proof": 0
+  },
+  "dispatch_to_result_file_seconds": 182.62149930000305,
+  "exact_transfer_failure_cause": "not retained; timeout consistent with interval but unproven",
+  "host_actions_in_recovery_so_far": 0,
+  "services_changed": false,
+  "preflight_b": "passed; not rerun",
+  "conditional_deployment_authority": "retained; not requested again"
+}
