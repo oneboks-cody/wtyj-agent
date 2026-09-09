@@ -1,5 +1,5 @@
 {
-  "status": "awaiting_independent_review_not_dispatched",
+  "status": "independently_cleared_executed_clean_slate_open",
   "payload_sha256": "55866bdf8c5faf0bd5ac46ff7502ee041086b382bf3f4147536e1f8a5135b79a",
   "bytes": 37443,
   "runtime_image": "sha256:293a23ac71835e382d0da0534f289fa7f95b4d4e0150b4b0ad033b0b6185fa47",
