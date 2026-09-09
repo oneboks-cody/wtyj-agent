@@ -243,6 +243,17 @@ class QuoteStore:
             old = db.execute('SELECT payload FROM isluno_quote_jobs WHERE id=? AND scope_key=?', (ident, scope.key)).fetchone()
             if old:
                 return json.loads(old[0])
+            # Repeated review questions refer to the original quote job, not a
+            # chain of old answer plans whose discovery controls are now stale.
+            visited = set()
+            while fulfillment.get('followup_job_id'):
+                target = fulfillment['followup_job_id']
+                check(target not in visited and len(visited) < 50, 'invalid_quote_composition')
+                visited.add(target)
+                row = db.execute('SELECT payload FROM isluno_quote_jobs WHERE id=? AND scope_key=? AND quote_id=?',
+                                 (target, scope.key, fulfillment['quote_id'])).fetchone()
+                check(row is not None, 'invalid_quote_composition')
+                fulfillment = json.loads(row[0])
             job = {**fulfillment, 'id':ident, 'parts':[{'message':answer['body'].get('message') or answer['body']['interactive']['body']['text']}],
                    'answer_plan_id':answer['id'], 'followup_job_id':fulfillment['id'], 'trigger_sent_at':sent_at}
             db.execute('INSERT INTO isluno_quote_jobs VALUES(?,?,?,?)', (ident, scope.key, fulfillment['quote_id'], encoded(job)))

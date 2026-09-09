@@ -291,6 +291,12 @@ class HospitalityTests(unittest.TestCase):
         self.turn('Please show the itinerary for review.',self.decision('Happy to help.',action='summary',evidence='show the itinerary for review',products=['fixture-cruise']))
         quotes=QuoteStore(self.t.store)
         job=self.last_job
+        self.turn('Show the review again, and is lunch included?',self.decision('Happy to help.',action='summary',evidence='Show the review again',
+            products=['fixture-cruise'],facts=['inclusion_0'],replies={**operation_replies(),
+                'saved':{'paragraphs':['{fact:fixture-cruise:inclusion_0}'],'question':'Would you like to confirm the details in the review?'}}))
+        self.assertEqual(len(self.transcript['turns'][-1]['outbound']),1)
+        self.assertIn('Lunch is included.',self.transcript['turns'][-1]['outbound'][0]['message'])
+        job=self.last_job
         before_quote=copy.deepcopy(job)
         self.turn('My name is Calvin, just checking in.',self.decision('Good to hear from you.','What would you like to check?',guest={'name':'Calvin'}))
         self.assertEqual(quotes.job(job['id'],self.t.scope().account_id,self.t.scope().conversation_id),before_quote)
