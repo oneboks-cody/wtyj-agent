@@ -1,0 +1,16 @@
+{
+  "source_commit": "e2deab8c2ad6c4313324d5b94769b91a1f0ae168",
+  "archive_sha256": "d9841ef3070fed9cde8840a353ad7a9917400f7facfbd13d3ab50472c9b68c51",
+  "archive_bytes": 60635790,
+  "git_tree_members_verified": 365,
+  "maintenance_runtime_files_verified": 17,
+  "unexpected_members": 0,
+  "missing_members": 0,
+  "git_blob_or_mode_mismatches": 0,
+  "symlinks_or_submodules": 0,
+  "new_runtime_member": "wtyj/shared/mermaid_maintenance.py",
+  "config_paths_unchanged": 5,
+  "frontend_rebuilt": false,
+  "old_archive_bytes_read_or_written": false,
+  "old_metadata_sha256": "b4b62ea9bec994d2d557454473586600746f8c359665133d2e95cddb660b5ea6"
+}

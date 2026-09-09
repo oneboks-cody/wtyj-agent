@@ -37,5 +37,6 @@
   },
   "runtime_and_provider_contacted": false,
   "local_node_version": "v24.20.0",
-  "frontend_readme_sha256": "56a184fe1c0a6c9cef503417a10f41d0035a740d787e6675fe893c84d87d514b"
+  "frontend_readme_sha256": "56a184fe1c0a6c9cef503417a10f41d0035a740d787e6675fe893c84d87d514b",
+  "record_scope": "Historical pre-inspection project/GitHub discovery. The runtime_and_provider_contacted field describes that phase only; current bounded inspection outcomes are in inspection-attempt.json and inspection-repeat-summary.json."
 }

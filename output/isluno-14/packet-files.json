@@ -1,23 +1,23 @@
 [
   {
     "file": "ACTION.md",
-    "sha256": "76f0bdc70e708d05c4227af2a50c444a28c5e814719ee2a228ef6ba216db2daf"
+    "sha256": "d6a42d673909c8fc8bdefd2b63c3ef38b26af8cf270b37f382d7c1d8864825c3"
   },
   {
     "file": "BUILD.md",
-    "sha256": "784deb337f0eb5e7ce879126fdd2fd13cdd77780ce9b0b19008fea4bb5f6b48b"
+    "sha256": "bec5c9acd6915b52d5b8531ed37be7475be3610a7c88cd759ad0053e69bf84fb"
   },
   {
     "file": "INGRESS-CUTOVER.md",
-    "sha256": "58af14c97475b7a906b9c082615cbbee95b8f0d19e3ee2c3555e24caec5bfb2c"
+    "sha256": "fda7a4167caa90b12e5b24d975ad6929ff14553c041bc72aec1c4744c85d5314"
   },
   {
     "file": "INSPECTION.md",
-    "sha256": "a68e5084c34d08eec0995915dc7ba477b0e8595d4cf1c2bb7e4b80baafba7a66"
+    "sha256": "c059a708c8ae8cedfe4974432257cc698500d261c8f15b784226af0d7c9003f3"
   },
   {
     "file": "MAINTENANCE.md",
-    "sha256": "29f7f1def116708d328c9dcaaef95ccebf468bdd6ea9c2eaee64e355f04335fa"
+    "sha256": "47c86b8c6d26942ee0ffd3e596d6235b04dbed7fc7f3326e6820572feadc4029"
   },
   {
     "file": "artifacts.json",
@@ -25,7 +25,15 @@
   },
   {
     "file": "commands.review.txt",
-    "sha256": "2742b8a236ec7d3f9f4a175dbb59f7452515d0ac6e8a403dab6d67b7fbfc0745"
+    "sha256": "e599df3bffd9ba42fadf08bb0d7245cb158b8c9f79eda53b5f0ff05320546904"
+  },
+  {
+    "file": "current-artifacts.json",
+    "sha256": "57ab1699fc41a0a570b539ec95648919184275ceb3cbe0ac2269ea0ca6f6c8e7"
+  },
+  {
+    "file": "current-package-checks.json",
+    "sha256": "93b1872b681815dfaaf13596f6337e1818ae15d6023fcba23a302031bf9a0e18"
   },
   {
     "file": "frontend-build.config.ts",
@@ -57,7 +65,7 @@
   },
   {
     "file": "maintenance-evidence.json",
-    "sha256": "ebe5024fe21788123392c1818dae756ba21b23acaeeef808208f0a7f50280090"
+    "sha256": "7f90c723b2230a6fe6770d08aaf094916da9880cd90b9699e32945cc9ca1d370"
   },
   {
     "file": "maintenance-regression.txt",
@@ -68,16 +76,24 @@
     "sha256": "37881430193448e33608daa5d2fc8ddf27d1ad3b28f35790be6b3c1e32a0fa45"
   },
   {
+    "file": "package-current-backend.py",
+    "sha256": "d188b3516ed4c73aa44a8e33464650629e95e23491475fad83db072d055a632a"
+  },
+  {
     "file": "package-local-artifacts.py",
     "sha256": "cd78b95a024d14cfcf44a769ae1dc5451dcdb1992cc5d9c0f211237ea88d99ec"
   },
   {
+    "file": "persisted-package-checks.json",
+    "sha256": "4de2ade52130bc9990fa4c516fd9bad45f210aff8fcba4f8badea96850a66eb0"
+  },
+  {
     "file": "read-only-metadata.json",
-    "sha256": "e14c49936cc8c555818f333a12b796812eee0acc717625ca1445d385e5f005a2"
+    "sha256": "867d1a37e12c3fde77fde4dee3ae2db3adf29e19b6ba5d64cdb916eaf2097c8a"
   },
   {
     "file": "required-inputs.json",
-    "sha256": "a06af726c9a7ace919a5edfb533d3efbbe811efa4a8f8876a5b48e905a43af27"
+    "sha256": "0d72563d595b3d9face9a50952b2107d7076e2fea94c00212f6e522e72747ef6"
   },
   {
     "file": "runner-evidence.json",

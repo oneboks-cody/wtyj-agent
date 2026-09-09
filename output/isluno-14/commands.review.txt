@@ -3,12 +3,15 @@ Do not copy this wholesale into a terminal. Remote fields are unverified. ISL-14
 execution requires separate approval after all inputs and the OCI digest exist.
 
 0. Local material (completed; no need to repeat for permission):
-   shasum -a 256 /Users/calvin/Projects/isluno-whatsapp-demo-20260908/tmp/isluno-release-artifacts/isluno-backend-source.tar.gz
+   shasum -a 256 /Users/calvin/Projects/isluno-whatsapp-demo-20260908/tmp/isluno-release-artifacts/e2deab8c2ad6c4313324d5b94769b91a1f0ae168/isluno-backend-source.tar.gz
    shasum -a 256 /Users/calvin/Projects/isluno-whatsapp-demo-20260908/tmp/isluno-release-artifacts/isluno-config-default-off.tar.gz
    shasum -a 256 /Users/calvin/Projects/isluno-whatsapp-demo-20260908/tmp/isluno-release-artifacts/isluno-frontend-static.tar.gz
-   Expected values are fixed in artifacts.json/ACTION.md.
+   Current backend and unchanged carried hashes are fixed in
+   current-artifacts.json/ACTION.md; these checks are complete, no rerun needed.
 
-1. Approved read-only inventory on VERIFIED target, not run during preparation:
+1. Historical H1-H7 command forms. Two separately authorized attempts are complete;
+   no further run is authorized. The corrected bounded runner and outcome records,
+   not these standalone forms, governed the successful inspection:
    docker ps --format '{{.Names}}|{{.ID}}|{{.Image}}'
    docker inspect --format '{{.Name}}|{{.Id}}|{{.Image}}|{{.State.StartedAt}}|{{.State.Running}}' "$VERIFIED_MERMAID_CONTAINER"
    docker image inspect --format '{{.Id}}|{{.Os}}|{{.Architecture}}' "$VERIFIED_CURRENT_IMAGE"
@@ -16,7 +19,8 @@ execution requires separate approval after all inputs and the OCI digest exist.
    Do not print Config.Env, raw client.json, provider keys or guest rows.
    These metadata commands alone do not establish number ownership or ingress retention.
 
-2. Candidate image build: BLOCKED, no approved base/platform/dependency image.
+2. Candidate image build: BLOCKED. Linux/amd64 metadata was observed; no approved
+   immutable base/dependency recipe or final image exists.
    The repository Dockerfile has a floating python:3.12-slim base and unpinned
    package installation. Do not invent an OCI digest or run a provider test.
    Pin/review the image recipe and warranted offline image checks before step 3.
@@ -27,8 +31,9 @@ execution requires separate approval after all inputs and the OCI digest exist.
    Check every staged relative path/sha256 against artifacts.json before switching.
    No TypeScript API server is started.
 
-4. Ingress close/drain: BLOCKED until the existing mechanism and durable inbound
-   retention are verified. No guessed maintenance marker, nginx rewrite, queue
+4. Ingress close/drain: local coordination is accepted but NOT installed.
+   First installation is BLOCKED until external admission/retention and old-worker
+   disposition are verified; see MAINTENANCE.md for the staged sequence. No guessed maintenance marker, nginx rewrite, queue
    mutation or provider webhook change is offered as a substitute.
 
 5. Service stop/private consistent backup/config CAS: ONLY after approved drain:

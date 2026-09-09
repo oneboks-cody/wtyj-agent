@@ -1,5 +1,5 @@
 {
-  "status": "unverified \u2014 execution prohibited",
+  "status": "ten point-in-time metadata bindings verified; release execution prohibited pending remaining facts",
   "tenant": "mermaid",
   "brand": "Isluno",
   "number_intended": "+1 223 276 0075",
@@ -190,6 +190,12 @@
     "drain": "Coordinated implementation prepared; deployed runtime participation and first-install external boundary not verified",
     "provider_contract": "public Zernio docs found; configured applicability unverified",
     "authority": "offline analysis only; no additional access",
-    "implementation": "MAINTENANCE.md / maintenance-evidence.json; default-off candidate pending review"
+    "implementation": "Accepted local implementation e2deab8; MAINTENANCE.md. Not deployed. Bootstrap external protection and configured inventory remain unresolved."
+  },
+  "current_runtime_package": {
+    "source_commit": "e2deab8c2ad6c4313324d5b94769b91a1f0ae168",
+    "manifest": "current-artifacts.json",
+    "source_archive_sha256": "d9841ef3070fed9cde8840a353ad7a9917400f7facfbd13d3ab50472c9b68c51",
+    "oci_digest": null
   }
 }

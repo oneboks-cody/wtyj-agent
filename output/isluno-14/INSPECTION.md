@@ -1,6 +1,6 @@
 # ISL-14 proposed current-state inspection
 
-**Review document only. No access performed or granted.** This extends `commands.review.txt` step 1; it does not authorize its later release steps. Existing Calvin authorization covers project/GitHub discovery and local preparation. It does not authorize production SSH, protected config projection or provider inspection. Gatekeeper's discovery PASS is not access authority.
+**Historical inspection specification; both authorized attempts are complete.** The first attempt stopped atH4; the separately approved corrected attempt succeeded on2026-09-09. See `inspection-attempt.json` and `inspection-repeat-summary.json`. No further host access is authorized. The command forms and runner-review sequence below document those bounded inspections; protected/operator/provider projections remain outside their scope. Current release state is summarized in ACTION.md.
 
 ## Target and limits
 
@@ -73,4 +73,4 @@ H4 mount inspection and H7 hash execution now use the validated full H2 containe
 
 The mount parser now accepts the template's last-row LF plus Docker's additional terminal LF, removing at most two terminal LF characters. It does not trim interior records or arbitrary whitespace. Extra terminal blank lines, interior/leading blank records, CR/other separators, duplicates and unexpected mounts remain rejected. The full H1–H7 fixture now includes Docker's actual two-LF terminal framing. Fifteen focused offline tests pass.
 
-Docker's official `cli/command/inspect/inspector.go` (blob `1f154c088ffae815d805ba4cc6710480f23798e0`, inspected via GitHub read-only) writes the rendered buffer and then `WriteByte('\n')`: https://github.com/docker/cli/blob/master/cli/command/inspect/inspector.go . This establishes an offline compatibility defect, not the confirmed cause of the prior live H4 stop. The original one-run authority remains consumed; no new host attempt has occurred or is authorized by this correction.
+Docker's official `cli/command/inspect/inspector.go` (blob `1f154c088ffae815d805ba4cc6710480f23798e0`, inspected via GitHub read-only) writes the rendered buffer and then `WriteByte('\n')`: https://github.com/docker/cli/blob/master/cli/command/inspect/inspector.go . This establishes an offline compatibility defect, not the confirmed cause of the prior live H4 stop. At that correction checkpoint the original one-run authority was consumed. A subsequently authorized corrected attempt is recorded in inspection-repeat-summary.json; both approvals are now consumed.

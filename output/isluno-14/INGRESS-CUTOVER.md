@@ -1,3 +1,5 @@
+**Historical analysis checkpoint at58e7cbe. The proposed local coordinator was subsequently implemented and accepted at e2deab8; see MAINTENANCE.md and ACTION.md for current state. The bootstrap external-boundary and configured-provider gaps remain unresolved.**
+
 # I1/I2 disposition: durable acceptance exists; coordinated cutover is not established
 
 **Do not cut over using inbox-disable or blind stop/recreate.** The matched Mermaid source already has durable inbound acceptance and restart recovery. The missing mechanism is a coordinated boundary that prevents fresh acceptance while allowing existing work to reach a safe, explicitly recorded disposition. The accepted Isluno quarantine preserves old rows and intentionally prevents automatic replay; it does not complete those customers' pending turns.

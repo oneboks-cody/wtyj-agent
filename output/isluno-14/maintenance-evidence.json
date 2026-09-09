@@ -1,6 +1,6 @@
 {
   "base_commit": "58e7cbe783855809fb83f77d8b5449fe65e6ac57",
-  "status": "implementation_candidate_pending_independent_review",
+  "status": "local_implementation_accepted_release_gated",
   "targeted_tests": 23,
   "backend_suite_tests": 221,
   "backend_suite_seconds": 27.329,
@@ -85,12 +85,14 @@
       "sha256": "c41c0523dea6c17a9e0a6d555ea968b20dc2eb09662eb9480cdbc8ec13faad53"
     }
   ],
-  "prior_release_archives": "historical accepted artifacts only; do not deploy as this changed runtime",
+  "prior_release_archives": "Historical preserved artifacts; current-artifacts.json now selects the distinct accepted-runtime source archive.",
   "limitations": "Coverage declaration requires independent external inventory proof; old-runtime first-install boundary absent. Unknown claims/ledgers block promotion; no automatic resolution or administrative override.",
   "correction_parent": "7527db6a02649d5d4a927510f639c0ca778b71fa",
   "targeted_seconds": 1.458,
   "review_corrections": [
     "M-R1: complete LEFT JOIN snapshot disposition evaluation; actual send_failed and superseded transitions remain blockers; valid explicit terminal controls pass.",
     "M-R2: actual SDK free-text entry gated before credentials/client; default-off/open/other-tenant/nested controls and retained SDK exception uncertainty verified."
-  ]
+  ],
+  "accepted_runtime_source": "e2deab8c2ad6c4313324d5b94769b91a1f0ae168",
+  "gatekeeper_review": "Independent PASS for23 targeted tests and failure probes; #356 at accepted runtime. Broad221 run remains builder evidence."
 }

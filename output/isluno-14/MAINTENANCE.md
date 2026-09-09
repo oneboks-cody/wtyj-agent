@@ -1,4 +1,4 @@
-# ISL14 admission/drain coordination — implementation candidate
+# ISL14 admission/drain coordination — accepted locally, release gated
 
 The new coordinator is inactive by default and uses the existing Mermaid SQLite database. It does not replace inbox/AI-owner controls, add a service, modify provider subscriptions or authorize a release. The absent `/features/mermaid_cutover_coordination` flag is false. No deployed configuration was changed.
 
@@ -33,7 +33,7 @@ The initial use is Mermaid-to-Isluno cutover. Unreviewed populated Isluno ledger
 
 `maintenance-regression.txt`:221 backend tests passed in27.329seconds with sockets/DNS denied, including the existing integrated booking/rollback paths. One initial regression run exposed an AST-only recovery test missing the newly required decorator in its execution namespace. The fixture now supplies the **real decorator**, preserving the existing quarantine assertion; no production behavior was bypassed. The final full suite passed. No live callback, model, SMTP, provider, DB/customer/log inspection, or server mutation occurred.
 
-Source hashes for this candidate are in `maintenance-evidence.json`; the previous ISL13/ISL14 source/build archives remain historical and unchanged. **They are not release packages for this modified runtime.** Backend packaging/image and affected acceptance evidence must be refreshed after independent acceptance of this delta. The unchanged dashboard static build is not rebuilt merely for this backend change.
+Source hashes for this candidate are in `maintenance-evidence.json`; the previous ISL13/ISL14 source/build archives remain historical and unchanged. **They are not release packages for this modified runtime.** The distinct accepted-runtime source archive is now recorded in current-artifacts.json; image pinning and remaining live acceptance remain outstanding. The unchanged dashboard static build is not rebuilt merely for this backend change.
 
 ## Proposed staged rollout — not executed
 
