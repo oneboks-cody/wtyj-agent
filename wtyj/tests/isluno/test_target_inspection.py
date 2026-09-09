@@ -55,6 +55,23 @@ class InspectionTests(unittest.TestCase):
         for bad in ['raw secret',ID+'|/other|'+IMAGE+'|true|2026-09-08T13:38:46Z|agent']:
             with self.assertRaises(m.Rejected):m.container_metadata(bad)
 
+    def test_docker_template_terminal_framing(self):
+        # {{println}} emits an LF per record; TemplateInspector adds one final LF.
+        rows=MOUNTS.split('\n')
+        docker_output=''.join(row+'\n' for row in rows)+'\n'
+        self.assertEqual(docker_output,MOUNTS+'\n\n')
+        expected=m.mount_metadata(MOUNTS)
+        for suffix in ('','\n','\n\n'):
+            self.assertEqual(m.mount_metadata(MOUNTS+suffix),expected)
+        for bad in (MOUNTS+'\n\n\n', '\n'+docker_output,
+                    docker_output.replace('\n','\n\n',1), MOUNTS+'\n \n',
+                    MOUNTS.replace('\n','\r\n'), MOUNTS.replace('\n','\v'),
+                    docker_output+rows[0]+'\n', docker_output.replace('/mermaid/logs','/other/logs')):
+            with self.subTest(case=repr(bad)),self.assertRaises(m.Rejected):m.mount_metadata(bad)
+        result=self.run_fixture()
+        self.assertEqual(result['status'],'observed')
+        self.assertNotIn('/app/logs',json.dumps(result))
+
     def test_safe_files_and_limits(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp).resolve();f=root/'x.py';f.write_bytes(b'12345')
@@ -95,7 +112,7 @@ class InspectionTests(unittest.TestCase):
         if argv[:3]==['docker','image','inspect']:return IMAGE+'|linux|amd64\n'
         if argv[:2]==['docker','inspect']:
             self.assertEqual(argv[-1], ID if '.Mounts' in argv[3] else m.CONTAINER)
-            return MOUNTS if '.Mounts' in argv[3] else ID+'|/wtyj-mermaid|'+IMAGE+'|true|2026-09-08T13:38:46Z|agent\n'
+            return MOUNTS+'\n\n' if '.Mounts' in argv[3] else ID+'|/wtyj-mermaid|'+IMAGE+'|true|2026-09-08T13:38:46Z|agent\n'
         if argv[:2]==['docker','exec']:
             self.assertEqual(argv[3],ID)
             self.assertNotIn('import agents',kwargs['data'].decode())

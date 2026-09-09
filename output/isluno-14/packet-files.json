@@ -9,7 +9,7 @@
   },
   {
     "file": "INSPECTION.md",
-    "sha256": "6d91f62d99f7ade5de49927f18d3c419baf13843630246d84f37af5a7950ce5c"
+    "sha256": "a68e5084c34d08eec0995915dc7ba477b0e8595d4cf1c2bb7e4b80baafba7a66"
   },
   {
     "file": "artifacts.json",
@@ -49,11 +49,11 @@
   },
   {
     "file": "runner-evidence.json",
-    "sha256": "372a46bbd14fe3be650b467eded50ee24e5a1628490f3947908d5795256ead1a"
+    "sha256": "93b9b9c88d52c3e71b1589055cef988bed23d11b90206d1ba8ed722322578c76"
   },
   {
     "file": "runner-tests.txt",
-    "sha256": "bc0f1a8082d91be53d8d78045a64074c233b8ac4f7dd5f844dabd33ecf3dfbe9"
+    "sha256": "8933cea358487c3f1d99e025dec54d448563d1e8a163448e85842895a714b30b"
   },
   {
     "file": "target-discovery.json",

@@ -119,7 +119,10 @@ def container_metadata(text):
 
 
 def mount_metadata(text):
-    lines = text.splitlines()
+    # Each template row has println; Docker appends one more LF after the template.
+    # Remove at most those two terminal LFs, never interior records/whitespace.
+    require(isinstance(text, str) and '\r' not in text, 'mount_validation_failed')
+    lines = text.removesuffix('\n').removesuffix('\n').split('\n')
     require(len(lines) == 3, 'mount_validation_failed')
     seen = set(); safe = []
     for line in lines:

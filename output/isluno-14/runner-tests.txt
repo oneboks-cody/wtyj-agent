@@ -1,6 +1,7 @@
 test_bounded_process_and_failure_suppression (__main__.InspectionTests.test_bounded_process_and_failure_suppression) ... ok
 test_container_replacement_restart_and_stop (__main__.InspectionTests.test_container_replacement_restart_and_stop) ... ok
 test_default_never_dispatches (__main__.InspectionTests.test_default_never_dispatches) ... ok
+test_docker_template_terminal_framing (__main__.InspectionTests.test_docker_template_terminal_framing) ... ok
 test_exited_parent_descendant_cannot_continue (__main__.InspectionTests.test_exited_parent_descendant_cannot_continue) ... ok
 test_full_h1_h7_fixture_and_escape (__main__.InspectionTests.test_full_h1_h7_fixture_and_escape) ... ok
 test_identity_and_mounts (__main__.InspectionTests.test_identity_and_mounts) ... ok
@@ -14,6 +15,6 @@ test_safe_files_and_limits (__main__.InspectionTests.test_safe_files_and_limits)
 test_session_deadline_and_wrong_image (__main__.InspectionTests.test_session_deadline_and_wrong_image) ... ok
 
 ----------------------------------------------------------------------
-Ran 14 tests in 1.896s
+Ran 15 tests in 1.928s
 
 OK
