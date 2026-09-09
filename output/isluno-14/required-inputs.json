@@ -182,5 +182,13 @@
       "source": "inspection-repeat-summary.json / private approved H1-H7 record",
       "limitation": "Point-in-time metadata; reverify at action. Not execution authority."
     }
+  },
+  "ingress_disposition": {
+    "record": "INGRESS-CUTOVER.md",
+    "evidence": "ingress-evidence.json",
+    "durable_acceptance": "matched-source transaction before200 for valid admitted messages",
+    "drain": "not established; minimal scoped correction proposed, not implemented",
+    "provider_contract": "public Zernio docs found; configured applicability unverified",
+    "authority": "offline analysis only; no additional access"
   }
 }

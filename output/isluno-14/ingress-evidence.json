@@ -1,0 +1,180 @@
+{
+  "baseline_commit": "e43d0d174d10b82ee0fd4a394828ea720d3996ad",
+  "candidate_commit": "19209b811fe216e9945397f0717d8870748bfe4d",
+  "method": "Read-only source trace; baseline file bytes independently matched to retained approved H7 hashes. No imports/runtime calls/tests/DB or host reads.",
+  "sources": [
+    {
+      "path": "wtyj/agents/social/webhook_server.py",
+      "candidate_sha256": "638990c1386d3d1cb4953f0b54b8a9a9ae7c7b2af6be0b8f24253b5cf8ddd43f",
+      "functions": {
+        "candidate": {
+          "lifespan": [
+            74,
+            109
+          ],
+          "_recover_stale_ali_inbound_once": [
+            434,
+            759
+          ],
+          "_ali_inbound_recovery_loop": [
+            762,
+            803
+          ],
+          "receive_webhook": [
+            1124,
+            1191
+          ],
+          "_buffer_message": [
+            1282,
+            1380
+          ],
+          "_whatsapp_inbox_still_enabled": [
+            1410,
+            1445
+          ],
+          "_flush_buffer": [
+            1536,
+            2536
+          ],
+          "receive_zernio_webhook": [
+            2540,
+            2679
+          ]
+        },
+        "baseline": {
+          "lifespan": [
+            74,
+            107
+          ],
+          "_recover_stale_ali_inbound_once": [
+            432,
+            753
+          ],
+          "_ali_inbound_recovery_loop": [
+            756,
+            792
+          ],
+          "receive_webhook": [
+            1113,
+            1180
+          ],
+          "_buffer_message": [
+            1271,
+            1369
+          ],
+          "_whatsapp_inbox_still_enabled": [
+            1399,
+            1434
+          ],
+          "_flush_buffer": [
+            1525,
+            2525
+          ],
+          "receive_zernio_webhook": [
+            2529,
+            2668
+          ]
+        }
+      },
+      "baseline_sha256": "3b3e3f1cbe3a0e8c2e22f9a6d70a800bf7da730087475a88c0eaaccfb93b6d7c",
+      "matched_H7": true
+    },
+    {
+      "path": "wtyj/shared/state_registry.py",
+      "candidate_sha256": "f3e3fb3e91c95bf2a7fecab61d1def2ac09dde0d2716b52e947908d0579b94b3",
+      "functions": {
+        "candidate": {
+          "wa_claim_inbound_processing": [
+            1421,
+            1485
+          ],
+          "inbound_processing_join_batch": [
+            1567,
+            1692
+          ],
+          "inbound_processing_claim_outbound_attempt": [
+            2184,
+            2242
+          ],
+          "inbound_processing_claim_recoverable": [
+            2338,
+            2546
+          ]
+        },
+        "baseline": {
+          "wa_claim_inbound_processing": [
+            1421,
+            1485
+          ],
+          "inbound_processing_join_batch": [
+            1567,
+            1692
+          ],
+          "inbound_processing_claim_outbound_attempt": [
+            2184,
+            2242
+          ],
+          "inbound_processing_claim_recoverable": [
+            2338,
+            2546
+          ]
+        }
+      },
+      "baseline_sha256": "f3e3fb3e91c95bf2a7fecab61d1def2ac09dde0d2716b52e947908d0579b94b3",
+      "matched_H7": true
+    },
+    {
+      "path": "wtyj/agents/social/zernio_dm_client.py",
+      "candidate_sha256": "f288a11d7db62883163cb2e5e5a5aa7152db27fc044826a3b02d8c7c6ed75e20",
+      "functions": {
+        "candidate": {
+          "parse_zernio_webhook": [
+            63,
+            229
+          ]
+        },
+        "baseline": {
+          "parse_zernio_webhook": [
+            63,
+            229
+          ]
+        }
+      },
+      "baseline_sha256": "f288a11d7db62883163cb2e5e5a5aa7152db27fc044826a3b02d8c7c6ed75e20",
+      "matched_H7": true
+    },
+    {
+      "path": "wtyj/agents/social/isluno_transition.py",
+      "candidate_sha256": "190ccd21b919016b925f8df7154e120a0adf147305fb45265eac6d160af100ec",
+      "functions": {
+        "candidate": {
+          "ensure": [
+            30,
+            63
+          ],
+          "quarantined_inbound": [
+            66,
+            72
+          ],
+          "rollback": [
+            83,
+            93
+          ]
+        }
+      },
+      "baseline": "absent; candidate-only cutover behavior"
+    }
+  ],
+  "public_contracts": [
+    {
+      "url": "https://docs.zernio.com/webhooks",
+      "accessed_date": "2026-09-09",
+      "scope": "public docs only; no configured subscription evidence"
+    },
+    {
+      "url": "https://docs.zernio.com/webhooks/get-webhook-logs",
+      "accessed_date": "2026-09-09",
+      "scope": "public docs only; endpoint was NOT called"
+    }
+  ]
+}

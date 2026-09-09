@@ -1,11 +1,15 @@
 [
   {
     "file": "ACTION.md",
-    "sha256": "9b1e73c034c88fb2aaf2556a73b676dbb39ee473936665027df613f4d65c2011"
+    "sha256": "65a50733cf5280434498a37c804c52253ef474ce63bf5acc69f2732c24c23f16"
   },
   {
     "file": "BUILD.md",
     "sha256": "784deb337f0eb5e7ce879126fdd2fd13cdd77780ce9b0b19008fea4bb5f6b48b"
+  },
+  {
+    "file": "INGRESS-CUTOVER.md",
+    "sha256": "58af14c97475b7a906b9c082615cbbee95b8f0d19e3ee2c3555e24caec5bfb2c"
   },
   {
     "file": "INSPECTION.md",
@@ -26,6 +30,10 @@
   {
     "file": "frontend-build.txt",
     "sha256": "fb32626ac4c19b9626f38c960ff3be2adafc1ac0427df7f3815a876cee972ee0"
+  },
+  {
+    "file": "ingress-evidence.json",
+    "sha256": "a6c12f5d24a7a120a639c1ef228fed21e3ba1d78171d12ea773bbefd1e7193b5"
   },
   {
     "file": "inspection-attempt.json",
@@ -49,7 +57,7 @@
   },
   {
     "file": "required-inputs.json",
-    "sha256": "eee331ae9b315977df850a0672bf7bd95b04a2458099ce0209d11d7c669fa56a"
+    "sha256": "8b87441fa62b4bb0f2b800cf4ae0b73c93a04387342668f89284e745d255c567"
   },
   {
     "file": "runner-evidence.json",
