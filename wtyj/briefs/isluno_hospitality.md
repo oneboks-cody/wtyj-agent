@@ -1,5 +1,5 @@
 # Isluno hospitality conversation rewrite
-Status: Building. Issues: #351, #356. Existing draft PR360.
+Status: Implemented and independently reviewed offline at source 3a5f524. Not deployed. Issues: #351, #356. Existing draft PR360.
 
 ## Context
 The controlling 19-section user brief is preserved in isluno_hospitality_user_brief.md.

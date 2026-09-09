@@ -1,6 +1,6 @@
 # Hospitality implementation and offline review packet
 
-Implementation is prepared in draft PR360 for conversation issue #351 and release
+Implementation is prepared and independently reviewed offline in draft PR360 for conversation issue #351 and release
 issue #356. It is not deployed. Live source remains c04512c. No new external API,
 WhatsApp, email, payment, supplier or production database operation was performed.
 
@@ -27,13 +27,16 @@ checks, not evidence that a live model will choose those words or classification
 | 14 | Provider-result history, actual text/media/button meanings; old unverified history labelled | Every dispatched turn, T07, T15, T20 |
 | 15 | Durable failure acknowledgement, action uncertainty copy, actual human review record | T13–14, T16, T19–20 |
 | 16 | Typed contract, source/result validation, no second model call or reply classifier | T17; all SDK assertions and seven targeted regression suites |
-| 17–18 | Full scripted conversations plus independent Gatekeeper scoring | CONVERSATIONS.md; Gatekeeper verdict pending |
+| 17–18 | Full scripted conversations plus independent Gatekeeper scoring | CONVERSATIONS.md; [Gatekeeper PASS for implementation and scripted offline review](GATEKEEPER-REVIEW.md) |
 | 19 | Preserving-data release sequence and explicit release gate | Deployment plan below |
+
+## Independent review result
+
+Gatekeeper independently passed 29 network-disabled checks and both reproduced failure cases. Its [per-conversation report](GATEKEEPER-REVIEW.md) scores all 24 complete conversations (71 turns) at least 4/5 across all six dimensions. The 25th record is the separate nondispatched adversarial example. Implementation/scripted offline review passed; deployment, live model quality and native-language certification remain separate.
 
 ## Builder's provisional quality assessment
 
-These are builder judgments about the scripted examples only. Gatekeeper must score
-and justify each conversation independently; these scores are not acceptance.
+These are builder judgments about the scripted examples only. Gatekeeper's independent scores above are authoritative for this offline review; these builder scores are not acceptance.
 
 | Dimension | Provisional score | Reasons and examples |
 | --- | --- | --- |

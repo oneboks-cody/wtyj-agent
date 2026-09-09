@@ -1,0 +1,1348 @@
+{
+  "title": "Independent Gatekeeper review of Tracy hospitality",
+  "candidate_sha": "3a5f5240f9d51e71fb47c47fbce8a16d1688f78e",
+  "verdict": "PASS for implementation and scripted offline review; release and live quality remain separate",
+  "evidence": {
+    "source": "/Users/calvin/Projects/isluno-hospitality-gatekeeper-20260909/output/isluno-hospitality/conversations.json",
+    "sha256": "19b0db5ee142d4836ccd5e9fe9519fe573752ab24939a15a53b55477d189690a",
+    "records": 25,
+    "complete_conversations": 24,
+    "turns": 71,
+    "additional_record": "T17 non-dispatched adversarial structural counterexample"
+  },
+  "independent_validation": {
+    "network": "none",
+    "tests": 29,
+    "result": "PASS",
+    "duration_seconds": 27.846,
+    "model": "mock",
+    "transport": "stub",
+    "external_api_calls": 0,
+    "host_operations": 0,
+    "log": "/Users/calvin/Projects/isluno-hospitality-gatekeeper-20260909/tmp/gatekeeper-tests.txt",
+    "additional_reproductions": [
+      "Repeated review now succeeds, references original quote job and sends only the new answer.",
+      "Unavailable storage now returns a failure acknowledgment; scope guards remain enforced."
+    ]
+  },
+  "dimensions": [
+    "Warmth",
+    "Listening",
+    "Guidance",
+    "Commercial progress",
+    "Accuracy",
+    "Ease"
+  ],
+  "minimum_required": 4,
+  "conversations": [
+    {
+      "scenario": "test_01_calvin_introduction_and_month",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 5,
+          "reason": "Personal welcome and island inspiration suit the introduction."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Acknowledges the month and then uses the supplied partner detail."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Narrows companions first and preferred pace second."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Builds useful discovery without premature administration."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "No itinerary or handoff is created by the name or holiday details."
+        },
+        "Ease": {
+          "score": 5,
+          "reason": "Three short opening paragraphs and one easy question."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Hi, I’m Calvin and interested in activities in Curaçao. We’re arriving next week and staying for a month.",
+          "reply": "Hi Calvin! Lovely to hear you're coming to Curaçao.\n\nA month gives you time for days on the water, a little adventure and slower days to enjoy the island at your own pace.\n\nWho's coming with you?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "My partner and I, just the two of us.",
+          "reply": "Lovely, we can find something that suits you both.\n\nWould you prefer a relaxed outing or something active?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_02_relaxed_couple",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Relaxed language fits the couple’s stated mood."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Recommendation explicitly uses their slower pace."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Names a fitting cruise and gives its verified duration and setting."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Offers photos as a concrete next step before purchase."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "Cruise facts and media remain tied to the fixture product."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "Two brief messages and manageable photo delivery."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "We are a couple looking for a relaxed day.",
+          "reply": "For the slower pace you're after, I'd start with Synthetic Cruise. A relaxed three-hour cruise around the harbour.\n\nWould you like to see a few photos?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Yes please.",
+          "reply": "Here is a photo of Synthetic Cruise.\n\nWould you like more photos or trip details?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_03_family_volunteers_details",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Addresses the family’s wishes without exaggerated enthusiasm."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Retains party, child ages, week-long holiday and no-pickup preference."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Explains the fit of the named relaxed cruise."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Moves from a suitable option to answering lunch and offering photos."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "Lunch uses a source binding; no age or eligibility inference becomes a booking."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "Does not ask again for volunteered details."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "We are two adults and two children, 6 and 10, here for a week. We like relaxed outings and need no pickup.",
+          "reply": "For the relaxed outing your family wants, I'd start with Synthetic Cruise. A relaxed three-hour cruise around the harbour.\n\nWould you like to explore this option?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Do they include lunch?",
+          "reply": "Lunch is included.\n\nWould you like to see the cruise photos?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_04_specific_budget",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Respects the budget and the request for thinking time."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Remembers the total budget and both ages."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Asks for the missing pricing input before calculating."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Offers an itinerary step and then accepts hesitation."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "USD 200 demo estimate is calculated without creating booking records."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "One pricing question, clear amount and concise pause acknowledgment."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "We have USD 250 for two people. How much is the cruise for us?",
+          "reply": "I'll keep your total budget in mind. To work out the right price for your party, I need your ages first.\n\nHow old are both guests?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "We are 35 and 34, October 15 morning, no pickup or extras.",
+          "reply": "The demo estimate for your party is USD 200.00.\n\nWould you like to add this cruise to your itinerary?\n\nDemo: no real reservation or payment.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 3,
+          "guest": "We need time to think.",
+          "reply": "Of course, take your time. I've kept your preferences for when you're ready.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_05_direct_booking_known_trip",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Helpful intake fits a direct booking request."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Uses Calvin’s name and age without asking again."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Asks only the outstanding trip date."
+        },
+        "Commercial progress": {
+          "score": 5,
+          "reason": "Moves the authorized choice into a draft and offers review."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "The draft total and departure are application-generated; defaults are existing catalog defaults."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "Missing-date question is short and misleading Add trip controls are absent."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Please add the cruise. I am Calvin, age 35.",
+          "reply": "Let's put the details together for your demo itinerary.\n\nCould you share the trip date?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "October 15 please.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_06_interest_is_not_consent",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Acknowledges interest without pressure."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Keeps the same named cruise in context."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Offers a clear next step after the explanation."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Invites selection without treating friendliness as consent."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "No booking is created by “That looks nice.”"
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "Short explanation followed by one focused question."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Tell me about the cruise.",
+          "reply": "Synthetic Cruise is the trip you asked about. A relaxed three-hour cruise around the harbour.\n\nDoes that pace suit you?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "That looks nice.",
+          "reply": "It sounds like it appeals to you.\n\nWould you like to add this cruise to your itinerary?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_07_photos_more_and_ambiguous",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Brief captions fit a direct photo request."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Understands successive requests for additional photos."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Offers another image or continued discovery in manageable steps."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Uses photos to support choosing without forcing a booking."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "Distinct product-bound assets are attempted; ambiguous media is not automatically resent."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "One photo per turn and no unsolicited gallery flood."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Show cruise photos.",
+          "reply": "Here is Synthetic Cruise.\n\nWould you like another photo?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "More photos please.",
+          "reply": "Here is another view of Synthetic Cruise.\n\nWould you like to keep browsing?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 3,
+          "guest": "Another please.",
+          "reply": "Another view of Synthetic Cruise.",
+          "outbound_parts": 1,
+          "provider_outcome": "ambiguous"
+        },
+        {
+          "turn": 4,
+          "guest": "Show the next photo.",
+          "reply": "Here is the next view of Synthetic Cruise.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_08_changed_preference",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Accepts the change of preference naturally."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Updates active pace to relaxed without discarding unrelated context."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Explains the named alternative using the newly preferred pace."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Offers the cruise details as a useful next step."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "Both descriptions come from their own product facts and no selection is invented."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "One considered alternative and one question."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "We want something active.",
+          "reply": "For the active outing you want, I'd start with Synthetic Walk. A two-hour active guided walk.\n\nDoes a walk appeal to you?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Actually, a relaxed outing would suit us better.",
+          "reply": "Let's switch to the slower pace you now prefer. Synthetic Cruise could fit. A relaxed three-hour cruise around the harbour.\n\nWould you like the cruise details?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_09_conflicting_trips",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Acknowledges the failed change calmly."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Preserves the first cruise while handling the second trip."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Explains overlapping times and suggests another day."
+        },
+        "Commercial progress": {
+          "score": 5,
+          "reason": "Completes the second selection once its date is corrected."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "Authoritative conflict checking blocks incompatible items and preserves the first item."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "Specific reason is grouped with preserved draft facts; longer draft review is justified."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Please add the cruise for 2026-10-15. I am Calvin, age 35.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Add the walk on the same date, October 15.",
+          "reply": "I couldn't complete that change.\n\nThose trip times overlap. Choose a different day or a departure that does not conflict.\nSynthetic Cruise · 2026-10-15 · 09:00\nDemo total: USD 100.00\n\nWould another day suit you?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 3,
+          "guest": "Move the walk to October 16.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\nSynthetic Walk · 2026-10-16 · 09:00\n\nThe draft total is USD 200.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_10_correction_and_question",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Direct and helpful for a practical mixed request."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Answers lunch and applies the requested date correction."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Shows the corrected draft and review step."
+        },
+        "Commercial progress": {
+          "score": 5,
+          "reason": "Advances the already-authorized itinerary without losing the question."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "Source-bound lunch answer and application-calculated corrected draft agree."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "Both parts are visible; the draft needs more space than discovery."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Please add the cruise for 2026-10-15. I am Calvin, age 35.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Move the cruise to October 16, and is lunch included?",
+          "reply": "Lunch is included.\n\nYour choices are together in a demo draft:\nSynthetic Cruise · 2026-10-16 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_11_missing_supplier_information",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Handles an accessibility concern without unsupported reassurance."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Honours the later decision to browse photos instead of seeking help."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "States what is unknown and offers the supported help path."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Allows the guest to continue discovery at their own pace."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "Does not invent accessibility or create an unsolicited operator request."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "A concise unknown-answer explanation and one choice."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Is the cruise wheelchair accessible?",
+          "reply": "I don't have confirmed accessibility details for this cruise.\n\nWould you like help from the team?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "No, just show me the photos for now.",
+          "reply": "Here is Synthetic Cruise.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_12_declined_recommendation",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Accepts the decline graciously."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Remembers that boat trips are unwanted."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Suggests switching to land activities."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Continues relevant discovery without pressure or urgency."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "No invented discount, availability or follow-up consent."
+        },
+        "Ease": {
+          "score": 5,
+          "reason": "Brief acknowledgment and a single useful question."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "What is the cruise like?",
+          "reply": "Synthetic Cruise offers this kind of outing: A relaxed three-hour cruise around the harbour.\n\nWould that suit your plans?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "No thanks, we do not want a boat trip.",
+          "reply": "Thanks for telling me. We can leave boat trips out.\n\nWould you prefer an activity on land?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_13_processing_failure",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "A calm difficulty acknowledgment is appropriate, though the fixed failure copy remains plain."
+        },
+        "Listening": {
+          "score": 4,
+          "reason": "Retains the existing draft through failure and a fresh follow-up."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Offers a fresh message as the supported next step."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Allows the conversation to continue without replaying the uncertain turn."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "Failure is nonempty; the itinerary is unchanged and the failed understanding is not retried."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "Short failure reply followed by a direct answer to the fresh question."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Please add the cruise for 2026-10-15. I am Calvin, age 35.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Move it to October 16.",
+          "reply": "I couldn’t process your message. Please send a new message to try again.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 3,
+          "guest": "What is the current cruise description?",
+          "reply": "A relaxed three-hour cruise around the harbour.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_14_explicit_human",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Acknowledges the preference to speak to a person."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Records the human request once and accepts thanks."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Uses the established operator-review path."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Moves the guest toward appropriate help without selling over the request."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "Says recorded for review, without claiming notification or an operator response."
+        },
+        "Ease": {
+          "score": 5,
+          "reason": "Two short paragraphs and a brief acknowledgment."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "I would like to speak to a person.",
+          "reply": "Of course, I understand you'd prefer help from the team.\n\nYour request is recorded for operator review.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Thank you.",
+          "reply": "You're welcome.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_15_returning_guest_pending_and_booked",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Welcomes the returning guest and responds directly to review requests."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Preserves the draft, quote and later demo payment across greetings and photos."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Acknowledges the requested review and points to its existing confirmation control."
+        },
+        "Commercial progress": {
+          "score": 5,
+          "reason": "Proceeds through distinct summary, quote approval and demo payment steps."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "Repeated review uses the original quote ledger; accepted parts are not resent; paid-photo browsing cannot add a trip."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "Formal multipart review remains longer, but the natural acknowledgment and controls match the task."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Please add the cruise for 2026-10-15. I am Calvin, age 35.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Hi again, Calvin here.",
+          "reply": "Welcome back, Calvin.\n\nWhat would you like help with?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 3,
+          "guest": "Please show the itinerary for review.",
+          "reply": "Here's the review you asked for. Please check the details and use Confirm details when you're ready.\n\nDemo: no real reservation or payment.",
+          "outbound_parts": 5,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 4,
+          "guest": "Show the review again, and is lunch included?",
+          "reply": "Lunch is included.\n\nWould you like to confirm the details in the review?\n\nDemo: no real reservation or payment.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 5,
+          "guest": "My name is Calvin, just checking in.",
+          "reply": "Good to hear from you.\n\nWhat would you like to check?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 6,
+          "guest": "[Native: Confirm summary]",
+          "reply": "Details confirmed. Review the quote before approving.",
+          "outbound_parts": 2,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 7,
+          "guest": "[Native: Approve quote]",
+          "reply": "Quote approved. No payment or real reservation has been made.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 8,
+          "guest": "[Native: Complete demo payment]",
+          "reply": "DEMO PAYMENT COMPLETED - No real money was charged. No supplier booking was made.",
+          "outbound_parts": 4,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 9,
+          "guest": "Hi, Calvin here again.",
+          "reply": "Welcome back, Calvin.\n\nWhat can I help you with?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 10,
+          "guest": "Can I see photos of my cruise?",
+          "reply": "You can browse the gallery for Synthetic Cruise.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_16_de",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Appropriate personal welcome in the scripted language example."
+        },
+        "Listening": {
+          "score": 4,
+          "reason": "Retains the month, party and relaxed preference across four turns."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Names the cruise and connects it to the requested pace."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Moves from discovery to photos, then honours the request for a person."
+        },
+        "Accuracy": {
+          "score": 4,
+          "reason": "Translated fixture facts, matched image and recorded-review wording retain the intended boundaries."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "Short messages and one next question; native-language polish remains unverified."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Hallo, ich bin Calvin. Wir bleiben einen Monat.",
+          "reply": "Hallo Calvin! Mit einem ganzen Monat könnt ihr die Insel in eurem Tempo entdecken.\n\nWer kommt mit?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Wir sind zwei Erwachsene.",
+          "reply": "Danke, dann suchen wir etwas Passendes für euch beide.\n\nMöchtet ihr etwas Ruhiges oder Aktives?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 3,
+          "guest": "Wir möchten etwas Ruhiges. Was empfiehlst du?",
+          "reply": "Für euren ruhigen Ausflug würde ich mit Synthetic Cruise beginnen. Eine entspannte dreistündige Hafenrundfahrt.\n\nMöchtest du diesen Ausflug zu deinem Reiseplan hinzufügen?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 4,
+          "guest": "Ich möchte mit einer Person sprechen.",
+          "reply": "Natürlich, ich verstehe, dass du lieber mit jemandem sprechen möchtest.\n\nDeine Anfrage ist zur Prüfung durch das Team erfasst.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": [],
+      "language_quality": "Provisional model-assisted text review; no native-speaker certification or live-model evidence"
+    },
+    {
+      "scenario": "test_16_es",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Appropriate personal welcome in the scripted language example."
+        },
+        "Listening": {
+          "score": 4,
+          "reason": "Retains the month, party and relaxed preference across four turns."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Names the cruise and connects it to the requested pace."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Moves from discovery to photos, then honours the request for a person."
+        },
+        "Accuracy": {
+          "score": 4,
+          "reason": "Translated fixture facts, matched image and recorded-review wording retain the intended boundaries."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "Short messages and one next question; native-language polish remains unverified."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Hola, soy Calvin. Nos quedamos un mes.",
+          "reply": "¡Hola, Calvin! Con un mes podéis descubrir la isla a vuestro ritmo.\n\n¿Con quién vienes?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Somos dos adultos.",
+          "reply": "Gracias, podemos buscar algo que os guste a los dos.\n\n¿Preferís algo tranquilo o activo?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 3,
+          "guest": "Queremos algo tranquilo. ¿Qué recomiendas?",
+          "reply": "Para la salida tranquila que buscáis, empezaría con Synthetic Cruise. Un tranquilo crucero de tres horas por el puerto.\n\n¿Quieres añadir esta excursión al itinerario?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 4,
+          "guest": "Quiero hablar con una persona.",
+          "reply": "Claro, entiendo que prefieras hablar con alguien.\n\nTu solicitud está registrada para que la revise el equipo.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": [],
+      "language_quality": "Provisional model-assisted text review; no native-speaker certification or live-model evidence"
+    },
+    {
+      "scenario": "test_16_nl",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Appropriate personal welcome in the scripted language example."
+        },
+        "Listening": {
+          "score": 4,
+          "reason": "Retains the month, party and relaxed preference across four turns."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Names the cruise and connects it to the requested pace."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Moves from discovery to photos, then honours the request for a person."
+        },
+        "Accuracy": {
+          "score": 4,
+          "reason": "Translated fixture facts, matched image and recorded-review wording retain the intended boundaries."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "Short messages and one next question; native-language polish remains unverified."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Hoi, ik ben Calvin. We blijven een maand.",
+          "reply": "Hoi Calvin! Fijn dat jullie een maand de tijd hebben om het eiland te ontdekken.\n\nMet wie kom je?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "We zijn met twee volwassenen.",
+          "reply": "Dank je, dan zoeken we iets dat bij jullie past.\n\nWillen jullie iets rustigs of actiefs?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 3,
+          "guest": "We willen iets rustigs. Wat raad je aan?",
+          "reply": "Voor jullie rustige uitstapje zou ik beginnen met Synthetic Cruise. Een rustige rondvaart van drie uur door de haven.\n\nWil je deze trip aan je reisplan toevoegen?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 4,
+          "guest": "Ik wil graag een medewerker spreken.",
+          "reply": "Natuurlijk, ik begrijp dat je liever met iemand spreekt.\n\nJe verzoek is vastgelegd voor beoordeling door het team.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": [],
+      "language_quality": "Provisional model-assisted text review; no native-speaker certification or live-model evidence"
+    },
+    {
+      "scenario": "test_16_pap",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Appropriate personal welcome in the scripted language example."
+        },
+        "Listening": {
+          "score": 4,
+          "reason": "Retains the month, party and relaxed preference across four turns."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Names the cruise and connects it to the requested pace."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Moves from discovery to photos, then honours the request for a person."
+        },
+        "Accuracy": {
+          "score": 4,
+          "reason": "Translated fixture facts, matched image and recorded-review wording retain the intended boundaries."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "Short messages and one next question; native-language polish remains unverified."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Bon dia, mi ta Calvin. Nos ta keda un luna.",
+          "reply": "Bon dia Calvin! Ku un luna boso tin tempu pa eksplorá e isla na boso ritmo.\n\nKu ken bo ta bini?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Nos ta dos adulto.",
+          "reply": "Danki, nos por buska algu ku ta pas ku boso dos.\n\nBoso ta preferá algu trankil òf aktivo?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 3,
+          "guest": "Nos ke algu trankil. Kiko bo ta rekomendá?",
+          "reply": "Pa e paseo trankil ku boso ke, mi lo kuminsá ku Synthetic Cruise. Un paseo trankil di tres ora den haf.\n\nBo ke agregá e paseo aki na bo itinerario?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 4,
+          "guest": "Mi ke papia ku un persona.",
+          "reply": "Di akuerdo, mi ta komprondé ku bo ke papia ku un persona.\n\nBo petishon ta registrá pa e ekipo revisá.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": [],
+      "language_quality": "Provisional model-assisted text review; no native-speaker certification or live-model evidence"
+    },
+    {
+      "scenario": "test_16_pt",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Appropriate personal welcome in the scripted language example."
+        },
+        "Listening": {
+          "score": 4,
+          "reason": "Retains the month, party and relaxed preference across four turns."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Names the cruise and connects it to the requested pace."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Moves from discovery to photos, then honours the request for a person."
+        },
+        "Accuracy": {
+          "score": 4,
+          "reason": "Translated fixture facts, matched image and recorded-review wording retain the intended boundaries."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "Short messages and one next question; native-language polish remains unverified."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Olá, sou o Calvin. Ficamos um mês.",
+          "reply": "Olá, Calvin! Com um mês podem descobrir a ilha ao vosso ritmo.\n\nQuem vem contigo?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Somos dois adultos.",
+          "reply": "Podemos encontrar algo que agrade aos dois.\n\nPreferem algo tranquilo ou ativo?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 3,
+          "guest": "Queremos algo tranquilo. O que recomenda?",
+          "reply": "Para o passeio tranquilo que procuram, começaria com Synthetic Cruise. Um cruzeiro tranquilo de três horas pelo porto.\n\nQuer adicionar este passeio ao itinerário?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 4,
+          "guest": "Quero falar com uma pessoa.",
+          "reply": "Claro, compreendo que prefira falar com alguém.\n\nO pedido está registado para análise pela equipa.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": [],
+      "language_quality": "Provisional model-assisted text review; no native-speaker certification or live-model evidence"
+    },
+    {
+      "scenario": "test_18_pending_intake_greeting_never_completes_it",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Greets the returning guest without restarting intake."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Keeps the outstanding date and known name/age."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Offers to continue the existing arrangement."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Preserves the partially arranged cruise."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "An unrelated greeting does not complete or duplicate the pending item."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "One short next-step question."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Add the cruise. I am Calvin, age 35.",
+          "reply": "Let's put the details together for your demo itinerary.\n\nCould you share the trip date?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Hi, Calvin here, I am 35.",
+          "reply": "Hi Calvin, good to hear from you.\n\nWould you like to continue arranging the cruise?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_19_question_survives_failed_correction",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Explains the failed change calmly."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Preserves the lunch question alongside the correction."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Gives the actual past-date reason and invites a future day."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Keeps the existing cruise while leaving correction possible."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "Lunch comes from the source and the old valid date remains unchanged."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "The error and preserved draft facts are grouped; no generic date error."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Please add the cruise for 2026-10-15. I am Calvin, age 35.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Move the cruise to yesterday, and is lunch included?",
+          "reply": "Lunch is included.\n\nI couldn't complete that change.\n\nThat date is in the past. Please choose a future date.\nSynthetic Cruise · 2026-10-15 · 09:00\nDemo total: USD 100.00\n\nWould another day suit you?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_20_partial_delivery_and_duplicate_no_resend",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Brief media captions fit the request."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Preserves the last accepted question after a rejected send."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Keeps the photo sequence and its context available."
+        },
+        "Commercial progress": {
+          "score": 4,
+          "reason": "Supports browsing without a booking mutation."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "Rejected attempt is recorded and duplicate dispatch is suppressed."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "One image per request; no fallback flood."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Photos of the cruise.",
+          "reply": "Here is Synthetic Cruise.\n\nWould you like more?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Another photo.",
+          "reply": "Another view of Synthetic Cruise.\n\nShall I show the next?",
+          "outbound_parts": 1,
+          "provider_outcome": "rejected"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    },
+    {
+      "scenario": "test_21_answering_authorized_name_intake",
+      "verdict": "PASS for this scripted offline conversation",
+      "scores": {
+        "Warmth": {
+          "score": 4,
+          "reason": "Helpful direct intake fits explicit trip selection."
+        },
+        "Listening": {
+          "score": 5,
+          "reason": "Uses the bare name/age answer for the question Tracy actually asked."
+        },
+        "Guidance": {
+          "score": 4,
+          "reason": "Completes the already-authorized pending details."
+        },
+        "Commercial progress": {
+          "score": 5,
+          "reason": "Moves to draft review without redundant permission."
+        },
+        "Accuracy": {
+          "score": 5,
+          "reason": "The explicit contextual update completes one pending item without inventing a new selection."
+        },
+        "Ease": {
+          "score": 4,
+          "reason": "No repeated request for the supplied name or age."
+        }
+      },
+      "examples": [
+        {
+          "turn": 1,
+          "guest": "Add the cruise on October 15.",
+          "reply": "Let's put the details together for your demo itinerary.\n\nCould you share the guest name?",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        },
+        {
+          "turn": 2,
+          "guest": "Calvin, age 35.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "outbound_parts": 1,
+          "provider_outcome": "accepted"
+        }
+      ],
+      "hard_blockers_observed_in_normal_outbound": []
+    }
+  ],
+  "residual_limits": [
+    "No live model reply or real guest receipt was tested.",
+    "Valid references and exact consent quotations do not semantically certify arbitrary model prose or interpretation; T17 demonstrates that limitation without dispatch.",
+    "Non-English scores apply to the scripted text and visible flow; native-language quality remains unverified.",
+    "Image tests prove fixture product/asset associations, not visual verification of live operator galleries.",
+    "These are demo quotes/payments, not real availability, supplier reservations or charges.",
+    "Transport or authorization failure can prevent delivery; nonempty processing-failure generation does not guarantee receipt."
+  ],
+  "status_dimensions": {
+    "implemented": "Reviewed at candidate SHA",
+    "reviewed_offline": "PASS within stated evidence limits",
+    "deployed": "No; live source last verified c04512c",
+    "verified_real_customer_conversation": "Pending"
+  },
+  "deployment_plan_review": "High-level preserving-data sequence is sound. It still requires a concrete exact-source packet, fresh maintenance evidence and applicable release authority; completed historical one-run approvals are not reusable."
+}
