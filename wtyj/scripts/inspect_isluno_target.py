@@ -44,7 +44,8 @@ def bounded_command(argv, *, timeout=15, cap=MAX_OUTPUT, data=None):
     sel = selectors.DefaultSelector()
     result = bytearray()
     count = 0
-    end = time.monotonic() + timeout
+    deadline = time.monotonic() + timeout
+    end = deadline - min(.1, timeout / 5)  # reserve bounded cleanup inside the call budget
     pending = memoryview(data or b'')
     try:
         for stream in (proc.stdout, proc.stderr):
@@ -85,12 +86,21 @@ def bounded_command(argv, *, timeout=15, cap=MAX_OUTPUT, data=None):
             raise Rejected('invalid_encoding') from None
     finally:
         sel.close()
-        if proc.poll() is None:
-            os.killpg(proc.pid, signal.SIGKILL)
-        proc.wait()
-        for stream in (proc.stdin, proc.stdout, proc.stderr):
-            if stream and not stream.closed:
-                stream.close()
+        try:
+            # The direct child may already have exited while descendants retain pipes.
+            # This session/process group is ours even after proc.poll() reports exit.
+            try:
+                os.killpg(proc.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            try:
+                proc.wait(timeout=max(.001, min(.1, deadline-time.monotonic())))
+            except subprocess.TimeoutExpired:
+                raise Rejected('cleanup_timeout') from None
+        finally:
+            for stream in (proc.stdin, proc.stdout, proc.stderr):
+                if stream and not stream.closed:
+                    stream.close()
 
 
 def fields(text, count):
@@ -199,8 +209,8 @@ def run_checks(paths, run=bounded_command):
     def cmd(argv, data=None):
         remaining = end-time.monotonic(); require(remaining > 0, 'timeout')
         return run(argv, timeout=min(15, remaining), cap=MAX_OUTPUT, data=data)
-    def inspect(fmt):
-        return cmd(['docker', 'inspect', '--format', fmt, CONTAINER])
+    def inspect(fmt, target=CONTAINER):
+        return cmd(['docker', 'inspect', '--format', fmt, target])
     try:
         # The alarm bounds filesystem reads as well as child commands.
         signal.signal(signal.SIGALRM, alarm_handler)
@@ -209,14 +219,15 @@ def run_checks(paths, run=bounded_command):
         require(os_name == 'Linux' and arch in ('x86_64', 'aarch64'), 'unsupported_platform')
         results[current] = dict(os=os_name, architecture=arch)
         current = 'H2'; signal.setitimer(signal.ITIMER_REAL, min(15,end-time.monotonic()))
-        c = container_metadata(inspect('{{.Id}}|{{.Name}}|{{.Image}}|{{.State.Running}}|{{.State.StartedAt}}|{{index .Config.Labels "com.docker.compose.service"}}'))
+        identity_format = '{{.Id}}|{{.Name}}|{{.Image}}|{{.State.Running}}|{{.State.StartedAt}}|{{index .Config.Labels "com.docker.compose.service"}}'
+        c = container_metadata(inspect(identity_format))
         results[current] = c
         current = 'H3'; signal.setitimer(signal.ITIMER_REAL, min(15,end-time.monotonic()))
         image, ios, ia = fields(cmd(['docker','image','inspect','--format','{{.Id}}|{{.Os}}|{{.Architecture}}',c['image']]),3)
         require(image == c['image'] and ios == 'linux' and ia == {'x86_64':'amd64','aarch64':'arm64'}[arch], 'wrong_image')
         results[current] = dict(id=image, os=ios, architecture=ia)
         current = 'H4'; signal.setitimer(signal.ITIMER_REAL, min(15,end-time.monotonic()))
-        results[current] = mount_metadata(inspect('{{range .Mounts}}{{.Type}}|{{.Source}}|{{.Destination}}|{{.RW}}{{println}}{{end}}'))
+        results[current] = mount_metadata(inspect('{{range .Mounts}}{{.Type}}|{{.Source}}|{{.Destination}}|{{.RW}}{{println}}{{end}}', c['id']))
         current = 'H5'; signal.setitimer(signal.ITIMER_REAL, min(15,end-time.monotonic()))
         results[current] = [path_metadata(ROOT+'/docker-compose.yml'), path_metadata(ROOT+'/config',True),
                             path_metadata(ROOT+'/data',True), path_metadata(ROOT+'/data/state_registry.db')]
@@ -238,13 +249,15 @@ def run_checks(paths, run=bounded_command):
         source_paths(paths)
         # Exact hash-only subset of this reviewed file; no application imports.
         script = HASH_WORKER + '\npaths = '+repr(paths)+'''\nbudget=[0]\nprint(json.dumps([dict(path=p,sha256=file_hash('/app/'+p,budget)) for p in paths]))\n'''
-        raw = cmd(['docker','exec','-i',CONTAINER,'python','-I','-B','-'], data=script.encode())
+        raw = cmd(['docker','exec','-i',c['id'],'python','-I','-B','-'], data=script.encode())
         value = json.loads(raw)
         require(isinstance(value,list) and len(value)==len(paths), 'invalid_source_result')
         for expected, item in zip(paths,value):
             require(isinstance(item,dict) and set(item)=={'path','sha256'} and item['path']==expected
                     and isinstance(item['sha256'],str) and HEX.fullmatch(item['sha256']), 'invalid_source_result')
         results[current] = value
+        # Still inside H7's alarm and the original session budget; no new allowance.
+        require(container_metadata(inspect(identity_format)) == c, 'container_changed')
         return dict(status='observed',checks=results)
     except Exception:
         # Never echo exception text, stdout, stderr, unexpected paths or partial checks.

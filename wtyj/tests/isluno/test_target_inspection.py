@@ -8,6 +8,7 @@ from pathlib import Path
 import socket
 import sys
 import tempfile
+import time
 import unittest
 from unittest.mock import patch
 
@@ -93,8 +94,10 @@ class InspectionTests(unittest.TestCase):
         if argv==['uname','-m']:return 'x86_64\n'
         if argv[:3]==['docker','image','inspect']:return IMAGE+'|linux|amd64\n'
         if argv[:2]==['docker','inspect']:
+            self.assertEqual(argv[-1], ID if '.Mounts' in argv[3] else m.CONTAINER)
             return MOUNTS if '.Mounts' in argv[3] else ID+'|/wtyj-mermaid|'+IMAGE+'|true|2026-09-08T13:38:46Z|agent\n'
         if argv[:2]==['docker','exec']:
+            self.assertEqual(argv[3],ID)
             self.assertNotIn('import agents',kwargs['data'].decode())
             return json.dumps([dict(path=p,sha256='c'*64) for p in PATHS])
         raise AssertionError('unexpected dispatch')
@@ -146,6 +149,42 @@ class InspectionTests(unittest.TestCase):
             if argv[:3]==['docker','image','inspect']:return IMAGE+'|linux|arm64'
             return self.fake_run(argv,**kwargs)
         self.assertEqual(self.run_fixture(runner=wrong)['failed_check'],'H3')
+
+    def test_exited_parent_descendant_cannot_continue(self):
+        # Each child proves it started; after failure its later side effect must not occur.
+        with tempfile.TemporaryDirectory() as tmp:
+            for mode in ('timeout','output','failure'):
+                ready=Path(tmp)/(mode+'-ready'); marker=Path(tmp)/(mode+'-late')
+                code="import os,time,sys\nfrom pathlib import Path\nchild=os.fork()\nif child==0:\n Path("+repr(str(ready))+").write_text('started')\n time.sleep(.35)\n Path("+repr(str(marker))+").write_text('late')\n os._exit(0)\nwhile not Path("+repr(str(ready))+").exists(): time.sleep(.001)\n"
+                if mode=='output':code+="print('x'*10000,flush=True)\nos._exit(0)\n"
+                elif mode=='failure':
+                    # Close child's pipe copies so parent failure can be observed immediately.
+                    code=code.replace(" time.sleep(.35)"," os.close(1);os.close(2)\n time.sleep(.35)")
+                    code+="os._exit(1)\n"
+                else:code+="os._exit(0)\n"
+                with self.subTest(mode=mode),self.assertRaises(m.Rejected):
+                    m.bounded_command([sys.executable,'-I','-c',code],timeout=.2,cap=1000)
+                self.assertTrue(ready.exists())
+                time.sleep(.45)
+                self.assertFalse(marker.exists(), 'descendant performed work after rejected call')
+
+    def test_container_replacement_restart_and_stop(self):
+        for mode in ('replacement','restart','stopped','image'):
+            names=[]
+            def changed(argv,**kwargs):
+                text=self.fake_run(argv,**kwargs)
+                if argv[:2]==['docker','inspect'] and argv[-1]==m.CONTAINER:
+                    names.append(argv[-1])
+                    if len(names)==2:
+                        if mode=='replacement':return text.replace(ID,'e'*64)
+                        if mode=='restart':return text.replace('13:38:46Z','13:39:46Z')
+                        if mode=='stopped':return text.replace('|true|','|false|')
+                        return text.replace(IMAGE,'sha256:'+'f'*64)
+                return text
+            with self.subTest(mode=mode):
+                result=self.run_fixture(runner=changed)
+                self.assertEqual(len(names),2)
+                self.assertEqual(result,{'status':'stopped','failed_check':'H7','checks':{}})
 
     def test_network_denied(self):
         with self.assertRaises(RuntimeError):socket.create_connection(('example.com',443))
