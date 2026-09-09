@@ -1,0 +1,11 @@
+# First-contact refinements deployed and verified
+
+Application `b0eef7a395d2ada58aa0e6e090b1b9dbfdbec420` is live, image `sha256:287f3bc3fe755dd9d750ab7a3c8203d69863e0911269ad361a9dc7754e529042`. Exact independently cleared packet `2c6f4a1e87671fc68c12140ada7b2166ac439db184526ceeb66066c08b3062ac` executed once in 17.564 seconds. One 51200-byte upload; all three archive members and both live source files verified. No retry or rollback.
+
+The welcome prompt asks one easy travelling-party question on a fresh broad introduction and allows restrained contextual holiday emojis. Prior-sharing language is instructed to rely on this conversation's accepted messages with correlated delivered/read evidence. Failed, ambiguous and legacy-unverified assistant prose is excluded from model dialogue history. Booking authority, facts and the single existing understanding call are unchanged. Scripted checks establish wiring and guards; real wording still needs the customer's WhatsApp test.
+
+The separately authorized clean slate was preserved: 38 selected demo/customer-context tables remain empty and 182 payload-free IDs prevent replay. The exact proof remains `df8b083ca12612f6ee288672b21f59f5b900ca127529418056763458424dd582`. All 91 protected customer/business tables were unchanged by this deployment. No repeated clearing occurred.
+
+Post-deployment verification passed inside the 900-second cumulative allowance: health HTTP 200, runtime admission open generation18, ingress open generation17, worker/watchdog restored, all 31 products and the existing dashboard pointer verified. Catalog, profile, client.json, number/account/provider/model and frontend source `25dfebfb8688f76ef357b97c60c893fdf1bb8791` stayed unchanged. No engineering customer messages, paid model probes or new backups. Draft PRs remain unmerged.
+
+Independent source and exact-packet reviews passed. Gatekeeper also verified authenticated empty Nr2 after cleanup. See ../INDEPENDENT-SOURCE-REVIEW.json, INDEPENDENT-PACKET-REVIEW.json, ../clean-slate-b/AUTHENTICATED-UI.json and the raw execution/verification receipts. Calvin can now send a new WhatsApp introduction to test the fresh-contact experience. Demo payment remains simulated.

@@ -1,0 +1,21 @@
+{
+  "verdict": "TECHNICAL_PASS",
+  "packet": "2c6f4a1e87671fc68c12140ada7b2166ac439db184526ceeb66066c08b3062ac",
+  "source": "b0eef7a395d2ada58aa0e6e090b1b9dbfdbec420",
+  "archive_bytes": 51200,
+  "archive_members": 3,
+  "application_files": 2,
+  "canonical_review_copies_matching": 12,
+  "source_and_assembled_payload_and_proof_verified": true,
+  "catalog_unchanged": true,
+  "dispatch_unconsumed": true,
+  "independent_operator_run": {
+    "tests": 31,
+    "seconds": 17.563,
+    "passed": true,
+    "composition": "7 focused operator/deadline plus 24 imported ConversationTests",
+    "network": "disabled Docker"
+  },
+  "host_calls": 0,
+  "remaining_gate": "fresh exact runtime/data preflight; execute once under existing authority"
+}

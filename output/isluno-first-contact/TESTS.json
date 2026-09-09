@@ -10,5 +10,7 @@
     "seconds": 33.761,
     "passed": true
   },
-  "live": false
+  "live": true,
+  "runtime_verification": "deployment/verification.json",
+  "live_wording_customer_test_pending": true
 }
