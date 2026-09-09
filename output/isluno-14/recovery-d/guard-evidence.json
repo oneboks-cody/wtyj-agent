@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "synthetic_legacy_rows": 71,
+  "empty_channel_metadata": true,
+  "durable_rows_block_duplicate_ingress_without_dedup": true,
+  "terminal_rows_excluded_from_recovery": true,
+  "eligible_recovery_control_claimed": true,
+  "channel_independent_quarantine_lookup": true,
+  "original_rows_unchanged": true,
+  "provider_calls": 0,
+  "agent_messages": 0,
+  "scope": "exact functions extracted from pinned image; synthetic SQLite; open-admission stub; not full webhook/tenant-auth E2E",
+  "image": "sha256:7375faa0dd8484fa15b6d3095a54e014562cb20e9b622cceb294780fcd635bc6",
+  "state_registry_sha256": "c9a2a906a25daefa18a95c7beba9fd5a4d81b831ea6b0d4b0ead4b3fa87f243d",
+  "transition_sha256": "cd3a98a5034cc65d1c281b54d4fb94e0ead182d4ad6e6dcd16bb6e8414e944ce",
+  "script_sha256": "fcb46201753d01969f819a180eed1343712db6b661da8ee80e32b074f8165bd9",
+  "runtime": "localDocker linux/amd64 emulation; read-only filesystem; tmpfs fixture; networknone",
+  "exit_code": 0,
+  "wall_time_seconds": 1.095107792
+}

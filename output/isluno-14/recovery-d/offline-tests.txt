@@ -1,0 +1,16 @@
+test_default_no_reads_no_writes (test_staged_recovery.RecoveryTests.test_default_no_reads_no_writes) ... ok
+test_duplicate_dispatch_preserves_both_snapshots (test_staged_recovery.RecoveryTests.test_duplicate_dispatch_preserves_both_snapshots) ... ok
+test_expired_seal_never_accepts_activation (test_staged_recovery.RecoveryTests.test_expired_seal_never_accepts_activation) ... ok
+test_extra_row_and_existing_quarantine_reject (test_staged_recovery.RecoveryTests.test_extra_row_and_existing_quarantine_reject) ... ok
+test_interrupted_transaction_keeps_original_rows_and_no_partial_quarantine (test_staged_recovery.RecoveryTests.test_interrupted_transaction_keeps_original_rows_and_no_partial_quarantine) ... ok
+test_missing_dedup_rejects (test_staged_recovery.RecoveryTests.test_missing_dedup_rejects) ... ok
+test_missing_extra_or_changed_rows_reject (test_staged_recovery.RecoveryTests.test_missing_extra_or_changed_rows_reject) ... ok
+test_preserves_exact_rows_quarantines_unknown_without_reclassification (test_staged_recovery.RecoveryTests.test_preserves_exact_rows_quarantines_unknown_without_reclassification) ... ok
+test_reviewed_snapshot_replacement_between_projection_and_manifest_rejects (test_staged_recovery.RecoveryTests.test_reviewed_snapshot_replacement_between_projection_and_manifest_rejects) ... ok
+test_snapshot_drift_and_typed_payload_drift_reject (test_staged_recovery.RecoveryTests.test_snapshot_drift_and_typed_payload_drift_reject) ... ok
+test_wrong_cas_or_binding_never_quarantines (test_staged_recovery.RecoveryTests.test_wrong_cas_or_binding_never_quarantines) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 2.893s
+
+OK

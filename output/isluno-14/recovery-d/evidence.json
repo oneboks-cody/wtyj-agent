@@ -1,0 +1,9 @@
+{
+  "files": {
+    "offline-tests.txt": "72b3a9dfbfcf21bf8ede0fe86508e91cf252f849f83bd4ee8a1ddae99fdafa1b",
+    "guard-evidence.json": "73d14c415c8c038af791d9a4c8e5a4e5e0217ce3ac9b04dbe327531179603b0d"
+  },
+  "synthetic_only": true,
+  "network_disabled": true,
+  "live_provider_verification": false
+}
