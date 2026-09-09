@@ -1,0 +1,35 @@
+{
+  "application_source": "0361641575552e5a78a671efbc1dd59b9d5196ba",
+  "regression": {
+    "tests": 194,
+    "seconds": 163.699803925,
+    "success": true,
+    "network": "disabled Docker"
+  },
+  "operator_retention_and_rollout": {
+    "tests": 11,
+    "seconds": 29.115,
+    "success": true,
+    "evidence_attribution": "Builder completed run before context checkpoint; console result retained in task history"
+  },
+  "postverification_deadline": {
+    "tests": 1,
+    "seconds": 0.006,
+    "success": true,
+    "external_calls": 0
+  },
+  "actual_handler_sender_exports": {
+    "scenarios": 8,
+    "success": true,
+    "network": "disabled Docker",
+    "model_and_HTTP": "scripted substitutes"
+  },
+  "Nr2_session": {
+    "status": "login_required",
+    "observed": "2026-09-09",
+    "url": "https://dashboard.unboks.org/login",
+    "browser": "Codex in-app browser for Builder",
+    "service_disruption_permitted": false
+  },
+  "dispatched": false
+}

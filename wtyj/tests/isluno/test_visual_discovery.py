@@ -30,8 +30,8 @@ class VisualDiscoveryTests(CommunicationWireTests):
         d['hospitality']['cards']=[{'product_id':p,'paragraphs':['{fact:'+p+':summary}']} for p in d['product_ids']]
         return d
 
-    def visual(self,trigger='visual',decision=None):
-        reply,calls,_=self.h.call(decision or self.decision(),trigger,text='We enjoy relaxed boat trips and beaches.')
+    def visual(self,trigger='visual',decision=None,*,text='We are a family visiting Curaçao and enjoy relaxed boat trips and beaches.'):
+        reply,calls,_=self.h.call(decision or self.decision(),trigger,text=text)
         self.assertEqual(calls,1);self.assertNotIn('generation_failed',reply)
         return reply
 
@@ -67,7 +67,7 @@ class VisualDiscoveryTests(CommunicationWireTests):
     def test_warm_introduction_no_forced_products_or_booking(self):
         d=response(products=[],fact_keys=[])
         d['hospitality']=hospitality('Welcome! A month on Curaçao gives you time to explore at your own pace.','Who are you travelling with?',stage='welcome')
-        reply=self.visual('welcome',d);self.assertTrue(self.send(reply))
+        reply=self.visual('welcome',d,text='Hello, I will be on holiday in Curaçao for a month.');self.assertTrue(self.send(reply))
         self.assertEqual(len(self.requests),1);self.assertNotIn('attachmentUrl',self.requests[0]);self.assertNotIn('buttons',self.requests[0])
         self.assertIsNone(self.t.store.session(self.t.scope())['active_itinerary_id'])
 
@@ -135,7 +135,7 @@ class VisualDiscoveryTests(CommunicationWireTests):
         d['translations']={'fixture-cruise':{'summary':'Een rustige vaartocht langs de kust.'}}
         d['hospitality']=hospitality('Dit past bij jullie rustige vakantie.','Lijkt dit jullie leuk?',photo='initial',stage='recommendation')
         d['hospitality']['cards']=[{'product_id':'fixture-cruise','paragraphs':['{fact:fixture-cruise:summary}']}]
-        first=self.visual('dutch',d);self.assertTrue(self.send(first));plan=self.plan(first)
+        first=self.visual('dutch',d,text='Wij zijn op vakantie met het gezin en houden van rustige boottochten en stranden.');self.assertTrue(self.send(first));plan=self.plan(first)
         token=next(t for t,a in plan['button_meanings'].items() if a['kind']=='info')
         detail=response(language='nl',products=['fixture-cruise'],fact_keys=['summary','inclusion_0'])
         detail['translations']={'fixture-cruise':{'summary':'Een rustige vaartocht langs de kust.','inclusion_0':'Een gids is inbegrepen.'}}
@@ -149,6 +149,7 @@ class VisualDiscoveryTests(CommunicationWireTests):
         latest=self.plan(result);next_plan=self.click_visual(latest,'fixture-cruise','info','dutch-native')
         self.assertFalse(next_plan.get('detail_translation_required'))
         self.assertIn('Een gids is inbegrepen.',next_plan['body']['message'])
+        self.assertTrue(self.send(envelope(next_plan)))
 
     def test_recommendation_photo_plan_and_intake_are_separate_authorities(self):
         first=self.visual();self.assertTrue(self.send(first));plan=self.plan(first)
@@ -159,6 +160,7 @@ class VisualDiscoveryTests(CommunicationWireTests):
         session=self.t.store.session(self.t.scope());self.assertTrue(session['pending'])
         self.assertEqual({p['product_id'] for p in session['pending'].values()},{'fixture-cruise'})
         self.assertFalse(self.t.itinerary.get(self.t.scope(),session['active_itinerary_id'])['items'])
+        self.assertTrue(self.send(result))
         self.assertNotIn('Demo itinerary saved',result['text'])
         pending_id=next(iter(session['pending']))
         d=response('update',updates=[{'item_id':pending_id}],guest={'name':'Alex'},products=['fixture-cruise'])
@@ -167,11 +169,12 @@ class VisualDiscoveryTests(CommunicationWireTests):
         self.assertEqual(calls,1);self.assertNotIn('generation_failed',updated)
         self.assertEqual(self.t.store.session(self.t.scope())['guest']['name'],'Alex')
         self.assertIn('ages',updated['text'])
+        self.assertTrue(self.send(updated))
 
     def test_fresh_text_fallback_after_rejection_does_not_replay_media(self):
         first=self.visual();self.assertFalse(self.send(first,[(400,{'code':'INVALID_MEDIA'})]))
         d=self.decision('none');d['hospitality']['replies']['browsing']['paragraphs']=['The earlier reply could not be sent. Here are the trip details in text.']
-        next_reply=self.visual('fresh-text',d);before=len(self.requests);self.assertTrue(self.send(next_reply))
+        next_reply=self.visual('fresh-text',d,text='Please send the trip details as text.');before=len(self.requests);self.assertTrue(self.send(next_reply))
         self.assertTrue(all('attachmentUrl' not in body for body in self.requests[before:]))
         self.assertEqual(self.plan(first)['parts'][0]['status'],'rejected')
 
@@ -182,7 +185,7 @@ class VisualDiscoveryTests(CommunicationWireTests):
         self.t.catalog_path.write_text(json.dumps(catalog))
         d=response(products=['fixture-cruise'],fact_keys=['additional_information'])
         d['hospitality']=hospitality('{fact:fixture-cruise:additional_information}',photo='none')
-        result=self.visual('direct-question',d);self.assertTrue(self.send(result))
+        result=self.visual('direct-question',d,text='Please tell me the full arrangements for this cruise.');self.assertTrue(self.send(result))
         self.assertIn(answer,''.join(b['message'] for b in self.requests))
         self.assertTrue(all('attachmentUrl' not in b for b in self.requests))
 

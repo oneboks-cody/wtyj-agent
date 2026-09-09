@@ -1,0 +1,1278 @@
+{
+  "application_source": "0361641575552e5a78a671efbc1dd59b9d5196ba",
+  "evidence": "Scripted SDK, strict fake HTTP, network-disabled Docker. Actual catalog case uses verified stored gallery bytes and public delivery URLs but makes no provider request. No live model/native-language quality claim.",
+  "scenarios": [
+    {
+      "scenario": "test_warm_introduction_no_forced_products_or_booking",
+      "events": [
+        {
+          "guest": "Hello, I will be on holiday in Curaçao for a month.",
+          "model_calls": 1,
+          "prepared_reply": "Welcome! A month on Curaçao gives you time to explore at your own pace.\n\nWho are you travelling with?",
+          "generation_failed": false
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "message": "Welcome! A month on Curaçao gives you time to explore at your own pace.\n\nWho are you travelling with?"
+            }
+          ],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [],
+              "assets": []
+            }
+          ]
+        }
+      ],
+      "final_state": {
+        "pending_products": [],
+        "active_itinerary_present": false
+      },
+      "passed": true
+    },
+    {
+      "scenario": "test_two_cards_real_http_and_exact_history",
+      "events": [
+        {
+          "guest": "We are a family visiting Curaçao and enjoy relaxed boat trips and beaches.",
+          "model_calls": 1,
+          "prepared_reply": "These two could suit your relaxed family holiday.Synthetic Cruise\n\nA relaxed coastal cruise.Beach adventure\n\nExplore beaches with a guide.\n\nWhich appeals to you?",
+          "generation_failed": false
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "message": "These two could suit your relaxed family holiday."
+            },
+            {
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-0.jpg",
+              "buttons": [
+                {
+                  "title": "More photos",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 1,
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Trip details",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Plan this trip",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-cruise"
+                  }
+                }
+              ],
+              "message": "Synthetic Cruise\n\nA relaxed coastal cruise."
+            },
+            {
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/beach-0.jpg",
+              "buttons": [
+                {
+                  "title": "More photos",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 1,
+                    "photo_location": "",
+                    "product_id": "fixture-beach"
+                  }
+                },
+                {
+                  "title": "Trip details",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "fixture-beach"
+                  }
+                },
+                {
+                  "title": "Plan this trip",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-beach"
+                  }
+                }
+              ],
+              "message": "Beach adventure\n\nExplore beaches with a guide.\n\nWhich appeals to you?"
+            }
+          ],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [],
+              "assets": []
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": [
+                {
+                  "asset_id": "cruise-0",
+                  "product_id": "fixture-cruise"
+                }
+              ]
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-beach"
+              ],
+              "assets": [
+                {
+                  "asset_id": "beach-0",
+                  "product_id": "fixture-beach"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "actual_HTTP_payloads": [],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [],
+              "assets": []
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": [
+                {
+                  "asset_id": "cruise-0",
+                  "product_id": "fixture-cruise"
+                }
+              ]
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-beach"
+              ],
+              "assets": [
+                {
+                  "asset_id": "beach-0",
+                  "product_id": "fixture-beach"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "guest": "[photos for fixture-cruise]",
+          "model_calls": 0,
+          "prepared_reply": "Synthetic CruiseSynthetic Cruise\n\nA relaxed coastal cruise."
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-1.jpg",
+              "message": "Synthetic Cruise"
+            },
+            {
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-2.jpg",
+              "buttons": [
+                {
+                  "title": "More photos",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 3,
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Trip details",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Plan this trip",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-cruise"
+                  }
+                }
+              ],
+              "message": "Synthetic Cruise\n\nA relaxed coastal cruise."
+            }
+          ],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": [
+                {
+                  "asset_id": "cruise-1",
+                  "product_id": "fixture-cruise"
+                }
+              ]
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": [
+                {
+                  "asset_id": "cruise-2",
+                  "product_id": "fixture-cruise"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "final_state": {
+        "pending_products": [],
+        "active_itinerary_present": false
+      },
+      "passed": true
+    },
+    {
+      "scenario": "test_sparse_dutch_details_use_one_bound_call_then_native_pages",
+      "events": [
+        {
+          "guest": "Wij zijn op vakantie met het gezin en houden van rustige boottochten en stranden.",
+          "model_calls": 1,
+          "prepared_reply": "Dit past bij jullie rustige vakantie.Synthetic Cruise\n\nEen rustige vaartocht langs de kust.\n\nLijkt dit jullie leuk?",
+          "generation_failed": false
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "message": "Dit past bij jullie rustige vakantie."
+            },
+            {
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-0.jpg",
+              "buttons": [
+                {
+                  "title": "Meer foto’s",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 1,
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Reisdetails",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Plan deze reis",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-cruise"
+                  }
+                }
+              ],
+              "message": "Synthetic Cruise\n\nEen rustige vaartocht langs de kust.\n\nLijkt dit jullie leuk?"
+            }
+          ],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [],
+              "assets": []
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": [
+                {
+                  "asset_id": "cruise-0",
+                  "product_id": "fixture-cruise"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "guest": "Reisdetails",
+          "model_calls": 1,
+          "prepared_reply": "Hier zijn de reisdetails.Synthetic Cruise\n\nEen gids is inbegrepen.",
+          "generation_failed": false
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "message": "Hier zijn de reisdetails."
+            },
+            {
+              "buttons": [
+                {
+                  "title": "Meer foto’s",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 0,
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Reisdetails",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Plan deze reis",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-cruise"
+                  }
+                }
+              ],
+              "message": "Synthetic Cruise\n\nEen gids is inbegrepen."
+            }
+          ],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [],
+              "assets": []
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": []
+            }
+          ]
+        },
+        {
+          "guest": "Reisdetails",
+          "model_calls": 0,
+          "prepared_reply": "Hier zijn de reisdetails.Synthetic Cruise\n\nEen gids is inbegrepen.",
+          "generation_failed": false
+        },
+        {
+          "actual_HTTP_payloads": [],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [],
+              "assets": []
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": []
+            }
+          ]
+        },
+        {
+          "guest": "[info for fixture-cruise]",
+          "model_calls": 0,
+          "prepared_reply": "Synthetic Cruise\n\nEen rustige vaartocht langs de kust.\n\nEen gids is inbegrepen."
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "buttons": [
+                {
+                  "title": "Meer foto’s",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 0,
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Reisdetails",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Plan deze reis",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-cruise"
+                  }
+                }
+              ],
+              "message": "Synthetic Cruise\n\nEen rustige vaartocht langs de kust.\n\nEen gids is inbegrepen."
+            }
+          ],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": []
+            }
+          ]
+        }
+      ],
+      "final_state": {
+        "pending_products": [],
+        "active_itinerary_present": false
+      },
+      "passed": true
+    },
+    {
+      "scenario": "test_recommendation_photo_plan_and_intake_are_separate_authorities",
+      "events": [
+        {
+          "guest": "We are a family visiting Curaçao and enjoy relaxed boat trips and beaches.",
+          "model_calls": 1,
+          "prepared_reply": "These two could suit your relaxed family holiday.Synthetic Cruise\n\nA relaxed coastal cruise.Beach adventure\n\nExplore beaches with a guide.\n\nWhich appeals to you?",
+          "generation_failed": false
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "message": "These two could suit your relaxed family holiday."
+            },
+            {
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-0.jpg",
+              "buttons": [
+                {
+                  "title": "More photos",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 1,
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Trip details",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Plan this trip",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-cruise"
+                  }
+                }
+              ],
+              "message": "Synthetic Cruise\n\nA relaxed coastal cruise."
+            },
+            {
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/beach-0.jpg",
+              "buttons": [
+                {
+                  "title": "More photos",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 1,
+                    "photo_location": "",
+                    "product_id": "fixture-beach"
+                  }
+                },
+                {
+                  "title": "Trip details",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "fixture-beach"
+                  }
+                },
+                {
+                  "title": "Plan this trip",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-beach"
+                  }
+                }
+              ],
+              "message": "Beach adventure\n\nExplore beaches with a guide.\n\nWhich appeals to you?"
+            }
+          ],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [],
+              "assets": []
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": [
+                {
+                  "asset_id": "cruise-0",
+                  "product_id": "fixture-cruise"
+                }
+              ]
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-beach"
+              ],
+              "assets": [
+                {
+                  "asset_id": "beach-0",
+                  "product_id": "fixture-beach"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "guest": "[photos for fixture-cruise]",
+          "model_calls": 0,
+          "prepared_reply": "Synthetic CruiseSynthetic Cruise\n\nA relaxed coastal cruise."
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-1.jpg",
+              "message": "Synthetic Cruise"
+            },
+            {
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-2.jpg",
+              "buttons": [
+                {
+                  "title": "More photos",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 3,
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Trip details",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Plan this trip",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-cruise"
+                  }
+                }
+              ],
+              "message": "Synthetic Cruise\n\nA relaxed coastal cruise."
+            }
+          ],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": [
+                {
+                  "asset_id": "cruise-1",
+                  "product_id": "fixture-cruise"
+                }
+              ]
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": [
+                {
+                  "asset_id": "cruise-2",
+                  "product_id": "fixture-cruise"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "guest": "[Plan this trip]",
+          "model_calls": 0,
+          "prepared_reply": "Please provide: guest name."
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "message": "Please provide: guest name."
+            }
+          ],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [],
+              "assets": []
+            }
+          ]
+        },
+        {
+          "guest": "My name is Alex",
+          "model_calls": 1,
+          "prepared_reply": "Thanks, Alex.\n\nCould you share the guest ages?",
+          "generation_failed": false
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "message": "Thanks, Alex.\n\nCould you share the guest ages?"
+            }
+          ],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [],
+              "assets": []
+            }
+          ]
+        }
+      ],
+      "final_state": {
+        "pending_products": [
+          "fixture-cruise"
+        ],
+        "active_itinerary_present": true
+      },
+      "passed": true
+    },
+    {
+      "scenario": "test_missing_local_media_and_unverified_location_are_truthful_text",
+      "events": [
+        {
+          "guest": "We are a family visiting Curaçao and enjoy relaxed boat trips and beaches.",
+          "model_calls": 1,
+          "prepared_reply": "These two could suit your relaxed family holiday.Synthetic Cruise\n\nA relaxed coastal cruise.\n\nPhotos unavailableBeach adventure\n\nExplore beaches with a guide.\n\nPhotos unavailable\n\nWhich appeals to you?",
+          "generation_failed": false
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "message": "These two could suit your relaxed family holiday."
+            },
+            {
+              "buttons": [
+                {
+                  "title": "More photos",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 1,
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Trip details",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Plan this trip",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-cruise"
+                  }
+                }
+              ],
+              "message": "Synthetic Cruise\n\nA relaxed coastal cruise.\n\nPhotos unavailable"
+            },
+            {
+              "buttons": [
+                {
+                  "title": "More photos",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 1,
+                    "photo_location": "",
+                    "product_id": "fixture-beach"
+                  }
+                },
+                {
+                  "title": "Trip details",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "fixture-beach"
+                  }
+                },
+                {
+                  "title": "Plan this trip",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-beach"
+                  }
+                }
+              ],
+              "message": "Beach adventure\n\nExplore beaches with a guide.\n\nPhotos unavailable\n\nWhich appeals to you?"
+            }
+          ],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [],
+              "assets": []
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": []
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-beach"
+              ],
+              "assets": []
+            }
+          ]
+        },
+        {
+          "guest": "We are a family visiting Curaçao and enjoy relaxed boat trips and beaches.",
+          "model_calls": 1,
+          "prepared_reply": "These two could suit your relaxed family holiday.Synthetic Cruise\n\nA relaxed coastal cruise.\n\nPhotos unavailableBeach adventure\n\nExplore beaches with a guide.\n\nPhotos unavailable\n\nWhich appeals to you?",
+          "generation_failed": false
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "message": "These two could suit your relaxed family holiday."
+            },
+            {
+              "buttons": [
+                {
+                  "title": "Trip details",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "unverified-stop",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Plan this trip",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-cruise"
+                  }
+                }
+              ],
+              "message": "Synthetic Cruise\n\nA relaxed coastal cruise.\n\nPhotos unavailable"
+            },
+            {
+              "buttons": [
+                {
+                  "title": "Trip details",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "unverified-stop",
+                    "product_id": "fixture-beach"
+                  }
+                },
+                {
+                  "title": "Plan this trip",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-beach"
+                  }
+                }
+              ],
+              "message": "Beach adventure\n\nExplore beaches with a guide.\n\nPhotos unavailable\n\nWhich appeals to you?"
+            }
+          ],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [],
+              "assets": []
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": []
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-beach"
+              ],
+              "assets": []
+            }
+          ]
+        }
+      ],
+      "final_state": {
+        "pending_products": [],
+        "active_itinerary_present": false
+      },
+      "passed": true
+    },
+    {
+      "scenario": "test_explicit_question_keeps_full_requested_answer",
+      "events": [
+        {
+          "guest": "Please tell me the full arrangements for this cruise.",
+          "model_calls": 1,
+          "prepared_reply": "Synthetic Cruise\n\nVerified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. ",
+          "generation_failed": false
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "message": "Synthetic Cruise\n\nVerified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements."
+            },
+            {
+              "buttons": [
+                {
+                  "title": "More photos",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 0,
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Trip details",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Plan this trip",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-cruise"
+                  }
+                }
+              ],
+              "message": " Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. Verified answer about the requested arrangements. "
+            }
+          ],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": []
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": []
+            }
+          ]
+        }
+      ],
+      "final_state": {
+        "pending_products": [],
+        "active_itinerary_present": false
+      },
+      "passed": true
+    },
+    {
+      "scenario": "test_fresh_text_fallback_after_rejection_does_not_replay_media",
+      "events": [
+        {
+          "guest": "We are a family visiting Curaçao and enjoy relaxed boat trips and beaches.",
+          "model_calls": 1,
+          "prepared_reply": "These two could suit your relaxed family holiday.Synthetic Cruise\n\nA relaxed coastal cruise.Beach adventure\n\nExplore beaches with a guide.\n\nWhich appeals to you?",
+          "generation_failed": false
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "message": "These two could suit your relaxed family holiday."
+            }
+          ],
+          "complete_provider_acceptance": false,
+          "parts": [
+            {
+              "status": "rejected",
+              "products": [],
+              "assets": []
+            },
+            {
+              "status": "queued",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": [
+                {
+                  "asset_id": "cruise-0",
+                  "product_id": "fixture-cruise"
+                }
+              ]
+            },
+            {
+              "status": "queued",
+              "products": [
+                "fixture-beach"
+              ],
+              "assets": [
+                {
+                  "asset_id": "beach-0",
+                  "product_id": "fixture-beach"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "guest": "Please send the trip details as text.",
+          "model_calls": 1,
+          "prepared_reply": "The earlier reply could not be sent. Here are the trip details in text.Synthetic Cruise\n\nA relaxed coastal cruise.Beach adventure\n\nExplore beaches with a guide.\n\nWhich appeals to you?",
+          "generation_failed": false
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "message": "The earlier reply could not be sent. Here are the trip details in text."
+            },
+            {
+              "buttons": [
+                {
+                  "title": "More photos",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 0,
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Trip details",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "fixture-cruise"
+                  }
+                },
+                {
+                  "title": "Plan this trip",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-cruise"
+                  }
+                }
+              ],
+              "message": "Synthetic Cruise\n\nA relaxed coastal cruise."
+            },
+            {
+              "buttons": [
+                {
+                  "title": "More photos",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 0,
+                    "photo_location": "",
+                    "product_id": "fixture-beach"
+                  }
+                },
+                {
+                  "title": "Trip details",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "fixture-beach"
+                  }
+                },
+                {
+                  "title": "Plan this trip",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "fixture-beach"
+                  }
+                }
+              ],
+              "message": "Beach adventure\n\nExplore beaches with a guide.\n\nWhich appeals to you?"
+            }
+          ],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [],
+              "assets": []
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-cruise"
+              ],
+              "assets": []
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "fixture-beach"
+              ],
+              "assets": []
+            }
+          ]
+        }
+      ],
+      "final_state": {
+        "pending_products": [],
+        "active_itinerary_present": false
+      },
+      "passed": true
+    },
+    {
+      "scenario": "actual_catalog_recommendations",
+      "events": [
+        {
+          "guest": "We are a family visiting Curaçao and enjoy relaxed boat trips and beaches.",
+          "model_calls": 1,
+          "prepared_reply": "For a day on the water or a mix of beaches and sightseeing, these are two options.Klein Curaçao Catamaran Day Trip\n\nTravel to Klein Curaçao by catamaran for beach time, snorkelling, breakfast and BBQ lunch. The listing includes an open bar and beach beds.\n\nKlein Curaçao is an island reached by boat from Curaçao.Snorkel and Beach Adventures\n\nCombine a 4×4 trip to Shete Boka with snorkelling at Playa Piskado and time at Cas Abao. The listing gives 09:00-15:00.\n\nShete Boka is a national park; Playa Piskado and Cas Abao are beaches.\n\nWhich sounds more like your kind of day?",
+          "generation_failed": false
+        },
+        {
+          "actual_HTTP_payloads": [
+            {
+              "message": "For a day on the water or a mix of beaches and sightseeing, these are two options."
+            },
+            {
+              "attachmentType": "image",
+              "attachmentUrl": "https://api.unboks.org/api/mermaid/r/isluno/media/7950c94ad3788369dc5fededd953452814285d934c5dd5dab491e6a9d7899ba0.jpg",
+              "buttons": [
+                {
+                  "title": "More photos",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 1,
+                    "photo_location": "",
+                    "product_id": "klein-curacao-catamaran-day-trip"
+                  }
+                },
+                {
+                  "title": "Trip details",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "klein-curacao-catamaran-day-trip"
+                  }
+                },
+                {
+                  "title": "Plan this trip",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "klein-curacao-catamaran-day-trip"
+                  }
+                }
+              ],
+              "message": "Klein Curaçao Catamaran Day Trip\n\nTravel to Klein Curaçao by catamaran for beach time, snorkelling, breakfast and BBQ lunch. The listing includes an open bar and beach beds.\n\nKlein Curaçao is an island reached by boat from Curaçao."
+            },
+            {
+              "attachmentType": "image",
+              "attachmentUrl": "https://api.unboks.org/api/mermaid/r/isluno/media/a4ba254cd9f9f743a0dc9e01fd8fef1fd5865a904502b3edf3da9d7b224a5a54.jpg",
+              "buttons": [
+                {
+                  "title": "More photos",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "photos",
+                    "offset": 1,
+                    "photo_location": "",
+                    "product_id": "snorkel-and-beach-adventures"
+                  }
+                },
+                {
+                  "title": "Trip details",
+                  "type": "postback",
+                  "meaning": {
+                    "info_offset": 0,
+                    "kind": "info",
+                    "photo_location": "",
+                    "product_id": "snorkel-and-beach-adventures"
+                  }
+                },
+                {
+                  "title": "Plan this trip",
+                  "type": "postback",
+                  "meaning": {
+                    "kind": "add",
+                    "product_id": "snorkel-and-beach-adventures"
+                  }
+                }
+              ],
+              "message": "Snorkel and Beach Adventures\n\nCombine a 4×4 trip to Shete Boka with snorkelling at Playa Piskado and time at Cas Abao. The listing gives 09:00-15:00.\n\nShete Boka is a national park; Playa Piskado and Cas Abao are beaches.\n\nWhich sounds more like your kind of day?"
+            }
+          ],
+          "complete_provider_acceptance": true,
+          "parts": [
+            {
+              "status": "accepted",
+              "products": [],
+              "assets": []
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "klein-curacao-catamaran-day-trip"
+              ],
+              "assets": [
+                {
+                  "asset_id": "img-1b8203efece0431a5a728387",
+                  "product_id": "klein-curacao-catamaran-day-trip"
+                }
+              ]
+            },
+            {
+              "status": "accepted",
+              "products": [
+                "snorkel-and-beach-adventures"
+              ],
+              "assets": [
+                {
+                  "asset_id": "img-64b272a1d7d8370cc4791567",
+                  "product_id": "snorkel-and-beach-adventures"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "final_state": {
+        "pending_products": [],
+        "active_itinerary_present": false
+      },
+      "passed": true
+    }
+  ]
+}

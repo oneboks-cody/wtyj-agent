@@ -1,0 +1,9 @@
+{
+  "evidence": "Network-disabled Docker; scripted model SDK and provider HTTP substitutes. No paid providers or customer sends.",
+  "source_commit": "0361641575552e5a78a671efbc1dd59b9d5196ba",
+  "tests_run": 194,
+  "elapsed_seconds": 163.69980392500293,
+  "failures": [],
+  "errors": [],
+  "success": true
+}

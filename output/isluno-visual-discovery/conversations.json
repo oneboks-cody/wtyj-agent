@@ -1,0 +1,3828 @@
+{
+  "evidence": "Synthetic catalog, scripted model responses, stub transports. No live model or native-language quality proof.",
+  "conversations": [
+    {
+      "scenario": "test_01_calvin_introduction_and_month",
+      "turns": [
+        {
+          "guest": "Hi, I’m Calvin and interested in activities in Curaçao. We’re arriving next week and staying for a month.",
+          "reply": "Hi Calvin! Lovely to hear you're coming to Curaçao.\n\nA month gives you time for days on the water, a little adventure and slower days to enjoy the island at your own pace.\n\nWho's coming with you?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "Arriving next week, staying a month"
+          },
+          "stage": "welcome",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Hi Calvin! Lovely to hear you're coming to Curaçao.\n\nA month gives you time for days on the water, a little adventure and slower days to enjoy the island at your own pace.\n\nWho's coming with you?"
+            }
+          ],
+          "last_accepted_question": "Who's coming with you?",
+          "history": [
+            {
+              "content": "Hi, I’m Calvin and interested in activities in Curaçao. We’re arriving next week and staying for a month.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Hi Calvin! Lovely to hear you're coming to Curaçao.\n\nA month gives you time for days on the water, a little adventure and slower days to enjoy the island at your own pace.\n\nWho's coming with you?",
+              "delivery_id": "discovery:faaafe8cf78ea27b6108d11ab69d8db5",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Who's coming with you?"
+            }
+          ]
+        },
+        {
+          "guest": "My partner and I, just the two of us.",
+          "reply": "Lovely, we can find something that suits you both.\n\nWould you prefer a relaxed outing or something active?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "Arriving next week, staying a month",
+            "party": "Two adults, partners"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Lovely, we can find something that suits you both.\n\nWould you prefer a relaxed outing or something active?"
+            }
+          ],
+          "last_accepted_question": "Would you prefer a relaxed outing or something active?",
+          "history": [
+            {
+              "content": "My partner and I, just the two of us.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Lovely, we can find something that suits you both.\n\nWould you prefer a relaxed outing or something active?",
+              "delivery_id": "discovery:7766441dfda99f1c0718552b326c0472",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Would you prefer a relaxed outing or something active?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_02_relaxed_couple",
+      "turns": [
+        {
+          "guest": "We are a couple looking for a relaxed day.",
+          "reply": "Synthetic Cruise\n\nFor the slower pace you're after, I'd start with Synthetic Cruise. A relaxed three-hour cruise around the harbour.\n\nWould you like to see a few photos?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {
+              "fixture-cruise": "The couple requested a relaxed pace; the catalog describes a relaxed cruise."
+            },
+            "guest": {},
+            "pace": "Relaxed",
+            "party": "Couple"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "buttons": [
+                {
+                  "payload": "isl_52e19e7886c35875",
+                  "title": "More photos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_1eef6d037fead6d7",
+                  "title": "Trip details",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_6636205b124c0e2d",
+                  "title": "Plan this trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nFor the slower pace you're after, I'd start with Synthetic Cruise. A relaxed three-hour cruise around the harbour.\n\nWould you like to see a few photos?"
+            }
+          ],
+          "last_accepted_question": "Would you like to see a few photos?",
+          "history": [
+            {
+              "content": "We are a couple looking for a relaxed day.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nFor the slower pace you're after, I'd start with Synthetic Cruise. A relaxed three-hour cruise around the harbour.\n\nWould you like to see a few photos?",
+              "delivery_id": "discovery:69035748c5fd22d2209dfb8bfc1317ec",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": {
+                "isl_1eef6d037fead6d7": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_52e19e7886c35875": {
+                  "kind": "photos",
+                  "offset": 0,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_6636205b124c0e2d": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Would you like to see a few photos?"
+            }
+          ]
+        },
+        {
+          "guest": "Yes please.",
+          "reply": "Synthetic Cruise\n\nHere is a photo of Synthetic Cruise.\n\nWould you like more photos or trip details?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {
+              "fixture-cruise": "The couple requested a relaxed pace; the catalog describes a relaxed cruise."
+            },
+            "guest": {},
+            "pace": "Relaxed",
+            "party": "Couple"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-0.jpg",
+              "buttons": [
+                {
+                  "payload": "isl_85c004c1dd6824db",
+                  "title": "More photos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_f53ff727f7911635",
+                  "title": "Trip details",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_6bfa9fe65a265f11",
+                  "title": "Plan this trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nHere is a photo of Synthetic Cruise.\n\nWould you like more photos or trip details?"
+            }
+          ],
+          "last_accepted_question": "Would you like more photos or trip details?",
+          "history": [
+            {
+              "content": "Yes please.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nHere is a photo of Synthetic Cruise.\n\nWould you like more photos or trip details?",
+              "delivery_id": "discovery:7a490f140e73c4bfa3e0b36ce1f3b560",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-0",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": {
+                "isl_6bfa9fe65a265f11": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_85c004c1dd6824db": {
+                  "kind": "photos",
+                  "offset": 1,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_f53ff727f7911635": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Would you like more photos or trip details?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_03_family_volunteers_details",
+      "turns": [
+        {
+          "guest": "We are two adults and two children, 6 and 10, here for a week. We like relaxed outings and need no pickup.",
+          "reply": "Synthetic Cruise\n\nFor the relaxed outing your family wants, I'd start with Synthetic Cruise. A relaxed three-hour cruise around the harbour.\n\nWould you like to explore this option?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {},
+            "holiday": "One week",
+            "pace": "Relaxed",
+            "party": "Two adults, children 6 and 10",
+            "requirements": "No pickup"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "buttons": [
+                {
+                  "payload": "isl_39cf723a5fd7c95e",
+                  "title": "More photos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_a1b173e27ea68000",
+                  "title": "Trip details",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_da3229f120e818a4",
+                  "title": "Plan this trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nFor the relaxed outing your family wants, I'd start with Synthetic Cruise. A relaxed three-hour cruise around the harbour.\n\nWould you like to explore this option?"
+            }
+          ],
+          "last_accepted_question": "Would you like to explore this option?",
+          "history": [
+            {
+              "content": "We are two adults and two children, 6 and 10, here for a week. We like relaxed outings and need no pickup.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nFor the relaxed outing your family wants, I'd start with Synthetic Cruise. A relaxed three-hour cruise around the harbour.\n\nWould you like to explore this option?",
+              "delivery_id": "discovery:794b242702f222d2dc9630de13b11e3c",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": {
+                "isl_39cf723a5fd7c95e": {
+                  "kind": "photos",
+                  "offset": 0,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_a1b173e27ea68000": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_da3229f120e818a4": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Would you like to explore this option?"
+            }
+          ]
+        },
+        {
+          "guest": "Do they include lunch?",
+          "reply": "Synthetic Cruise\n\nLunch is included.\n\nWould you like to see the cruise photos?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {},
+            "holiday": "One week",
+            "pace": "Relaxed",
+            "party": "Two adults, children 6 and 10",
+            "requirements": "No pickup"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "buttons": [
+                {
+                  "payload": "isl_a22248d21ee8b237",
+                  "title": "More photos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_38d82f61110f978a",
+                  "title": "Trip details",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_b1b77e2970615e05",
+                  "title": "Plan this trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nLunch is included.\n\nWould you like to see the cruise photos?"
+            }
+          ],
+          "last_accepted_question": "Would you like to see the cruise photos?",
+          "history": [
+            {
+              "content": "Do they include lunch?",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nLunch is included.\n\nWould you like to see the cruise photos?",
+              "delivery_id": "discovery:a7c30820569d87e45899c7936c9683f2",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": {
+                "isl_38d82f61110f978a": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_a22248d21ee8b237": {
+                  "kind": "photos",
+                  "offset": 0,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_b1b77e2970615e05": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Would you like to see the cruise photos?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_04_specific_budget",
+      "turns": [
+        {
+          "guest": "We have USD 250 for two people. How much is the cruise for us?",
+          "reply": "I'll keep your total budget in mind. To work out the right price for your party, I need your ages first.\n\nHow old are both guests?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "budget": "USD 250 total",
+            "discussed": {},
+            "guest": {},
+            "party": "Two people"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "buttons": [
+                {
+                  "payload": "isl_6289182a8743ba26",
+                  "title": "Add trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "I'll keep your total budget in mind. To work out the right price for your party, I need your ages first.\n\nHow old are both guests?"
+            }
+          ],
+          "last_accepted_question": "How old are both guests?",
+          "history": [
+            {
+              "content": "We have USD 250 for two people. How much is the cruise for us?",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "I'll keep your total budget in mind. To work out the right price for your party, I need your ages first.\n\nHow old are both guests?",
+              "delivery_id": "discovery:78122999f387127124809b43e8ab7230",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": {
+                "isl_6289182a8743ba26": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "How old are both guests?"
+            }
+          ]
+        },
+        {
+          "guest": "We are 35 and 34, October 15 morning, no pickup or extras.",
+          "reply": "The demo estimate for your party is USD 200.00.\n\nWould you like to add this cruise to your itinerary?\n\nDemo: no real reservation or payment.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "budget": "USD 250 total",
+            "discussed": {},
+            "guest": {
+              "ages": [
+                35,
+                34
+              ]
+            },
+            "party": "Two people"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "buttons": [
+                {
+                  "payload": "isl_42468af7617b5d83",
+                  "title": "Add trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "The demo estimate for your party is USD 200.00.\n\nWould you like to add this cruise to your itinerary?\n\nDemo: no real reservation or payment."
+            }
+          ],
+          "last_accepted_question": "Would you like to add this cruise to your itinerary?",
+          "history": [
+            {
+              "content": "We are 35 and 34, October 15 morning, no pickup or extras.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "The demo estimate for your party is USD 200.00.\n\nWould you like to add this cruise to your itinerary?\n\nDemo: no real reservation or payment.",
+              "delivery_id": "discovery:4f59d9ca8859c7457cfba24a7c83cb06",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": {
+                "isl_42468af7617b5d83": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Would you like to add this cruise to your itinerary?"
+            }
+          ]
+        },
+        {
+          "guest": "We need time to think.",
+          "reply": "Of course, take your time. I've kept your preferences for when you're ready.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "budget": "USD 250 total",
+            "discussed": {},
+            "guest": {
+              "ages": [
+                35,
+                34
+              ]
+            },
+            "party": "Two people"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Of course, take your time. I've kept your preferences for when you're ready."
+            }
+          ],
+          "last_accepted_question": "Would you like to add this cruise to your itinerary?",
+          "history": [
+            {
+              "content": "We need time to think.",
+              "role": "user",
+              "trigger_id": "hospitality-3"
+            },
+            {
+              "role": "assistant",
+              "content": "Of course, take your time. I've kept your preferences for when you're ready.",
+              "delivery_id": "discovery:1948dc538348e7c1e2bbed0bf532c117",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_05_direct_booking_known_trip",
+      "turns": [
+        {
+          "guest": "Please add the cruise. I am Calvin, age 35.",
+          "reply": "Let's put the details together for your demo itinerary.\n\nCould you share the trip date?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "booking_preparation",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 1,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Let's put the details together for your demo itinerary.\n\nCould you share the trip date?"
+            }
+          ],
+          "last_accepted_question": "Could you share the trip date?",
+          "history": [
+            {
+              "content": "Please add the cruise. I am Calvin, age 35.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Let's put the details together for your demo itinerary.\n\nCould you share the trip date?",
+              "delivery_id": "discovery:08a1763a697dfb7abf79c315f188a0ef",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Could you share the trip date?"
+            }
+          ]
+        },
+        {
+          "guest": "October 15 please.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "booking_preparation",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment."
+            }
+          ],
+          "last_accepted_question": "Would you like to review the full itinerary?",
+          "history": [
+            {
+              "content": "October 15 please.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+              "delivery_id": "discovery:f8bc1d068e5c053abaed262f00d3d919",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Would you like to review the full itinerary?"
+            }
+          ]
+        }
+      ],
+      "default_provenance": "The application selected the catalog sole 09:00 departure, meeting-point pickup=false, and no optional extras. Neither scripted update supplied slot, pickup or options. The draft exposes 09:00; the combined native review exposes arrangements before approval."
+    },
+    {
+      "scenario": "test_06_interest_is_not_consent",
+      "turns": [
+        {
+          "guest": "Tell me about the cruise.",
+          "reply": "Synthetic Cruise\n\nSynthetic Cruise is the trip you asked about. A relaxed three-hour cruise around the harbour.\n\nDoes that pace suit you?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "buttons": [
+                {
+                  "payload": "isl_294dabd6d5af18f2",
+                  "title": "More photos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_0c73ab2bea517361",
+                  "title": "Trip details",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_95feaac7cf925922",
+                  "title": "Plan this trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nSynthetic Cruise is the trip you asked about. A relaxed three-hour cruise around the harbour.\n\nDoes that pace suit you?"
+            }
+          ],
+          "last_accepted_question": "Does that pace suit you?",
+          "history": [
+            {
+              "content": "Tell me about the cruise.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nSynthetic Cruise is the trip you asked about. A relaxed three-hour cruise around the harbour.\n\nDoes that pace suit you?",
+              "delivery_id": "discovery:475799eff9d7787c7394038b92ee8d70",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": {
+                "isl_0c73ab2bea517361": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_294dabd6d5af18f2": {
+                  "kind": "photos",
+                  "offset": 0,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_95feaac7cf925922": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Does that pace suit you?"
+            }
+          ]
+        },
+        {
+          "guest": "That looks nice.",
+          "reply": "It sounds like it appeals to you.\n\nWould you like to add this cruise to your itinerary?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "buttons": [
+                {
+                  "payload": "isl_915a604e49d58c4a",
+                  "title": "Add trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "It sounds like it appeals to you.\n\nWould you like to add this cruise to your itinerary?"
+            }
+          ],
+          "last_accepted_question": "Would you like to add this cruise to your itinerary?",
+          "history": [
+            {
+              "content": "That looks nice.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "It sounds like it appeals to you.\n\nWould you like to add this cruise to your itinerary?",
+              "delivery_id": "discovery:5086e70104de17d6e123357b3000b023",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": {
+                "isl_915a604e49d58c4a": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Would you like to add this cruise to your itinerary?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_07_photos_more_and_ambiguous",
+      "turns": [
+        {
+          "guest": "Show cruise photos.",
+          "reply": "Synthetic Cruise\n\nHere is Synthetic Cruise.\n\nWould you like another photo?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-0.jpg",
+              "buttons": [
+                {
+                  "payload": "isl_f451ca2c73390ecb",
+                  "title": "More photos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_c450f7021c8c1c2a",
+                  "title": "Trip details",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_c6b0dc9380e82d74",
+                  "title": "Plan this trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nHere is Synthetic Cruise.\n\nWould you like another photo?"
+            }
+          ],
+          "last_accepted_question": "Would you like another photo?",
+          "history": [
+            {
+              "content": "Show cruise photos.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nHere is Synthetic Cruise.\n\nWould you like another photo?",
+              "delivery_id": "discovery:3a7e9d9a63ef906e03b080090cde4a5a",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-0",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": {
+                "isl_c450f7021c8c1c2a": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_c6b0dc9380e82d74": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_f451ca2c73390ecb": {
+                  "kind": "photos",
+                  "offset": 1,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Would you like another photo?"
+            }
+          ]
+        },
+        {
+          "guest": "More photos please.",
+          "reply": "Synthetic CruiseSynthetic Cruise\n\nHere is another view of Synthetic Cruise.\n\nWould you like to keep browsing?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-1.jpg",
+              "message": "Synthetic Cruise"
+            },
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-2.jpg",
+              "buttons": [
+                {
+                  "payload": "isl_90cf747c66c7f5b3",
+                  "title": "More photos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_ed13d25c5483dbaa",
+                  "title": "Trip details",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_9f8790d46599c213",
+                  "title": "Plan this trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nHere is another view of Synthetic Cruise.\n\nWould you like to keep browsing?"
+            }
+          ],
+          "last_accepted_question": "Would you like to keep browsing?",
+          "history": [
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise",
+              "delivery_id": "discovery:eadcd3a666bd4c1e5af209d755d17a7c:part:0",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-1",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": [],
+              "question": ""
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nHere is another view of Synthetic Cruise.\n\nWould you like to keep browsing?",
+              "delivery_id": "discovery:eadcd3a666bd4c1e5af209d755d17a7c:part:1",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-2",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": {
+                "isl_90cf747c66c7f5b3": {
+                  "kind": "photos",
+                  "offset": 3,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_9f8790d46599c213": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_ed13d25c5483dbaa": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Would you like to keep browsing?"
+            }
+          ]
+        },
+        {
+          "guest": "Another please.",
+          "reply": "Synthetic CruiseSynthetic Cruise\n\nAnother view of Synthetic Cruise.",
+          "provider_outcome": "ambiguous",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-3.jpg",
+              "message": "Synthetic Cruise"
+            }
+          ],
+          "last_accepted_question": "Would you like to keep browsing?",
+          "history": [
+            {
+              "content": "Another please.",
+              "role": "user",
+              "trigger_id": "hospitality-3"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise",
+              "delivery_id": "discovery:a33b631ab4a1380992a29261ff6722a5:part:0",
+              "delivery_status": "ambiguous",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-3",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": [],
+              "question": ""
+            }
+          ]
+        },
+        {
+          "guest": "Show the next photo.",
+          "reply": "Synthetic CruiseSynthetic Cruise\n\nHere is the next view of Synthetic Cruise.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-4.jpg",
+              "message": "Synthetic Cruise"
+            },
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-5.jpg",
+              "buttons": [
+                {
+                  "payload": "isl_d280dbd5793c9e06",
+                  "title": "More photos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_03d45b7ffaa4e594",
+                  "title": "Trip details",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_26d81be324bbc384",
+                  "title": "Plan this trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nHere is the next view of Synthetic Cruise."
+            }
+          ],
+          "last_accepted_question": "Would you like to keep browsing?",
+          "history": [
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise",
+              "delivery_id": "discovery:c1ab3b39f895ec5f81af6f9b11b8aeaa:part:0",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-4",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": [],
+              "question": ""
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nHere is the next view of Synthetic Cruise.",
+              "delivery_id": "discovery:c1ab3b39f895ec5f81af6f9b11b8aeaa:part:1",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-5",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": {
+                "isl_03d45b7ffaa4e594": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_26d81be324bbc384": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_d280dbd5793c9e06": {
+                  "kind": "photos",
+                  "offset": 6,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_08_changed_preference",
+      "turns": [
+        {
+          "guest": "We want something active.",
+          "reply": "Synthetic Walk\n\nFor the active outing you want, I'd start with Synthetic Walk. A two-hour active guided walk.\n\nDoes a walk appeal to you?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {},
+            "pace": "Active"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "buttons": [
+                {
+                  "payload": "isl_0a5c854984b5700a",
+                  "title": "Trip details",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_254795344c6da00c",
+                  "title": "Plan this trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Walk\n\nFor the active outing you want, I'd start with Synthetic Walk. A two-hour active guided walk.\n\nDoes a walk appeal to you?"
+            }
+          ],
+          "last_accepted_question": "Does a walk appeal to you?",
+          "history": [
+            {
+              "content": "We want something active.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Walk\n\nFor the active outing you want, I'd start with Synthetic Walk. A two-hour active guided walk.\n\nDoes a walk appeal to you?",
+              "delivery_id": "discovery:327266d065f4ac3061f5f22bfde43b8f",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": {
+                "isl_0a5c854984b5700a": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-walk"
+                },
+                "isl_254795344c6da00c": {
+                  "kind": "add",
+                  "product_id": "fixture-walk"
+                }
+              },
+              "question": "Does a walk appeal to you?"
+            }
+          ]
+        },
+        {
+          "guest": "Actually, a relaxed outing would suit us better.",
+          "reply": "Synthetic Cruise\n\nLet's switch to the slower pace you now prefer. Synthetic Cruise could fit. A relaxed three-hour cruise around the harbour.\n\nWould you like the cruise details?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {},
+            "pace": "Relaxed"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "buttons": [
+                {
+                  "payload": "isl_81dc2d61373f3e03",
+                  "title": "More photos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_c477bc82e644e57c",
+                  "title": "Trip details",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_dac90b4cf93b58e7",
+                  "title": "Plan this trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nLet's switch to the slower pace you now prefer. Synthetic Cruise could fit. A relaxed three-hour cruise around the harbour.\n\nWould you like the cruise details?"
+            }
+          ],
+          "last_accepted_question": "Would you like the cruise details?",
+          "history": [
+            {
+              "content": "Actually, a relaxed outing would suit us better.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nLet's switch to the slower pace you now prefer. Synthetic Cruise could fit. A relaxed three-hour cruise around the harbour.\n\nWould you like the cruise details?",
+              "delivery_id": "discovery:9df48d144a38bbbca8497f56a6f7cf05",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": {
+                "isl_81dc2d61373f3e03": {
+                  "kind": "photos",
+                  "offset": 0,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_c477bc82e644e57c": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_dac90b4cf93b58e7": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Would you like the cruise details?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_09_conflicting_trips",
+      "turns": [
+        {
+          "guest": "Please add the cruise for 2026-10-15. I am Calvin, age 35.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "booking_preparation",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment."
+            }
+          ],
+          "last_accepted_question": "Would you like to review the full itinerary?",
+          "history": [
+            {
+              "content": "Please add the cruise for 2026-10-15. I am Calvin, age 35.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+              "delivery_id": "discovery:dba999689a5639ff8db97a2fe7616be6",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Would you like to review the full itinerary?"
+            }
+          ]
+        },
+        {
+          "guest": "Add the walk on the same date, October 15.",
+          "reply": "I couldn't complete that change.\n\nThose trip times overlap. Choose a different day or a departure that does not conflict.\nSynthetic Cruise · 2026-10-15 · 09:00\nDemo total: USD 100.00\n\nWould another day suit you?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "booking_preparation",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 1,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "I couldn't complete that change.\n\nThose trip times overlap. Choose a different day or a departure that does not conflict.\nSynthetic Cruise · 2026-10-15 · 09:00\nDemo total: USD 100.00\n\nWould another day suit you?"
+            }
+          ],
+          "last_accepted_question": "Would another day suit you?",
+          "history": [
+            {
+              "content": "Add the walk on the same date, October 15.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "I couldn't complete that change.\n\nThose trip times overlap. Choose a different day or a departure that does not conflict.\nSynthetic Cruise · 2026-10-15 · 09:00\nDemo total: USD 100.00\n\nWould another day suit you?",
+              "delivery_id": "discovery:19b11b1912502804f5cdf6dc565177f8",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Would another day suit you?"
+            }
+          ]
+        },
+        {
+          "guest": "Move the walk to October 16.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\nSynthetic Walk · 2026-10-16 · 09:00\n\nThe draft total is USD 200.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "booking_preparation",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\nSynthetic Walk · 2026-10-16 · 09:00\n\nThe draft total is USD 200.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment."
+            }
+          ],
+          "last_accepted_question": "Would you like to review the full itinerary?",
+          "history": [
+            {
+              "content": "Move the walk to October 16.",
+              "role": "user",
+              "trigger_id": "hospitality-3"
+            },
+            {
+              "role": "assistant",
+              "content": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\nSynthetic Walk · 2026-10-16 · 09:00\n\nThe draft total is USD 200.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+              "delivery_id": "discovery:a735d60d11a6ec5e6a11dcd744108cfd",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Would you like to review the full itinerary?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_10_correction_and_question",
+      "turns": [
+        {
+          "guest": "Please add the cruise for 2026-10-15. I am Calvin, age 35.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "booking_preparation",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment."
+            }
+          ],
+          "last_accepted_question": "Would you like to review the full itinerary?",
+          "history": [
+            {
+              "content": "Please add the cruise for 2026-10-15. I am Calvin, age 35.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+              "delivery_id": "discovery:ab6f2bccf37c2dd0017f7d46f6744c25",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Would you like to review the full itinerary?"
+            }
+          ]
+        },
+        {
+          "guest": "Move the cruise to October 16, and is lunch included?",
+          "reply": "Lunch is included.\n\nYour choices are together in a demo draft:\nSynthetic Cruise · 2026-10-16 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Lunch is included.\n\nYour choices are together in a demo draft:\nSynthetic Cruise · 2026-10-16 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment."
+            }
+          ],
+          "last_accepted_question": "Would you like to review the full itinerary?",
+          "history": [
+            {
+              "content": "Move the cruise to October 16, and is lunch included?",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Lunch is included.\n\nYour choices are together in a demo draft:\nSynthetic Cruise · 2026-10-16 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+              "delivery_id": "discovery:3c4f196711aba37b2ae0ea8fdab93420",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Would you like to review the full itinerary?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_11_missing_supplier_information",
+      "turns": [
+        {
+          "guest": "Is the cruise wheelchair accessible?",
+          "reply": "I don't have confirmed accessibility details for this cruise.\n\nWould you like help from the team?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "buttons": [
+                {
+                  "payload": "isl_548c6e96540fcdac",
+                  "title": "Ask the team",
+                  "type": "postback"
+                }
+              ],
+              "message": "I don't have confirmed accessibility details for this cruise.\n\nWould you like help from the team?"
+            }
+          ],
+          "last_accepted_question": "Would you like help from the team?",
+          "history": [
+            {
+              "content": "Is the cruise wheelchair accessible?",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "I don't have confirmed accessibility details for this cruise.\n\nWould you like help from the team?",
+              "delivery_id": "discovery:acb6eb933ce207d79c4fe77363d45ab8",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": {
+                "isl_548c6e96540fcdac": {
+                  "kind": "human",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Would you like help from the team?"
+            }
+          ]
+        },
+        {
+          "guest": "No, just show me the photos for now.",
+          "reply": "Synthetic Cruise\n\nHere is Synthetic Cruise.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-0.jpg",
+              "buttons": [
+                {
+                  "payload": "isl_c1fbb953050061c0",
+                  "title": "More photos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_65973b6380f6166c",
+                  "title": "Trip details",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_730901c29ac775bc",
+                  "title": "Plan this trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nHere is Synthetic Cruise."
+            }
+          ],
+          "last_accepted_question": "Would you like help from the team?",
+          "history": [
+            {
+              "content": "No, just show me the photos for now.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nHere is Synthetic Cruise.",
+              "delivery_id": "discovery:d82eb9eef69e4f4392911f6bfa6a1382",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-0",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": {
+                "isl_65973b6380f6166c": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_730901c29ac775bc": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_c1fbb953050061c0": {
+                  "kind": "photos",
+                  "offset": 1,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_12_declined_recommendation",
+      "turns": [
+        {
+          "guest": "What is the cruise like?",
+          "reply": "Synthetic Cruise\n\nSynthetic Cruise offers this kind of outing: A relaxed three-hour cruise around the harbour.\n\nWould that suit your plans?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "buttons": [
+                {
+                  "payload": "isl_db8ed755cd66c241",
+                  "title": "More photos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_7fcedb61acebc0a5",
+                  "title": "Trip details",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_de25c11f67561b89",
+                  "title": "Plan this trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nSynthetic Cruise offers this kind of outing: A relaxed three-hour cruise around the harbour.\n\nWould that suit your plans?"
+            }
+          ],
+          "last_accepted_question": "Would that suit your plans?",
+          "history": [
+            {
+              "content": "What is the cruise like?",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nSynthetic Cruise offers this kind of outing: A relaxed three-hour cruise around the harbour.\n\nWould that suit your plans?",
+              "delivery_id": "discovery:12b23e1b382a32b5bec7248aa1998e76",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": {
+                "isl_7fcedb61acebc0a5": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_db8ed755cd66c241": {
+                  "kind": "photos",
+                  "offset": 0,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_de25c11f67561b89": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Would that suit your plans?"
+            }
+          ]
+        },
+        {
+          "guest": "No thanks, we do not want a boat trip.",
+          "reply": "Thanks for telling me. We can leave boat trips out.\n\nWould you prefer an activity on land?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {},
+            "interests": "Land activities, no boat trips"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Thanks for telling me. We can leave boat trips out.\n\nWould you prefer an activity on land?"
+            }
+          ],
+          "last_accepted_question": "Would you prefer an activity on land?",
+          "history": [
+            {
+              "content": "No thanks, we do not want a boat trip.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Thanks for telling me. We can leave boat trips out.\n\nWould you prefer an activity on land?",
+              "delivery_id": "discovery:9208588ed07ca58a66b8e3f1e8acafff",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Would you prefer an activity on land?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_13_processing_failure",
+      "turns": [
+        {
+          "guest": "Please add the cruise for 2026-10-15. I am Calvin, age 35.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "booking_preparation",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment."
+            }
+          ],
+          "last_accepted_question": "Would you like to review the full itinerary?",
+          "history": [
+            {
+              "content": "Please add the cruise for 2026-10-15. I am Calvin, age 35.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+              "delivery_id": "discovery:d895eb94554d17b31796a027bcf24433",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Would you like to review the full itinerary?"
+            }
+          ]
+        },
+        {
+          "guest": "Move it to October 16.",
+          "reply": "I couldn’t process your message. Please send a new message to try again.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "booking_preparation",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "I couldn’t process your message. Please send a new message to try again."
+            }
+          ],
+          "last_accepted_question": "Would you like to review the full itinerary?",
+          "history": [
+            {
+              "content": "Move it to October 16.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "I couldn’t process your message. Please send a new message to try again.",
+              "delivery_id": "discovery:4eb9151290b8fcfd64faca9798921298",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": ""
+            }
+          ]
+        },
+        {
+          "guest": "What is the current cruise description?",
+          "reply": "Synthetic Cruise\n\nA relaxed three-hour cruise around the harbour.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "buttons": [
+                {
+                  "payload": "isl_dfc8184680a1dc9f",
+                  "title": "More photos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_bd2a1f6272fc473e",
+                  "title": "Trip details",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nA relaxed three-hour cruise around the harbour."
+            }
+          ],
+          "last_accepted_question": "Would you like to review the full itinerary?",
+          "history": [
+            {
+              "content": "What is the current cruise description?",
+              "role": "user",
+              "trigger_id": "hospitality-3"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nA relaxed three-hour cruise around the harbour.",
+              "delivery_id": "discovery:852c416c2f3c6336a13df13712adfe76",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": {
+                "isl_bd2a1f6272fc473e": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_dfc8184680a1dc9f": {
+                  "kind": "photos",
+                  "offset": 0,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_14_explicit_human",
+      "turns": [
+        {
+          "guest": "I would like to speak to a person.",
+          "reply": "Of course, I understand you'd prefer help from the team.\n\nYour request is recorded for operator review.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Of course, I understand you'd prefer help from the team.\n\nYour request is recorded for operator review."
+            }
+          ],
+          "last_accepted_question": null,
+          "history": [
+            {
+              "content": "I would like to speak to a person.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Of course, I understand you'd prefer help from the team.\n\nYour request is recorded for operator review.",
+              "delivery_id": "discovery:3ebee1663cf24bc13b44048658bae9c4",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": ""
+            }
+          ]
+        },
+        {
+          "guest": "Thank you.",
+          "reply": "You're welcome.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "You're welcome."
+            }
+          ],
+          "last_accepted_question": null,
+          "history": [
+            {
+              "content": "Thank you.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "You're welcome.",
+              "delivery_id": "discovery:c63b0adb848f826a12ba8c006a7ae6ac",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_15_returning_guest_pending_and_booked",
+      "turns": [
+        {
+          "guest": "Please add the cruise for 2026-10-15. I am Calvin, age 35.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "booking_preparation",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment."
+            }
+          ],
+          "last_accepted_question": "Would you like to review the full itinerary?",
+          "history": [
+            {
+              "content": "Please add the cruise for 2026-10-15. I am Calvin, age 35.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+              "delivery_id": "discovery:bff92c97397ada91ae83e75b09f40e82",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Would you like to review the full itinerary?"
+            }
+          ]
+        },
+        {
+          "guest": "Hi again, Calvin here.",
+          "reply": "Welcome back, Calvin.\n\nWhat would you like help with?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            }
+          },
+          "stage": "after_booking",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Welcome back, Calvin.\n\nWhat would you like help with?"
+            }
+          ],
+          "last_accepted_question": "What would you like help with?",
+          "history": [
+            {
+              "content": "Hi again, Calvin here.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Welcome back, Calvin.\n\nWhat would you like help with?",
+              "delivery_id": "discovery:df5968c100b8c92ddc647518b6d509bc",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "What would you like help with?"
+            }
+          ]
+        },
+        {
+          "guest": "Please show the itinerary for review.",
+          "reply": "Here's the review you asked for. Please check the details and use Confirm details when you're ready.\n\nDemo: no real reservation or payment.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            }
+          },
+          "stage": "review_approval",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Here's the review you asked for. Please check the details and use Confirm details when you're ready.\n\nDemo: no real reservation or payment."
+            },
+            {
+              "accountId": "synthetic-account",
+              "message": "Isluno | Itinerary summary | Version 1\nDEMO - No real reservation or payment. Availability is assumed.\nGuest: Calvin\nDocument language: en"
+            },
+            {
+              "accountId": "synthetic-account",
+              "message": "1. Synthetic Cruise\nGuest: Calvin\nGuests / ages: 35\nDeparture: 2026-10-15 09:00 (America/Curacao)\nCheck-in: 2026-10-15 09:00\nPickup / meeting point: Synthetic pier\nages 13-120: 1 x USD 100.00 = USD 100.00\nTotal: USD 100.00\nDemo booking using catalog rules"
+            },
+            {
+              "accountId": "synthetic-account",
+              "message": "Total: USD 100.00\nDEMO - No real reservation or payment. Availability is assumed.\nCorrect any details before continuing."
+            },
+            {
+              "accountId": "synthetic-account",
+              "buttons": [
+                {
+                  "payload": "iq_ab9d8513d501cfea95c382511ff74866",
+                  "title": "Confirm details",
+                  "type": "postback"
+                }
+              ],
+              "message": "Correct any details before continuing."
+            }
+          ],
+          "last_accepted_question": "What would you like help with?",
+          "history": [
+            {
+              "role": "assistant",
+              "content": "Total: USD 100.00\nDEMO - No real reservation or payment. Availability is assumed.\nCorrect any details before continuing.",
+              "delivery_id": "quote:3b6a9c198ca39c49a6543722ee08ee65:2",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": ""
+            },
+            {
+              "role": "assistant",
+              "content": "Correct any details before continuing.",
+              "delivery_id": "quote:3b6a9c198ca39c49a6543722ee08ee65:3",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [
+                {
+                  "payload": "iq_ab9d8513d501cfea95c382511ff74866",
+                  "title": "Confirm details",
+                  "type": "postback"
+                }
+              ],
+              "question": ""
+            }
+          ]
+        },
+        {
+          "guest": "Show the review again, and is lunch included?",
+          "reply": "Lunch is included.\n\nWould you like to confirm the details in the review?\n\nDemo: no real reservation or payment.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            }
+          },
+          "stage": "exploration",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Lunch is included.\n\nWould you like to confirm the details in the review?\n\nDemo: no real reservation or payment."
+            }
+          ],
+          "last_accepted_question": "Would you like to confirm the details in the review?",
+          "history": [
+            {
+              "content": "Show the review again, and is lunch included?",
+              "role": "user",
+              "trigger_id": "hospitality-4"
+            },
+            {
+              "role": "assistant",
+              "content": "Lunch is included.\n\nWould you like to confirm the details in the review?\n\nDemo: no real reservation or payment.",
+              "delivery_id": "discovery:91605d5287cc5f62547dc6ff0580a2fb",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Would you like to confirm the details in the review?"
+            }
+          ]
+        },
+        {
+          "guest": "My name is Calvin, just checking in.",
+          "reply": "Good to hear from you.\n\nWhat would you like to check?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            }
+          },
+          "stage": "exploration",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Good to hear from you.\n\nWhat would you like to check?"
+            }
+          ],
+          "last_accepted_question": "What would you like to check?",
+          "history": [
+            {
+              "content": "My name is Calvin, just checking in.",
+              "role": "user",
+              "trigger_id": "hospitality-5"
+            },
+            {
+              "role": "assistant",
+              "content": "Good to hear from you.\n\nWhat would you like to check?",
+              "delivery_id": "discovery:96c35abb3c6fb865465610902b231b23",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "What would you like to check?"
+            }
+          ]
+        },
+        {
+          "guest": "[Native: Confirm summary]",
+          "reply": "Details confirmed. Review the quote before approving.",
+          "provider_outcome": "accepted",
+          "model_calls": 0,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            }
+          },
+          "stage": "review_approval",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Details confirmed. Review the quote before approving.",
+              "attachmentUrl": "https://example.invalid/documents/a92218ac04774c358752212a6f4a3a84.pdf",
+              "attachmentType": "file",
+              "attachmentName": "Isluno-quote.pdf"
+            },
+            {
+              "accountId": "synthetic-account",
+              "buttons": [
+                {
+                  "payload": "iq_7873b011e8a88d6f692217fc6dcf1b02",
+                  "title": "Approve quote",
+                  "type": "postback"
+                }
+              ],
+              "message": "Details confirmed. Review the quote before approving."
+            }
+          ],
+          "last_accepted_question": "What would you like to check?",
+          "history": [
+            {
+              "role": "assistant",
+              "content": "Details confirmed. Review the quote before approving.",
+              "delivery_id": "quote:e30f4ff065eff9fc9c53b8a43aa7843f:0",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "document_quote_id": "a92218ac04774c358752212a6f4a3a84",
+                  "type": "file"
+                }
+              ],
+              "buttons": [],
+              "question": ""
+            },
+            {
+              "role": "assistant",
+              "content": "Details confirmed. Review the quote before approving.",
+              "delivery_id": "quote:e30f4ff065eff9fc9c53b8a43aa7843f:1",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [
+                {
+                  "payload": "iq_7873b011e8a88d6f692217fc6dcf1b02",
+                  "title": "Approve quote",
+                  "type": "postback"
+                }
+              ],
+              "question": ""
+            }
+          ]
+        },
+        {
+          "guest": "[Native: Approve quote]",
+          "reply": "Quote approved. No payment or real reservation has been made.",
+          "provider_outcome": "accepted",
+          "model_calls": 0,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            }
+          },
+          "stage": "payment_confirmation",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "buttons": [
+                {
+                  "payload": "ip_6c20d7dfb6d04f1365094564a70739c4",
+                  "title": "Complete demo pay",
+                  "type": "postback"
+                }
+              ],
+              "message": "Quote approved. No payment or real reservation has been made."
+            }
+          ],
+          "last_accepted_question": "What would you like to check?",
+          "history": [
+            {
+              "content": "[Verified WhatsApp action: approve_quote]",
+              "role": "user"
+            },
+            {
+              "role": "assistant",
+              "content": "Quote approved. No payment or real reservation has been made.",
+              "delivery_id": "quote:7a6ac3fe938926cb3ad169595f392b24:0",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [
+                {
+                  "payload": "ip_6c20d7dfb6d04f1365094564a70739c4",
+                  "title": "Complete demo pay",
+                  "type": "postback"
+                }
+              ],
+              "question": ""
+            }
+          ]
+        },
+        {
+          "guest": "[Native: Complete demo payment]",
+          "reply": "DEMO PAYMENT COMPLETED - No real money was charged. No supplier booking was made.",
+          "provider_outcome": "accepted",
+          "model_calls": 0,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            }
+          },
+          "stage": "after_booking",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "DEMO PAYMENT COMPLETED - No real money was charged. No supplier booking was made."
+            },
+            {
+              "accountId": "synthetic-account",
+              "attachmentName": "Isluno-receipt-688b2b0f739133f3936e233c6d929e88.pdf",
+              "message": "Demo receipt / itinerary: 688b2b0f739133f3936e233c6d929e88",
+              "attachmentUrl": "https://example.invalid/documents/ae8353806c84784f0cda1d44688e5367.pdf",
+              "attachmentType": "file"
+            },
+            {
+              "accountId": "synthetic-account",
+              "attachmentName": "Isluno-ticket-ISL-DEMO-23A547937A0C9B90.pdf",
+              "message": "Demo ticket: ISL-DEMO-23A547937A0C9B90",
+              "attachmentUrl": "https://example.invalid/documents/69cf9450cb997b27dfb85b98b2157f3d.pdf",
+              "attachmentType": "file"
+            },
+            {
+              "accountId": "synthetic-account",
+              "message": "Send receipt by email - Please provide the email address for your receipt."
+            }
+          ],
+          "last_accepted_question": "What would you like to check?",
+          "history": [
+            {
+              "role": "assistant",
+              "content": "Demo ticket: ISL-DEMO-23A547937A0C9B90",
+              "delivery_id": "quote:e108e3211ab5f8b008a0aaf8b6f35d13:2",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "document_quote_id": "69cf9450cb997b27dfb85b98b2157f3d",
+                  "type": "file"
+                }
+              ],
+              "buttons": [],
+              "question": ""
+            },
+            {
+              "role": "assistant",
+              "content": "Send receipt by email - Please provide the email address for your receipt.",
+              "delivery_id": "quote:e108e3211ab5f8b008a0aaf8b6f35d13:3",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": ""
+            }
+          ]
+        },
+        {
+          "guest": "Hi, Calvin here again.",
+          "reply": "Welcome back, Calvin.\n\nWhat can I help you with?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            }
+          },
+          "stage": "after_booking",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Welcome back, Calvin.\n\nWhat can I help you with?"
+            }
+          ],
+          "last_accepted_question": "What can I help you with?",
+          "history": [
+            {
+              "content": "Hi, Calvin here again.",
+              "role": "user",
+              "trigger_id": "hospitality-9"
+            },
+            {
+              "role": "assistant",
+              "content": "Welcome back, Calvin.\n\nWhat can I help you with?",
+              "delivery_id": "discovery:e18936d8ef73f8541dca783e7dc65dca",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "What can I help you with?"
+            }
+          ]
+        },
+        {
+          "guest": "Can I see photos of my cruise?",
+          "reply": "Synthetic Cruise\n\nYou can browse the gallery for Synthetic Cruise.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            }
+          },
+          "stage": "after_booking",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-0.jpg",
+              "buttons": [
+                {
+                  "payload": "isl_4b7d175ec718b34f",
+                  "title": "More photos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_b3a561184cdeb2fb",
+                  "title": "Trip details",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nYou can browse the gallery for Synthetic Cruise."
+            }
+          ],
+          "last_accepted_question": "What can I help you with?",
+          "history": [
+            {
+              "content": "Can I see photos of my cruise?",
+              "role": "user",
+              "trigger_id": "hospitality-10"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nYou can browse the gallery for Synthetic Cruise.",
+              "delivery_id": "discovery:bf4a67f0885af4645fa5f79ac9bb04d8",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-0",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": {
+                "isl_4b7d175ec718b34f": {
+                  "kind": "photos",
+                  "offset": 1,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_b3a561184cdeb2fb": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_16_de",
+      "turns": [
+        {
+          "guest": "Hallo, ich bin Calvin. Wir bleiben einen Monat.",
+          "reply": "Hallo Calvin! Mit einem ganzen Monat könnt ihr die Insel in eurem Tempo entdecken.\n\nWer kommt mit?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month"
+          },
+          "stage": "welcome",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Hallo Calvin! Mit einem ganzen Monat könnt ihr die Insel in eurem Tempo entdecken.\n\nWer kommt mit?"
+            }
+          ],
+          "last_accepted_question": "Wer kommt mit?",
+          "history": [
+            {
+              "content": "Hallo, ich bin Calvin. Wir bleiben einen Monat.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Hallo Calvin! Mit einem ganzen Monat könnt ihr die Insel in eurem Tempo entdecken.\n\nWer kommt mit?",
+              "delivery_id": "discovery:2749d7f547c435009ec99e8b6c73b0d8",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Wer kommt mit?"
+            }
+          ]
+        },
+        {
+          "guest": "Wir sind zwei Erwachsene.",
+          "reply": "Danke, dann suchen wir etwas Passendes für euch beide.\n\nMöchtet ihr etwas Ruhiges oder Aktives?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month",
+            "party": "Two adults"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Danke, dann suchen wir etwas Passendes für euch beide.\n\nMöchtet ihr etwas Ruhiges oder Aktives?"
+            }
+          ],
+          "last_accepted_question": "Möchtet ihr etwas Ruhiges oder Aktives?",
+          "history": [
+            {
+              "content": "Wir sind zwei Erwachsene.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Danke, dann suchen wir etwas Passendes für euch beide.\n\nMöchtet ihr etwas Ruhiges oder Aktives?",
+              "delivery_id": "discovery:8defb20b557b1bb5d1a396ec824aa825",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Möchtet ihr etwas Ruhiges oder Aktives?"
+            }
+          ]
+        },
+        {
+          "guest": "Wir möchten etwas Ruhiges. Was empfiehlst du?",
+          "reply": "Synthetic Cruise\n\nFür euren ruhigen Ausflug würde ich mit Synthetic Cruise beginnen. Eine entspannte dreistündige Hafenrundfahrt.\n\nMöchtest du diesen Ausflug zu deinem Reiseplan hinzufügen?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month",
+            "pace": "Relaxed",
+            "party": "Two adults"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-0.jpg",
+              "buttons": [
+                {
+                  "payload": "isl_a6c15e20322d5237",
+                  "title": "Mehr Fotos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_8bbbca33748e24e0",
+                  "title": "Reisedetails",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_6e8c15f6a5f02470",
+                  "title": "Reise planen",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nFür euren ruhigen Ausflug würde ich mit Synthetic Cruise beginnen. Eine entspannte dreistündige Hafenrundfahrt.\n\nMöchtest du diesen Ausflug zu deinem Reiseplan hinzufügen?"
+            }
+          ],
+          "last_accepted_question": "Möchtest du diesen Ausflug zu deinem Reiseplan hinzufügen?",
+          "history": [
+            {
+              "content": "Wir möchten etwas Ruhiges. Was empfiehlst du?",
+              "role": "user",
+              "trigger_id": "hospitality-3"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nFür euren ruhigen Ausflug würde ich mit Synthetic Cruise beginnen. Eine entspannte dreistündige Hafenrundfahrt.\n\nMöchtest du diesen Ausflug zu deinem Reiseplan hinzufügen?",
+              "delivery_id": "discovery:a0cf2b9e730edecfae2321db6c82069a",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-0",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": {
+                "isl_6e8c15f6a5f02470": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_8bbbca33748e24e0": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_a6c15e20322d5237": {
+                  "kind": "photos",
+                  "offset": 1,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Möchtest du diesen Ausflug zu deinem Reiseplan hinzufügen?"
+            }
+          ]
+        },
+        {
+          "guest": "Ich möchte mit einer Person sprechen.",
+          "reply": "Natürlich, ich verstehe, dass du lieber mit jemandem sprechen möchtest.\n\nDeine Anfrage ist zur Prüfung durch das Team erfasst.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month",
+            "pace": "Relaxed",
+            "party": "Two adults"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Natürlich, ich verstehe, dass du lieber mit jemandem sprechen möchtest.\n\nDeine Anfrage ist zur Prüfung durch das Team erfasst."
+            }
+          ],
+          "last_accepted_question": "Möchtest du diesen Ausflug zu deinem Reiseplan hinzufügen?",
+          "history": [
+            {
+              "content": "Ich möchte mit einer Person sprechen.",
+              "role": "user",
+              "trigger_id": "hospitality-4"
+            },
+            {
+              "role": "assistant",
+              "content": "Natürlich, ich verstehe, dass du lieber mit jemandem sprechen möchtest.\n\nDeine Anfrage ist zur Prüfung durch das Team erfasst.",
+              "delivery_id": "discovery:4cce5bdac8cccc4a5f380a795619a492",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_16_es",
+      "turns": [
+        {
+          "guest": "Hola, soy Calvin. Nos quedamos un mes.",
+          "reply": "¡Hola, Calvin! Con un mes podéis descubrir la isla a vuestro ritmo.\n\n¿Con quién vienes?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month"
+          },
+          "stage": "welcome",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "¡Hola, Calvin! Con un mes podéis descubrir la isla a vuestro ritmo.\n\n¿Con quién vienes?"
+            }
+          ],
+          "last_accepted_question": "¿Con quién vienes?",
+          "history": [
+            {
+              "content": "Hola, soy Calvin. Nos quedamos un mes.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "¡Hola, Calvin! Con un mes podéis descubrir la isla a vuestro ritmo.\n\n¿Con quién vienes?",
+              "delivery_id": "discovery:07c56ba68e8b0add9239c6c7204b0ebd",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "¿Con quién vienes?"
+            }
+          ]
+        },
+        {
+          "guest": "Somos dos adultos.",
+          "reply": "Gracias, podemos buscar algo que os guste a los dos.\n\n¿Preferís algo tranquilo o activo?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month",
+            "party": "Two adults"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Gracias, podemos buscar algo que os guste a los dos.\n\n¿Preferís algo tranquilo o activo?"
+            }
+          ],
+          "last_accepted_question": "¿Preferís algo tranquilo o activo?",
+          "history": [
+            {
+              "content": "Somos dos adultos.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Gracias, podemos buscar algo que os guste a los dos.\n\n¿Preferís algo tranquilo o activo?",
+              "delivery_id": "discovery:b90c630b35b1ad48ecf1e0dd6a61da97",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "¿Preferís algo tranquilo o activo?"
+            }
+          ]
+        },
+        {
+          "guest": "Queremos algo tranquilo. ¿Qué recomiendas?",
+          "reply": "Synthetic Cruise\n\nPara la salida tranquila que buscáis, empezaría con Synthetic Cruise. Un tranquilo crucero de tres horas por el puerto.\n\n¿Quieres añadir esta excursión al itinerario?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month",
+            "pace": "Relaxed",
+            "party": "Two adults"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-0.jpg",
+              "buttons": [
+                {
+                  "payload": "isl_70ee81da67017f22",
+                  "title": "Más fotos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_d683f82c51c1540f",
+                  "title": "Detalles del viaje",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_3b482d528e8090d4",
+                  "title": "Planear este viaje",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nPara la salida tranquila que buscáis, empezaría con Synthetic Cruise. Un tranquilo crucero de tres horas por el puerto.\n\n¿Quieres añadir esta excursión al itinerario?"
+            }
+          ],
+          "last_accepted_question": "¿Quieres añadir esta excursión al itinerario?",
+          "history": [
+            {
+              "content": "Queremos algo tranquilo. ¿Qué recomiendas?",
+              "role": "user",
+              "trigger_id": "hospitality-3"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nPara la salida tranquila que buscáis, empezaría con Synthetic Cruise. Un tranquilo crucero de tres horas por el puerto.\n\n¿Quieres añadir esta excursión al itinerario?",
+              "delivery_id": "discovery:60024c9a37f40daa194afce94c783383",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-0",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": {
+                "isl_3b482d528e8090d4": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_70ee81da67017f22": {
+                  "kind": "photos",
+                  "offset": 1,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_d683f82c51c1540f": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "¿Quieres añadir esta excursión al itinerario?"
+            }
+          ]
+        },
+        {
+          "guest": "Quiero hablar con una persona.",
+          "reply": "Claro, entiendo que prefieras hablar con alguien.\n\nTu solicitud está registrada para que la revise el equipo.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month",
+            "pace": "Relaxed",
+            "party": "Two adults"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Claro, entiendo que prefieras hablar con alguien.\n\nTu solicitud está registrada para que la revise el equipo."
+            }
+          ],
+          "last_accepted_question": "¿Quieres añadir esta excursión al itinerario?",
+          "history": [
+            {
+              "content": "Quiero hablar con una persona.",
+              "role": "user",
+              "trigger_id": "hospitality-4"
+            },
+            {
+              "role": "assistant",
+              "content": "Claro, entiendo que prefieras hablar con alguien.\n\nTu solicitud está registrada para que la revise el equipo.",
+              "delivery_id": "discovery:7d38fcda2ebec64c33c604fc32bbff85",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_16_nl",
+      "turns": [
+        {
+          "guest": "Hoi, ik ben Calvin. We blijven een maand.",
+          "reply": "Hoi Calvin! Fijn dat jullie een maand de tijd hebben om het eiland te ontdekken.\n\nMet wie kom je?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month"
+          },
+          "stage": "welcome",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Hoi Calvin! Fijn dat jullie een maand de tijd hebben om het eiland te ontdekken.\n\nMet wie kom je?"
+            }
+          ],
+          "last_accepted_question": "Met wie kom je?",
+          "history": [
+            {
+              "content": "Hoi, ik ben Calvin. We blijven een maand.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Hoi Calvin! Fijn dat jullie een maand de tijd hebben om het eiland te ontdekken.\n\nMet wie kom je?",
+              "delivery_id": "discovery:bd90d9c6446d2fc9cfb3018ae21dc832",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Met wie kom je?"
+            }
+          ]
+        },
+        {
+          "guest": "We zijn met twee volwassenen.",
+          "reply": "Dank je, dan zoeken we iets dat bij jullie past.\n\nWillen jullie iets rustigs of actiefs?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month",
+            "party": "Two adults"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Dank je, dan zoeken we iets dat bij jullie past.\n\nWillen jullie iets rustigs of actiefs?"
+            }
+          ],
+          "last_accepted_question": "Willen jullie iets rustigs of actiefs?",
+          "history": [
+            {
+              "content": "We zijn met twee volwassenen.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Dank je, dan zoeken we iets dat bij jullie past.\n\nWillen jullie iets rustigs of actiefs?",
+              "delivery_id": "discovery:885711bc7223a5fe023b8d75bc174fe9",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Willen jullie iets rustigs of actiefs?"
+            }
+          ]
+        },
+        {
+          "guest": "We willen iets rustigs. Wat raad je aan?",
+          "reply": "Synthetic Cruise\n\nVoor jullie rustige uitstapje zou ik beginnen met Synthetic Cruise. Een rustige rondvaart van drie uur door de haven.\n\nWil je deze trip aan je reisplan toevoegen?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month",
+            "pace": "Relaxed",
+            "party": "Two adults"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-0.jpg",
+              "buttons": [
+                {
+                  "payload": "isl_3c4bacdbad351e20",
+                  "title": "Meer foto’s",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_2370129bd49f6d42",
+                  "title": "Reisdetails",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_42b62b3a6ac3b795",
+                  "title": "Plan deze reis",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nVoor jullie rustige uitstapje zou ik beginnen met Synthetic Cruise. Een rustige rondvaart van drie uur door de haven.\n\nWil je deze trip aan je reisplan toevoegen?"
+            }
+          ],
+          "last_accepted_question": "Wil je deze trip aan je reisplan toevoegen?",
+          "history": [
+            {
+              "content": "We willen iets rustigs. Wat raad je aan?",
+              "role": "user",
+              "trigger_id": "hospitality-3"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nVoor jullie rustige uitstapje zou ik beginnen met Synthetic Cruise. Een rustige rondvaart van drie uur door de haven.\n\nWil je deze trip aan je reisplan toevoegen?",
+              "delivery_id": "discovery:71f77e99f082c89eb442e22cb9c3fa28",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-0",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": {
+                "isl_2370129bd49f6d42": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_3c4bacdbad351e20": {
+                  "kind": "photos",
+                  "offset": 1,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_42b62b3a6ac3b795": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Wil je deze trip aan je reisplan toevoegen?"
+            }
+          ]
+        },
+        {
+          "guest": "Ik wil graag een medewerker spreken.",
+          "reply": "Natuurlijk, ik begrijp dat je liever met iemand spreekt.\n\nJe verzoek is vastgelegd voor beoordeling door het team.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month",
+            "pace": "Relaxed",
+            "party": "Two adults"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Natuurlijk, ik begrijp dat je liever met iemand spreekt.\n\nJe verzoek is vastgelegd voor beoordeling door het team."
+            }
+          ],
+          "last_accepted_question": "Wil je deze trip aan je reisplan toevoegen?",
+          "history": [
+            {
+              "content": "Ik wil graag een medewerker spreken.",
+              "role": "user",
+              "trigger_id": "hospitality-4"
+            },
+            {
+              "role": "assistant",
+              "content": "Natuurlijk, ik begrijp dat je liever met iemand spreekt.\n\nJe verzoek is vastgelegd voor beoordeling door het team.",
+              "delivery_id": "discovery:364f717b27597337e8e910606ba1f746",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_16_pap",
+      "turns": [
+        {
+          "guest": "Bon dia, mi ta Calvin. Nos ta keda un luna.",
+          "reply": "Bon dia Calvin! Ku un luna boso tin tempu pa eksplorá e isla na boso ritmo.\n\nKu ken bo ta bini?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month"
+          },
+          "stage": "welcome",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Bon dia Calvin! Ku un luna boso tin tempu pa eksplorá e isla na boso ritmo.\n\nKu ken bo ta bini?"
+            }
+          ],
+          "last_accepted_question": "Ku ken bo ta bini?",
+          "history": [
+            {
+              "content": "Bon dia, mi ta Calvin. Nos ta keda un luna.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Bon dia Calvin! Ku un luna boso tin tempu pa eksplorá e isla na boso ritmo.\n\nKu ken bo ta bini?",
+              "delivery_id": "discovery:2153c05a09063fc80df20e39d4cea7b1",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Ku ken bo ta bini?"
+            }
+          ]
+        },
+        {
+          "guest": "Nos ta dos adulto.",
+          "reply": "Danki, nos por buska algu ku ta pas ku boso dos.\n\nBoso ta preferá algu trankil òf aktivo?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month",
+            "party": "Two adults"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Danki, nos por buska algu ku ta pas ku boso dos.\n\nBoso ta preferá algu trankil òf aktivo?"
+            }
+          ],
+          "last_accepted_question": "Boso ta preferá algu trankil òf aktivo?",
+          "history": [
+            {
+              "content": "Nos ta dos adulto.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Danki, nos por buska algu ku ta pas ku boso dos.\n\nBoso ta preferá algu trankil òf aktivo?",
+              "delivery_id": "discovery:ff1bb4a046b53e88cea802f33d825de2",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Boso ta preferá algu trankil òf aktivo?"
+            }
+          ]
+        },
+        {
+          "guest": "Nos ke algu trankil. Kiko bo ta rekomendá?",
+          "reply": "Synthetic Cruise\n\nPa e paseo trankil ku boso ke, mi lo kuminsá ku Synthetic Cruise. Un paseo trankil di tres ora den haf.\n\nBo ke agregá e paseo aki na bo itinerario?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month",
+            "pace": "Relaxed",
+            "party": "Two adults"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-0.jpg",
+              "buttons": [
+                {
+                  "payload": "isl_3295ab176083536e",
+                  "title": "Mas potrèt",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_b7f1097956debb0c",
+                  "title": "Detaye di biahe",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_aa515f53def1d6f7",
+                  "title": "Planifiká e biahe",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nPa e paseo trankil ku boso ke, mi lo kuminsá ku Synthetic Cruise. Un paseo trankil di tres ora den haf.\n\nBo ke agregá e paseo aki na bo itinerario?"
+            }
+          ],
+          "last_accepted_question": "Bo ke agregá e paseo aki na bo itinerario?",
+          "history": [
+            {
+              "content": "Nos ke algu trankil. Kiko bo ta rekomendá?",
+              "role": "user",
+              "trigger_id": "hospitality-3"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nPa e paseo trankil ku boso ke, mi lo kuminsá ku Synthetic Cruise. Un paseo trankil di tres ora den haf.\n\nBo ke agregá e paseo aki na bo itinerario?",
+              "delivery_id": "discovery:889a1caba920c1ae407bc3ba2e79a1ff",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-0",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": {
+                "isl_3295ab176083536e": {
+                  "kind": "photos",
+                  "offset": 1,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_aa515f53def1d6f7": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_b7f1097956debb0c": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Bo ke agregá e paseo aki na bo itinerario?"
+            }
+          ]
+        },
+        {
+          "guest": "Mi ke papia ku un persona.",
+          "reply": "Di akuerdo, mi ta komprondé ku bo ke papia ku un persona.\n\nBo petishon ta registrá pa e ekipo revisá.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month",
+            "pace": "Relaxed",
+            "party": "Two adults"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Di akuerdo, mi ta komprondé ku bo ke papia ku un persona.\n\nBo petishon ta registrá pa e ekipo revisá."
+            }
+          ],
+          "last_accepted_question": "Bo ke agregá e paseo aki na bo itinerario?",
+          "history": [
+            {
+              "content": "Mi ke papia ku un persona.",
+              "role": "user",
+              "trigger_id": "hospitality-4"
+            },
+            {
+              "role": "assistant",
+              "content": "Di akuerdo, mi ta komprondé ku bo ke papia ku un persona.\n\nBo petishon ta registrá pa e ekipo revisá.",
+              "delivery_id": "discovery:9eca9d7d528f8685db52654f3ed613be",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_16_pt",
+      "turns": [
+        {
+          "guest": "Olá, sou o Calvin. Ficamos um mês.",
+          "reply": "Olá, Calvin! Com um mês podem descobrir a ilha ao vosso ritmo.\n\nQuem vem contigo?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month"
+          },
+          "stage": "welcome",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Olá, Calvin! Com um mês podem descobrir a ilha ao vosso ritmo.\n\nQuem vem contigo?"
+            }
+          ],
+          "last_accepted_question": "Quem vem contigo?",
+          "history": [
+            {
+              "content": "Olá, sou o Calvin. Ficamos um mês.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Olá, Calvin! Com um mês podem descobrir a ilha ao vosso ritmo.\n\nQuem vem contigo?",
+              "delivery_id": "discovery:69c8a4541379b1d77a45341e2f639c2e",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Quem vem contigo?"
+            }
+          ]
+        },
+        {
+          "guest": "Somos dois adultos.",
+          "reply": "Podemos encontrar algo que agrade aos dois.\n\nPreferem algo tranquilo ou ativo?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month",
+            "party": "Two adults"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Podemos encontrar algo que agrade aos dois.\n\nPreferem algo tranquilo ou ativo?"
+            }
+          ],
+          "last_accepted_question": "Preferem algo tranquilo ou ativo?",
+          "history": [
+            {
+              "content": "Somos dois adultos.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Podemos encontrar algo que agrade aos dois.\n\nPreferem algo tranquilo ou ativo?",
+              "delivery_id": "discovery:c506eca36652740e0a23db57103c48a5",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Preferem algo tranquilo ou ativo?"
+            }
+          ]
+        },
+        {
+          "guest": "Queremos algo tranquilo. O que recomenda?",
+          "reply": "Synthetic Cruise\n\nPara o passeio tranquilo que procuram, começaria com Synthetic Cruise. Um cruzeiro tranquilo de três horas pelo porto.\n\nQuer adicionar este passeio ao itinerário?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month",
+            "pace": "Relaxed",
+            "party": "Two adults"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-0.jpg",
+              "buttons": [
+                {
+                  "payload": "isl_c01a7511bd78c2ee",
+                  "title": "Mais fotos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_940c669a3ba0cc84",
+                  "title": "Detalhes da viagem",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_9d786c0b395192a6",
+                  "title": "Planear esta viagem",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nPara o passeio tranquilo que procuram, começaria com Synthetic Cruise. Um cruzeiro tranquilo de três horas pelo porto.\n\nQuer adicionar este passeio ao itinerário?"
+            }
+          ],
+          "last_accepted_question": "Quer adicionar este passeio ao itinerário?",
+          "history": [
+            {
+              "content": "Queremos algo tranquilo. O que recomenda?",
+              "role": "user",
+              "trigger_id": "hospitality-3"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nPara o passeio tranquilo que procuram, começaria com Synthetic Cruise. Um cruzeiro tranquilo de três horas pelo porto.\n\nQuer adicionar este passeio ao itinerário?",
+              "delivery_id": "discovery:9e7eb5e9cd0e258b83acaa1c501c9814",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-0",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": {
+                "isl_940c669a3ba0cc84": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_9d786c0b395192a6": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_c01a7511bd78c2ee": {
+                  "kind": "photos",
+                  "offset": 1,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Quer adicionar este passeio ao itinerário?"
+            }
+          ]
+        },
+        {
+          "guest": "Quero falar com uma pessoa.",
+          "reply": "Claro, compreendo que prefira falar com alguém.\n\nO pedido está registado para análise pela equipa.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "name": "Calvin"
+            },
+            "holiday": "One month",
+            "pace": "Relaxed",
+            "party": "Two adults"
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Claro, compreendo que prefira falar com alguém.\n\nO pedido está registado para análise pela equipa."
+            }
+          ],
+          "last_accepted_question": "Quer adicionar este passeio ao itinerário?",
+          "history": [
+            {
+              "content": "Quero falar com uma pessoa.",
+              "role": "user",
+              "trigger_id": "hospitality-4"
+            },
+            {
+              "role": "assistant",
+              "content": "Claro, compreendo que prefira falar com alguém.\n\nO pedido está registado para análise pela equipa.",
+              "delivery_id": "discovery:56e35184eaeb6e8860e438367ad5329c",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_17_structural_rejection_and_semantic_limit",
+      "turns": [],
+      "adversarial_not_dispatched": {
+        "text": "{fact:fixture-cruise:summary} A luxury transfer is included.",
+        "result": "Structurally valid, semantically unsupported; must fail human conversation review. NOT sent by this harness."
+      }
+    },
+    {
+      "scenario": "test_18_pending_intake_greeting_never_completes_it",
+      "turns": [
+        {
+          "guest": "Add the cruise. I am Calvin, age 35.",
+          "reply": "Let's put the details together for your demo itinerary.\n\nCould you share the trip date?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 1,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Let's put the details together for your demo itinerary.\n\nCould you share the trip date?"
+            }
+          ],
+          "last_accepted_question": "Could you share the trip date?",
+          "history": [
+            {
+              "content": "Add the cruise. I am Calvin, age 35.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Let's put the details together for your demo itinerary.\n\nCould you share the trip date?",
+              "delivery_id": "discovery:d67b1bc0d972f8ea149546cc74632bac",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Could you share the trip date?"
+            }
+          ]
+        },
+        {
+          "guest": "Hi, Calvin here, I am 35.",
+          "reply": "Hi Calvin, good to hear from you.\n\nWould you like to continue arranging the cruise?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {
+              "ages": [
+                35
+              ],
+              "name": "Calvin"
+            }
+          },
+          "stage": "exploration",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 1,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Hi Calvin, good to hear from you.\n\nWould you like to continue arranging the cruise?"
+            }
+          ],
+          "last_accepted_question": "Would you like to continue arranging the cruise?",
+          "history": [
+            {
+              "content": "Hi, Calvin here, I am 35.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Hi Calvin, good to hear from you.\n\nWould you like to continue arranging the cruise?",
+              "delivery_id": "discovery:e4ed509b7fe53e2161b6de6c8b017983",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Would you like to continue arranging the cruise?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_19_question_survives_failed_correction",
+      "turns": [
+        {
+          "guest": "Please add the cruise for 2026-10-15. I am Calvin, age 35.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "booking_preparation",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment."
+            }
+          ],
+          "last_accepted_question": "Would you like to review the full itinerary?",
+          "history": [
+            {
+              "content": "Please add the cruise for 2026-10-15. I am Calvin, age 35.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+              "delivery_id": "discovery:db47fb887090bb50ac1e15b0e7b0b7e6",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Would you like to review the full itinerary?"
+            }
+          ]
+        },
+        {
+          "guest": "Move the cruise to yesterday, and is lunch included?",
+          "reply": "Lunch is included.\n\nI couldn't complete that change.\n\nThat date is in the past. Please choose a future date.\nSynthetic Cruise · 2026-10-15 · 09:00\nDemo total: USD 100.00\n\nWould another day suit you?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 1,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Lunch is included.\n\nI couldn't complete that change.\n\nThat date is in the past. Please choose a future date.\nSynthetic Cruise · 2026-10-15 · 09:00\nDemo total: USD 100.00\n\nWould another day suit you?"
+            }
+          ],
+          "last_accepted_question": "Would another day suit you?",
+          "history": [
+            {
+              "content": "Move the cruise to yesterday, and is lunch included?",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Lunch is included.\n\nI couldn't complete that change.\n\nThat date is in the past. Please choose a future date.\nSynthetic Cruise · 2026-10-15 · 09:00\nDemo total: USD 100.00\n\nWould another day suit you?",
+              "delivery_id": "discovery:b87247eae91c542af1e4576b10b74612",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Would another day suit you?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_20_partial_delivery_and_duplicate_no_resend",
+      "turns": [
+        {
+          "guest": "Photos of the cruise.",
+          "reply": "Synthetic Cruise\n\nHere is Synthetic Cruise.\n\nWould you like more?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-0.jpg",
+              "buttons": [
+                {
+                  "payload": "isl_2f75103e34036ef7",
+                  "title": "More photos",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_16bc570585197dcd",
+                  "title": "Trip details",
+                  "type": "postback"
+                },
+                {
+                  "payload": "isl_99bbf08a7e46c8c2",
+                  "title": "Plan this trip",
+                  "type": "postback"
+                }
+              ],
+              "message": "Synthetic Cruise\n\nHere is Synthetic Cruise.\n\nWould you like more?"
+            }
+          ],
+          "last_accepted_question": "Would you like more?",
+          "history": [
+            {
+              "content": "Photos of the cruise.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise\n\nHere is Synthetic Cruise.\n\nWould you like more?",
+              "delivery_id": "discovery:dd36cae7330db64e4f409524ead4b76c",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-0",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": {
+                "isl_16bc570585197dcd": {
+                  "info_offset": 0,
+                  "kind": "info",
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_2f75103e34036ef7": {
+                  "kind": "photos",
+                  "offset": 1,
+                  "photo_location": "",
+                  "product_id": "fixture-cruise"
+                },
+                "isl_99bbf08a7e46c8c2": {
+                  "kind": "add",
+                  "product_id": "fixture-cruise"
+                }
+              },
+              "question": "Would you like more?"
+            }
+          ]
+        },
+        {
+          "guest": "Another photo.",
+          "reply": "Synthetic CruiseSynthetic Cruise\n\nAnother view of Synthetic Cruise.\n\nShall I show the next?",
+          "provider_outcome": "rejected",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {},
+            "guest": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": null,
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "attachmentType": "image",
+              "attachmentUrl": "https://example.invalid/cruise-photo-1.jpg",
+              "message": "Synthetic Cruise"
+            }
+          ],
+          "last_accepted_question": "Would you like more?",
+          "history": [
+            {
+              "content": "Another photo.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Synthetic Cruise",
+              "delivery_id": "discovery:3fce74677ce547264a39718186944e24:part:0",
+              "delivery_status": "rejected",
+              "guest_receipt_verified": false,
+              "media": [
+                {
+                  "asset_id": "cruise-photo-1",
+                  "product_id": "fixture-cruise"
+                }
+              ],
+              "buttons": [],
+              "question": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "scenario": "test_21_answering_authorized_name_intake",
+      "turns": [
+        {
+          "guest": "Add the cruise on October 15.",
+          "reply": "Let's put the details together for your demo itinerary.\n\nCould you share the guest name?",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 1,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Let's put the details together for your demo itinerary.\n\nCould you share the guest name?"
+            }
+          ],
+          "last_accepted_question": "Could you share the guest name?",
+          "history": [
+            {
+              "content": "Add the cruise on October 15.",
+              "role": "user",
+              "trigger_id": "hospitality-1"
+            },
+            {
+              "role": "assistant",
+              "content": "Let's put the details together for your demo itinerary.\n\nCould you share the guest name?",
+              "delivery_id": "discovery:6a7d32da5dda38d4753daaecd7eaa6ff",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Could you share the guest name?"
+            }
+          ]
+        },
+        {
+          "guest": "Calvin, age 35.",
+          "reply": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+          "provider_outcome": "accepted",
+          "model_calls": 1,
+          "browsing": {
+            "discussed": {}
+          },
+          "stage": "exploration",
+          "itinerary_id": "39ae3a844aaa0b6034daca89759f8c91",
+          "pending_items": 0,
+          "outbound": [
+            {
+              "accountId": "synthetic-account",
+              "message": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment."
+            }
+          ],
+          "last_accepted_question": "Would you like to review the full itinerary?",
+          "history": [
+            {
+              "content": "Calvin, age 35.",
+              "role": "user",
+              "trigger_id": "hospitality-2"
+            },
+            {
+              "role": "assistant",
+              "content": "Your choices are together in a demo draft:\nSynthetic Cruise · 2026-10-15 · 09:00\n\nThe draft total is USD 100.00.\n\nWould you like to review the full itinerary?\n\nDemo: no real reservation or payment.",
+              "delivery_id": "discovery:39a452c83dce064587967603d181ba5c",
+              "delivery_status": "accepted",
+              "guest_receipt_verified": false,
+              "media": [],
+              "buttons": [],
+              "question": "Would you like to review the full itinerary?"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

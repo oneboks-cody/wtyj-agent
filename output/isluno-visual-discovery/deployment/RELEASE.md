@@ -1,0 +1,21 @@
+# Visual discovery release review
+
+Prepared only; not dispatched. Application source `0361641575552e5a78a671efbc1dd59b9d5196ba`; dashboard stays `25dfebfb8688f76ef357b97c60c893fdf1bb8791`. Exact packet `c64b08f7788cfd54391a63b6b445bb51d87d1bf8e11b670c1cfcc075caa2f3ee`. Application changes are seven Python files and the scoped catalog additions. Later test/evidence commits do not change the pinned archive.
+
+The missing-image investigation found zero media attempts in the latest accepted multi-product reply. The old multi-product renderer omitted media and used numbered Choose actions. The candidate sends one durable plan with separate ordinary image/button messages, concise verified product context and exact product-bound More photos, Trip details and Plan this trip actions. A broad greeting can ask one question without product suggestions. Specific questions retain their requested answer. Photos are sent in batches of at most two.
+
+Seven source-backed place explanations are added; the catalog version changes. Stripping only these additions and the version yields the previous catalog exactly, preserving all prices, rules and gallery data. Location-specific photos remain unavailable without actual provenance. All 31 public tour pages were inspected for video references; none were established, so no video is activated. Native carousels remain disabled; these are ordinary image messages.
+
+Native Trip details may consume the one existing Marina call for that inbound when the selected language lacks verified translated facts. It remains at most one call, with the same provider/model/token limit and no SDK retries. Already available detail pages and photo actions use zero model calls. Engineering verification used no paid providers or customer sends. Scripted language examples demonstrate wiring, not live model/native-speaker quality.
+
+The fresh retained-data binding covers seven turns, six plans (four accepted and two rejected), 181 inbound rows including 174 no-replay tombstones, and the existing two soft operator notices. Existing history, pending notices and controls are retained. Exact protected hashes for 91 tables are compared through sealing, readiness and entrypoint checks. Any fresh customer change fails the preflight rather than discarding it.
+
+The operator uses new private stage `/root/isluno-visual-0361641-a`, one 890880-byte archive, one serial upload capped at 60 seconds, one no-network image build capped at 120 seconds, and 900 seconds overall including postverification. No automatic retries; original staging-C files and partial upload are untouched. It requires 500 seconds before disruption and 300 seconds before activation, with a 180-second rollback reserve. Catalog replacement is atomic, hash-bound and fsynced. A single guarded rollback restores the original catalog and image while retaining all customer tables; no database restore or dashboard pointer change occurs.
+
+The running baseline remains source `ab88343b325d3ee67a6dcdad5e15e1f6dd2d254f`, image `sha256:8ea85eb29ae6bea3ff64012cb276970a2daef15f5e0958c743df2c9bca5ac11d`. Runtime/ingress generations are expected 12/11 and would become 14/13. No number, account, provider, model, client.json, profile or frontend change.
+
+Validation: 194 application regressions passed in network-disabled Docker; eight exported scenarios passed through the actual handler, renderer, sender and strict fake HTTP boundary, including real stored Isluno gallery assets. Eleven operator tests passed; one additional overall-deadline test passed and proved zero host calls after expiry. See CHECKS.json, ../TESTS.json and ../VISUAL-CONVERSATIONS.md.
+
+Remaining execution gates: independent Gatekeeper review of this exact candidate/packet, then authenticated Nr2 confirmation and fresh bound host preflight. The current Codex browser redirects to the login screen; no service disruption is permitted until that session is restored and verified. Existing conditional deployment approval is retained; no renewed permission is requested.
+
+Files in this directory are review copies. The canonical guarded execution directory is `tmp/isluno-visual-rollout`; do not execute these copies. All previous consumed deployment/recovery receipts remain untouched.
