@@ -1,7 +1,7 @@
 [
   {
     "file": "ACTION.md",
-    "sha256": "be8ebbb06dfd79b605a4cc5d072263b01367d8c3e2fe70469bc1661484e73f1f"
+    "sha256": "76f0bdc70e708d05c4227af2a50c444a28c5e814719ee2a228ef6ba216db2daf"
   },
   {
     "file": "BUILD.md",
@@ -17,7 +17,7 @@
   },
   {
     "file": "MAINTENANCE.md",
-    "sha256": "92ae4ad1283aed299090644e353a3f06ca31c46faf405b157ac0b2ebdb5e5fa3"
+    "sha256": "29f7f1def116708d328c9dcaaef95ccebf468bdd6ea9c2eaee64e355f04335fa"
   },
   {
     "file": "artifacts.json",
@@ -53,19 +53,19 @@
   },
   {
     "file": "maintenance-coverage.json",
-    "sha256": "a94673fa8ade0941fa8ae82fcb8f42a8b9278b20143cfc4a66007592189e0afe"
+    "sha256": "afb6ef258f61f427351a7d1c26494d754562339ada4c66bc159979e3800f245c"
   },
   {
     "file": "maintenance-evidence.json",
-    "sha256": "5b7a08c06b449ae41dc9486aa35eccee369005de9a2f6a49db9dc240aa7c9ab5"
+    "sha256": "ebe5024fe21788123392c1818dae756ba21b23acaeeef808208f0a7f50280090"
   },
   {
     "file": "maintenance-regression.txt",
-    "sha256": "537874720fbd7132f362f89d18eab1f950fa6f98bcb969da75ad9a4c5205f6ee"
+    "sha256": "24c6494111c370ced2796cc289cd52154bdf80cf76fbd7a4559655414e7512c1"
   },
   {
     "file": "maintenance-tests.txt",
-    "sha256": "7170b260159ce99cea036022df0f4d084ae28ed65ee9fb8cd25291093b9ab79b"
+    "sha256": "37881430193448e33608daa5d2fc8ddf27d1ad3b28f35790be6b3c1e32a0fa45"
   },
   {
     "file": "package-local-artifacts.py",

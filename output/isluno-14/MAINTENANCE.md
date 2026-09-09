@@ -16,7 +16,7 @@ The status endpoint is `GET /isluno/maintenance` on the existing authenticated d
 
 ## Coverage and explicit exclusions
 
-`maintenance-coverage.json` records the exact28 decorated entry points by function, source line and role. The covered paths are:
+`maintenance-coverage.json` records the exact29 decorated entry points by function, source line and role. The covered paths are:
 
 - Accepted Zernio/Meta background processing, debounce admission/flush, and stale-inbound recovery. Actual background inbound IDs bind to the closed-generation snapshot; non-customer events bypass the customer wrapper.
 - Mermaid abandoned reminders, pending document reconciliation, consented reservation email preparation/transport and both demo-payment completion roots.
@@ -29,9 +29,9 @@ The initial use is Mermaid-to-Isluno cutover. Unreviewed populated Isluno ledger
 
 ## Meaningful offline verification
 
-`maintenance-tests.txt`:16 targeted tests passed. They use synthetic SQLite with the actual registry acceptance function and actual Zernio handler. They cover racing closure/commit, crash after durable acceptance before acknowledgement/background work, duplicate200/new503 with no dedup consumption, active/nested worker versus seal, scheduled/SMTP denial before side effects/credentials, returned-but-ambiguous send ledger, crashed/exception claims, incomplete producer coverage, unknown populated ledgers, deadline/stale-generation checks, persistent fence despite feature removal, inactive/non-Mermaid behavior and unchanged non-customer semantics.
+`maintenance-tests.txt`:23 targeted tests passed. They use synthetic SQLite with the actual registry acceptance function and actual Zernio handler. They cover racing closure/commit, crash after durable acceptance before acknowledgement/background work, duplicate200/new503 with no dedup consumption, active/nested worker versus seal, scheduled/SMTP denial before side effects/credentials, returned-but-ambiguous send ledger, crashed/exception claims, incomplete producer coverage, unknown populated ledgers, deadline/stale-generation checks, persistent fence despite feature removal, inactive/non-Mermaid behavior and unchanged non-customer semantics.
 
-`maintenance-regression.txt`:214 backend tests passed in27.085seconds with sockets/DNS denied, including the existing integrated booking/rollback paths. One initial regression run exposed an AST-only recovery test missing the newly required decorator in its execution namespace. The fixture now supplies the **real decorator**, preserving the existing quarantine assertion; no production behavior was bypassed. The final full suite passed. No live callback, model, SMTP, provider, DB/customer/log inspection, or server mutation occurred.
+`maintenance-regression.txt`:221 backend tests passed in27.329seconds with sockets/DNS denied, including the existing integrated booking/rollback paths. One initial regression run exposed an AST-only recovery test missing the newly required decorator in its execution namespace. The fixture now supplies the **real decorator**, preserving the existing quarantine assertion; no production behavior was bypassed. The final full suite passed. No live callback, model, SMTP, provider, DB/customer/log inspection, or server mutation occurred.
 
 Source hashes for this candidate are in `maintenance-evidence.json`; the previous ISL13/ISL14 source/build archives remain historical and unchanged. **They are not release packages for this modified runtime.** Backend packaging/image and affected acceptance evidence must be refreshed after independent acceptance of this delta. The unchanged dashboard static build is not rebuilt merely for this backend change.
 
@@ -45,3 +45,14 @@ Source hashes for this candidate are in `maintenance-evidence.json`; the previou
 6. Retain the accepted guard-preserving rollback: never restore a pre-guard binary or old DB over new records. Reopening is an explicit operator action after verified runtime readiness; its function does not itself attest code identity, provider routing or grant permission.
 
 C1/R1/P1/I1/I2 configured facts, first-install external protection, complete runtime inventory, immutable image/public URLs/private backup/CAS/window and exact release authorization remain unresolved. Both approved host inspections are consumed. This candidate creates no authority to perform any rollout step.
+
+
+## M-R1 / M-R2 integrated corrections
+
+Every member of the closing snapshot is now evaluated through a LEFT JOIN, including an absent inbound row. The only automatically accepted terminal pairs are `replied/provider_send_ok`, explicit ignored-contact/ignored-phone/blocked-conversation/non-text dispositions, and `escalated/human_takeover_ai_muted`, all with empty error/processing-token/lease metadata. Generic `processed`, unknown reasons/statuses, failed delivery, malformed terminal metadata and missing rows block seal and activation. Operator status exposes fixed aggregate disposition categories, never raw unknown values or customer IDs.
+
+The real delivery-failure commit writes `send_failed/provider_send_failed/provider_delivery_unconfirmed` while creating an operator item; the new regression proves this still blocks seal. Notification creation is not reconciliation. Existing recovery sets `superseded/newer_outbound_exists` when any newer assistant/operator thread entry exists (excluding model-status notices). That condition does not causally resolve this particular turn or its uncertain send. An actual recovery regression with an unrelated synthetic operator note therefore retains supersession as a review blocker. Reviewed successful reply and intentional owner/policy dispositions continue to seal normally through the real state-transition API.
+
+`zernio_dm_client.send_dm_reply` itself is now a participating transport boundary, including its default SDK `client.inbox.send_inbox_message` branch. The gate runs before credential lookup/client construction. Draining/sealed roots cannot invoke either; open/default-off/other-tenant behavior and existing provider-account checks are preserved. A nested already-active worker may finish during its original drain deadline. Caught SDK exceptions retain a durable `provider_outcome_unknown` claim, so returning False cannot silently mark that uncertain outbound complete. All effects in these regressions are mocks; no provider was contacted.
+
+Correction evidence:23 targeted tests passed in1.458seconds;221 backend offline tests passed in27.329seconds. Source/coverage/packet hashes are refreshed. Previous source/build archives remain historical, no first-install protection or new access/activation authority is implied.

@@ -7,7 +7,7 @@ import tempfile
 import threading
 import time
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 from shared import mermaid_maintenance as gate, state_registry
 
 
@@ -28,7 +28,8 @@ class MaintenanceTests(unittest.TestCase):
         return gate.close(0,seconds=120,coverage=gate.COVERAGE,evidence='synthetic-complete-inventory')
 
     def terminal(self,mid):
-        with sqlite3.connect(self.path) as db:db.execute("UPDATE inbound_processing_events SET status='processed' WHERE message_id=?",(mid,))
+        # Preserve the terminal metadata produced by the real completion API.
+        self.assertTrue(state_registry.inbound_processing_update(mid,'replied',reason='provider_send_ok'))
 
     def test_accepted_commit_survives_crash_and_duplicate(self):
         self.assertTrue(self.claim('one'))  # Simulated crash before ack: no background work runs.
@@ -97,6 +98,7 @@ class MaintenanceTests(unittest.TestCase):
         self.claim('one');epoch=self.close()
         with sqlite3.connect(self.path) as db:db.execute("UPDATE inbound_processing_events SET status='processing_failed' WHERE message_id='one'")
         with self.assertRaises(gate.Closed):gate.seal(epoch)
+        with sqlite3.connect(self.path) as db:db.execute("UPDATE inbound_processing_events SET status='received' WHERE message_id='one'")
         self.terminal('one')
         with sqlite3.connect(self.path) as db:
             db.execute('CREATE TABLE isluno_unreviewed_sender(status TEXT)');db.execute("INSERT INTO isluno_unreviewed_sender VALUES('claimed')")
@@ -185,3 +187,89 @@ class MaintenanceTests(unittest.TestCase):
             with patch.object(gate.time,'time',return_value=time.time()+200):
                 with self.assertRaises(gate.Closed):gate.require_sealed(db,epoch)
             gate.require_sealed(db,epoch)
+
+    def test_actual_unconfirmed_delivery_transition_blocks_seal(self):
+        from shared import tenant_guard
+        self.claim('failed')
+        batch=state_registry.inbound_processing_join_batch('failed')
+        token=state_registry.inbound_processing_begin_batch(['failed'],batch_id=batch)
+        self.assertTrue(token);epoch=self.close()
+        with patch.object(tenant_guard,'account_access_state',return_value=True):
+            notice=state_registry.inbound_processing_commit_delivery_failure(['failed'],batch,token,
+                account_id='fixture-account',notification={'channel':'whatsapp','customer_id':'fixture-guest','customer_name':'Fixture',
+                'subject':'Synthetic unconfirmed delivery','body':'Synthetic operator review required'})
+        self.assertIsNotNone(notice)
+        with sqlite3.connect(self.path) as db:
+            self.assertEqual(db.execute("SELECT status,reason,last_error FROM inbound_processing_events WHERE message_id='failed'").fetchone(),
+                             ('send_failed','provider_send_failed','provider_delivery_unconfirmed'))
+        self.assertEqual(gate.status()['pending']['inbound_processing_events'],1)
+        with self.assertRaises(gate.Closed):gate.seal(epoch)
+
+    def test_missing_unknown_and_superseded_snapshot_members_block(self):
+        for mid in ('missing','unknown','superseded','bare-replied'):self.claim(mid)
+        epoch=self.close()
+        with sqlite3.connect(self.path) as db:
+            db.execute("DELETE FROM inbound_processing_events WHERE message_id='missing'")
+            db.execute("UPDATE inbound_processing_events SET status='future_status' WHERE message_id='unknown'")
+            db.execute("UPDATE inbound_processing_events SET status='superseded',reason='newer_outbound_exists' WHERE message_id='superseded'")
+            db.execute("UPDATE inbound_processing_events SET status='replied',reason='unreviewed_reason' WHERE message_id='bare-replied'")
+        summary=gate.status()
+        self.assertEqual(summary['pending']['inbound_processing_events'],4)
+        self.assertEqual(summary['inbound_dispositions']['missing_row'],1)
+        self.assertEqual(summary['inbound_dispositions']['superseded_requires_review'],1)
+        with self.assertRaises(gate.Closed):gate.seal(epoch)
+
+    def test_reviewed_completed_and_owner_dispositions_can_seal(self):
+        for mid in ('reply','ignore','handoff'):self.claim(mid)
+        epoch=self.close();self.terminal('reply')
+        self.assertTrue(state_registry.inbound_processing_update('ignore','ignored',reason='ignored_contact'))
+        self.assertTrue(state_registry.inbound_processing_update('handoff','escalated',reason='human_takeover_ai_muted'))
+        self.assertEqual(gate.status()['inbound_dispositions'],{'completed_or_disposed':3})
+        gate.seal(epoch)
+
+    def test_sdk_text_denied_before_credentials_or_client_in_draining_and_sealed(self):
+        from agents.social import zernio_dm_client as client
+        epoch=self.close()
+        for phase in ('draining','sealed'):
+            if phase=='sealed':gate.seal(epoch)
+            with patch.object(client.os.environ,'get',side_effect=AssertionError('credential lookup forbidden')),patch.object(client,'_get_client') as factory:
+                with self.assertRaises(gate.Closed):client.send_dm_reply('fixture','fixture-account','synthetic')
+                factory.assert_not_called()
+
+    def test_actual_sdk_text_open_nested_default_off_and_other_tenant(self):
+        from agents.social import zernio_dm_client as client
+        sdk=MagicMock()
+        with patch.dict(client.os.environ,{'LATE_API_KEY':'offline-dummy-key'}),patch.object(client,'_get_client',return_value=sdk),patch.object(client,'_provider_mutation_account_allowed',return_value=True) as account:
+            self.assertTrue(client.send_dm_reply('fixture','fixture-account','open'))
+            with gate.worker('inbound'):
+                epoch=self.close()
+                self.assertTrue(client.send_dm_reply('fixture','fixture-account','nested original work'))
+            gate.seal(epoch);gate.reopen(epoch)
+            self.raw={'slug':'other','features':{}}
+            self.assertTrue(client.send_dm_reply('fixture','fixture-account','other'))
+            self.raw={'slug':'mermaid','features':{}}
+            with sqlite3.connect(self.path) as db:db.execute('DELETE FROM mermaid_maintenance')
+            self.assertTrue(client.send_dm_reply('fixture','fixture-account','inactive'))
+            self.assertEqual(sdk.inbox.send_inbox_message.call_count,4)
+            self.assertEqual(account.call_count,4)
+        with sqlite3.connect(self.path) as db:
+            self.assertEqual(db.execute("SELECT COUNT(*) FROM mermaid_maintenance_workers WHERE role='transport' AND status='finished'").fetchone()[0],2)
+
+    def test_actual_supersession_is_not_causal_resolution(self):
+        self.claim('superseded');epoch=self.close()
+        state_registry.wa_store_message('fixture-guest','operator','Synthetic unrelated newer note')
+        self.assertEqual(state_registry.inbound_processing_claim_recoverable(max_age_seconds=0),[])
+        with sqlite3.connect(self.path) as db:
+            self.assertEqual(db.execute("SELECT status,reason FROM inbound_processing_events WHERE message_id='superseded'").fetchone(),
+                             ('superseded','newer_outbound_exists'))
+        self.assertEqual(gate.status()['inbound_dispositions'],{'superseded_requires_review':1})
+        with self.assertRaises(gate.Closed):gate.seal(epoch)
+
+    def test_caught_sdk_exception_retains_unknown_outbound_claim(self):
+        from agents.social import zernio_dm_client as client
+        sdk=MagicMock();sdk.inbox.send_inbox_message.side_effect=RuntimeError('synthetic response lost')
+        with patch.dict(client.os.environ,{'LATE_API_KEY':'offline-dummy-key'}),patch.object(client,'_get_client',return_value=sdk),patch.object(client,'_provider_mutation_account_allowed',return_value=True):
+            self.assertFalse(client.send_dm_reply('fixture','fixture-account','uncertain'))
+        epoch=self.close();self.assertEqual(gate.status()['workers'],{'operator_review':1})
+        self.assertEqual(gate.status()['incidents'][0]['disposition'],'provider_outcome_unknown')
+        with self.assertRaises(gate.Closed):gate.seal(epoch)

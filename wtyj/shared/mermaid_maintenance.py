@@ -152,6 +152,14 @@ def worker(role, message_ids=(), db_path=None):
             db.execute("UPDATE mermaid_maintenance_workers SET status=?,ended=?,disposition=? WHERE id=? AND status='active'",(status,time.time(),reason,token))
 
 
+def retain_uncertain_outbound():
+    """Caught transport errors must not look like normally completed worker claims."""
+    parent=CURRENT.get()
+    if not parent or not applies():return
+    with sqlite3.connect(parent[0]) as db:
+        db.execute("UPDATE mermaid_maintenance_workers SET status='operator_review',ended=?,disposition='provider_outcome_unknown' WHERE id=? AND status='active'",(time.time(),parent[1]))
+
+
 def participating(role, ids=None, when=None):
     def decorate(fn):
         @wraps(fn)
@@ -165,13 +173,45 @@ def participating(role, ids=None, when=None):
     return decorate
 
 
+# Explicit source-reviewed terminal dispositions. A generic status name is not proof.
+SAFE_INBOUND_DISPOSITIONS = frozenset({
+    ('replied', 'provider_send_ok'),
+    ('ignored', 'ignored_contact'),
+    ('ignored', 'ignored_phone'),
+    ('ignored', 'blocked_conversation'),
+    ('ignored', 'non_text_message'),
+    ('escalated', 'human_takeover_ai_muted'),
+})
+
+
+def _inbound_dispositions(db, generation):
+    """LEFT JOIN retains missing members; never turn failure/unknown into an empty count."""
+    outcomes={}
+    rows=db.execute('SELECT i.message_id,i.status,i.reason,i.last_error,i.processing_token,i.lease_expires_at '
+                    'FROM mermaid_maintenance_pending p LEFT JOIN inbound_processing_events i '
+                    'ON i.message_id=p.message_id WHERE p.generation=?',(generation,))
+    for identity,status,reason,error,token,lease in rows:
+        if identity is None:
+            disposition='missing_row'
+        elif status=='superseded':
+            # Existing recovery only proves some newer outbound exists, not a causal
+            # completion/reconciliation of this exact turn or its uncertain send.
+            disposition='superseded_requires_review'
+        elif (status,reason) in SAFE_INBOUND_DISPOSITIONS:
+            disposition='completed_or_disposed' if error=='' and token=='' and lease=='' else 'terminal_metadata_unresolved'
+        else:
+            disposition='failed_pending_or_unreviewed'
+        outcomes[disposition]=outcomes.get(disposition,0)+1
+    return outcomes
+
+
 def _snapshot(db):
     s=_enabled(db)
     if not s:return {'phase':'inactive','ready':False}
     incidents=[dict(zip(('id','role','status','started','ended','disposition'),row)) for row in db.execute("SELECT id,role,status,started,ended,disposition FROM mermaid_maintenance_workers WHERE status!='finished' ORDER BY started LIMIT 50")]
     counts={k:v for k,v in db.execute("SELECT status,COUNT(*) FROM mermaid_maintenance_workers WHERE status!='finished' GROUP BY status")}
     tables={x[0] for x in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
-    pending={};unknown=[]
+    pending={};unknown=[];inbound_outcomes={}
     for table,(column,states) in LEDGERS.items():
         if table not in tables:
             if table=='inbound_processing_events':unknown.append(table)
@@ -179,7 +219,11 @@ def _snapshot(db):
         columns={x[1] for x in db.execute('PRAGMA table_info('+table+')')}
         if column not in columns:unknown.append(table);continue
         if table=='inbound_processing_events':
-            count=db.execute('SELECT COUNT(*) FROM inbound_processing_events WHERE message_id IN (SELECT message_id FROM mermaid_maintenance_pending WHERE generation=?) AND status IN ('+','.join('?' for _ in states)+')',(s['generation'],*states)).fetchone()[0]
+            required={'message_id','status','reason','last_error','processing_token','lease_expires_at'}
+            if not required <= columns:
+                unknown.append(table);continue
+            inbound_outcomes=_inbound_dispositions(db,s['generation'])
+            count=sum(v for k,v in inbound_outcomes.items() if k!='completed_or_disposed')
         else:
             count=db.execute('SELECT COUNT(*) FROM '+table+' WHERE '+column+' IN ('+','.join('?' for _ in states)+')',states).fetchone()[0]
         if count:pending[table]=count
@@ -191,7 +235,7 @@ def _snapshot(db):
                 if db.execute('SELECT 1 FROM '+table+' LIMIT 1').fetchone():unknown.append(table)
     return {'phase':s['phase'],'generation':s['generation'],'deadline':s['deadline'],
             'coverage_complete':set(json.loads(s['coverage']))==COVERAGE and bool(s['evidence']),
-            'workers':counts,'incidents':incidents,'pending':pending,'unreviewed_ledgers':sorted(unknown),'ready':False}
+            'workers':counts,'incidents':incidents,'pending':pending,'inbound_dispositions':inbound_outcomes,'unreviewed_ledgers':sorted(unknown),'ready':False}
 
 
 def status(db_path=None):

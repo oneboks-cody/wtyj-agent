@@ -2141,6 +2141,7 @@ def send_dm_vehicle_recommendation(
     return {"success": False, "delivery": "picker_failed"}
 
 
+@_maintenance_participating('transport')
 def send_dm_reply(conversation_id: str, account_id: str, text: str,
                   attachment_url: str = "",
                   attachment_type: str = "image",
@@ -2187,6 +2188,8 @@ def send_dm_reply(conversation_id: str, account_id: str, text: str,
         bm_logger.log("zernio_dm_sent", conversation_id=conversation_id[:20])
         return True
     except Exception as e:
+        from shared.mermaid_maintenance import retain_uncertain_outbound
+        retain_uncertain_outbound()
         bm_logger.log("zernio_dm_send_failed", conversation_id=conversation_id[:20],
                        error=str(e)[:200])
         return False

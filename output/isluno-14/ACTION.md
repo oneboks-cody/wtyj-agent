@@ -89,4 +89,4 @@ The separately approved corrected-runner attempt completed on 2026-09-09 at 02:0
 
 ## Implemented maintenance candidate
 
-`MAINTENANCE.md`, `maintenance-coverage.json` and `maintenance-evidence.json` describe the inactive-by-default coordinator,28 worker entry points, verified offline behavior and first-install external-boundary gap.16 focused and214 full backend tests passed; no host/provider access or activation occurred. This runtime delta awaits independent review. Prior archive/evidence identities are retained as historical records, not relabeled as this code.
+`MAINTENANCE.md`, `maintenance-coverage.json` and `maintenance-evidence.json` describe the inactive-by-default coordinator,29 worker entry points, verified offline behavior and first-install external-boundary gap.23 focused and221 full backend tests passed; no host/provider access or activation occurred. This runtime delta awaits independent review. Prior archive/evidence identities are retained as historical records, not relabeled as this code.

@@ -1,9 +1,9 @@
 {
   "base_commit": "58e7cbe783855809fb83f77d8b5449fe65e6ac57",
   "status": "implementation_candidate_pending_independent_review",
-  "targeted_tests": 16,
-  "backend_suite_tests": 214,
-  "backend_suite_seconds": 27.085,
+  "targeted_tests": 23,
+  "backend_suite_tests": 221,
+  "backend_suite_seconds": 27.329,
   "external_test_spend_usd": 0,
   "host_contacted": false,
   "default_activation": false,
@@ -62,7 +62,7 @@
     },
     {
       "path": "wtyj/agents/social/zernio_dm_client.py",
-      "sha256": "ea239b9cf27334f1ab0dcd9fc7746a4cb4fc5a6f8108093117dd538a7e72332e"
+      "sha256": "69c0c71caa63ea2fff051a85b646a0cb334dfd161b43c1fbf5824b1f579d1a8c"
     },
     {
       "path": "wtyj/dashboard/isluno_api.py",
@@ -70,7 +70,7 @@
     },
     {
       "path": "wtyj/shared/mermaid_maintenance.py",
-      "sha256": "eeea87c71e0d5dfa6539221d4bb92fa010b2aa00e37d5cfc8a8be736925e63a6"
+      "sha256": "927ac23d7993ea5970dd0fae828e549fe33911fd41e77dd3db3765734585f9d1"
     },
     {
       "path": "wtyj/shared/state_registry.py",
@@ -78,7 +78,7 @@
     },
     {
       "path": "wtyj/tests/isluno/test_maintenance.py",
-      "sha256": "dc40e23746a948832f4c908854bebf63b0891feefe971c5b435ecf2ef32f7250"
+      "sha256": "cd8963e20f6f1e0c189110d07b89b9cb4849b4401cf75e5c597b2c9d81878fb4"
     },
     {
       "path": "wtyj/tests/isluno/test_recovery.py",
@@ -86,5 +86,11 @@
     }
   ],
   "prior_release_archives": "historical accepted artifacts only; do not deploy as this changed runtime",
-  "limitations": "Coverage declaration requires independent external inventory proof; old-runtime first-install boundary absent. Unknown claims/ledgers block promotion; no automatic resolution or administrative override."
+  "limitations": "Coverage declaration requires independent external inventory proof; old-runtime first-install boundary absent. Unknown claims/ledgers block promotion; no automatic resolution or administrative override.",
+  "correction_parent": "7527db6a02649d5d4a927510f639c0ca778b71fa",
+  "targeted_seconds": 1.458,
+  "review_corrections": [
+    "M-R1: complete LEFT JOIN snapshot disposition evaluation; actual send_failed and superseded transitions remain blockers; valid explicit terminal controls pass.",
+    "M-R2: actual SDK free-text entry gated before credentials/client; default-off/open/other-tenant/nested controls and retained SDK exception uncertainty verified."
+  ]
 }

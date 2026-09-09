@@ -139,18 +139,23 @@
           "role": "transport"
         },
         {
+          "function": "send_dm_reply",
+          "line": 2145,
+          "role": "transport"
+        },
+        {
           "function": "send_dm_template",
-          "line": 2195,
+          "line": 2198,
           "role": "transport"
         },
         {
           "function": "send_dm_reply_with_attachment",
-          "line": 2355,
+          "line": 2358,
           "role": "transport"
         },
         {
           "function": "send_typing_indicator",
-          "line": 2660,
+          "line": 2663,
           "role": "transport"
         }
       ]
@@ -206,7 +211,7 @@
       ]
     }
   ],
-  "count": 28,
+  "count": 29,
   "external_inventory_required": [
     "operator writers and direct/manual scripts quiesced",
     "generic email-poller/hold-reaper/ali-quote-recovery disabled or separately coordinated for Mermaid",
