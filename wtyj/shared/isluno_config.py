@@ -73,6 +73,16 @@ def active_profile():
                 or type(welcome.get("width")) is not int or type(welcome.get("height")) is not int
                 or not 1 <= welcome["width"] <= 4096 or not 1 <= welcome["height"] <= 4096):
             raise ValueError("profile welcome media")
+        copies = profile.get('product_copy', {})
+        if not isinstance(copies, dict) or len(copies) > 50:
+            raise ValueError('profile product copy')
+        for product_id, editorial in copies.items():
+            if (not isinstance(product_id, str) or not re.fullmatch(r'[a-z0-9-]{1,100}', product_id)
+                    or not isinstance(editorial, dict) or set(editorial) != {'source_sha256', 'facts'}
+                    or not isinstance(editorial['source_sha256'], str) or not re.fullmatch(r'[a-f0-9]{64}', editorial['source_sha256'])
+                    or not isinstance(editorial['facts'], dict) or len(editorial['facts']) > 30
+                    or any(not isinstance(k,str) or not isinstance(v,str) or not v.strip() or len(v)>2000 for k,v in editorial['facts'].items())):
+                raise ValueError('profile product copy')
         if not isinstance(profile.get("profile_version"), str) or not profile["profile_version"].strip():
             raise ValueError("profile version")
         return copy.deepcopy(profile)

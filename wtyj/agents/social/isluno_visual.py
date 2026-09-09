@@ -61,6 +61,9 @@ def build(store, db, scope, products, decision, button, labels, *, texts=None, c
         gallery=product['gallery'];check(type(offset) is int and 0<=offset<=len(gallery),'invalid_gallery_page')
         excluded=set() if photo=='repeat' else attempted_assets(db,scope,product_id)
         available=[(n,a) for n,a in enumerate(gallery) if n>=offset and a['id'] not in excluded]
+        # A details card may reuse its own trip image when that gallery was seen.
+        if action_kind=='info' and info_offset==0 and photo!='none' and not available:
+            available=list(enumerate(gallery))
         if location:
             # Product captions identify a trip, not the stop depicted in the image.
             available=[(n,a) for n,a in available if a.get('location_id')==location and a.get('location_source_url')]

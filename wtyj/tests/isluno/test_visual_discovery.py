@@ -84,6 +84,18 @@ class VisualDiscoveryTests(CommunicationWireTests):
         reply=self.visual(decision=self.decision('none'));self.assertTrue(self.send(reply))
         self.assertTrue(all('attachmentUrl' not in b for b in self.requests))
 
+    def test_native_details_include_trip_image(self):
+        reply=self.visual();self.assertTrue(self.send(reply))
+        details=self.click_visual(self.plan(reply),'fixture-cruise','info','details-image')
+        images=[p for p in details['parts'] if p['body'].get('attachmentUrl')]
+        self.assertEqual(len(images),1)
+        self.assertEqual(images[0]['product_ids'],['fixture-cruise'])
+
+    def test_native_details_respect_text_only_preference(self):
+        reply=self.visual(decision=self.decision('none'));self.assertTrue(self.send(reply))
+        details=self.click_visual(self.plan(reply),'fixture-cruise','info','details-no-image')
+        self.assertTrue(all('attachmentUrl' not in p['body'] for p in details['parts']))
+
     def test_second_card_rejection_preserves_first_and_blocks_actions(self):
         reply=self.visual();self.assertFalse(self.send(reply,[(200,{'success':True,'data':{'messageId':'intro'}}),(200,{'success':True,'data':{'messageId':'first'}}),(400,{'code':'INVALID_MEDIA'})]))
         plan=self.plan(reply);self.assertEqual([p['status'] for p in plan['parts']],['accepted','accepted','rejected'])

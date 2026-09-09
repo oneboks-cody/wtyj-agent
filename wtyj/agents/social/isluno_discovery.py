@@ -152,10 +152,13 @@ class DiscoveryStore:
                              'unavailable' if not decision['fact_keys'] and decision['question'].strip() else 'source_backed')
             visual=visual or bool(hospitality and chosen and selected_intent is None and (card_texts or decision['intent']=='discover' or hospitality['photo']!='none'))
             visual_parts=None
+            photo_preference=(hospitality or {}).get('photo','more' if action_kind=='photos' else 'initial')
+            if action_token is not None and action_kind=='info':
+                photo_preference='none' if old.get('photo_preference')=='none' or info_offset else 'initial'
             if visual and answer_status=='source_backed' and selected_intent is None:
                 from agents.social.isluno_visual import build
                 visual_parts,asset_ids,missing=build(self,db,scope,chosen,{**decision,'translations':translations},button,labels,
-                    texts=card_texts,common=response_text or '',question=next_question,photo=(hospitality or {}).get('photo','more' if action_kind=='photos' else 'none' if action_kind=='info' else 'initial'),
+                    texts=card_texts,common=response_text or '',question=next_question,photo=photo_preference,
                     location=photo_location,offset=offset,info_offset=info_offset,action_kind=action_kind,offer_selection=offer_selection,detail_keys=detail_keys)
                 body={'accountId':scope.account_id,'message':''.join(p['body']['message'] for p in visual_parts)}
                 fallback=None
@@ -280,7 +283,7 @@ class DiscoveryStore:
                        'product_ids': decision['product_ids'], 'language': locale, 'fact_keys': decision['fact_keys'],
                        'product_fact_keys': fact_association, 'answer_status': answer_status, 'translations': translations,
                        'body': body, 'offer_selection': offer_selection, 'next_question': next_question, 'button_meanings': actions, 'fallback': fallback, 'asset_ids': asset_ids, 'missing_asset_ids': missing,
-                       'selected_intent': selected_intent, 'requires_human': decision['intent'] == 'human', 'brand_asset_id': brand_asset_id,
+                       'selected_intent': selected_intent, 'requires_human': decision['intent'] == 'human', 'brand_asset_id': brand_asset_id, 'photo_preference': photo_preference,
                        'created_at': self.clock().isoformat(), 'expires_at': (self.clock() + timedelta(hours=24)).isoformat()}
             db.execute('INSERT INTO isluno_discovery_plans(id,scope_key,trigger_id,payload) VALUES(?,?,?,?)', (plan_id, scope.key, trigger_id, dump(payload)))
             for token, action in actions.items():

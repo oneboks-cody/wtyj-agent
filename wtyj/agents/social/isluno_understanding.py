@@ -1,6 +1,6 @@
 """Isluno discovery through Marina's existing structured model entry point."""
 import json
-from shared.isluno_config import active_profile, LANGUAGES
+from shared.isluno_config import active_profile, LANGUAGES, IslunoUnavailable
 from shared.isluno_pricing import check
 
 TOOL = {'name': 'marina_response', 'description': 'Select source-backed Isluno trip information.',
@@ -27,6 +27,12 @@ def facts(product):
         result['inclusion_' + str(index)] = value
     for index, value in enumerate(claims.get('metadata') or []):
         result['metadata_' + str(index)] = value
+    try:
+        editorial = active_profile().get('product_copy', {}).get(product['id'], {})
+    except IslunoUnavailable:
+        editorial = {}
+    if editorial.get('source_sha256') == (product.get('source') or {}).get('content_sha256'):
+        result.update({k:v for k,v in editorial.get('facts', {}).items() if k in result})
     return result
 
 

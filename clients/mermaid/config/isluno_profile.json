@@ -2,7 +2,7 @@
   "schema_version": "isluno.v1",
   "tenant_slug": "mermaid",
   "journey_type": "isluno_itinerary_demo_v1",
-  "profile_version": "isluno-profile-v1-welcome-media-20260909",
+  "profile_version": "isluno-premium-safari-20260909",
   "brand": {
     "id": "isluno",
     "name": "Isluno",
@@ -82,6 +82,20 @@
       "date_in_past": "E fecha ei a pasa kaba. Skohe un fecha den futuro.",
       "departure_in_past": "E salida ei a pasa kaba. Skohe un salida den futuro.",
       "human_requested": "Bo petishon ta registrá pa e ekipo revisá."
+    }
+  },
+  "product_copy": {
+    "national-park-jeep-safari": {
+      "source_sha256": "a909006cfb5b5f067c660af7408dc7780db4e7e744e9397a56915bb2d4a45956",
+      "facts": {
+        "summary": "Take your island adventure beyond the beach 🌴\n\nHop into an open vehicle and explore Curaçao’s north coast, Jan Kok and Christoffel National Park. A day out for curious explorers who want to see more of the island.",
+        "additional_information": "Good to know: lunch is extra. The listing excludes guests who are pregnant or have back problems.",
+        "guarantees": "The listing advertises free cancellation up to 24 hours before departure (local time) and a reservation deposit. Final booking terms need confirmation.",
+        "inclusion_0": "Included: bottled water",
+        "inclusion_1": "Included: entrance fees",
+        "metadata_0": "Your day: 09:00 to 15:00 (6 hours)",
+        "metadata_1": "Area: Westpunt"
+      }
     }
   }
 }
