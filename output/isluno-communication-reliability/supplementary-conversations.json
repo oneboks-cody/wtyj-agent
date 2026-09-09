@@ -1,0 +1,28 @@
+{
+  "source_commit": "ab88343b325d3ee67a6dcdad5e15e1f6dd2d254f",
+  "evidence": "Synthetic data, scripted SDK and HTTP; network disabled. No native-language quality or live delivery claim.",
+  "conversations": [
+    {
+      "scenario": "test_optional_unused_outcome_branches_are_not_required",
+      "guest": "Add this trip",
+      "reply": "Happy to help.\n\nCould you share the guest name?",
+      "model_calls": 1,
+      "evidence": "Actual handler output from scripted SDK; delivery only asserted by named test."
+    },
+    {
+      "scenario": "test_stale_button_returns_operational_notice_without_model_or_mutation",
+      "guest": "[Earlier Add trip button]",
+      "reply": "That earlier choice is no longer current. What would you like to check or change in your itinerary?",
+      "model_calls": 0,
+      "mutation": "none",
+      "evidence": "Durable operational notice prepared; no live send."
+    },
+    {
+      "scenario": "test_fresh_hi_after_rejected_reply_is_a_new_turn_without_replay",
+      "guest": "hi",
+      "reply": "Hello! I can help you plan your visit.\n\nWhat do you enjoy doing on holiday?",
+      "model_calls": 1,
+      "evidence": "Actual handler output from scripted SDK; delivery only asserted by named test."
+    }
+  ]
+}

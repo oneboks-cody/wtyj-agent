@@ -1,0 +1,7 @@
+{
+  "tests": 10,
+  "passed": true,
+  "elapsed_seconds": 38.077,
+  "scope": "retained-history controls, drain/seal/reopen preservation, runner budget and pointer rollback guards",
+  "network": "disabled"
+}

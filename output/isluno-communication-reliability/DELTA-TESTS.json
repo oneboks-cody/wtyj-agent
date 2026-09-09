@@ -1,0 +1,14 @@
+{
+  "source_commit": "ab88343b325d3ee67a6dcdad5e15e1f6dd2d254f",
+  "parent_regression_source": "e8aead27e980ab5579324e84b55db3c18d3ef35d",
+  "parent_tests": 175,
+  "affected_assertion_tests_passed": 46,
+  "presentation_tests_passed": 10,
+  "additional_binding_test_passed": 1,
+  "supplementary_cases_passed": 3,
+  "initial_loader_error": "test_presentation nonexistent; corrected module test_presentation_tolerance passed",
+  "schema_change": false,
+  "validation_change": "add/new/update requires missing_field in pending.question if supplied, otherwise browsing.question; shared prose cannot contain this transaction binding",
+  "extra_model_calls": 0,
+  "external_network": "disabled"
+}

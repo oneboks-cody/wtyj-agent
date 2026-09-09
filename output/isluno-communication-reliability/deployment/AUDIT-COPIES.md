@@ -1,0 +1,1 @@
+These are review copies of the canonical private runner in tmp/isluno-communication-rollout. Relative paths resolve there; do not execute these copies. No dispatch has occurred at publication. Source archive is represented by its exact manifest and SHA, not duplicated here. Historical staging recovery is not replayed.

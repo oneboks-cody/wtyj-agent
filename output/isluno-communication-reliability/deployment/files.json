@@ -1,0 +1,344 @@
+{
+  "source_commit": "ab88343b325d3ee67a6dcdad5e15e1f6dd2d254f",
+  "frontend_commit": "25dfebfb8688f76ef357b97c60c893fdf1bb8791",
+  "base_image": "sha256:f3cac23eaddd2b904f587399e2537e35b6bb40bc8c5310d4f76a0953cc6f1817",
+  "profile_merge_keys": [],
+  "files": {
+    "Dockerfile": {
+      "bytes": 1394,
+      "sha256": "51bb67e03146724d6f1a68e8ad7a83805726a8e9ab33eee17eda75a51e9eccf6"
+    },
+    "agents/marina/marina_agent.py": {
+      "bytes": 130125,
+      "sha256": "768e62fb68195bc8e90d5753033f7bb46bc194008de50bfb120c3c8fd80616dd"
+    },
+    "agents/social/isluno_callbacks.py": {
+      "bytes": 7471,
+      "sha256": "f79916a0d6a8762e1035c966edcfe46b9165a1f63b44f3a000c40f19286644c9"
+    },
+    "agents/social/isluno_conversation.py": {
+      "bytes": 40979,
+      "sha256": "f3059c0b1e7d20394e37db04f945d14022bb37d1689c260378812e57dd74eb8c"
+    },
+    "agents/social/isluno_conversation_understanding.py": {
+      "bytes": 11115,
+      "sha256": "d84eb5508973d9d8dfaac67bb378a44a196029221659457ead502197e8124994"
+    },
+    "agents/social/isluno_delivery.py": {
+      "bytes": 10673,
+      "sha256": "e0109beee9f884537c63451c9beda039e7c2c9b19a21cc2069ec9351307a06d5"
+    },
+    "agents/social/isluno_discovery.py": {
+      "bytes": 26157,
+      "sha256": "c1482cfcdc992860fc3ea8377ccc5e63d243bf696337496e8b876a8ebbe05733"
+    },
+    "agents/social/isluno_fulfillment.py": {
+      "bytes": 5873,
+      "sha256": "9c44122f3aa397df2d1edeafce02cda8943bc0bdd515f7263055d653bcf032c7"
+    },
+    "agents/social/isluno_hospitality.py": {
+      "bytes": 22397,
+      "sha256": "971f4238f30c756ff0af8709aecafb8945d7c8f34af95e4f7238e076e31362bc"
+    },
+    "agents/social/isluno_payments.py": {
+      "bytes": 20089,
+      "sha256": "c49e0ff3b5b8026506f47053e72c6882a6d3d10c937b45621a952e4e474ef345"
+    },
+    "agents/social/isluno_quote_delivery.py": {
+      "bytes": 7811,
+      "sha256": "34b8d27e31530ffbae57d9cba17cd9554e0e2bc745e530b2a96fd3111b9f2135"
+    },
+    "agents/social/isluno_quotes.py": {
+      "bytes": 22757,
+      "sha256": "197c2d5d92bd69ac3c7d956bbe2b5cfb85129dd831a2646bdb3205ec98d3d853"
+    },
+    "agents/social/isluno_recovery.py": {
+      "bytes": 22750,
+      "sha256": "7b67d7c4d630fc0f76d819953bfb26018550797df4fffa2ce613670aafc6c8f0"
+    },
+    "agents/social/isluno_recovery_copy.py": {
+      "bytes": 2720,
+      "sha256": "6d7ff02bd215816921ae078844a6080f58963845b216db127d469d7b5047e6fb"
+    },
+    "agents/social/isluno_wire.py": {
+      "bytes": 5313,
+      "sha256": "00ff73372261e0c07399a102ed76264283b43c291254e202621976e2043f58d7"
+    },
+    "agents/social/social_agent.py": {
+      "bytes": 141804,
+      "sha256": "fa775649d46a67d2187d2dd3627fa986c4d911a846e01a53902179732632b5f0"
+    },
+    "agents/social/webhook_server.py": {
+      "bytes": 160054,
+      "sha256": "0e9f5fffeaf06d4c0b16b078b04acc070e7a9463cca6b0c16de55b4512004755"
+    },
+    "frontend/assets/AliCustomerFile-Bvg-RbiD.js": {
+      "bytes": 26452,
+      "sha256": "fc8b64200940611c5d35a039ebca113ef7e22e8f5ec55cefa40a7f38c1601f98"
+    },
+    "frontend/assets/Analytics-D-iU1MOg.js": {
+      "bytes": 378719,
+      "sha256": "ba2306bda5393edd370420efb7e7409525ead0aa0c61b383ed47f7e7211f90f1"
+    },
+    "frontend/assets/Bookings-Co9w-ks0.js": {
+      "bytes": 31273,
+      "sha256": "e6854f03586df8275ec41202698d8f516a1272af9a3bb78ecfefb5d5a77b15fa"
+    },
+    "frontend/assets/DashboardShell-BfcqgAPC.js": {
+      "bytes": 71236,
+      "sha256": "d0c69dd9bdc970ace9fd50a56fd63f5c1086169a52cf8b56682860640c594679"
+    },
+    "frontend/assets/FollowUps-B_OOrVrI.js": {
+      "bytes": 32129,
+      "sha256": "54405d4e3034723d536ea3e7c1f7afea0877925f939cf687fb61032e239d4a3a"
+    },
+    "frontend/assets/Help-DzKoGx--.js": {
+      "bytes": 10627,
+      "sha256": "a6c16a7f9aa2ead14f07f2be3f593274eebd8029d85196c48b9592204269adc7"
+    },
+    "frontend/assets/Images-kZpoCnyr.js": {
+      "bytes": 10218,
+      "sha256": "478d270906f7ef0cffdc95f736cfba5551a4f5aa76ee18f370f9c3f570fd02b8"
+    },
+    "frontend/assets/Inbox-2CzGCQuO.js": {
+      "bytes": 120939,
+      "sha256": "8c12855a4997902d8041c3b04640fef9e747beac07435f2801b703a03b899ad6"
+    },
+    "frontend/assets/IslunoOperations-Bc-cobON.js": {
+      "bytes": 15742,
+      "sha256": "7ea1361db540a632b345611ef3edaf301bfa4bec59d3c051bbfe67661aed101c"
+    },
+    "frontend/assets/Login-D8nzDSph.js": {
+      "bytes": 5459,
+      "sha256": "86af1eb07a1729ce9cb1530d1daa7276c7850ba009615329997f130035a6bf35"
+    },
+    "frontend/assets/MermaidAttentionQueue-BH_LYJ_s.js": {
+      "bytes": 15094,
+      "sha256": "223702888d1873bf64963a51a1943986ae4b9fd2d331f3b3f3704abb65bf1a2f"
+    },
+    "frontend/assets/MermaidCrewAssistance-BFy-Jlq1.js": {
+      "bytes": 7183,
+      "sha256": "66cfcc399ab0842064e17b5b0867580ce5e1a935e2c902840308dbe16f77de79"
+    },
+    "frontend/assets/MermaidCustomerAccount-CoCNQLTe.js": {
+      "bytes": 7744,
+      "sha256": "0b42ac2b5f0b5a7829332ac7270fd517795bcef341fa3533fbab1cd3f2371ae9"
+    },
+    "frontend/assets/MermaidCustomers-BJnik5kf.js": {
+      "bytes": 3872,
+      "sha256": "7c971dd4a3410f1ebd59b00cd4e8527958f45388025e2c87b9a692c744108f06"
+    },
+    "frontend/assets/MermaidReservationWorkspace-BWsVELUp.js": {
+      "bytes": 25444,
+      "sha256": "f97fd0fc87a54d823add4797b35392a6003f41739de2f50404a7581d5edec32f"
+    },
+    "frontend/assets/MermaidReservations-8xBmVnSr.js": {
+      "bytes": 8718,
+      "sha256": "e24c4eb3730f86439e7e08729c86712df4a94dd2a728f840dc3c6317af204cae"
+    },
+    "frontend/assets/MermaidToday-D876e01L.js": {
+      "bytes": 12349,
+      "sha256": "8215c298f24c93092bbc1cbc875caf0af05342af9b21528e8e28071df7d97585"
+    },
+    "frontend/assets/Rental-DlVSncEM.js": {
+      "bytes": 92284,
+      "sha256": "5a63d64ca5ac5b671f5bdfb4a115c960940e02d882381bd3cbd0afa2a4444aeb"
+    },
+    "frontend/assets/RentalCustomerWorkspace-CKWPn8dP.js": {
+      "bytes": 8743,
+      "sha256": "008468c48c5c80680e68f086e67535c5e569e8c40e7a34f4e35d16ac5569e63f"
+    },
+    "frontend/assets/RentalCustomers-xC3B_xD6.js": {
+      "bytes": 7167,
+      "sha256": "706476dae89bc2f1a226e6b1d07ca1ceb5f0039fbef9ae934ce9abc438ba7117"
+    },
+    "frontend/assets/RentalToday-BFgjCEyr.js": {
+      "bytes": 10323,
+      "sha256": "d0038945622342e13dd37e93358b581165e5d94091a37a1a3d5fa1b256fd2bd5"
+    },
+    "frontend/assets/Settings-0552gNVF.js": {
+      "bytes": 217545,
+      "sha256": "623823d257d02299ed4abd5351575eea16a4e76b0fd7958b4e2e6356a61a0fdd"
+    },
+    "frontend/assets/archive-Y3RSfT_4.js": {
+      "bytes": 254,
+      "sha256": "8dc7b93b3854d836c64292e45a96c031f5643a83eaedae72e50f373704899dae"
+    },
+    "frontend/assets/arrow-left-ConuHQDI.js": {
+      "bytes": 166,
+      "sha256": "e82a473f42c452417139b8e5abd65ecd0d387992e1af2b5af9da24bcbaad21d7"
+    },
+    "frontend/assets/arrow-right-Cm9CIsOX.js": {
+      "bytes": 166,
+      "sha256": "522ecd886d95a5b9715b67b468cd5a5ec6292473a16500415645b75c9be4f977"
+    },
+    "frontend/assets/building-2-CjRyXyjk.js": {
+      "bytes": 384,
+      "sha256": "cd9d84649899effb3884a0c92886237a465efe422ab4bf63eb415a2f37a05e43"
+    },
+    "frontend/assets/button-Bz8dxVPP.js": {
+      "bytes": 3596,
+      "sha256": "eb9fdb89ee11380b31b2b9e0aece743ea0b713d6a3e10d706adfea491a7c30a0"
+    },
+    "frontend/assets/calendar-days-BdC01kSX.js": {
+      "bytes": 495,
+      "sha256": "76140a84d52c0123508ca98b95c0b8f2f3f4d3dd4c536c708042c7ad61643b41"
+    },
+    "frontend/assets/check-C7q5nBea.js": {
+      "bytes": 120,
+      "sha256": "f71e883652f4cb29c2e24064992d2d3ff16e4477c8da1dc76c9372e14484ff61"
+    },
+    "frontend/assets/chevron-down-DKXqFipn.js": {
+      "bytes": 129,
+      "sha256": "be4cf9c38244918b63700c25f2807697189f17f5e053d3d08de931666febe069"
+    },
+    "frontend/assets/chevron-right-BXXGhQZh.js": {
+      "bytes": 131,
+      "sha256": "de81acc0fb6596996f704360d2ae3855ac6f99de70063badfc66aa909e6fb129"
+    },
+    "frontend/assets/circle-alert-CJPOe4F2.js": {
+      "bytes": 251,
+      "sha256": "4635718039e552d51205faf3e6737015a286143215c3c4078d39044bd6fdf7bc"
+    },
+    "frontend/assets/circle-check-rHT5p02L.js": {
+      "bytes": 174,
+      "sha256": "ba43f7e597a6e35b5f489ae55f8423f3b944455429772c86634ca963c1dd62d3"
+    },
+    "frontend/assets/circle-dollar-sign-CnUbOUdq.js": {
+      "bytes": 244,
+      "sha256": "044ef02ce23061ccd52d56e6008b3b6f8817c9be825306a87e9159c2668653d2"
+    },
+    "frontend/assets/clock-3-BshRjCWz.js": {
+      "bytes": 165,
+      "sha256": "3bbe69e0fc29a649a8125d69e7c0ef0198b88102ca6a07cac76dc00e545fa988"
+    },
+    "frontend/assets/cloud-upload-QBpGWrQj.js": {
+      "bytes": 252,
+      "sha256": "1a0e669c91b0a81775d819c17959b649565e9c939deb4c491fcbff137d9c56f8"
+    },
+    "frontend/assets/copy-4w_tHarf.js": {
+      "bytes": 232,
+      "sha256": "988a76cb3f96b453f85b114087dfdf9322feddbeeb14c49084c62c4c514cba02"
+    },
+    "frontend/assets/dialog-CsTRcDIR.js": {
+      "bytes": 23715,
+      "sha256": "b2c83575a50c9160f20cc8a5a1c1e07098c49077164cedcc39e2f4dbcfd230e2"
+    },
+    "frontend/assets/direct-whatsapp-reply-Cdlg9pra.js": {
+      "bytes": 1613,
+      "sha256": "508f9b42c56caa7dd17a8da32884765eacc0961964b5364f25480d22482a69f6"
+    },
+    "frontend/assets/download-BrISAUzh.js": {
+      "bytes": 233,
+      "sha256": "d798f964f62e9b23b957c7478a003abd64ba08cad94f558f741a81372d62d06e"
+    },
+    "frontend/assets/external-link-CA0gkRl7.js": {
+      "bytes": 252,
+      "sha256": "4abb0d2578c87dddee50990e8a0e442d91161f40b0d2efa64f341005fc686a10"
+    },
+    "frontend/assets/file-key-2-DgrdAEZC.js": {
+      "bytes": 551,
+      "sha256": "00f1dc15acfea1d07d73cef5013df0126e9bf78b9ca61acfa21933ba80d3b620"
+    },
+    "frontend/assets/file-text-BB5PdWom.js": {
+      "bytes": 334,
+      "sha256": "dc1dda27484b1c9d6ddeb231b9f4d2dd1c615a9d3e693c04b437455f8a73608c"
+    },
+    "frontend/assets/index-BGMwB8mS.js": {
+      "bytes": 410519,
+      "sha256": "34de010693f93d082e34c2fa5483f1ab0b8ea71c2b8d71b98fb5fc68a9eb0fab"
+    },
+    "frontend/assets/index-CZ016oHx.js": {
+      "bytes": 1332,
+      "sha256": "06c794862688b1b60503192a43241d1702564c343c0ec38da252e4195062dd30"
+    },
+    "frontend/assets/index-RUo0sh4B.css": {
+      "bytes": 194539,
+      "sha256": "2a7342bdc982aa573427e434229f49fe08adbc60115c45416f93693a9182a354"
+    },
+    "frontend/assets/index-uwm0ClBB.js": {
+      "bytes": 1134,
+      "sha256": "1c5c543886ccf84df3bea0569946afec884d06113a725ac1b6b773ae1cf1cb51"
+    },
+    "frontend/assets/input-DTYGTi0P.js": {
+      "bytes": 849,
+      "sha256": "f8b03a6f2f5b8befd4749077643130a70aa5e64bc01808563bca2e9c16f4e8f7"
+    },
+    "frontend/assets/map-pin-D4cbCSrI.js": {
+      "bytes": 255,
+      "sha256": "b59266a7aa253967a71e0ca6a2be5f1ed30cb52bd78dcebd977f3d644d121ae9"
+    },
+    "frontend/assets/not-found-Dou5IQy6.js": {
+      "bytes": 2398,
+      "sha256": "b3453a712988f7bd7467c7b9c4fd2df0b2ea9cf7ca4abdb4c05606cf118539c5"
+    },
+    "frontend/assets/phone-mg-msEDz.js": {
+      "bytes": 323,
+      "sha256": "3b3c4da9f6f5601210f6a17daae6336a00452a707286db31374d1d6bfa8deaa8"
+    },
+    "frontend/assets/printer-BosWCnGi.js": {
+      "bytes": 320,
+      "sha256": "89f1bd39a591d5f7b20ceae706e974300a741ab68352a9c4743054b324648243"
+    },
+    "frontend/assets/proxy-h7pANXF1.js": {
+      "bytes": 120193,
+      "sha256": "2a8cd13ddb9ac8279cc0f38b06fb8878b1cd32600b64b9c6ccaa0201ef57b381"
+    },
+    "frontend/assets/shield-check-BDst0Lfz.js": {
+      "bytes": 316,
+      "sha256": "a08668ff19cf53f263c834afc5ba3d8efbd74836f946866b32884d72a4c6e255"
+    },
+    "frontend/assets/switch-B6tAKbYY.js": {
+      "bytes": 2955,
+      "sha256": "f393ffca37a3985e1285d16946fc738c69bf14745c92d5920915bf3d22faf9c2"
+    },
+    "frontend/assets/trash-2-Cfs8T12p.js": {
+      "bytes": 329,
+      "sha256": "47885d9e5fde665f8d65aebd55a13b317fa30a22caab1dc4e75d9fff68058c37"
+    },
+    "frontend/assets/triangle-alert-BIwC3f5u.js": {
+      "bytes": 266,
+      "sha256": "78bef00bc31a5bcfae6177d4e8bde51c7fd2e9bfb03e38bee6df725b7dd3fc06"
+    },
+    "frontend/assets/unboks-login-logo-optimized_1778556585382-9bD9Tsfq.webp": {
+      "bytes": 5456,
+      "sha256": "3ed7469af858c3a478328115517c6ab660144c84400aed72315f270414861687"
+    },
+    "frontend/assets/use-dashboard-identity-BP3iuDAr.js": {
+      "bytes": 763,
+      "sha256": "b397504e407c50fef089904af2f31481978e733cb36b4820807013fa55f2bd4e"
+    },
+    "frontend/assets/useInfiniteQuery-D8OLztVR.js": {
+      "bytes": 1123,
+      "sha256": "df3294c5b99577e85efd93d8ec5a8e7103927fc75c5aa34f068edeedc110f6f6"
+    },
+    "frontend/assets/useMutation-CLqh1Awz.js": {
+      "bytes": 2210,
+      "sha256": "bf9f20c6fbc627eff819295946aa35760c1e0e05ae416cb0c374d2328111af28"
+    },
+    "frontend/assets/user-round-check-D3X3iiAL.js": {
+      "bytes": 230,
+      "sha256": "907f2e7b27b89a5b0040dfaae5705e585b3c5024aa9031cc765643eb879850eb"
+    },
+    "frontend/favicon.svg": {
+      "bytes": 321,
+      "sha256": "7dc3fea38ccf095a1be51cb175e4e0101afa46c79d807225b7cd057a5873d23e"
+    },
+    "frontend/index.html": {
+      "bytes": 6619,
+      "sha256": "c15c71d8487780a63999578005560899a50634e4c8f4a1b2a9e9419093c9f11b"
+    },
+    "frontend/opengraph.jpg": {
+      "bytes": 18473,
+      "sha256": "357b4e9a95b647b0e6586bde81d4f76e0d11411f68ebaf540be686055a937c32"
+    },
+    "frontend/unboks-logo.png": {
+      "bytes": 194846,
+      "sha256": "7e9963376bf7c8a3693b89005b56fd24568a375cefb7e9575a892998f65f53df"
+    }
+  },
+  "bundle": {
+    "bytes": 2826240,
+    "sha256": "d5c383222a336bba68af31105179af16b8e9f6a1c1405e306851fdec7ff62b5a"
+  }
+}
