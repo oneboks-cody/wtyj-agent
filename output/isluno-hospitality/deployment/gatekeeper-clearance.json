@@ -1,0 +1,24 @@
+{
+  "verdict": "TECHNICAL PASS for execution under Calvin's already-verified go-live authorization",
+  "packet_commit": "eb77b65f223d36177a66cabf44fe6dc89418be83",
+  "packet_sha256": "8ae84786388fa987f0ae22c4e3cb8e06efd3dad9a148afd0df4709fa16cc08c3",
+  "application_source": "3a5f5240f9d51e71fb47c47fbce8a16d1688f78e",
+  "bundle_sha256": "70333b571e96b3906a3b6a08e696c4bb4075c4add155eaf2c897d435933f82b7",
+  "history_proof_sha256": "aed5c33dfde9c432316d3dfb325626919ace9f88d285e71995a52075dae2fd34",
+  "review": {
+    "operator_files_verified": 14,
+    "generated_payload_hashes": "PASS",
+    "archive_members_verified": 12,
+    "source_and_profile_bindings": "PASS",
+    "independent_operator_tests": {"count": 10, "seconds": 7.512, "result": "PASS", "network": "none", "log": "/tmp/isluno-gatekeeper-operator-tests-20260909.txt"},
+    "additional_independent_mocked_abort_routing_cases": 5,
+    "customer_preservation": "Exact terminal history classification, schema/row hashes, pre/post-stop and post-activation comparisons, no customer row deletion/relabel/replay",
+    "profile_scope": "Only hospitality_voice and conversation_outcomes merged into existing public profile",
+    "failure_paths": "Unsealed unchanged-runtime abort; sealed original-runtime restart only after proof; one image/profile rollback after activation; explicit held state when restoration cannot be proven",
+    "dashboard_verification": "Fresh browser check redirects to login. Unchanged dashboard pointer/index, auth-store bytes, tenant/account binding and guarded backend readiness accepted for this backend/profile-only rollout; authenticated visual/customer checks remain pending"
+  },
+  "bounds": {"overall_seconds": 900, "transfers": 1, "archive_bytes": 296960, "transfer_seconds": 60, "build_seconds": 120, "minimum_before_disruption": 500, "minimum_before_activation": 300, "rollback_reserve": 180, "automatic_retries": false},
+  "execution_owner": "Isluno — Builder",
+  "gatekeeper_host_operations": 0,
+  "live_deployment_verified": false
+}

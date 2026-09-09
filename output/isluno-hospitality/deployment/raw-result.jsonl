@@ -1,0 +1,3 @@
+{"progress": "image_verified"}
+{"progress": "sealed_and_stopped"}
+{"result": {"agent_messages_sent": 0, "automatic_retry": false, "container_id": "8bc4006c9fa3d5f83eef6d3c7f275e241bfcfc2ee7532b6e3d436a0d8123d21c", "customer_tables_preserved": 91, "health": 200, "image": "sha256:f80fefc3b9e49f2580f0e1b0c5b7affc643b129d80a54d32c8c4abd64538f7ac", "ingress_generation": 7, "profile_sha256": "5c90d1979c7599e9bdd82a809a6cebe07db150692ed949b7a88e1070b16616b3", "runtime_generation": 8, "source": "3a5f5240f9d51e71fb47c47fbce8a16d1688f78e", "state": {"gates_closed": true, "image_changed": true, "marker_created": true, "open": true, "profile_changed": true, "rolled_back": false, "sealed": true, "watchdog_stopped": true, "worker_stopped": true}, "status": "fix_deployed_open"}}
