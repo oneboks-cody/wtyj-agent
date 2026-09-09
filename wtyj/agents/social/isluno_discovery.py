@@ -105,6 +105,7 @@ class DiscoveryStore:
                 check(row is not None, 'invalid_discovery_action')
                 old, action = json.loads(row['payload']), json.loads(row['action_json'])
                 translations = old.get('translations', {})
+                offer_selection = old.get('offer_selection', True)
                 check(row['plan_id'] == old['id'] and old['catalog_revision'] == snapshot['revision']
                       and datetime.fromisoformat(old['expires_at']) > self.clock(), 'stale_discovery_action')
                 selected_product = action['product_id']
@@ -246,7 +247,7 @@ class DiscoveryStore:
                        'catalog_revision': snapshot['revision'], 'catalog_version': snapshot['catalog']['version'], 'catalog_superseded': superseded,
                        'product_ids': decision['product_ids'], 'language': locale, 'fact_keys': decision['fact_keys'],
                        'product_fact_keys': fact_association, 'answer_status': answer_status, 'translations': translations,
-                       'body': body, 'next_question': next_question, 'button_meanings': actions, 'fallback': fallback, 'asset_ids': asset_ids, 'missing_asset_ids': missing,
+                       'body': body, 'offer_selection': offer_selection, 'next_question': next_question, 'button_meanings': actions, 'fallback': fallback, 'asset_ids': asset_ids, 'missing_asset_ids': missing,
                        'selected_intent': selected_intent, 'requires_human': decision['intent'] == 'human',
                        'created_at': self.clock().isoformat(), 'expires_at': (self.clock() + timedelta(hours=24)).isoformat()}
             db.execute('INSERT INTO isluno_discovery_plans(id,scope_key,trigger_id,payload) VALUES(?,?,?,?)', (plan_id, scope.key, trigger_id, dump(payload)))
@@ -266,11 +267,12 @@ class DiscoveryStore:
     def current_context(self, scope):
         require_scope(scope)
         with self.db() as db:
-            row = db.execute('SELECT p.payload FROM isluno_discovery_latest l JOIN isluno_discovery_plans p ON p.id=l.plan_id WHERE l.scope_key=? AND p.scope_key=?', (scope.key, scope.key)).fetchone()
+            row = db.execute('SELECT p.payload,p.status FROM isluno_discovery_latest l JOIN isluno_discovery_plans p ON p.id=l.plan_id WHERE l.scope_key=? AND p.scope_key=?', (scope.key, scope.key)).fetchone()
         if row is None:
             return None
         plan = json.loads(row[0])
-        return {key: plan[key] for key in ('product_ids', 'catalog_revision', 'language', 'selected_intent')}
+        return {**{key: plan[key] for key in ('product_ids', 'catalog_revision', 'language', 'selected_intent')},
+                'delivery_status': row['status'], 'guest_receipt_verified': False}
 
     def allow_turn(self, scope):
         require_scope(scope)

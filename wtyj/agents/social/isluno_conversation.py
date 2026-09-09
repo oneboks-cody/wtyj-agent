@@ -495,8 +495,10 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
     # Action resolution used this trigger already; use a distinct durable reply
     # ID for its application result so selection metadata cannot mask intake.
     reply_trigger = 'conversation-' + opaque(scope, trigger, 'reply')
+    selected_products = {i['product']['id'] for i in (outcome['itinerary'] or {}).get('items', [])} | {p.get('product_id') for p in outcome['session']['pending'].values()}
+    offer_selection = booking['action'] == 'none' and not selected_products.intersection(decision['product_ids'])
     plan = discovery.plan(scope, reply_trigger, timestamp, base, translations=decision['translations'], response_text=response_text, catalog_snapshot=snapshot,
-                          hospitality=decision.get('hospitality'), next_question=next_question, offer_selection=booking['action'] == 'none')
+                          hospitality=decision.get('hospitality'), next_question=next_question, offer_selection=offer_selection)
     if prepared_quote and decision.get('hospitality'):
         from agents.social.isluno_quotes import QuoteStore, envelope as quote_envelope
         return quote_envelope(QuoteStore(store).compose_answer(scope, trigger, timestamp, prepared_quote, plan))

@@ -313,6 +313,9 @@ class HospitalityTests(unittest.TestCase):
         self.turn('Hi, Calvin here again.',self.decision('Welcome back, Calvin.','What can I help you with?',guest={'name':'Calvin'},stage='after_booking'))
         self.assertEqual(PaymentStore(self.t.store).records(self.t.scope()),paid)
         self.assertEqual(self.t.store.reviews(self.t.scope()),[])
+        self.turn('Can I see photos of my cruise?',self.decision('You can browse the gallery for {name:fixture-cruise}.',products=['fixture-cruise'],photo='initial',stage='after_booking'))
+        self.assertNotIn('Add trip',[b['title'] for b in self.transcript['turns'][-1]['outbound'][0].get('buttons',[])])
+        self.assertEqual(PaymentStore(self.t.store).records(self.t.scope()),paid)
 
     def language_conversation(self, language):
         samples={
