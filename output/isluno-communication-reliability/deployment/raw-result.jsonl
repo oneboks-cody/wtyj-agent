@@ -1,0 +1,5 @@
+{"progress": "image_verified"}
+{"progress": "sealed_and_stopped"}
+{"progress": "public_frontend_verified"}
+{"progress": "frontend_switched"}
+{"result": {"agent_messages_sent": 0, "authenticated_ui": "pending", "automatic_retry": false, "container_id": "d698b4d8daa5ad58fbdc1de4a13a9a75a046e6dc13bff5e73624199b53d47950", "customer_tables_preserved": 91, "frontend_commit": "25dfebfb8688f76ef357b97c60c893fdf1bb8791", "frontend_index_sha256": "c15c71d8487780a63999578005560899a50634e4c8f4a1b2a9e9419093c9f11b", "frontend_target": "/var/www/unboks-dashboard/releases/isluno-25dfebf-20260909-b", "health": 200, "image": "sha256:8ea85eb29ae6bea3ff64012cb276970a2daef15f5e0958c743df2c9bca5ac11d", "ingress_generation": 11, "profile_sha256": "5c90d1979c7599e9bdd82a809a6cebe07db150692ed949b7a88e1070b16616b3", "runtime_generation": 12, "source": "ab88343b325d3ee67a6dcdad5e15e1f6dd2d254f", "state": {"frontend_changed": true, "gates_closed": true, "image_changed": true, "marker_created": true, "open": true, "rolled_back": false, "sealed": true, "watchdog_stopped": true, "worker_stopped": true}, "status": "fix_deployed_open"}}

@@ -1,0 +1,24 @@
+{
+  "reviewer_thread": "01a08184-d2f3-7bc0-907b-d45beffaeb7c",
+  "status": "authenticated_ui_pass",
+  "url": "https://dashboard.unboks.org/today",
+  "tab": 7,
+  "selected_tenant": "Isluno",
+  "counts": {
+    "itineraries": 0,
+    "items": 0,
+    "demo_paid": 0,
+    "pending_review": 2
+  },
+  "historical_incidents": 3,
+  "historical_label": "Earlier progress recorded; delivery unverified",
+  "rejected_replies": 2,
+  "scoped_conversation_links_verified": true,
+  "conversation_opened": false,
+  "main_asset": "/assets/index-BGMwB8mS.js",
+  "browser_error_warn_logs": [],
+  "old_provider_metadata": "unknown retained; no retrospective HTTP/part evidence invented",
+  "rollback_required": false,
+  "customer_mutations": 0,
+  "evidence": "Gatekeeper authenticated browser reload/DOM and asset inspection after rollout, reported to Builder."
+}

@@ -1,0 +1,19 @@
+{
+  "reviewer": "Existing Gatekeeper and Organizer thread01a08184-d2f3-7bc0-907b-d45beffaeb7c",
+  "application_source": "ab88343b325d3ee67a6dcdad5e15e1f6dd2d254f",
+  "communication_delivery": {
+    "tests": 24,
+    "passed": true,
+    "seconds": 18.397
+  },
+  "hospitality_presentation": {
+    "tests": 35,
+    "passed": true,
+    "seconds": 33.946
+  },
+  "packet": "6f0a71adb17f5fd40ff9a55ed79d41188078ce8aeb339754cdd541fa14130bfe",
+  "source_members_verified": 83,
+  "frontend_independent_identical_files": 66,
+  "external_network": "disabled for application tests",
+  "actual_customer_delivery_test": false
+}

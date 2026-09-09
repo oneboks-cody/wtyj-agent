@@ -1,6 +1,6 @@
-# Isluno communication correction — reviewed candidate
+# Isluno communication correction — deployed and independently reviewed
 
-Status: not deployed. Prior staging recovery and presentation rollout receipts remain preserved. This packet does not reuse either dispatch allowance.
+Status: deployed. Exact postdeployment verification and independent authenticated Nr2 dashboard review both passed. One upload,22.635seconds, no automatic retry or rollback. All91 customer/business tables and the exact retained-history proof are preserved. Prior staging recovery and presentation rollout receipts remain preserved. This packet does not reuse either dispatch allowance.
 
 ## What failed
 
@@ -37,3 +37,11 @@ The source candidate, exact preservation proof and bounded deployment runner nee
 ## Review links
 
 [Backend PR360](https://github.com/BensonOpas/wtyj-agent/pull/360) and [dashboard PR167](https://github.com/unboks-org/unboks-dashboard-api/pull/167) retain this work for review. Application source ab88343b325d3ee67a6dcdad5e15e1f6dd2d254f; dashboard25dfebfb8688f76ef357b97c60c893fdf1bb8791. Deployment remains separately recorded in deployment receipts.
+
+## Completed release
+
+The release runs backend ab88343 and dashboard25dfebf. All83 archive members and16 live source files matched their manifests;31 catalog products are present. Runtime admission is open at generation12 and ingress at11, with background services restored. Existing partial staging artifacts, phone/account configuration, profile and customer history remain preserved.
+
+The authenticated dashboard retained0 itineraries,0 items,0 demo payments and2 pending reviews. All3 historical incidents display delivery as unverified; both rejected replies link to the correct conversation. Unknown historical provider details remain unknown. No customer conversation was opened during verification. See deployment/result.json, verification.json and AUTHENTICATED-UI.json.
+
+No engineering model call, WhatsApp message or email was sent. Offline tests plus live source/data/UI checks establish deployment readiness; a fresh customer WhatsApp exchange remains the real delivery confirmation. Old failed replies are not replayed.
