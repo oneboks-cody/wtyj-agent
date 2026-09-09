@@ -1,6 +1,6 @@
 # Visual discovery release review
 
-Prepared only; not dispatched. Application source `0361641575552e5a78a671efbc1dd59b9d5196ba`; dashboard stays `25dfebfb8688f76ef357b97c60c893fdf1bb8791`. Exact packet `c64b08f7788cfd54391a63b6b445bb51d87d1bf8e11b670c1cfcc075caa2f3ee`. Application changes are seven Python files and the scoped catalog additions. Later test/evidence commits do not change the pinned archive.
+Completed after independent clearance and authenticated Nr2 verification; see COMPLETED.md and the raw receipts. The remainder records the reviewed pre-dispatch design. Application source `0361641575552e5a78a671efbc1dd59b9d5196ba`; dashboard stays `25dfebfb8688f76ef357b97c60c893fdf1bb8791`. Exact packet `c64b08f7788cfd54391a63b6b445bb51d87d1bf8e11b670c1cfcc075caa2f3ee`. Application changes are seven Python files and the scoped catalog additions. Later test/evidence commits do not change the pinned archive.
 
 The missing-image investigation found zero media attempts in the latest accepted multi-product reply. The old multi-product renderer omitted media and used numbered Choose actions. The candidate sends one durable plan with separate ordinary image/button messages, concise verified product context and exact product-bound More photos, Trip details and Plan this trip actions. A broad greeting can ask one question without product suggestions. Specific questions retain their requested answer. Photos are sent in batches of at most two.
 
@@ -16,6 +16,6 @@ The running baseline remains source `ab88343b325d3ee67a6dcdad5e15e1f6dd2d254f`, 
 
 Validation: 194 application regressions passed in network-disabled Docker; eight exported scenarios passed through the actual handler, renderer, sender and strict fake HTTP boundary, including real stored Isluno gallery assets. Eleven operator tests passed; one additional overall-deadline test passed and proved zero host calls after expiry. See CHECKS.json, ../TESTS.json and ../VISUAL-CONVERSATIONS.md.
 
-Remaining execution gates: independent Gatekeeper review of this exact candidate/packet, then authenticated Nr2 confirmation and fresh bound host preflight. The current Codex browser redirects to the login screen; no service disruption is permitted until that session is restored and verified. Existing conditional deployment approval is retained; no renewed permission is requested.
+Pre-dispatch execution gates (subsequently passed): independent Gatekeeper review of this exact candidate/packet, then authenticated Nr2 confirmation and fresh bound host preflight. The initial Codex browser navigation redirected to login; Gatekeeper subsequently verified the completed authenticated state before disruption (FINAL-UI.json). Existing conditional deployment approval is retained; no renewed permission is requested.
 
 Files in this directory are review copies. The canonical guarded execution directory is `tmp/isluno-visual-rollout`; do not execute these copies. All previous consumed deployment/recovery receipts remain untouched.

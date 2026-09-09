@@ -1,0 +1,21 @@
+{
+  "source": "0361641575552e5a78a671efbc1dd59b9d5196ba",
+  "test_evidence_commit": "50e54c7",
+  "application": {
+    "tests": 64,
+    "seconds": 32.919,
+    "success": true
+  },
+  "operator": {
+    "tests": 12,
+    "seconds": 36.419,
+    "success": true
+  },
+  "independent_native_authority_cases": 4,
+  "conversation_exports": 8,
+  "exports_sha256": "f1aefe6dcd20628f9878b06313b8142c30262e5d8b6a2f601b031af21f9500e7",
+  "network": "disabled Docker",
+  "paid_engineering_calls": 0,
+  "customer_sends": 0,
+  "host_calls": 0
+}

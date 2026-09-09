@@ -1,0 +1,14 @@
+{
+  "packet": "c64b08f7788cfd54391a63b6b445bb51d87d1bf8e11b670c1cfcc075caa2f3ee",
+  "archive_sha256": "06680cbb8539d86fdc132b29dbbe9d931ccbe4dc74b1ca48a5ea6c4cd01dbe6e",
+  "archive_bytes": 890880,
+  "exact_members": 10,
+  "python_sources_bound": 7,
+  "catalog_only_seven_context_additions": true,
+  "review_copies_match_canonical": true,
+  "source_unchanged_in_evidence_commit": true,
+  "dispatch_guard_absent": true,
+  "base_tag_sha_verified_by_operator": true,
+  "host_calls": 0,
+  "success": true
+}

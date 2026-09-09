@@ -1,0 +1,19 @@
+{
+  "status": "authenticated",
+  "observed_at_utc": "2026-09-09 19:24:25 UTC",
+  "url": "https://dashboard.unboks.org/today",
+  "tenant": "Isluno",
+  "counts": {
+    "itineraries": 0,
+    "trip_items": 0,
+    "demo_paid": 0,
+    "pending_review": 2
+  },
+  "historical_incidents": 3,
+  "rejected_reply_rows": 2,
+  "main_asset": "/assets/index-BGMwB8mS.js",
+  "browser_errors_or_warnings": [],
+  "conversation_opened": false,
+  "mutation": false,
+  "supersedes_initial_login_redirect": true
+}

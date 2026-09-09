@@ -25,11 +25,26 @@
     "model_and_HTTP": "scripted substitutes"
   },
   "Nr2_session": {
-    "status": "login_required",
-    "observed": "2026-09-09",
-    "url": "https://dashboard.unboks.org/login",
-    "browser": "Codex in-app browser for Builder",
-    "service_disruption_permitted": false
+    "status": "authenticated",
+    "observed_at_utc": "2026-09-09 19:24:25 UTC",
+    "url": "https://dashboard.unboks.org/today",
+    "tenant": "Isluno",
+    "counts": {
+      "itineraries": 0,
+      "trip_items": 0,
+      "demo_paid": 0,
+      "pending_review": 2
+    },
+    "historical_incidents": 3,
+    "rejected_reply_rows": 2,
+    "main_asset": "/assets/index-BGMwB8mS.js",
+    "browser_errors_or_warnings": [],
+    "conversation_opened": false,
+    "mutation": false,
+    "supersedes_initial_login_redirect": true
   },
-  "dispatched": false
+  "dispatched": true,
+  "independent_review": "FINAL-REVIEW.md",
+  "deployment_status": "fix_deployed_open",
+  "postdeployment": "live_verified"
 }

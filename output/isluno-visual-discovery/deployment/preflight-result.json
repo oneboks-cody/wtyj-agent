@@ -1,0 +1,2 @@
+{"status": "preflight_pass", "proof": {"sha256": "3928439de63ddc47eb0a03ef2a9595d32b83819f199e46169bd6bbc29035457f", "classification": "seven_retained_turns_four_accepted_two_rejected_plans_no_replay", "turns": 7, "accepted_plans": 4, "rejected_plans": 2, "historical_progress_labels_preserved": 3, "preserved_operator_notices": 2, "controls": {"row_present": true, "ai_muted": false, "ai_mute_source": "", "blocked": false}, "unreviewed_ledgers": ["isluno_conversation_turns", "isluno_discovery_plans", "isluno_recovery_incidents"]}}
+

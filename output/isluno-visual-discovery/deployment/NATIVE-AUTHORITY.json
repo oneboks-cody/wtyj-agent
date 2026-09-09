@@ -1,0 +1,26 @@
+[
+  {
+    "case": "guest_mutation",
+    "rejected": true,
+    "model_calls": 1,
+    "booking_and_guest_unchanged": true
+  },
+  {
+    "case": "booking_mutation",
+    "rejected": true,
+    "model_calls": 1,
+    "booking_and_guest_unchanged": true
+  },
+  {
+    "case": "wrong_language",
+    "rejected": true,
+    "model_calls": 1,
+    "booking_and_guest_unchanged": true
+  },
+  {
+    "case": "invalid_token",
+    "rejected": true,
+    "model_calls": 0,
+    "booking_and_guest_unchanged": true
+  }
+]
