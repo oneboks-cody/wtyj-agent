@@ -207,7 +207,8 @@ class QuoteTests(unittest.TestCase):
         self.quotes.public_base=''
         count=len(self.posts)
         self.assertFalse(self.send(quote['id']));self.assertEqual(count,len(self.posts))
-        self.assertTrue(all(d['status']=='queued' for d in self.quotes.list(self.scope())[0]['deliveries'] if d['job_id']==quote['id']))
+        states=[d['status'] for d in self.quotes.list(self.scope())[0]['deliveries'] if d['job_id']==quote['id']]
+        self.assertEqual(states[0],'blocked');self.assertTrue(all(state=='queued' for state in states[1:]))
 
     def test_immutable_pdf_and_snapshot_and_complete_long_summary(self):
         self.summary()
@@ -266,6 +267,10 @@ class QuoteTests(unittest.TestCase):
         summary=self.summary()
         self.assertFalse(send_job(self.scope().conversation_id,self.scope().account_id,summary['id'],store=self.quotes,
             post=lambda *a:self.fail('closed window dispatched'),window=lambda *a:{'open':False},sleep=self.sleep))
+        self.assertFalse(send_job(self.scope().conversation_id,self.scope().account_id,summary['id'],store=self.quotes,post=lambda *a:self.fail('held job replayed'),window=lambda *a:{'open':True},sleep=self.sleep))
+
+    def test_correction_during_send_keeps_accepted_prefix(self):
+        summary=self.summary()
         calls=[]
         def post(scope,body,key):
             calls.append(body)
@@ -311,6 +316,8 @@ class QuoteTests(unittest.TestCase):
         self.assertTrue(all(d['status']=='queued' for d in rows[0]['deliveries']))
         with self.discovery.db() as db:
             plan=json.loads(db.execute('SELECT payload FROM isluno_discovery_plans WHERE id=?',(result['media']['url'],)).fetchone()[0])
+        with self.discovery.db() as db,db:
+            db.execute("UPDATE isluno_discovery_plans SET status='accepted' WHERE id=?",(plan['id'],))
         help_token=plan['body']['buttons'][0]['payload']
         response,_=self.turn(token=help_token)
         self.assertIn('operator review',response['text'])

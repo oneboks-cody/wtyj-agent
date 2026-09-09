@@ -153,6 +153,8 @@ class ConversationTests(unittest.TestCase):
     def test_native_add_and_human_buttons_are_consumed_by_application(self):
         result, _ = self.turn(response())
         plan, _ = self.discovery.delivery_plan(result['media']['url'], self.scope().account_id, self.scope().conversation_id)
+        with self.discovery.db() as db,db:
+            db.execute("UPDATE isluno_discovery_plans SET status='accepted' WHERE id=?",(plan['id'],))
         token = plan['body']['buttons'][0]['payload']
         result, calls = self.turn(token=token)
         self.assertEqual(calls, 0)
@@ -160,6 +162,8 @@ class ConversationTests(unittest.TestCase):
         self.assertTrue(self.store.session(self.scope())['pending'])
         result, _ = self.turn(response(fact_keys=[], question='Would you like operator help?'))
         plan, _ = self.discovery.delivery_plan(result['media']['url'], self.scope().account_id, self.scope().conversation_id)
+        with self.discovery.db() as db,db:
+            db.execute("UPDATE isluno_discovery_plans SET status='accepted' WHERE id=?",(plan['id'],))
         token = plan['body']['buttons'][0]['payload']
         result, calls = self.turn(token=token)
         self.assertEqual(calls, 0)
@@ -405,6 +409,8 @@ class ConversationTests(unittest.TestCase):
             plan,_ = self.discovery.delivery_plan(result['media']['url'],self.scope().account_id,self.scope().conversation_id)
             self.assertEqual(plan['answer_status'],'unavailable')
             self.assertEqual(plan['body']['buttons'][0]['title'],'Ask the team')
+        with self.discovery.db() as db,db:
+            db.execute("UPDATE isluno_discovery_plans SET status='accepted' WHERE id=?",(plan['id'],))
         result,calls = self.turn(token=plan['body']['buttons'][0]['payload'])
         self.assertEqual(calls,0)
         self.assertIn('operator review',result['text'])

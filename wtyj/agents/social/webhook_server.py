@@ -2231,6 +2231,14 @@ def _flush_buffer(buffer_key):
                         return
                     if not batch_account_is_current():
                         return
+                    if (reply_media or {}).get('type') in {'isluno_discovery','isluno_quote','isluno_fulfillment'} and not reply_result.get('generation_failed'):
+                        try:
+                            from agents.social.isluno_recovery import reply_accepted
+                            reply_accepted(final_msg,reply_media)
+                        except Exception:
+                            # Provider acceptance cannot be undone by a local
+                            # projection failure or invite a second send.
+                            log('isluno_progress_record_failed',code='progress_store_unavailable')
                     if ali_turn_commit:
                         if not commit_ali_turn_delivery(
                             _zernio_conv,
@@ -2577,6 +2585,16 @@ async def receive_zernio_webhook(request: Request, background_tasks: BackgroundT
             )
             return PlainTextResponse(content="Unavailable", status_code=503)
         return PlainTextResponse(content="OK", status_code=200)
+    if payload.get('event') in {'message.failed','message.delivered','message.read'}:
+        from agents.social.isluno_transition import requested
+        if requested():
+            try:
+                from agents.social.isluno_callbacks import accept
+                accept(payload)
+            except Exception:
+                log('isluno_callback_accept_failed',code='callback_persistence_unavailable')
+                return PlainTextResponse(content='Unavailable',status_code=503)
+            return PlainTextResponse(content='OK',status_code=200)
     if payload.get("event") == "message.failed":
         failed = parse_zernio_failed_webhook(payload)
         if not failed:

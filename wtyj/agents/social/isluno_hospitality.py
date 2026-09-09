@@ -60,12 +60,16 @@ Never claim a price inquiry created a booking. Ask missing pricing details if ne
 
 NATURAL PRESENTATION:
 replies maps actual outcome branches to {paragraphs:[...], question:"one next question"}.
-Always supply browsing. For any action supply error plus the applicable success branches:
-add/new: pending/saved/choose_product/review; update: pending/saved/choose_item/review; human: review; cancel: cancelled/no_active/review;
-remove: saved/choose_item/review; summary: pending/saved; approve: approval_unavailable; documents/email/stop_reminders: saved.
-Supply choose_item/choose_product for unresolved selections. Booked changes use review.
-When the guest asks for a review, acknowledge that request and guide the existing
-Confirm details control. Do not ask again whether they want the review you are sending.
+Always supply browsing as a neutral shared answer: answer the guest's questions and
+acknowledge their request without claiming an operation has succeeded. For any booking
+action also supply error with {operation}. Other outcome branches are OPTIONAL; do not
+write every speculative branch. If omitted, the server combines the common answer with
+the actual authoritative outcome and actual missing-field question. Include a branch only
+when a materially different natural response is needed. Keep common prose concise.
+For a first general introduction without concrete activity preferences, welcome the guest,
+recognize their holiday, and ask one easy question about interests or company. Empty
+product_ids/fact_keys are valid here; do not force three recommendations into a greeting.
+For a fresh hello after a rejected reply, do not assume the guest saw your recommendations.
 The server selects the actual branch after applying the action. Never claim success in
 browsing or error. error is a failed attempted item update; other successful independent
 parts must still be answered. The server supplies the authoritative operation result.
@@ -168,22 +172,10 @@ def validate(value, decision, catalog):
     if 'estimate' in value:
         check('error' in replies, 'missing_estimate_error_reply')
     action = decision['booking']['action']
-    if action == 'stop_reminders':
+    if action == 'stop_reminders' and 'saved' in replies:
         check('operation' in [r for t in replies.get('saved', {}).get('paragraphs', []) for r in references(t)], 'missing_reminder_result')
     check(decision['intent'] != 'add' or action in {'add','new'}, 'contradictory_selection_authority')
     check((decision['intent'] == 'human') == (action == 'human'), 'contradictory_handoff_authority')
-    required = {
-        'add': {'pending','saved','choose_product','review'},
-        'new': {'pending','saved','choose_product'},
-        'update': {'pending','saved','choose_item','review'},
-        'remove': {'saved','choose_item','review'},
-        'cancel': {'cancelled','no_active','review'},
-        'human': {'review'},
-        'summary': {'pending','saved'},
-        'approve': {'approval_unavailable'},
-        'documents': {'saved'}, 'email': {'saved'}, 'stop_reminders': {'saved'},
-    }.get(action,set())
-    check(required <= set(replies), 'missing_possible_outcome_reply')
     if action != 'none':
         check('error' in replies and bool(consent['evidence'].strip()), 'missing_action_authority')
     return value
@@ -255,8 +247,9 @@ def present(value, decision, outcome, snapshot, *, now=None):
         except (ItineraryError, CatalogError) as exc:
             branch = 'error'
             outcome = {**outcome, 'error':exc.code if isinstance(exc, ItineraryError) else 'product_rules_unavailable'}
-    check(branch in value['replies'], 'missing_actual_outcome_reply')
-    selected = value['replies'][branch]
+    fallback=branch not in value['replies']
+    selected=copy.deepcopy(value['replies'].get(branch,value['replies']['browsing']))
+    if fallback:selected['paragraphs'].append('{operation}')
     products = {p['id']: p for p in snapshot['catalog']['products']}
     missing = None
     for pending in session['pending'].values():
@@ -268,6 +261,16 @@ def present(value, decision, outcome, snapshot, *, now=None):
             break
     bindings = {'operation': render(outcome, snapshot),
                 'missing_field': COPY[decision['language']][missing] if missing else ''}
+    if fallback and branch=='pending' and missing:
+        from agents.social.isluno_conversation import missing_prompt
+        question=missing_prompt(session,snapshot)
+        bindings['operation']='\n\n'.join(line for line in bindings['operation'].split('\n\n') if line!=question+'.')
+        selected['question']=question+'?'
+    elif fallback and branch in {'choose_item','choose_product'}:
+        selected['paragraphs']=[t for t in selected['paragraphs'] if t!='{operation}']
+        selected['question']='{operation}'
+    elif fallback and branch not in {'saved','browsing'}:
+        selected['question']=''
     if branch == 'error':
         bindings['operation'] = bindings['operation'].replace('\n\n', '\n')
     if action == 'stop_reminders':

@@ -81,7 +81,7 @@ class DiscoveryStore:
             row = db.execute('SELECT payload FROM isluno_discovery_plans WHERE scope_key=? AND trigger_id=?', (scope.key, trigger_id)).fetchone()
             return json.loads(row[0]) if row else None
 
-    def plan(self, scope, trigger_id, sent_at, decision=None, *, action_token=None, interactive_type=None, translations=None, response_text=None, catalog_snapshot=None, hospitality=None, next_question="", offer_selection=True):
+    def plan(self, scope, trigger_id, sent_at, decision=None, *, action_token=None, interactive_type=None, translations=None, response_text=None, catalog_snapshot=None, hospitality=None, next_question="", offer_selection=True, source_trigger_id=None):
         require_scope(scope)
         check(isinstance(trigger_id, str) and 0 < len(trigger_id) <= 512, 'missing_verified_message_id')
         try:
@@ -100,13 +100,13 @@ class DiscoveryStore:
             offset, info_offset, selected_intent, force_single = 0, 0, None, False
             if action_token is not None:
                 check(interactive_type in {'button_reply', 'list_reply'}, 'unverified_discovery_action')
-                row = db.execute('SELECT a.action_json,p.payload,l.plan_id FROM isluno_discovery_actions a JOIN isluno_discovery_plans p ON p.id=a.plan_id JOIN isluno_discovery_latest l ON l.scope_key=p.scope_key WHERE a.token=? AND p.scope_key=?',
+                row = db.execute('SELECT a.action_json,p.payload,p.status,l.plan_id FROM isluno_discovery_actions a JOIN isluno_discovery_plans p ON p.id=a.plan_id JOIN isluno_discovery_latest l ON l.scope_key=p.scope_key WHERE a.token=? AND p.scope_key=?',
                                  (action_token, scope.key)).fetchone()
                 check(row is not None, 'invalid_discovery_action')
                 old, action = json.loads(row['payload']), json.loads(row['action_json'])
                 translations = old.get('translations', {})
                 offer_selection = old.get('offer_selection', True)
-                check(row['plan_id'] == old['id'] and old['catalog_revision'] == snapshot['revision']
+                check(row['status'] == 'accepted' and row['plan_id'] == old['id'] and old['catalog_revision'] == snapshot['revision']
                       and datetime.fromisoformat(old['expires_at']) > self.clock(), 'stale_discovery_action')
                 selected_product = action['product_id']
                 selected_keys = old.get('product_fact_keys', {}).get(selected_product, [])
@@ -174,7 +174,7 @@ class DiscoveryStore:
                 native = not force_single and (config_loader.get_raw().get('isluno') or {}).get('native_carousels') is True
                 excluded_assets = set()
                 if hospitality and hospitality['photo'] != 'repeat':
-                    for sent in db.execute("SELECT payload FROM isluno_discovery_plans WHERE scope_key=? AND status IN ('accepted','claimed','ambiguous')", (scope.key,)):
+                    for sent in db.execute("SELECT payload FROM isluno_discovery_plans WHERE scope_key=? AND status IN ('accepted','claimed','ambiguous','rejected')", (scope.key,)):
                         prior = json.loads(sent[0])
                         if prior.get('product_ids') == [product['id']]:
                             excluded_assets.update(prior.get('asset_ids', []))
@@ -214,7 +214,6 @@ class DiscoveryStore:
                 check(isinstance(response_text, str) and 0 < len(response_text) <= 4096, 'invalid_conversation_reply')
                 if hospitality:
                     if 'interactive' in body:
-                        check(len(response_text) <= 1024, 'carousel_text_too_long')
                         body['interactive']['body']['text'] = response_text
                     else:
                         body['message'] = response_text
@@ -241,9 +240,11 @@ class DiscoveryStore:
                           'pt':'As informações da viagem mudaram. Peça os dados mais recentes antes de confirmar.',
                           'pap':'Informashon di biahe a kambia. Puntra pa e datonan mas resien promé ku konfirmá.'}[locale]
                 content = body.get('message') or body['interactive']['body']['text']
-                body = {'accountId': scope.account_id, 'message': content[:3500] + '\n\n' + notice, 'buttons': []}
+                body = {'accountId': scope.account_id, 'message': content + '\n\n' + notice, 'buttons': []}
                 asset_ids, missing, fallback = [], [], None
-            payload = {'id': plan_id, 'scope': scope.__dict__, 'trigger_id': trigger_id, 'trigger_sent_at': sent_at,
+            from agents.social.isluno_wire import messages
+            parts=[{'body':b,'status':'queued','provider_id':None} for b in messages(body,next_question)]
+            payload = {'source_trigger_id':source_trigger_id or trigger_id,'parts':parts,'id': plan_id, 'scope': scope.__dict__, 'trigger_id': trigger_id, 'trigger_sent_at': sent_at,
                        'catalog_revision': snapshot['revision'], 'catalog_version': snapshot['catalog']['version'], 'catalog_superseded': superseded,
                        'product_ids': decision['product_ids'], 'language': locale, 'fact_keys': decision['fact_keys'],
                        'product_fact_keys': fact_association, 'answer_status': answer_status, 'translations': translations,
@@ -255,6 +256,27 @@ class DiscoveryStore:
                 db.execute('INSERT INTO isluno_discovery_actions VALUES(?,?,?)', (token, plan_id, dump(action)))
             db.execute('INSERT INTO isluno_discovery_latest VALUES(?,?) ON CONFLICT(scope_key) DO UPDATE SET plan_id=excluded.plan_id', (scope.key, plan_id))
             return payload
+
+    def notice(self, scope, trigger_id, sent_at, text, *, source_trigger_id):
+        """Persist only an approved operational failure notice without catalog I/O."""
+        from agents.social.isluno_recovery_copy import PROCESSING_FAILED, RESPONSE_FAILED, STALE_CHOICE
+        from agents.social.isluno_wire import messages
+        require_scope(scope)
+        check(text in {*PROCESSING_FAILED.values(), *RESPONSE_FAILED.values(), *STALE_CHOICE.values()}, 'invalid_failure_notice')
+        check(isinstance(trigger_id,str) and 0<len(trigger_id)<=512,'missing_verified_message_id')
+        inbound=datetime.fromisoformat(sent_at.replace('Z','+00:00'))
+        check(inbound.tzinfo is not None and timedelta(0)<=self.clock()-inbound<timedelta(hours=24),'invalid_inbound_time')
+        body={'accountId':scope.account_id,'message':text}
+        with self.db() as db,db:
+            db.execute('BEGIN IMMEDIATE')
+            old=db.execute('SELECT payload FROM isluno_discovery_plans WHERE scope_key=? AND trigger_id=?',(scope.key,trigger_id)).fetchone()
+            if old:return json.loads(old[0])
+            plan={'id':new_id(),'scope':scope.__dict__,'trigger_id':trigger_id,'source_trigger_id':source_trigger_id,
+                  'trigger_sent_at':sent_at,'created_at':self.clock().isoformat(),'expires_at':(inbound+timedelta(hours=24)).isoformat(),
+                  'body':body,'parts':[{'body':b,'status':'queued','provider_id':None} for b in messages(body)],
+                  'product_ids':[],'asset_ids':[],'next_question':'','button_meanings':{},'operational_notice':True}
+            db.execute('INSERT INTO isluno_discovery_plans(id,scope_key,trigger_id,payload) VALUES(?,?,?,?)',(plan['id'],scope.key,trigger_id,dump(plan)))
+            return plan
 
     def source_snapshot(self, scope, plan):
         require_scope(scope)
@@ -281,7 +303,7 @@ class DiscoveryStore:
         recent = sum(datetime.fromisoformat(json.loads(row[0])['created_at']) > self.clock() - timedelta(hours=1) for row in rows)
         check(recent < 50, 'discovery_rate_limited')
 
-    def delivery_plan(self, plan_id, account_id, conversation_id):
+    def delivery_plan(self, plan_id, account_id, conversation_id, *, allow_expired=False):
         with self.db() as db:
             row = db.execute('SELECT payload,status FROM isluno_discovery_plans WHERE id=?', (plan_id,)).fetchone()
         check(row is not None, 'discovery_plan_missing')
@@ -289,9 +311,7 @@ class DiscoveryStore:
         scope = JourneyScope(**plan['scope'])
         require_scope(scope)
         check(scope.account_id == account_id and scope.conversation_id == conversation_id, 'discovery_delivery_scope_mismatch')
-        with self.db() as db:
-            latest = db.execute('SELECT plan_id FROM isluno_discovery_latest WHERE scope_key=?', (scope.key,)).fetchone()
-        check(latest is not None and latest[0] == plan_id and datetime.fromisoformat(plan['expires_at']) > self.clock(), 'stale_discovery_delivery')
+        check(allow_expired or datetime.fromisoformat(plan['expires_at']) > self.clock(), 'stale_discovery_delivery')
         return plan, row['status']
 
 

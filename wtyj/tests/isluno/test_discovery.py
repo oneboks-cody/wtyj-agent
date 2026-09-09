@@ -69,6 +69,9 @@ class DiscoveryTests(unittest.TestCase):
         return self.store().plan(self.scope(), trigger, NOW.isoformat(), copy.deepcopy(DECISION), **kwargs)
 
     def click(self, plan, title, trigger, **kwargs):
+        # Fixture represents a button from an accepted previous message.
+        with self.store().db() as db,db:
+            db.execute("UPDATE isluno_discovery_plans SET status='accepted' WHERE id=? AND status='queued'",(plan['id'],))
         token = next(b['payload'] for b in replies(plan['body']) if b['title'] == title)
         return self.store().plan(self.scope(), trigger, self.now.isoformat(), action_token=token, interactive_type='button_reply', **kwargs)
 
@@ -128,12 +131,14 @@ class DiscoveryTests(unittest.TestCase):
             self.click(current, 'Add trip', 'catalog-after')
 
     def test_expired_action_and_old_delivery_are_rejected(self):
+        unsent=self.plan('never-sent')
         plan = self.plan()
         self.now += timedelta(hours=24, seconds=1)
         with self.assertRaises(ItineraryError):
             self.click(plan, 'Add trip', 'expired')
         calls = []
-        self.assertFalse(send_plan(self.scope().conversation_id, self.scope().account_id, plan['id'], store=self.store(), post=lambda *a: calls.append(a)))
+        self.assertTrue(send_plan(self.scope().conversation_id, self.scope().account_id, plan['id'], store=self.store(), post=lambda *a: calls.append(a)))
+        self.assertFalse(send_plan(self.scope().conversation_id, self.scope().account_id, unsent['id'], store=self.store(), post=lambda *a: calls.append(a)))
         self.assertEqual(calls, [])
 
     def test_choose_add_and_duplicate_turn_do_not_create_booking(self):
@@ -175,6 +180,8 @@ class DiscoveryTests(unittest.TestCase):
         self.assertEqual(handle_message(inbound, store=self.store(), understand=understanding), result)
         self.assertEqual(len(calls), 1)
         plan, _ = self.store().delivery_plan(result['media']['url'], self.scope().account_id, self.scope().conversation_id)
+        with self.store().db() as db,db:
+            db.execute("UPDATE isluno_discovery_plans SET status='accepted' WHERE id=?",(plan['id'],))
         token = replies(plan['body'])[0]['payload']
         inbound.update(message_id='adapter-button', _zernio_interactive_id=token, _zernio_interactive_type='button_reply')
         chosen = handle_message(inbound, store=self.store(), understand=understanding)
@@ -193,6 +200,8 @@ class DiscoveryTests(unittest.TestCase):
         args = (self.scope().conversation_id, self.scope().account_id, plan['id'])
         self.assertFalse(send_plan(*args, store=self.store(), post=post, window=lambda *a: {'open': False}))
         self.assertEqual(calls, [])
+        self.assertFalse(send_plan(*args, store=self.store(), post=post, window=lambda *a: {'open': True}))
+        plan=self.plan('fresh-send');args=(args[0],args[1],plan['id'])
         self.assertTrue(send_plan(*args, store=self.store(), post=post, window=lambda *a: {'open': True}))
         self.assertTrue(send_plan(*args, store=self.store(), post=post, window=lambda *a: {'open': True}))
         self.assertEqual(len(calls), 1)
@@ -237,6 +246,8 @@ class DiscoveryTests(unittest.TestCase):
         decision = dict(DECISION, product_ids=['fixture-cruise', 'other-trip'], fact_keys=['inclusion_0'], intent='discover')
         plan = self.store().plan(self.scope(), 'heterogeneous', NOW.isoformat(), decision)
         self.assertEqual(plan['product_fact_keys'], {'fixture-cruise': ['inclusion_0'], 'other-trip': []})
+        with self.store().db() as db,db:
+            db.execute("UPDATE isluno_discovery_plans SET status='accepted' WHERE id=?",(plan['id'],))
         token = next(b['payload'] for b in replies(plan['body']) if b['title'] == '2. Choose')
         inbound = WhatsAppZernioChannel.from_zernio({'conversation_id': self.scope().conversation_id,
             'account_id': self.scope().account_id, 'sender_id': self.scope().customer_ref,
@@ -306,10 +317,11 @@ class DiscoveryTests(unittest.TestCase):
 
     def test_claimed_crash_cannot_be_replayed_as_a_new_send(self):
         plan = self.plan()
+        class Crash(BaseException):pass
         def crash(*args):
-            raise RuntimeError('synthetic process failure')
+            raise Crash('synthetic process failure')
         args = (self.scope().conversation_id, self.scope().account_id, plan['id'])
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(Crash):
             send_plan(*args, store=self.store(), post=crash, window=lambda *a: {'open': True})
         calls = []
         self.assertFalse(send_plan(*args, store=self.store(), post=lambda *a: calls.append(a), window=lambda *a: {'open': True}))
@@ -350,7 +362,7 @@ class DiscoveryTests(unittest.TestCase):
         with patch.dict('os.environ', {'LATE_API_KEY': 'synthetic-no-network'}), \
              patch.object(client, '_provider_mutation_account_allowed', return_value=False), \
              patch.object(client.http_requests, 'post') as post:
-            self.assertEqual(post_once(self.scope(), {'accountId': self.scope().account_id}, 'fixture')['status'], 'blocked')
+            self.assertEqual(post_once(self.scope(), {'accountId': self.scope().account_id, 'message':'Fixture'}, 'fixture')['status'], 'blocked')
             post.assert_not_called()
 
     def test_future_inbound_and_disabled_sender_fail_closed(self):

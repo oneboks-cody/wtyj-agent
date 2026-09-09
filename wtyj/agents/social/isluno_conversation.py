@@ -309,6 +309,16 @@ def render(outcome, snapshot):
         total = itinerary['totals']
         if total['currency']:
             lines.append(words[14] + ': ' + total['currency'] + ' ' + str(total['total_minor']//100) + '.' + str(total['total_minor']%100).zfill(2))
+    prompt = missing_prompt(session, snapshot)
+    if prompt:
+        lines.append(prompt + '.')
+    if session['document_language']:
+        lines.append(words[15] + ': ' + session['document_language'])
+    return '\n\n'.join(lines)[:4096]
+
+
+def missing_prompt(session, snapshot):
+    words = COPY[session['chat_language']]
     for pending in session['pending'].values():
         try:
             missing = complete_selection(copy.deepcopy(pending), session['guest'], snapshot)
@@ -322,11 +332,8 @@ def render(outcome, snapshot):
             if product and missing == 7:
                 rules = quote_rules(product, mode='demo')['rules']
                 prompt += ' (' + ', '.join(slot['start'] for slot in rules['schedule']['slots']) + ')'
-            lines.append(prompt + '.')
-            break
-    if session['document_language']:
-        lines.append(words[15] + ': ' + session['document_language'])
-    return '\n\n'.join(lines)[:4096]
+            return prompt
+    return ''
 
 
 def handle_message(message, *, store=None, discovery=None, understand=None):
@@ -336,21 +343,20 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
     scope=verified_scope(account_id=message.get('_zernio_account_id',''),conversation_id=message.get('from',''),customer_ref=message.get('_zernio_sender_id',''))
     trigger=message.get('message_id') or message.get('_ali_action_id')
     check(isinstance(trigger,str) and bool(trigger),'missing_verified_message_id')
-    ensure(store.itinerary.db_path,store.itinerary.clock())
-    check(not quarantined_inbound([trigger],store.itinerary.db_path),'legacy_turn_quarantined')
     recovery=RecoveryStore(store)
-    recovery.observe(scope,trigger,message.get('_zernio_sent_at',''))
-    recovery.reconcile_claims()
-    token=str(message.get('_zernio_interactive_id',''))
-    if token and not token.startswith(('ip_','ie_','iq_','isl_')):
-        recovery.incident(scope,trigger,'legacy_action','quarantined_legacy_button')
-        raise ItineraryError('legacy_action_quarantined')
     try:
+        ensure(store.itinerary.db_path,store.itinerary.clock())
+        check(not quarantined_inbound([trigger],store.itinerary.db_path),'legacy_turn_quarantined')
+        recovery.observe(scope,trigger,message.get('_zernio_sent_at',''))
+        recovery.reconcile_claims()
+        token=str(message.get('_zernio_interactive_id',''))
+        if token and not token.startswith(('ip_','ie_','iq_','isl_')):
+            raise ItineraryError('legacy_action_quarantined')
         result=_handle_message(message,store=store,discovery=discovery,understand=understand)
     except PermissionError:
         raise
     except Exception as exc:
-        if isinstance(exc, ItineraryError) and exc.code in {'understanding_already_claimed', 'invalid_discovery_action', 'stale_discovery_action', 'unverified_discovery_action', 'invalid_quote_action', 'invalid_payment_action'}:
+        if isinstance(exc, ItineraryError) and exc.code in {'understanding_already_claimed', 'legacy_turn_quarantined'}:
             raise
         try:
             recovery.incident(scope,trigger,'conversation_failure',exc.code if isinstance(exc, ItineraryError) else type(exc).__name__)
@@ -358,10 +364,13 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
             raise
         except Exception:
             pass  # Incident persistence must not swallow an already-claimed reply.
-        result=failure_reply(store, discovery, scope, trigger, message)
+        result=failure_reply(store, discovery, scope, trigger, message, stale_choice=isinstance(exc,ItineraryError) and exc.code in {'stale_discovery_action','stale_quote_action','stale_quote_catalog'})
     if not result.get('generation_failed'):
-        recovery.progress(scope,trigger)
-        recovery.schedule(scope,trigger,result)
+        try:
+            recovery.schedule(scope,trigger,result)
+        except Exception:
+            from shared import bm_logger
+            bm_logger.log('isluno_reminder_schedule_failed',code='schedule_store_unavailable')
     return result
 
 
@@ -498,7 +507,7 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
     selected_products = {i['product']['id'] for i in (outcome['itinerary'] or {}).get('items', [])} | {p.get('product_id') for p in outcome['session']['pending'].values()}
     offer_selection = booking['action'] == 'none' and not selected_products.intersection(decision['product_ids'])
     plan = discovery.plan(scope, reply_trigger, timestamp, base, translations=decision['translations'], response_text=response_text, catalog_snapshot=snapshot,
-                          hospitality=decision.get('hospitality'), next_question=next_question, offer_selection=offer_selection)
+                          hospitality=decision.get('hospitality'), next_question=next_question, offer_selection=offer_selection, source_trigger_id=trigger)
     if prepared_quote and decision.get('hospitality'):
         from agents.social.isluno_quotes import QuoteStore, envelope as quote_envelope
         return quote_envelope(QuoteStore(store).compose_answer(scope, trigger, timestamp, prepared_quote, plan))
@@ -512,16 +521,16 @@ def envelope(plan):
             'media': {'url': plan['id'], 'type': 'isluno_discovery', 'caption': 'Isluno itinerary'}}
 
 
-def failure_reply(store, discovery, scope, trigger, message, *, understanding_failed=False):
+def failure_reply(store, discovery, scope, trigger, message, *, understanding_failed=False, stale_choice=False):
     """Best-effort history/plan persistence after verified scope and inbound claim.
 
     This never bypasses the webhook's lease/account/automation guards or retries an
     action. Storage failure cannot manufacture history, but must not hide the text.
     """
-    from agents.social.isluno_recovery_copy import PROCESSING_FAILED, RESPONSE_FAILED
+    from agents.social.isluno_recovery_copy import PROCESSING_FAILED, RESPONSE_FAILED, STALE_CHOICE
     require_scope(scope)
     check(isinstance(trigger, str) and bool(trigger), 'missing_verified_message_id')
-    copy = PROCESSING_FAILED if understanding_failed else RESPONSE_FAILED
+    copy = STALE_CHOICE if stale_choice else PROCESSING_FAILED if understanding_failed else RESPONSE_FAILED
     text = copy['en']
     try:
         discovery = discovery or DiscoveryStore(store.itinerary.db_path, store.itinerary.catalog_path, clock=store.itinerary.clock)
@@ -533,9 +542,20 @@ def failure_reply(store, discovery, scope, trigger, message, *, understanding_fa
                 session['history'] = (session['history'] + [{'role':'user','content':message.get('text',''), 'trigger_id':trigger}])[-100:]
             db.execute('INSERT INTO isluno_booking_sessions VALUES(?,?) ON CONFLICT(scope_key) DO UPDATE SET payload=excluded.payload', (scope.key, encoded(session)))
         base = {'language':session['chat_language'], 'product_ids':[], 'fact_keys':[], 'intent':'discover', 'question':''}
-        plan = discovery.plan(scope, 'failure-' + opaque(scope,trigger,'ack'), message.get('_zernio_sent_at',''), base, response_text=text)
+        plan = discovery.plan(scope, 'failure-' + opaque(scope,trigger,'ack'), message.get('_zernio_sent_at',''), base, response_text=text, source_trigger_id=trigger)
         return {**envelope(plan), 'generation_failed':True}
     except PermissionError:
         raise
     except Exception:
-        return {'text':text, 'generation_failed':True}
+        try:
+            plan = discovery.notice(scope, 'failure-' + opaque(scope,trigger,'ack'),
+                                    message.get('_zernio_sent_at',''), text, source_trigger_id=trigger)
+            return {**envelope(plan), 'generation_failed':True}
+        except PermissionError:
+            raise
+        except Exception:
+            # Storage is required for a one-attempt claim. The webhook records
+            # its durable delivery-failure notification; never bypass its ledger.
+            from shared import bm_logger
+            bm_logger.log('isluno_failure_notice_unavailable',code='notice_store_unavailable')
+            raise ItineraryError('notice_store_unavailable')

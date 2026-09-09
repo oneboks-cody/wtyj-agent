@@ -2159,7 +2159,7 @@ def process_message(
             from agents.social import isluno_conversation_understanding
             system_prompt = isluno_conversation_understanding.system_prompt()
             tool_schema = isluno_conversation_understanding.TOOL
-            user_prompt = json.dumps({"latest_guest": body, "saved_context": thread_fields, "history": messages or []}, ensure_ascii=False)
+            user_prompt = json.dumps({"latest_guest": body, "saved_context": {k:v for k,v in thread_fields.items() if k != "history"}, "history": messages or []}, ensure_ascii=False, separators=(",", ":"))
         elif response_contract == "isluno_discovery":
             from agents.social import isluno_understanding
             system_prompt = isluno_understanding.system_prompt()

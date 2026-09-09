@@ -93,7 +93,7 @@ def send_fulfillment(conversation_id, account_id, job_id, *, store=None, dispatc
             db.execute("UPDATE isluno_operator_requests SET status='resolved' WHERE id=? AND scope_key=? AND reason='demo_fulfillment_review'",('fulfillment-'+job['payment_id'],scope.key))
     if not result:
         with store.db() as db,db:
-            uncertain=db.execute("SELECT 1 FROM isluno_quote_deliveries WHERE job_id=? AND status IN ('ambiguous','claimed','rejected')",(job_id,)).fetchone()
+            uncertain=db.execute("SELECT 1 FROM isluno_quote_deliveries WHERE job_id=? AND status IN ('ambiguous','claimed','rejected','provider_failed','blocked','window_closed','validation_failed','pacing_deferred')",(job_id,)).fetchone()
             if uncertain:
                 key='fulfillment-'+job['payment_id']
                 db.execute("INSERT OR IGNORE INTO isluno_operator_requests(id,scope_key,itinerary_id,reason,request_json) VALUES(?,?,?,'demo_fulfillment_review',?)",(key,scope.key,store._paid(db,scope,job['payment_id'])['itinerary_id'],json.dumps({'job_id':job_id})))

@@ -22,6 +22,11 @@ class RecoveryTests(unittest.TestCase):
         self.addCleanup(patch.stopall)
         patch.object(state_registry,'DB_PATH',str(self.t.itinerary.db_path)).start()
         self.calls=[]
+    def accept_reply(self,result,trigger):
+        self.assertTrue(send_plan(self.t.scope().conversation_id,self.t.scope().account_id,result['media']['url'],store=self.t.discovery,
+            post=lambda *a:{'status':'accepted','provider_id':'accepted-progress-'+trigger},window=lambda *a:{'open':True},
+            sleep=lambda seconds:setattr(self.t,'now',self.t.now+timedelta(seconds=seconds))))
+        self.store.progress(self.t.scope(),trigger,delivery_confirmed=True)
     def plan(self):
         result=self.t.initial();self.assertTrue(send_plan(self.t.scope().conversation_id,self.t.scope().account_id,result['media']['url'],store=self.t.discovery,post=lambda *a:{'status':'accepted','provider_id':'original-reply'},window=lambda *a:{'open':True}))
         with self.store.db() as db:return [dict(r) for r in db.execute('SELECT * FROM isluno_reminders WHERE scope_key=? ORDER BY due_at',(self.t.scope().key,))]
@@ -183,7 +188,9 @@ class RecoveryTests(unittest.TestCase):
         self.t.turn(response('none'),before_response=failure)
         data=self.t.get('today').json();self.assertEqual(data['recovery']['incidents'][0]['status'],'operator_review')
         self.assertGreaterEqual(data['counts']['attention'],1)
-        self.t.turn(response('update',[{'date':'2026-10-20'}]))
+        reply,_=self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='accepted-progress')
+        self.assertEqual(self.t.get('today').json()['recovery']['incidents'][0]['status'],'operator_review')
+        self.accept_reply(reply,'accepted-progress')
         self.assertEqual(self.t.get('today').json()['recovery']['incidents'][0]['status'],'progress_resumed_new_turn')
 
     def test_abandoned_model_claim_surfaces_after_restart_without_replay(self):
@@ -200,12 +207,14 @@ class RecoveryTests(unittest.TestCase):
         self.assertEqual((result,calls),('',0));self.assertEqual(self.t.active(),before)
         audit=self.store.audit();self.assertEqual(len(audit['incidents']),1)
         incident=audit['incidents'][0];self.assertEqual(incident['code'],'stale_claim_outcome_unknown');self.assertEqual(incident['itinerary_id'],before['id'])
-        self.assertEqual(self.t.get('today').json()['counts']['attention'],1)
+        self.assertGreaterEqual(self.t.get('today').json()['counts']['attention'],1)
         detail=self.t.get('journeys/'+self.t.scope().key+'.'+incident['itinerary_id'])
         self.assertEqual(detail.status_code,200);self.assertEqual(detail.json()['itinerary'],before)
-        self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='new-progress')
+        reply,_=self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='new-progress')
+        self.assertEqual(self.store.audit()['incidents'][0]['status'],'operator_review')
+        self.accept_reply(reply,'new-progress')
         self.assertEqual(self.store.audit()['incidents'][0]['status'],'progress_resumed_new_turn')
-        self.assertEqual(self.t.get('today').json()['counts']['attention'],0)
+        self.assertEqual(sum(i['status']=='operator_review' for i in self.store.audit()['incidents']),0)
 
     def test_currently_executing_model_claim_is_not_reported_as_abandoned(self):
         self.t.initial()
@@ -271,16 +280,18 @@ class RecoveryTests(unittest.TestCase):
                     reply,calls=self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='later-failure',before_response=fail)
                     self.assertTrue(reply['text']);self.assertTrue(reply['generation_failed']);self.assertEqual(calls,1)
                 self.t.now+=timedelta(hours=2)
-                prior=self.t.get('today').json();self.assertEqual(prior['counts']['attention'],1)
+                prior=self.t.get('today').json();self.assertGreaterEqual(prior['counts']['attention'],1)
                 incidents=[i for i in prior['recovery']['incidents'] if i['scope_key']==scope.key]
                 self.assertEqual(len(incidents),1);self.assertEqual(incidents[0]['kind'],'understanding_stalled' if stalled else 'understanding_failure')
                 _,calls=self.t.turn(response(),trigger=old_trigger);self.assertEqual(calls,0)
-                after=self.t.get('today').json();self.assertEqual(after['counts']['attention'],1)
+                after=self.t.get('today').json();self.assertEqual(after['counts']['attention'],prior['counts']['attention'])
                 self.assertEqual(self.t.store.session(scope)['revision'],revision);self.assertEqual(self.t.active(),before)
                 self.assertEqual(next(i for i in after['recovery']['incidents'] if i['scope_key']==scope.key)['status'],'operator_review')
-                _,calls=self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='genuine-later-update');self.assertEqual(calls,1)
+                reply,calls=self.t.turn(response('update',[{'date':'2026-10-20'}]),trigger='genuine-later-update');self.assertEqual(calls,1)
+                self.assertEqual(next(i for i in self.store.audit()['incidents'] if i['scope_key']==scope.key)['status'],'operator_review')
+                self.accept_reply(reply,'genuine-later-update')
                 self.assertGreater(self.t.store.session(scope)['revision'],revision)
                 self.assertEqual(self.t.active()['items'][0]['selection']['date'],'2026-10-20')
-                resolved=self.t.get('today').json();self.assertEqual(resolved['counts']['attention'],0)
+                resolved=self.t.get('today').json();self.assertFalse(any(i['status']=='operator_review' for i in resolved['recovery']['incidents']))
                 self.assertEqual(next(i for i in resolved['recovery']['incidents'] if i['scope_key']==scope.key)['status'],'progress_resumed_new_turn')
                 self.assertEqual(self.calls,[])

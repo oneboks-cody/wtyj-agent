@@ -191,6 +191,19 @@ class QuoteStore:
     def _record(self, db, scope, trigger, fingerprint, job_id):
         db.execute('INSERT INTO isluno_quote_requests VALUES(?,?,?,?)', (scope.key,trigger,fingerprint,job_id))
 
+    def fully_accepted(self,db,scope,job_id,seen=None):
+        require_scope(scope);seen=set() if seen is None else seen
+        if job_id in seen or len(seen)>=50:return False
+        seen.add(job_id)
+        row=db.execute('SELECT payload FROM isluno_quote_jobs WHERE id=? AND scope_key=?',(job_id,scope.key)).fetchone()
+        if not row:return False
+        job=json.loads(row[0]);rows=db.execute('SELECT status FROM isluno_quote_deliveries WHERE job_id=?',(job_id,)).fetchall()
+        if not rows or any(row[0]!='accepted' for row in rows):return False
+        if job.get('answer_plan_id'):
+            if not db.execute("SELECT 1 FROM isluno_discovery_plans WHERE id=? AND scope_key=? AND status='accepted'",(job['answer_plan_id'],scope.key)).fetchone():return False
+        followup=job.get('followup_job_id') or job.get('fulfillment_job_id')
+        return not followup or self.fully_accepted(db,scope,followup,seen)
+
     def act(self, scope, trigger, sent_at, token, interactive_type):
         require_scope(scope)
         self._timestamp(sent_at)
@@ -207,7 +220,7 @@ class QuoteStore:
             check(stage in {required, target} or row['kind'] == 'confirm_summary' and stage == 'approved', 'wrong_quote_stage')
             if stage == required:
                 latest = db.execute('SELECT id FROM isluno_quote_jobs WHERE quote_id=? ORDER BY rowid DESC LIMIT 1', (snapshot['id'],)).fetchone()[0]
-                check(not db.execute("SELECT 1 FROM isluno_quote_deliveries WHERE job_id=? AND status!='accepted'", (latest,)).fetchone(), 'quote_not_fully_accepted')
+                check(self.fully_accepted(db,scope,latest), 'quote_not_fully_accepted')
                 session, _ = self._current(db, scope)
                 session['revision'] += 1
                 session['stage'] = 'payment_confirmation' if target == 'approved' else 'review_approval'

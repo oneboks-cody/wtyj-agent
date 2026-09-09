@@ -97,6 +97,19 @@ def validate_translations(translations, decision, catalog):
             check(needed <= set(provided), 'translation_missing')
 
 
+
+def prompt_state(saved):
+    """Project current conversational state; history has one separate owner."""
+    keys=('revision','guest','pending','active_itinerary_id','chat_language','document_language',
+          'item_details','browsing','stage','last_accepted_question','current_time','timezone','discovery','quote_context')
+    result={k:copy.deepcopy(saved[k]) for k in keys if k in saved}
+    itinerary=saved.get('itinerary')
+    if itinerary:
+        result['itinerary']={k:copy.deepcopy(itinerary[k]) for k in ('id','revision','status','totals') if k in itinerary}
+        result['itinerary']['items']=[{k:copy.deepcopy(item[k]) for k in ('id','item_id','product','selection','starts_at','ends_at','total_minor','currency','currency_exponent','lines') if k in item} for item in itinerary.get('items',[])]
+    return result
+
+
 def understand(scope, text, saved, snapshot):
     from shared.isluno_config import require_scope
     from agents.marina import marina_agent
@@ -107,7 +120,7 @@ def understand(scope, text, saved, snapshot):
         product = products[entry['id']]
         entry['booking_rules'] = quote_rules(product, mode='demo') if product['readiness']['quotable'] else None
     result = marina_agent.process_message(from_email=scope.customer_ref, subject='Isluno itinerary', body=text,
-        thread_fields={'catalog': catalog, **saved}, thread_flags={}, channel='whatsapp',
+        thread_fields={'catalog': catalog, **prompt_state(saved)}, thread_flags={}, channel='whatsapp',
         messages=saved.get('history', []), response_contract='isluno_conversation')
     check(not result.get('generation_failed'), (result.get('model_error') or {}).get('code') or 'conversation_generation_failed')
     validated = validate(result, catalog)

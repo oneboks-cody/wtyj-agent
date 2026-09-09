@@ -90,7 +90,7 @@ class PaymentStore(QuoteStore):
             quote, stage=self._valid(db,scope,action['quote_id'])
             check(stage=='approved','quote_not_approved')
             latest=db.execute('SELECT id FROM isluno_quote_jobs WHERE quote_id=? ORDER BY rowid DESC LIMIT 1',(quote['id'],)).fetchone()[0]
-            check(not db.execute("SELECT 1 FROM isluno_quote_deliveries WHERE job_id=? AND status!='accepted'",(latest,)).fetchone(),'payment_prompt_not_accepted')
+            check(self.fully_accepted(db,scope,latest),'payment_prompt_not_accepted')
             check(not db.execute("SELECT 1 FROM isluno_operator_requests WHERE scope_key=? AND status IN ('pending','active')",(scope.key,)).fetchone(),'operator_review_active')
             payment_id=secrets.token_hex(16);job_id=secrets.token_hex(16)
             snapshot=copy.deepcopy(quote)

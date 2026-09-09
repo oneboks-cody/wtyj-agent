@@ -1038,8 +1038,16 @@ def handle_incoming_whatsapp_message(message: dict, channel: str = "whatsapp",
         from shared.isluno_pricing import ItineraryError
         try:
             return handle_message(message) if include_media else ""
-        except (isluno_config.IslunoUnavailable, ItineraryError):
+        except isluno_config.IslunoUnavailable:
+            bm_logger.log('isluno_reply_suppressed',code='scope_unavailable')
             return ""
+        except ItineraryError as exc:
+            if exc.code in {'understanding_already_claimed','legacy_turn_quarantined','missing_verified_message_id'}:
+                bm_logger.log('isluno_reply_suppressed',code=exc.code)
+                return ""
+            # A storage/operational failure must reach the durable webhook
+            # failure owner instead of becoming ignored/no_reply_returned.
+            raise
 
     # Get existing booking state
     state = state_registry.wa_get_booking_state(phone)

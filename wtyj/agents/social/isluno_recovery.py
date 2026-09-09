@@ -52,13 +52,19 @@ class RecoveryStore:
         with self.db() as db,db:
             db.execute('UPDATE isluno_recovery_contacts SET opt_out=1 WHERE scope_key=?',(scope.key,))
             db.execute("UPDATE isluno_reminders SET status='suppressed',reason='opt_out' WHERE scope_key=? AND status='queued'",(scope.key,))
-    def progress(self,scope,trigger):
+    def progress(self,scope,trigger,*,delivery_confirmed=False):
+        if not delivery_confirmed:return
         self.initialize();isluno_config.require_scope(scope)
         with self.db() as db,db:
             db.execute('BEGIN IMMEDIATE')
             completed=db.execute('SELECT outcome FROM isluno_conversation_turns WHERE scope_key=? AND trigger_id=?',(scope.key,trigger)).fetchone()
             if not completed or not completed[0]:return
             applied_revision=json.loads(completed[0])['session']['revision']
+            saved=db.execute('SELECT payload FROM isluno_booking_sessions WHERE scope_key=?',(scope.key,)).fetchone()
+            if not saved:return
+            session=json.loads(saved[0])
+            session['communication_progress']={'trigger_id':trigger,'revision':applied_revision,'accepted_at':self.clock().isoformat()}
+            db.execute('UPDATE isluno_booking_sessions SET payload=? WHERE scope_key=?',(json.dumps(session,ensure_ascii=False),scope.key))
             rows=db.execute("SELECT i.id,t.baseline FROM isluno_recovery_incidents i JOIN isluno_conversation_turns t ON t.scope_key=i.scope_key AND t.trigger_id=i.trigger_id WHERE i.scope_key=? AND i.trigger_id!=? AND i.kind IN ('understanding_failure','understanding_stalled') AND i.status='operator_review'",(scope.key,trigger)).fetchall()
             for row in rows:
                 # Replaying an older outcome is not evidence of later progress.
@@ -96,7 +102,7 @@ class RecoveryStore:
                 if db.execute("SELECT 1 FROM isluno_recovery_incidents WHERE scope_key=? AND trigger_id=? AND kind IN ('understanding_failure','understanding_stalled')",(scope.key,row['trigger_id'])).fetchone():continue
                 baseline=json.loads(row['baseline'])
                 saved=db.execute('SELECT payload FROM isluno_booking_sessions WHERE scope_key=?',(scope.key,)).fetchone()
-                resumed=saved and json.loads(saved[0])['revision']>baseline['revision']
+                resumed=saved and json.loads(saved[0]).get('communication_progress',{}).get('revision',-1)>baseline['revision']
                 identifier=hashlib.sha256((scope.key+row['trigger_id']+'understanding_stalled').encode()).hexdigest()
                 db.execute('INSERT OR IGNORE INTO isluno_recovery_incidents VALUES(?,?,?,?,?,?,?,?)',(identifier,scope.key,baseline['active_itinerary_id'],row['trigger_id'],'understanding_stalled','progress_resumed_new_turn' if resumed else 'operator_review','stale_claim_outcome_unknown',self.clock().isoformat()))
 
@@ -105,12 +111,36 @@ class RecoveryStore:
         from shared import config_loader
         allowed=config_loader.get_raw()['channel_account_allowlist']['zernio_accounts'][0]
         with self.db() as db:
-            scopes=[r[0] for r in db.execute("SELECT scope_key FROM isluno_recovery_contacts WHERE json_extract(scope_json,'$.tenant_slug')=? AND json_extract(scope_json,'$.account_id')=? AND json_extract(scope_json,'$.journey_type')=? AND json_extract(scope_json,'$.schema_version')=?",('mermaid',allowed,isluno_config.JOURNEY,isluno_config.SCHEMA_VERSION))]
+            from urllib.parse import quote
+            contacts=db.execute("SELECT scope_key,scope_json FROM isluno_recovery_contacts WHERE json_extract(scope_json,'$.tenant_slug')=? AND json_extract(scope_json,'$.account_id')=? AND json_extract(scope_json,'$.journey_type')=? AND json_extract(scope_json,'$.schema_version')=?",('mermaid',allowed,isluno_config.JOURNEY,isluno_config.SCHEMA_VERSION)).fetchall()
             incidents=[];reminders=[];outbound=[]
-            for scope in scopes:
-                outbound.extend(dict(r) for r in db.execute("SELECT id,status,provider_id FROM isluno_discovery_plans WHERE scope_key=? AND status NOT IN ('queued','accepted','consumed_action')",(scope,)))
-                incidents.extend(dict(r) for r in db.execute('SELECT id,scope_key,itinerary_id,trigger_id,kind,status,code,created_at FROM isluno_recovery_incidents WHERE scope_key=?',(scope,)))
-                reminders.extend(dict(r) for r in db.execute('SELECT id,itinerary_id,due_at,status,provider_id,reason FROM isluno_reminders WHERE scope_key=?',(scope,)))
+            for contact in contacts:
+                scope=contact['scope_key'];scoped=json.loads(contact['scope_json'])
+                inbox='/conversations?c='+quote(scoped['conversation_id'],safe='')
+                for row in db.execute("SELECT id,status,provider_id,payload FROM isluno_discovery_plans WHERE scope_key=? AND status NOT IN ('accepted','consumed_action')",(scope,)):
+                    payload=json.loads(row['payload']);result=payload.get('transport_result',{})
+                    parts=[{'index':i,'status':part['status'],'reason':part.get('result',{}).get('code') or part.get('result',{}).get('provider_code'),
+                            'http_status':part.get('result',{}).get('http_status')} for i,part in enumerate(payload.get('parts',[]))]
+                    outbound.append({'id':row['id'],'status':row['status'],'provider_id':row['provider_id'],'inbox_path':inbox,
+                        'reason':result.get('code') or result.get('provider_code') or row['status'],
+                        'http_status':result.get('http_status'),'platform_code':result.get('platform_code'),
+                        'created_at':payload.get('created_at'),'parts':parts})
+                for row in db.execute("SELECT j.id,j.payload,d.part,d.status,d.provider_id FROM isluno_quote_jobs j JOIN isluno_quote_deliveries d ON d.job_id=j.id WHERE j.scope_key=? AND d.status!='accepted'",(scope,)):
+                    payload=json.loads(row['payload']);result=payload.get('transport_results',{}).get(str(row['part']),{})
+                    outbound.append({'id':row['id']+':'+str(row['part']),'kind':'quote','status':row['status'],'provider_id':row['provider_id'],
+                        'inbox_path':inbox,'reason':result.get('code') or result.get('provider_code') or row['status'],
+                        'http_status':result.get('http_status'),'parts':[{'index':row['part'],'status':row['status'],'reason':result.get('code'),'http_status':result.get('http_status')}]})
+                if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='inbound_processing_events'").fetchone():
+                    for row in db.execute("SELECT message_id,status,reason FROM inbound_processing_events WHERE conversation_id=? AND status='processing_failed' AND (json_extract(payload_json,'$.account_id')=? OR json_extract(payload_json,'$._zernio_account_id')=?)",(scoped['conversation_id'],scoped['account_id'],scoped['account_id'])):
+                        outbound.append({'id':'inbound:'+hashlib.sha256(row['message_id'].encode()).hexdigest(),'kind':'inbound','status':row['status'],
+                            'provider_id':None,'inbox_path':inbox,'reason':row['reason'],'parts':[]})
+                saved=db.execute('SELECT payload FROM isluno_booking_sessions WHERE scope_key=?',(scope,)).fetchone()
+                progress=json.loads(saved[0]).get('communication_progress',{}) if saved else {}
+                for r in db.execute('SELECT id,scope_key,itinerary_id,trigger_id,kind,status,code,created_at FROM isluno_recovery_incidents WHERE scope_key=?',(scope,)):
+                    baseline=db.execute('SELECT baseline FROM isluno_conversation_turns WHERE scope_key=? AND trigger_id=?',(scope,r['trigger_id'])).fetchone()
+                    verified=bool(baseline and progress.get('revision',-1)>json.loads(baseline[0])['revision'])
+                    incidents.append({**dict(r),'inbox_path':inbox,'delivery_progress_verified':verified})
+                reminders.extend({**dict(r),'inbox_path':inbox} for r in db.execute('SELECT id,itinerary_id,due_at,status,provider_id,reason FROM isluno_reminders WHERE scope_key=?',(scope,)))
         from agents.social.isluno_transition import audit
         return {'outbound_failures':outbound,'reminders_enabled':bool(self.policy()),'incidents':incidents,'reminders':reminders,'legacy':audit(self.conversation.itinerary.db_path)}
 
@@ -221,3 +251,18 @@ def run_once(*,store=None,post=None,guard=None,window=None):
     with store.db() as db:
         rows=db.execute("SELECT id FROM isluno_reminders WHERE status='queued' AND due_at<=? ORDER BY due_at LIMIT 10",(store.clock().isoformat(),)).fetchall()
     return sum(store.dispatch(row[0],post=post,guard=guard,window=window) for row in rows)
+
+
+def reply_accepted(message,media):
+    """Called only after the complete sender envelope has returned accepted."""
+    scope=isluno_config.verified_scope(account_id=message.get('_zernio_account_id',''),
+        conversation_id=message.get('from',''),customer_ref=message.get('_zernio_sender_id',''))
+    trigger=message.get('message_id') or message.get('_ali_action_id')
+    store=RecoveryStore()
+    with store.db() as db:
+        if media['type']=='isluno_discovery':
+            accepted=bool(db.execute("SELECT 1 FROM isluno_discovery_plans WHERE id=? AND scope_key=? AND status='accepted'",(media['url'],scope.key)).fetchone())
+        else:
+            from agents.social.isluno_quotes import QuoteStore
+            accepted=QuoteStore(store.conversation).fully_accepted(db,scope,media['url'])
+    if accepted:store.progress(scope,trigger,delivery_confirmed=True)

@@ -24,7 +24,10 @@ class HospitalityDeliveryTests(unittest.TestCase):
         from agents.social.isluno_recovery_copy import RESPONSE_FAILED
         with patch.object(self.t.store,'db',side_effect=sqlite3.OperationalError('synthetic storage unavailable')):
             reply=failure_reply(self.t.store,self.t.discovery,self.t.scope(),'claimed-message',{'text':'Synthetic','_zernio_sent_at':self.now.isoformat()})
-            self.assertEqual(reply,{'text':RESPONSE_FAILED['en'],'generation_failed':True})
+            self.assertEqual(reply['text'],RESPONSE_FAILED['en']);self.assertTrue(reply['generation_failed'])
+            self.assertEqual(reply['media']['type'],'isluno_discovery')
+            plan,_=self.t.discovery.delivery_plan(reply['media']['url'],self.t.scope().account_id,self.t.scope().conversation_id)
+            self.assertTrue(plan['operational_notice'])
             with self.assertRaises(PermissionError):
                 failure_reply(self.t.store,self.t.discovery,replace(self.t.scope(),account_id='wrong-account'),'claimed-message',{})
 
@@ -82,3 +85,32 @@ class HospitalityDeliveryTests(unittest.TestCase):
         self.assertEqual(session['last_accepted_question'],'Which day suits you?')
         self.assertEqual(session['history'][-1]['delivery_status'],'ambiguous')
         self.assertFalse(session['history'][-1]['guest_receipt_verified'])
+
+    def test_late_failure_of_answer_blocks_composed_quote_approval(self):
+        from datetime import timedelta
+        from agents.social.isluno_callbacks import accept
+        self.t.initial();scope=self.t.scope();quotes=QuoteStore(self.t.store,'https://example.invalid/documents')
+        original=quotes.prepare(scope,'review',self.now.isoformat(),expected_session_revision=self.t.store.session(scope)['revision'])
+        base={'language':'en','product_ids':[],'fact_keys':[],'intent':'discover','question':''}
+        answer=self.t.discovery.plan(scope,'answer',self.now.isoformat(),base,response_text='A source-backed answer.')
+        composed=quotes.compose_answer(scope,'composition',self.now.isoformat(),original,answer)
+        calls=[]
+        def post(*args):
+            calls.append(args);return {'status':'accepted','provider_id':'composed-'+str(len(calls))}
+        self.assertTrue(send_job(scope.conversation_id,scope.account_id,composed['id'],store=quotes,post=post,window=lambda *a:{'open':True},sleep=lambda seconds:setattr(self,'now',self.now+timedelta(seconds=seconds))))
+        with patch('shared.tenant_guard.account_access_state',return_value=True):
+            self.assertTrue(accept({'event':'message.failed','message':{'id':'composed-1','accountId':scope.account_id,'conversationId':scope.conversation_id}},store=self.t.store))
+        token=original['parts'][-1]['buttons'][0]['payload']
+        with self.assertRaisesRegex(ItineraryError,'quote_not_fully_accepted'):
+            quotes.act(scope,'no-approval-after-failed-answer',self.now.isoformat(),token,'button_reply')
+
+    def test_stale_quote_hold_does_not_erase_an_accepted_part(self):
+        from agents.social.isluno_quote_delivery import _save
+        self.t.initial();scope=self.t.scope();quotes=QuoteStore(self.t.store,'https://example.invalid/documents')
+        job=quotes.prepare(scope,'race-review',self.now.isoformat(),expected_session_revision=self.t.store.session(scope)['revision'])
+        with quotes.db() as db,db:
+            db.execute("UPDATE isluno_quote_deliveries SET status='accepted',provider_id='owned-send' WHERE job_id=? AND part=0",(job['id'],))
+        self.assertEqual(_save(quotes,scope,job,0,{'status':'window_closed','dispatched':False}),'accepted')
+        with quotes.db() as db:
+            row=db.execute('SELECT status,provider_id FROM isluno_quote_deliveries WHERE job_id=? AND part=0',(job['id'],)).fetchone()
+            self.assertEqual(tuple(row),('accepted','owned-send'))
