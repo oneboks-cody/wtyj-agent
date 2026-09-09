@@ -3,11 +3,11 @@
   "reference": "calvin-isluno-staging-c",
   "runner": {
     "path": "wtyj/scripts/recover_isluno_archive_staging.py",
-    "sha256": "490a59b701ac69a6a4c94461ea9f1a008fe1d588c4b81b03c1b9639c27d382bf"
+    "sha256": "77dbadf60ccf28b4cd667f8a0b1a11062a5e6d7c3e4878134b0a1fa087bd6890"
   },
   "tests": {
     "path": "wtyj/tests/scripts/test_isluno_archive_recovery.py",
-    "sha256": "3998d430b32aff35e9cdf203cf288857dd920d6d26f518019cce4cdf4deab43b"
+    "sha256": "81c4236a22c92d20b376b7e9b1fb4c053e39ab950fb61929692c7b05252ad561"
   },
   "maximum_uploads": 5,
   "upload_concurrency": 1,
@@ -46,5 +46,12 @@
     "count": 1,
     "seconds": 0.001,
     "unique_current_tests": 8
+  },
+  "receipt_ownership_checks": {
+    "count": 2,
+    "seconds": 0.004,
+    "unique_current_tests": 9,
+    "existing_guard_checked_before_local_artifacts": true,
+    "only_newly_owned_guard_receives_failure_receipts": true
   }
 }

@@ -33,6 +33,15 @@ class RecoveryTests(unittest.TestCase):
    with patch.object(m,'__file__',str(script)),patch.object(m,'ARTIFACTS',[]),patch.object(m,'command',side_effect=AssertionError('host call')),contextlib.redirect_stdout(io.StringIO()) as out:
     self.assertEqual(m.main(['--execute-approved-recovery','--approval-reference',m.REFERENCE]),1)
    self.assertEqual(prior.read_text(),'original');self.assertEqual(list(guard.iterdir()),[prior]);self.assertEqual(json.loads(out.getvalue())['code'],'recovery_already_dispatched')
+ def test_consumed_guard_with_invalid_artifact_never_changes_prior_receipts(self):
+  with tempfile.TemporaryDirectory() as temp:
+   root=Path(temp);script=root/'wtyj/scripts/recovery.py';script.parent.mkdir(parents=True);script.write_text('synthetic')
+   guard=root/'tmp/isluno-staging-c';guard.mkdir(parents=True);prior=guard/'receipt.json';prior.write_bytes(b'prior successful attempt')
+   invalid=[('archive','missing-file',1,'0'*64,1)]
+   with patch.object(m,'__file__',str(script)),patch.object(m,'ARTIFACTS',invalid),patch.object(m,'command',side_effect=AssertionError('host call')),contextlib.redirect_stdout(io.StringIO()) as out:
+    self.assertEqual(m.main(['--execute-approved-recovery','--approval-reference',m.REFERENCE]),1)
+   self.assertEqual(json.loads(out.getvalue())['code'],'recovery_already_dispatched')
+   self.assertEqual(prior.read_bytes(),b'prior successful attempt');self.assertEqual(list(guard.iterdir()),[prior])
  def test_exact_dynamic_payload_is_preserved_before_dispatch(self):
   with tempfile.TemporaryDirectory() as temp:
    root=Path(temp);raw=b'print("synthetic payload")\n'

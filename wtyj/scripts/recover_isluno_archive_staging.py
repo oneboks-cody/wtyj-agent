@@ -129,8 +129,10 @@ def main(argv=None):
  argv=sys.argv[1:] if argv is None else argv
  if not argv:print('{"status":"offline_default","host_reads":false,"mutations":false}');return 0
  if argv!=['--execute-approved-recovery','--approval-reference',REFERENCE]:print('{"status":"stopped","code":"explicit_recovery_approval_required"}');return 1
- repo=Path(__file__).resolve().parents[2];receipts=repo/'tmp/isluno-staging-c';started=time.monotonic();events=[]
+ repo=Path(__file__).resolve().parents[2];receipts=repo/'tmp/isluno-staging-c';started=time.monotonic();events=[];owns_receipts=False
  try:
+  if receipts.exists() or receipts.is_symlink():
+   print('{"status":"stopped","code":"recovery_already_dispatched"}');return 1
   rows=[]
   for name,local,size,digest,limit in ARTIFACTS:
    path=Path(local) if Path(local).is_absolute() else repo/local
@@ -141,6 +143,7 @@ def main(argv=None):
   try:receipts.mkdir(mode=0o700)  # One logical attempt, never rewrite an old receipt.
   except FileExistsError:
    print('{"status":"stopped","code":"recovery_already_dispatched"}');return 1
+  owns_receipts=True
   def save():
    p=receipts/'receipt.json';p.write_text(json.dumps({'reference':REFERENCE,'events':events,'services_changed':False,'automatic_retry':False},indent=2));p.chmod(0o600)
   events.append({'phase':'dispatch','at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'runner_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'overall_limit_seconds':OVERALL_SECONDS,'maximum_uploads':5,'upload_concurrency':1,'maximum_original_artifact_bytes':233957640,'transfer_limit_seconds':[900,600,60,60,60]});save()
@@ -178,7 +181,7 @@ print(json.dumps({'status':'all_archives_verified','artifacts':rows,'existing_fi
   events.append({'phase':'finished','status':'all_archives_verified','elapsed_seconds':round(time.monotonic()-started,3)});save();print('{"status":"all_archives_verified","services_changed":false}');return 0
  except Exception as e:
   code=e.code if isinstance(e,Failed) else 'local_or_receipt_error'
-  if receipts.exists():
+  if owns_receipts:
    events.append({'phase':'stopped','code':code,'elapsed_seconds':round(time.monotonic()-started,3)})
    p=receipts/'stop.json'
    fd=os.open(p,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)

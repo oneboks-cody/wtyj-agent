@@ -1,0 +1,7 @@
+test_consumed_guard_with_invalid_artifact_never_changes_prior_receipts (__main__.RecoveryTests.test_consumed_guard_with_invalid_artifact_never_changes_prior_receipts) ... ok
+test_consumed_guard_preserves_prior_receipt_and_blocks_commands (__main__.RecoveryTests.test_consumed_guard_preserves_prior_receipt_and_blocks_commands) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.004s
+
+OK
