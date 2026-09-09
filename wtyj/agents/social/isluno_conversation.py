@@ -352,7 +352,12 @@ def handle_message(message, *, store=None, discovery=None, understand=None):
     except Exception as exc:
         if isinstance(exc, ItineraryError) and exc.code in {'understanding_already_claimed', 'invalid_discovery_action', 'stale_discovery_action', 'unverified_discovery_action', 'invalid_quote_action', 'invalid_payment_action'}:
             raise
-        recovery.incident(scope,trigger,'conversation_failure',exc.code if isinstance(exc, ItineraryError) else type(exc).__name__)
+        try:
+            recovery.incident(scope,trigger,'conversation_failure',exc.code if isinstance(exc, ItineraryError) else type(exc).__name__)
+        except PermissionError:
+            raise
+        except Exception:
+            pass  # Incident persistence must not swallow an already-claimed reply.
         result=failure_reply(store, discovery, scope, trigger, message)
     if not result.get('generation_failed'):
         recovery.progress(scope,trigger)
@@ -413,8 +418,13 @@ def _handle_message(message, *, store=None, discovery=None, understand=None):
                         store.record_decision(scope, trigger, decision)
                 except Exception as exc:
                     from agents.social.isluno_recovery import RecoveryStore
-                    RecoveryStore(store).incident(scope,trigger,'understanding_failure',
-                                                  exc.code if isinstance(exc, ItineraryError) else type(exc).__name__)
+                    try:
+                        RecoveryStore(store).incident(scope,trigger,'understanding_failure',
+                                                      exc.code if isinstance(exc, ItineraryError) else type(exc).__name__)
+                    except PermissionError:
+                        raise
+                    except Exception:
+                        pass  # Preserve the failure reply even when its incident cannot be saved.
                     from agents.social.isluno_recovery_copy import PROCESSING_FAILED
                     # This turn was claimed exactly once. Leave its decision and
                     # outcome unresolved; a duplicate must never call the model
@@ -501,22 +511,29 @@ def envelope(plan):
 
 
 def failure_reply(store, discovery, scope, trigger, message, *, understanding_failed=False):
-    """Persist a bounded failure acknowledgement, never retry the failed action."""
+    """Best-effort history/plan persistence after verified scope and inbound claim.
+
+    This never bypasses the webhook's lease/account/automation guards or retries an
+    action. Storage failure cannot manufacture history, but must not hide the text.
+    """
     from agents.social.isluno_recovery_copy import PROCESSING_FAILED, RESPONSE_FAILED
-    discovery = discovery or DiscoveryStore(store.itinerary.db_path, store.itinerary.catalog_path, clock=store.itinerary.clock)
-    with store.db() as db, db:
-        row = db.execute('SELECT payload FROM isluno_booking_sessions WHERE scope_key=?', (scope.key,)).fetchone()
-        session = json.loads(row[0]) if row else default_session()
-        if not any(h.get('trigger_id') == trigger for h in session['history']):
-            session['history'] = (session['history'] + [{'role':'user','content':message.get('text',''), 'trigger_id':trigger}])[-100:]
-        db.execute('INSERT INTO isluno_booking_sessions VALUES(?,?) ON CONFLICT(scope_key) DO UPDATE SET payload=excluded.payload', (scope.key, encoded(session)))
+    require_scope(scope)
+    check(isinstance(trigger, str) and bool(trigger), 'missing_verified_message_id')
     copy = PROCESSING_FAILED if understanding_failed else RESPONSE_FAILED
-    text = copy.get(session['chat_language'], copy['en'])
-    base = {'language':session['chat_language'], 'product_ids':[], 'fact_keys':[], 'intent':'discover', 'question':''}
+    text = copy['en']
     try:
+        discovery = discovery or DiscoveryStore(store.itinerary.db_path, store.itinerary.catalog_path, clock=store.itinerary.clock)
+        with store.db() as db, db:
+            row = db.execute('SELECT payload FROM isluno_booking_sessions WHERE scope_key=?', (scope.key,)).fetchone()
+            session = json.loads(row[0]) if row else default_session()
+            text = copy.get(session['chat_language'], copy['en'])
+            if not any(h.get('trigger_id') == trigger for h in session['history']):
+                session['history'] = (session['history'] + [{'role':'user','content':message.get('text',''), 'trigger_id':trigger}])[-100:]
+            db.execute('INSERT INTO isluno_booking_sessions VALUES(?,?) ON CONFLICT(scope_key) DO UPDATE SET payload=excluded.payload', (scope.key, encoded(session)))
+        base = {'language':session['chat_language'], 'product_ids':[], 'fact_keys':[], 'intent':'discover', 'question':''}
         plan = discovery.plan(scope, 'failure-' + opaque(scope,trigger,'ack'), message.get('_zernio_sent_at',''), base, response_text=text)
         return {**envelope(plan), 'generation_failed':True}
+    except PermissionError:
+        raise
     except Exception:
-        # Storage itself may be unavailable. The already-claimed inbound retains
-        # its one-attempt webhook send boundary; do not fabricate delivery history.
         return {'text':text, 'generation_failed':True}

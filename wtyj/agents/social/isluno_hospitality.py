@@ -292,7 +292,7 @@ def record_delivery(db, scope, delivery_id, body, status, *, assets=None, button
              'question': question}
     history.append(event)
     session['history'] = history[-100:]
-    if status == 'accepted':
+    if status == 'accepted' and question:
         session['last_accepted_question'] = question
     db.execute('UPDATE isluno_booking_sessions SET payload=? WHERE scope_key=?',
                (json.dumps(session, ensure_ascii=False), scope.key))
