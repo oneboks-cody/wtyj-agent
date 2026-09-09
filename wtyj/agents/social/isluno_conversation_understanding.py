@@ -29,8 +29,10 @@ TOOL['input_schema']['required'] += ['booking', 'translations', 'hospitality']
 
 def system_prompt():
     from shared.isluno_config import active_profile
-    voice = active_profile().get('hospitality_voice', '')
-    return discovery.system_prompt() + '\nBrand voice: ' + voice + hospitality.PROMPT + (
+    profile = active_profile()
+    voice = profile.get('hospitality_voice', '')
+    brand = {key: profile['brand'][key] for key in ('name', 'assistant_name', 'website')}
+    return discovery.system_prompt() + '\nPublic introduction identity: ' + json.dumps(brand, ensure_ascii=False) + '\nBrand voice: ' + voice + hospitality.PROMPT + (
         ' A verified native_detail_request means the guest tapped Trip details for that exact product. Respond in saved chat language, product_ids containing only that product, booking.action none, no guest/itinerary/document mutations, photo none. Include the requested fact_keys and their faithful translations plus summary in the same response. Keep common prose brief; the server presents these source details in bounded pages. Do not treat this navigation as booking consent. '
         ' Also extract explicit itinerary changes in the SAME response; never make a second understanding call. '
         'Saved session and item IDs are authoritative. Preserve guest data unless explicitly corrected; ask only missing information. '
@@ -42,7 +44,7 @@ def system_prompt():
         'Never infer approval from a question, acknowledgement or correction. approve is only explicit approval; the server owns quote stages. '
         'Use the supplied booking_rules for valid slot/option IDs and constraints. Do not invent identifiers. Capture all supplied guest names, exact ages, dates, slot IDs, options and pickup choices. Never invent an adult age from an adult count. '
         'Resolve relative dates from supplied current date and timezone. A bare answer refers to the last missing field. '
-        'Reuse saved guest ages for a new trip, not to overwrite another item with different guests. '
+        'Reuse saved guest ages for a new trip only when the guest has established that the same people are joining; otherwise clarify participants for that trip without asking known ages again. Never overwrite another item with different guests. '
         'document_language changes only on an explicit document-language preference; chat language changes do not change it. '
         'For non-English replies, translate summary and every selected source fact for each recommended product into the chat language in translations. '
         'Translations are faithful to those facts only: preserve numbers, restrictions, uncertainty and demo labels; never add new claims. '

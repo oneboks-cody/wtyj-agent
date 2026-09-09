@@ -1,5 +1,6 @@
 """Fresh contact versus delivery-proven continuation through real callers, no network."""
 import copy
+import json
 import unittest
 from unittest.mock import patch
 from agents.marina import marina_agent
@@ -17,8 +18,8 @@ class FirstContactTests(unittest.TestCase):
 
     def call(self,trigger='fresh',text='Hello, I will be on Curaçao for a month.'):
         decision=response(products=[],fact_keys=[])
-        decision['hospitality']=hospitality('Welcome! A month on Curaçao gives you time to explore at your own pace. 🌴',
-                                            'Who are you travelling with?',stage='welcome')
+        decision['hospitality']=hospitality("Welcome! I'm Tracy, your virtual trip assistant from Isluno.com. ☀️ A month on Curaçao gives you time to explore at your own pace. 🏝️",
+                                            'What kinds of experiences interest you?',stage='welcome')
         with patch.object(marina_agent,'process_message',wraps=marina_agent.process_message) as real:
             reply,calls,_=self.w.h.call(decision,trigger,text=text)
             inputs=copy.deepcopy(real.call_args.kwargs)
@@ -31,10 +32,12 @@ class FirstContactTests(unittest.TestCase):
         self.assertEqual(inputs['messages'],[])
         self.assertTrue(self.w.send(reply))
         sent=''.join(x['message'] for x in self.w.requests)
-        self.assertIn('🌴',sent);self.assertEqual(sent.count('?'),1)
+        self.assertIn('☀️',sent);self.assertIn('🏝️',sent)
+        self.assertIn("I'm Tracy",sent);self.assertIn('Isluno.com',sent)
+        self.assertIn('What kinds of experiences interest you?',sent)
+        self.assertEqual(sent.count('?'),1)
         self.assertNotIn('—',sent);self.assertNotIn('–',sent)
         self.assertFalse(self.t.store.session(self.t.scope())['active_itinerary_id'])
-        self.assertIn('Ask activity preferences on the next turn',isluno_hospitality.PROMPT)
 
     def test_accepted_is_not_delivered_and_foreign_callback_is_not_proof(self):
         first,_=self.call('one');self.assertTrue(self.w.send(first))
@@ -43,6 +46,18 @@ class FirstContactTests(unittest.TestCase):
         self.assertEqual(inputs['thread_fields']['delivery_context']['confirmed_message_ids'],[])
         self.assertTrue(any(h.get('delivery_status')=='accepted' for h in inputs['messages']))
         self.assertIn('acceptance without a delivered/read callback',isluno_hospitality.PROMPT)
+
+    def test_public_introduction_uses_active_profile_without_private_fields(self):
+        profile=copy.deepcopy(self.t.profile)
+        profile['brand'].update(assistant_name='Synthetic Host',website='https://welcome.example.invalid',
+                                private_token='synthetic-private-not-for-prompt')
+        self.t.write_profile(profile)
+        prompt=understanding.system_prompt()
+        identity=json.loads(prompt.split('Public introduction identity: ',1)[1].split('\n',1)[0])
+        self.assertEqual(identity,{'name':profile['brand']['name'],
+                                  'assistant_name':'Synthetic Host','website':'https://welcome.example.invalid'})
+        self.assertNotIn('synthetic-private-not-for-prompt',prompt)
+        self.assertIn(profile['hospitality_voice'],prompt)
 
     def test_confirmed_continuation_and_late_failure_remove_sharing_authority(self):
         first,_=self.call('one');self.assertTrue(self.w.send(first))
