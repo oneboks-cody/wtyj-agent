@@ -28,6 +28,8 @@ DECISION = {'language': 'en', 'product_ids': ['fixture-cruise'], 'fact_keys': ['
 
 
 class FakeMedia:
+    def welcome_url(self):
+        raise MediaUnavailable('fixture-no-brand')
     def __init__(self, missing=()):
         self.missing = missing
     def url(self, asset):

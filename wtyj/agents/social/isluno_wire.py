@@ -52,8 +52,12 @@ def validate_body(body):
         check(not buttons,'wire_conflicting_controls')
         cards=interactive.get('action',{}).get('cards')
         check(isinstance(cards,list) and 2<=len(cards)<=10,'wire_carousel_cards')
-        for card in cards:
+        for index,card in enumerate(cards):
             check(isinstance(card,dict) and units(card.get('body',{}).get('text',''))<=160,'wire_card_text')
+            check(card.get('card_index')==index,'wire_card_index')
+            header=card.get('header',{})
+            check(header.get('type')=='image' and isinstance(header.get('image',{}).get('link'),str)
+                  and header['image']['link'].startswith('https://'),'wire_card_image')
             choices=card.get('action',{}).get('buttons',[])
             check(1<=len(choices)<=3,'wire_card_buttons')
             for button in choices:

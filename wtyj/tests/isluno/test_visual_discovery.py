@@ -27,6 +27,7 @@ class VisualDiscoveryTests(CommunicationWireTests):
     def decision(self,photo='initial'):
         d=response(products=['fixture-cruise','fixture-beach']);d['intent']='discover'
         d['hospitality']=hospitality('These two could suit your relaxed family holiday.','Which appeals to you?',photo=photo,stage='recommendation')
+        d['hospitality']['photo_opt_out']=photo=='none'
         d['hospitality']['cards']=[{'product_id':p,'paragraphs':['{fact:'+p+':summary}']} for p in d['product_ids']]
         return d
 
@@ -90,6 +91,40 @@ class VisualDiscoveryTests(CommunicationWireTests):
         images=[p for p in details['parts'] if p['body'].get('attachmentUrl')]
         self.assertEqual(len(images),1)
         self.assertEqual(images[0]['product_ids'],['fixture-cruise'])
+
+    def test_carousel_sender_tracks_all_images_and_scoped_buttons(self):
+        self.t.profile['gallery_mode']='carousel';self.t.write_profile(self.t.profile)
+        reply=self.visual();self.assertTrue(self.send(reply));plan=self.plan(reply)
+        carousel=[p for p in plan['parts'] if p['body'].get('interactive')]
+        self.assertEqual(len(carousel),2)
+        for part in carousel:
+            self.assertEqual(len(part['assets']),3)
+            self.assertEqual(len(part['body']['interactive']['action']['cards']),3)
+            self.assertTrue(part['button_meanings'])
+            self.assertTrue(all(a['product_id']==part['product_ids'][0] for a in part['button_meanings'].values()))
+        details=self.click_visual(plan,'fixture-cruise','info','carousel-details')
+        self.assertEqual(details['product_ids'],['fixture-cruise'])
+        self.assertTrue(self.send(envelope(details)))
+
+    def test_carousel_rejection_never_replays_or_enables_buttons(self):
+        self.t.profile['gallery_mode']='carousel';self.t.write_profile(self.t.profile)
+        reply=self.visual()
+        self.assertFalse(self.send(reply,[(200,{'success':True,'data':{'messageId':'intro'}}),(400,{'code':'INVALID_MEDIA'})]))
+        before=len(self.requests);self.assertFalse(self.send(reply));self.assertEqual(len(self.requests),before)
+        self.assertEqual(self.plan(reply)['parts'][1]['status'],'rejected')
+
+    def test_recommendation_cannot_accidentally_omit_images(self):
+        d=self.decision('none');d['hospitality']['photo_opt_out']=False
+        reply=self.visual(decision=d);self.assertTrue(self.send(reply))
+        self.assertEqual(sum(bool(b.get('attachmentUrl')) for b in self.requests),2)
+
+    def test_repeated_pitch_keeps_image_when_gallery_exhausted(self):
+        catalog=json.loads(self.t.catalog_path.read_text())
+        for p in catalog['products']:p['gallery']=p['gallery'][:1]
+        self.t.catalog_path.write_text(json.dumps(catalog))
+        self.assertTrue(self.send(self.visual()));before=len(self.requests)
+        self.assertTrue(self.send(self.visual('repeat-pitch')))
+        self.assertEqual(sum(bool(b.get('attachmentUrl')) for b in self.requests[before:]),2)
 
     def test_native_details_respect_text_only_preference(self):
         reply=self.visual(decision=self.decision('none'));self.assertTrue(self.send(reply))
@@ -199,7 +234,7 @@ class VisualDiscoveryTests(CommunicationWireTests):
         d['hospitality']=hospitality('{fact:fixture-cruise:additional_information}',photo='none')
         result=self.visual('direct-question',d,text='Please tell me the full arrangements for this cruise.');self.assertTrue(self.send(result))
         self.assertIn(answer,''.join(b['message'] for b in self.requests))
-        self.assertTrue(all('attachmentUrl' not in b for b in self.requests))
+        self.assertTrue(any('attachmentUrl' in b for b in self.requests))
 
     def test_predispatch_hold_does_not_consume_an_image(self):
         first=self.visual();self.assertFalse(self.send(first,window=False));self.assertEqual(self.requests,[])

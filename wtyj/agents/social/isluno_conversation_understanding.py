@@ -33,7 +33,7 @@ def system_prompt():
     voice = profile.get('hospitality_voice', '')
     brand = {key: profile['brand'][key] for key in ('name', 'assistant_name', 'website')}
     return discovery.system_prompt() + '\nPublic introduction identity: ' + json.dumps(brand, ensure_ascii=False) + '\nBrand voice: ' + voice + hospitality.PROMPT + (
-        ' A verified native_detail_request means the guest tapped Trip details for that exact product. Respond in saved chat language, product_ids containing only that product, booking.action none, no guest/itinerary/document mutations, photo none. Include the requested fact_keys and their faithful translations plus summary in the same response. Keep common prose brief; the server presents these source details in bounded pages. Do not treat this navigation as booking consent. '
+        ' A verified native_detail_request means the guest tapped Trip details for that exact product. Respond in saved chat language, product_ids containing only that product, booking.action none, no guest/itinerary/document mutations, photo initial unless the guest explicitly declined images. Include the requested fact_keys and their faithful translations plus summary in the same response. Keep common prose brief; the server presents these source details in bounded pages. Do not treat this navigation as booking consent. '
         ' Also extract explicit itinerary changes in the SAME response; never make a second understanding call. '
         'Saved session and item IDs are authoritative. Preserve guest data unless explicitly corrected; ask only missing information. '
         'booking.action add means an explicit new trip; update targets existing or pending item IDs; remove targets one item; '

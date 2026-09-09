@@ -3,6 +3,7 @@ import json
 from agents.social.isluno_wire import messages, text_of, units, MAX_PARTS
 from agents.social import isluno_understanding
 from shared.isluno_media import MediaUnavailable
+from shared.isluno_config import active_profile
 from shared.isluno_pricing import check
 
 # Native UI labels, not generated conversational prose or business claims.
@@ -34,6 +35,7 @@ def build(store, db, scope, products, decision, button, labels, *, texts=None, c
     """Render product-bound parts. Existing sender owns all durable dispatch states."""
     locale=decision['language'];titles=ACTIONS[locale];parts=[];assets=[];missing=[]
     translations=decision.get('translations') or {}
+    carousel=active_profile().get('gallery_mode')=='carousel'
     def append(body, product_id=None, asset=None, meanings=None, next_question=''):
         wire=messages(body,next_question)
         for index,item in enumerate(wire):
@@ -62,12 +64,13 @@ def build(store, db, scope, products, decision, button, labels, *, texts=None, c
         excluded=set() if photo=='repeat' else attempted_assets(db,scope,product_id)
         available=[(n,a) for n,a in enumerate(gallery) if n>=offset and a['id'] not in excluded]
         # A details card may reuse its own trip image when that gallery was seen.
-        if action_kind=='info' and info_offset==0 and photo!='none' and not available:
+        if photo=='initial' and action_kind!='photos' and not available:
             available=list(enumerate(gallery))
         if location:
             # Product captions identify a trip, not the stop depicted in the image.
             available=[(n,a) for n,a in available if a.get('location_id')==location and a.get('location_source_url')]
-        page=available[:2 if action_kind=='photos' or photo in {'more','all'} else 1] if photo!='none' else []
+        limit=3 if carousel else 2 if action_kind=='photos' or photo in {'more','all'} else 1
+        page=available[:limit] if photo!='none' else []
         resolved=[]
         for position,asset in page:
             try:url=store.media.url(asset)
@@ -81,7 +84,25 @@ def build(store, db, scope, products, decision, button, labels, *, texts=None, c
             choices.append(button('photos',product_id,titles[0],offset=cursor,photo_location=location))
         choices.append(button('info',product_id,titles[1],info_offset=info_offset+1 if action_kind=='info' and info_offset+1<len(chunks) else 0,photo_location=location))
         if offer_selection:choices.append(button('add',product_id,titles[2]))
-        # At most two photos per requested page, with controls only on its final photo.
+        if carousel and len(resolved)>=2:
+            final_question=question if index==len(products)-1 else ''
+            if final_question and units(text+'\n\n'+final_question)<=1024:text+='\n\n'+final_question
+            elif final_question:final_question=''
+            cards=[{'card_index':n,'type':'cta_url',
+                    'header':{'type':'image','image':{'link':url}},
+                    'body':{'text':product['name'][:120]},
+                    'action':{'buttons':[{'type':'quick_reply','quick_reply':{'id':b['payload'],'title':b['title']}} for b in choices]}}
+                   for n,(_,asset,url) in enumerate(resolved)]
+            body={'accountId':scope.account_id,'interactive':{'type':'carousel','body':{'text':text},'action':{'cards':cards}}}
+            from agents.social.isluno_wire import validate_body
+            validate_body(body)
+            parts.append({'body':body,'status':'queued','provider_id':None,'product_ids':[product_id],
+                          'assets':[{'product_id':product_id,'asset_id':a['id']} for _,a,_ in resolved],
+                          'button_meanings':{},'next_question':final_question})
+            if question and index==len(products)-1 and not final_question:
+                append({'accountId':scope.account_id,'message':question},next_question=question)
+            continue
+        # Ordinary single-image fallback when fewer than two gallery assets resolve.
         for _,asset,url in resolved[:-1]:
             append({'accountId':scope.account_id,'message':product['name'],'attachmentUrl':url,'attachmentType':'image'},product_id,asset)
         final_question=question if index==len(products)-1 else ''

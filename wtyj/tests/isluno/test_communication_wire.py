@@ -168,7 +168,7 @@ class CommunicationWireTests(unittest.TestCase):
             validate_body(kw['json']);posts.append(kw['json']);data={'success':True,'data':{'messageId':'webhook-'+str(len(posts))}}
             return SimpleNamespace(status_code=200,json=lambda:data,text=json.dumps(data))
         with ExitStack() as stack:
-            stack.enter_context(patch.dict('os.environ',{'ZERNIO_WEBHOOK_SECRET':'synthetic-secret','LATE_API_KEY':'synthetic-no-network'}))
+            stack.enter_context(patch.dict('os.environ',{'ZERNIO_WEBHOOK_SECRET':'synthetic-secret','LATE_API_KEY':'synthetic-no-network','ANTHROPIC_API_KEY':'synthetic-sdk-is-mocked'}))
             for obj,name,val in [(isluno_conversation,'ConversationStore',self.t.store),(isluno_conversation,'DiscoveryStore',self.t.discovery),
                 (social_agent.state_registry,'match_ignored_contact',None),(social_agent.auto_block,'evaluate_inbound',{})]:
                 stack.enter_context(patch.object(obj,name,return_value=val))

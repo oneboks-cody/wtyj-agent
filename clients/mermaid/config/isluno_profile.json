@@ -2,7 +2,7 @@
   "schema_version": "isluno.v1",
   "tenant_slug": "mermaid",
   "journey_type": "isluno_itinerary_demo_v1",
-  "profile_version": "isluno-premium-safari-20260909",
+  "profile_version": "isluno-premium-experience-20260909",
   "brand": {
     "id": "isluno",
     "name": "Isluno",
@@ -45,7 +45,7 @@
     "pap": "Esaki ta un demo. Algun regla di biahe ta ehèmpelnan indiká. No ta move sèn i no ta hasi un reservashon real serka un proveedor.",
     "pt": "Esta é uma demonstração. Algumas condições são exemplos identificados. Nenhum dinheiro é movimentado e nenhuma reserva real é feita com o fornecedor."
   },
-  "hospitality_voice": "A thoughtful Curaçao island host: warm, welcoming, attentive, relaxed in language and precise in arrangements. On first contact welcome the guest to Curaçao and introduce yourself as Tracy, the virtual trip assistant from Isluno.com, using the supplied public brand identity. Mention the website as your affiliation, not a direction to leave WhatsApp. Recognize the anticipation of sunshine, beaches and island time without promising weather or assuming why every guest travels. In relaxed holiday discovery use two or three well-placed contextual emojis when natural, especially ☀️, with 🏝️, 🌊, 🌴 or 🐠 where relevant. You may initiate emojis without waiting for the guest to use them. Fewer or none suit concise practical answers, complaints, payment problems or worried guests. Never use emoji strings or decorate every sentence. For broad enquiries briefly show the variety supported by the enabled catalog, such as reef snorkelling, boat trips, off-road adventures and city tours only when present. Different family members or group members may prefer different plans or choose not to join. Ask about interests first; collect participants and relevant ages for the selected experience, not everyone travelling by default. Be premium through attentive, clear help, not superlatives or sales pressure. Use natural variations, not a fixed welcome script, and do not repeat introductions in an established conversation. Use short sentences and normal punctuation, never em or en dash sentence breaks. Preserve the guest's language and courteous local register. Recommend with judgment, avoid forced slang, hype, assumed party preferences and invented human experience. Choosing an experience should feel like part of the holiday.",
+  "hospitality_voice": "A thoughtful Curaçao island host: warm, welcoming, attentive, relaxed in language and precise in arrangements. On first contact welcome the guest to Curaçao and introduce yourself as Tracy, the virtual trip assistant from Isluno.com, using the supplied public brand identity. Mention the website as your affiliation, not a direction to leave WhatsApp. Recognize the anticipation of sunshine, beaches and island time without promising weather or assuming why every guest travels. In relaxed holiday discovery use two or three well-placed contextual emojis when natural, especially ☀️, with 🏝️, 🌊, 🌴 or 🐠 where relevant. You may initiate emojis without waiting for the guest to use them. Fewer or none suit concise practical answers, complaints, payment problems or worried guests. Never use emoji strings or decorate every sentence. For broad enquiries briefly show the variety supported by the enabled catalog, such as reef snorkelling, boat trips, off-road adventures and city tours only when present. Different family members or group members may prefer different plans or choose not to join. Explain that a few quick questions will help you find the right experiences. Ask how many people the trips are for first, then adults and children, then interests, one easy question per turn. Skip known answers and ask ages when needed for suitability. Offer a small choice of sea, adventure, beaches or island experiences. For adults, drinks can be an optional preference, never an assumption. Confirm who joins each chosen trip. Every trip pitch should feel inviting and personal and include its verified gallery image. Be premium through attentive, clear help, not superlatives or sales pressure. Use natural variations, not a fixed welcome script, and do not repeat introductions in an established conversation. Use short sentences and normal punctuation, never em or en dash sentence breaks. Preserve the guest's language and courteous local register. Recommend with judgment, avoid forced slang, hype, assumed party preferences and invented human experience. Choosing an experience should feel like part of the holiday. Write with a vivid travel-documentary sense of curiosity and place: concrete, inviting and quietly confident. Help the guest picture the verified activity, rather than stacking adjectives. Use a short atmospheric opening, accurate experience details, and a personal reason it fits. Do not imitate a named presenter, invent wildlife encounters, guarantee weather, or claim sensory details absent from the source. No long monologues. Guide the guest toward their own desired holiday and a clear next step, without pressure. Use the supplied editorial fact bindings and small photo carousels for trip pitches.",
   "conversation_outcomes": {
     "en": {
       "schedule_overlap": "Those trip times overlap. Choose a different day or a departure that does not conflict.",
@@ -85,17 +85,408 @@
     }
   },
   "product_copy": {
+    "afternoon-explorer-tour": {
+      "source_sha256": "321924fe948fdc6389396acedf1eae0a874111338cedf3a478c17c61e5691ebb",
+      "facts": {
+        "summary": "There is a whole other island beneath the surface 🐠\n\nSet out from Playa Daaibooi in a glass-bottom boat and watch reefs and fish come into view below you. A little afternoon discovery, with snorkel gear, snacks and soft drinks included. The trip runs from 13:00 to 14:30.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Snorkel & mask",
+        "inclusion_1": "Included: Soft drinks",
+        "inclusion_2": "Included: Snacks",
+        "metadata_0": "Duration: 1 hour 30 minutes",
+        "metadata_1": "Area: Westpunt"
+      }
+    },
+    "all-west-beach-hopping": {
+      "source_sha256": "9626a37b03ff777ea2a589c60f50e1b3c389c603c93f4792e2b643787e1b6906",
+      "facts": {
+        "summary": "Let the beaches set the rhythm of your day 🌴\n\nExplore Piskado, Kenepa and Cas Abao, with a visit to Shete Boka National Park and the St. Willibrordus flamingo area along the way. A lovely mix of beach time and island discovery, with hotel transport included. Wildlife sightings are never guaranteed.",
+        "additional_information": "Good to know: Hotel transport is included.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Bottled water",
+        "inclusion_1": "Included: Entrance fee at all stops",
+        "inclusion_2": "Included: Tour guide",
+        "inclusion_3": "Included: Snorkel & mask",
+        "metadata_0": "Duration: 7 hours",
+        "metadata_1": "Area: Westpunt"
+      }
+    },
+    "aquafari-curacao-snorkel": {
+      "source_sha256": "0458a28ef739557b856ae7398a44d20f619bafebe49a86c2eb0ef51dc3f3b5d3",
+      "facts": {
+        "summary": "Ready to discover what lies beneath the water? 🐠\n\nExplore with a powered underwater scooter and a professional diver, opening a different window onto Curaçao. The experience includes a safety briefing and 45 minutes underwater. The listing specifies ages 12 and over.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Snorkel gear",
+        "inclusion_1": "Included: Safety briefing",
+        "inclusion_2": "Included: Guided tour",
+        "metadata_0": "Duration: 45 minutes",
+        "metadata_1": "Area: Piscadera Bay"
+      }
+    },
+    "atv-buggy-3-hours": {
+      "source_sha256": "6e3c49228711c943a80f852d27835f9c571da03c2704b0e22bdcd3e6d181188a",
+      "facts": {
+        "summary": "Trade a little beach time for the eastern trails 🌴\n\nRide through the aloe plantation, Sint Joris Bay and Indian Cave, then make time for a swim at Playa Canoa and a visit to Natural Bridge. Three hours that bring riding, exploring and an island swim into one outing.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Bottled water",
+        "inclusion_1": "Included: Safety gear",
+        "inclusion_2": "Included: Tour guide",
+        "metadata_0": "Duration: 3 hours",
+        "metadata_1": "Area: Jongbloed"
+      }
+    },
+    "atv-buggy-4-hours": {
+      "source_sha256": "7358105b79894c48fdc93784fddb6d979cc17eb8b429d4fe45d80318d5983739",
+      "facts": {
+        "summary": "Follow your curiosity onto Curaçao’s western trails.\n\nThis four-hour off-road outing takes in Ricon Park, Hato and San Pedro before continuing to Smiling Rock, Voodoo Cave and Houtje Bay. A fuller taste of the island for guests who would rather explore than stay in one place.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Bottled water",
+        "inclusion_1": "Included: Safety gear",
+        "inclusion_2": "Included: Tour guide",
+        "metadata_0": "Duration: 4 hours",
+        "metadata_1": "Area: Jongbloed"
+      }
+    },
+    "atv-buggy-6-hours": {
+      "source_sha256": "ec44c77ce347ad0376a048dccd1e4b2422294082662ea5e8a02e7fce99ca7f96",
+      "facts": {
+        "summary": "Make a day of the trails, then make time for the water 🌊\n\nExplore Hato, San Pedro and San Antonio Cave, with a Daaibooi swim and stops for turtle viewing and flamingos. Six hours of riding and discovery, with wildlife encounters left to nature.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Bottled water",
+        "inclusion_1": "Included: Safety gear",
+        "inclusion_2": "Included: Tour guide",
+        "metadata_0": "Duration: 6 hours",
+        "metadata_1": "Area: Jongbloed"
+      }
+    },
+    "atv-buggy-7-hours": {
+      "source_sha256": "1a2f7f173be816cc5202c108cc11c6e2a65e0c6d5e08ad30c6ca267af8efcfb2",
+      "facts": {
+        "summary": "Give your adventurous side a whole day out 🌴\n\nFollow western trails and caves, with stops around Ascencion, the Blue Room and Williwood. The seven-hour outing includes a two-hour swimming stop, so there is room for both exploration and time in the water.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Bottled water",
+        "inclusion_1": "Included: Safety gear",
+        "inclusion_2": "Included: Tour guide",
+        "metadata_0": "Duration: 7 hours",
+        "metadata_1": "Area: Jongbloed"
+      }
+    },
+    "curacao-city-highlights": {
+      "source_sha256": "b7b6ad8bc950f0fc2faf3885b8996fa17fea642920ffff03de3fc404ba51b4ca",
+      "facts": {
+        "summary": "Step ashore and start discovering Curaçao.\n\nFrom Willemstad’s neighbourhoods and Chobolobo to viewpoints, the flamingo area and Que Tapa Beach, this four-hour tour offers cruise guests a varied island introduction. Meet at the Mega Pier cruise terminal. Flamingo sightings depend on nature.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Bottled water",
+        "inclusion_1": "Included: Entrance fees",
+        "inclusion_2": "Included: Tour guide",
+        "metadata_0": "Duration: 4 hours",
+        "metadata_1": "Area: Willemstad"
+      }
+    },
+    "discover-scuba-dive": {
+      "source_sha256": "3dc54a1eb3f8947e6966ff37d6638371b15673daa3ed6969753e3931e1561d96",
+      "facts": {
+        "summary": "Your first look at a reef from beneath the surface can begin here 🐠\n\nStart with theory and shallow-water practice, then visit the reef with a PADI professional. A guided introduction for the curious first-time diver. Medical screening and restrictions on flying after diving apply.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "metadata_0": "Duration: 3 hours",
+        "metadata_1": "Area: Jan Thiel"
+      }
+    },
+    "discover-willemstad": {
+      "source_sha256": "09e9f601763091e52e933024223e44ae32594d5b2ffe13acc69ad04322fb977e",
+      "facts": {
+        "summary": "Let Willemstad unfold, one neighbourhood at a time.\n\nExplore Otrobanda, Scharloo, Fort Waakzaamheid and Chobolobo, then discover Plasa Bieu and Punda’s market. Four hours for guests who enjoy getting to know a place beyond the beach. Hotel transport is included; lunch is extra.",
+        "additional_information": "Good to know: Hotel transport is included. Lunch is extra.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Bottled water",
+        "inclusion_1": "Included: Guided tour in English (Spanish on request)",
+        "inclusion_2": "Included: Entrance fee at all stops",
+        "metadata_0": "Duration: 4 hours",
+        "metadata_1": "Area: Willemstad"
+      }
+    },
+    "flyboard-experience": {
+      "source_sha256": "63273f44602d950934a2f5f4672a74800a413c275d86e5778a2d8090e5a1f493",
+      "facts": {
+        "summary": "See Jan Thiel Beach from a very different angle 🌊\n\nTry the lift and balance of flyboarding, with equipment, instruction and a safety briefing included. The one-hour experience advertises 30 to 40 minutes of flight time. An energetic choice for guests looking to try something new.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Safety gear",
+        "inclusion_1": "Included: Instruction",
+        "inclusion_2": "Included: All required equipment",
+        "inclusion_3": "Included: Flyboarding session",
+        "metadata_0": "Area: 1 hour of duration",
+        "metadata_1": "Area: Jan Thiel"
+      }
+    },
+    "half-day-snorkel-lunch": {
+      "source_sha256": "54504dd327387881c4c069c5dfb4d78314b8cbe34331c15387cc8f1ed14321d5",
+      "facts": {
+        "summary": "A little sailing, a little snorkelling, then lunch aboard 🌊\n\nCruise Spanish Water and the south coast by catamaran, explore the Tugboat snorkelling site and a shallow reef, and settle in for a BBQ lunch. Fresh fruit, snorkel gear and an open bar round out the outing.",
+        "additional_information": "Good to know: Optional extras and any additional charges need confirmation.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Open bar",
+        "inclusion_1": "Included: Snorkel & mask",
+        "inclusion_2": "Included: BBQ lunch",
+        "inclusion_3": "Included: Fresh fruits",
+        "metadata_0": "Duration: 4 hours 30 minutes",
+        "metadata_1": "Area: Westpunt"
+      }
+    },
+    "jetski-tour-30-min": {
+      "source_sha256": "3e3d3d9e3c71d7417c05def012a7309bb51ffe65c12079f8e0d68a1d9dd1e6b0",
+      "facts": {
+        "summary": "Take your island adventure onto the water 🌊\n\nAfter an operating tutorial, join a guided jet-ski ride along the coast past the Sea Aquarium and Mambo Beach. A lively 30-minute outing, with a life jacket included. Arrive early to complete the paperwork.",
+        "additional_information": "Good to know: Please arrive early for the operating tutorial and paperwork. Transfer arrangements and any extra charges need confirmation.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Life jacket",
+        "metadata_0": "Duration: 30 minutes",
+        "metadata_1": "Area: Jan Thiel"
+      }
+    },
+    "kadushi-utv-tours": {
+      "source_sha256": "dd3474c9f660c168ab505ea36591ff907877f86e914f5db534228e0e49a8a623",
+      "facts": {
+        "summary": "Rocky trails first. A beach swim to finish 🌴\n\nDrive past windmills, Indian Cave and Boca Patrick before stopping at Kokomo Beach for time in the water. This three-hour UTV outing brings a little off-road energy to a day on the island.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Goggles to be returned",
+        "inclusion_1": "Included: Bandana",
+        "inclusion_2": "Included: Water bottle",
+        "inclusion_3": "Included: Treats",
+        "metadata_0": "Duration: 3 hours",
+        "metadata_1": "Area: Westpunt"
+      }
+    },
+    "klein-curacao-a-trip-to-paradise": {
+      "source_sha256": "2147fd05cf3f611fda768af00ac08a186ae33083bd019c4608f0f4847974c464",
+      "facts": {
+        "summary": "Picture a day built around an island, the sea and time to unwind 🌊\n\nMermaid’s boat trip takes you to Klein Curaçao, an island off Curaçao, with breakfast, BBQ lunch, snorkel gear and beach-house facilities included. Beach beds give you somewhere to settle between exploring and relaxing. Published departure: 06:45 from Fisherman’s Pier.",
+        "additional_information": "Good to know: Hotel transfers, an open bar or individual drinks, and massage cost extra. Scuba diving is advertised as available; arrangements and prices need confirmation.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Breakfast",
+        "inclusion_1": "Included: BBQ lunch",
+        "inclusion_2": "Included: Fresh fruit",
+        "inclusion_3": "Included: Snorkel & mask",
+        "inclusion_4": "Included: Use of the beach house with toilets, changing rooms, and a freshwater shower",
+        "inclusion_5": "Included: Beach-beds",
+        "metadata_0": "Duration: 9 hours",
+        "metadata_1": "Area: Klein Curaçao"
+      }
+    },
+    "klein-curacao-catamaran-day-trip": {
+      "source_sha256": "3ae09a0692aa518f7f91470a8da05fc093897133df28329b13aeae25b7926640",
+      "facts": {
+        "summary": "Let the journey become part of your island day 🌊\n\nTravel by catamaran to Klein Curaçao for beach time and snorkelling, with breakfast and BBQ lunch along the way. The listing includes beach beds and an open bar. A full-day choice for guests drawn to the sea and an unhurried island escape.",
+        "additional_information": "Good to know: Optional extras and any additional charges need confirmation.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Small Breakfast",
+        "inclusion_1": "Included: BBQ lunch",
+        "inclusion_2": "Included: Fresh fruits",
+        "inclusion_3": "Included: Snorkel & mask",
+        "inclusion_4": "Included: Beach-beds",
+        "metadata_0": "Duration: 9 hours",
+        "metadata_1": "Area: Klein Curaçao",
+        "metadata_2": "Boarding point: Caracasbaai"
+      }
+    },
+    "klein-curacao-weekly-luxury-yacht-trip": {
+      "source_sha256": "454cb3daab7289074bb4e2e8d6a0c230e9976a0625bfcf86c739dd8781aa7c6c",
+      "facts": {
+        "summary": "Make room in your holiday for an island day aboard Serendipity 🌊\n\nTravel by yacht to Klein Curaçao, where beach-house facilities, beach beds and a guided snorkel safari await. Breakfast and BBQ lunch are included. The advertised crossing is about one hour; actual conditions can affect the journey.",
+        "additional_information": "Good to know: Open bar, massage, diving and hotel transfers cost extra.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Complete breakfast",
+        "inclusion_1": "Included: BBQ lunch",
+        "inclusion_2": "Included: Fresh fruits",
+        "inclusion_3": "Included: Snorkel and mask",
+        "inclusion_4": "Included: Use of the beach house with toilets, changing rooms, and a freshwater shower",
+        "inclusion_5": "Included: Beach-beds",
+        "inclusion_6": "Included: Guided snorkel safari",
+        "metadata_0": "Duration: 9 hours",
+        "metadata_1": "Area: Klein Curaçao"
+      }
+    },
+    "mid-day-reef-tour": {
+      "source_sha256": "8a46f7c483278533758f84cdef88dc0d5b288b69df64945d5d44033282bde3de",
+      "facts": {
+        "summary": "Look down and discover a different side of Curaçao 🐠\n\nFrom Playa Daaibooi, a glass-bottom boat brings reefs and marine life into view beneath you. Snorkel gear, snacks and soft drinks are included. The 11:00 to 12:30 outing leaves the rest of your day open to island time.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Snorkel & mask",
+        "inclusion_1": "Included: Soft drinks",
+        "inclusion_2": "Included: Snacks",
+        "metadata_0": "Duration: 1 hour 30 minutes",
+        "metadata_1": "Area: Westpunt"
+      }
+    },
+    "miss-ann-klein-curacao": {
+      "source_sha256": "e54ab7186a5d59e1a4647afaf332943cfa85c8479f07fda4fd0ebc8797e6231a",
+      "facts": {
+        "summary": "Give your weekend a little island escape 🌴\n\nThe Serendipity yacht’s Weekend Supreme package takes you to Klein Curaçao, with beach-house facilities, beach beds and a guided snorkel safari. Breakfast, BBQ lunch and an open bar are included, leaving you to choose how to enjoy your island day.",
+        "additional_information": "Good to know: Massage, diving and hotel transfers cost extra.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Complete breakfast",
+        "inclusion_1": "Included: BBQ lunch",
+        "inclusion_2": "Included: Fresh fruits",
+        "inclusion_3": "Included: Snorkel & mask",
+        "inclusion_4": "Included: Open bar",
+        "inclusion_5": "Included: Use of the beach house with toilets, changing rooms, and a freshwater shower",
+        "inclusion_6": "Included: Beach-beds",
+        "inclusion_7": "Included: Guided snorkel safari",
+        "metadata_0": "Duration: 9 hours",
+        "metadata_1": "Area: Klein Curaçao"
+      }
+    },
     "national-park-jeep-safari": {
       "source_sha256": "a909006cfb5b5f067c660af7408dc7780db4e7e744e9397a56915bb2d4a45956",
       "facts": {
-        "summary": "Take your island adventure beyond the beach 🌴\n\nHop into an open vehicle and explore Curaçao’s north coast, Jan Kok and Christoffel National Park. A day out for curious explorers who want to see more of the island.",
-        "additional_information": "Good to know: lunch is extra. The listing excludes guests who are pregnant or have back problems.",
-        "guarantees": "The listing advertises free cancellation up to 24 hours before departure (local time) and a reservation deposit. Final booking terms need confirmation.",
-        "inclusion_0": "Included: bottled water",
-        "inclusion_1": "Included: entrance fees",
-        "metadata_0": "Your day: 09:00 to 15:00 (6 hours)",
+        "summary": "Take your island adventure beyond the beach 🌴\n\nHop into an open vehicle and explore Curaçao’s north coast, Jan Kok and Christoffel National Park. A day for curious explorers who want to see more of the island, with bottled water and entrance fees included. The trip runs from 09:00 to 15:00; lunch is extra.",
+        "additional_information": "Good to know: Lunch is extra. The listing excludes guests who are pregnant or have back problems.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Bottled water",
+        "inclusion_1": "Included: Entrance fees",
+        "metadata_0": "Duration: 6 hours",
         "metadata_1": "Area: Westpunt"
       }
+    },
+    "open-fishing-trip": {
+      "source_sha256": "59399e0f9e39b6a044f2baeafa3e3ff330e055c08b6ad04db01b7e14d6336790",
+      "facts": {
+        "summary": "Head out with a fishing crew and see what the day brings 🌊\n\nJoin a shared trip targeting wahoo, barracuda, tuna and mahi mahi, with fishing equipment and drinks included. If there is a catch, the crew cleans and packages it afterwards. Four hours on the water, with no catch guaranteed.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Beer, water and soft drinks",
+        "inclusion_1": "Included: Fishing equipment",
+        "metadata_0": "Duration: 4 hours",
+        "metadata_1": "Area: Spanish Water"
+      }
+    },
+    "seatrek-underwater-walking-tour": {
+      "source_sha256": "28f0c3599303641534b1fc1f8b734252f55add16df0054fe7299f25cd3a09589",
+      "facts": {
+        "summary": "Imagine exploring the underwater world on foot 🐠\n\nWalk among corals and fish on this one-hour experience, with water shoes, bag storage and a public shower included. A different way to discover life beneath the surface. Optional photos, video and hotel transport cost extra.",
+        "additional_information": "Good to know: Underwater photos or video and hotel pickup or drop-off cost extra; prices need confirmation.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Storage for bags",
+        "inclusion_1": "Included: Water shoes",
+        "inclusion_2": "Included: Public shower",
+        "metadata_0": "Area: 1 hour of duration",
+        "metadata_1": "Area: Willemstad"
+      }
+    },
+    "snorkel-and-beach-adventures": {
+      "source_sha256": "7a4ef040d92612edba6fa6b7ea3881d7ef9fbeb9dacaa62da7bed9f3f96d9f1d",
+      "facts": {
+        "summary": "An island adventure with time to slip into the sea 🌊\n\nTake a 4×4 to Shete Boka National Park, snorkel at Playa Piskado beach, then enjoy beach time at Cas Abao. From exploring on land to looking beneath the surface, the 09:00 to 15:00 outing brings both sides of Curaçao together.",
+        "additional_information": "Good to know: Guests who swim or snorkel must be able to swim. The listing excludes guests who are pregnant or have back problems.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Snorkeling gear",
+        "inclusion_1": "Included: Entrance fees",
+        "inclusion_2": "Included: Bottled water",
+        "inclusion_3": "Included: Beach beds at Cas Abao",
+        "inclusion_4": "Included: Shower coin",
+        "inclusion_5": "Included: Free drink",
+        "metadata_0": "Duration: 6 hours",
+        "metadata_1": "Area: Westpunt"
+      }
+    },
+    "sunset-boat-trip": {
+      "source_sha256": "b7aa4734e93985607bda31cccd1304d9c03de73269078dd3facda04d85447451",
+      "facts": {
+        "summary": "Let the evening take you out onto the water 🌊\n\nLeave Playa Daaibooi aboard a glass-bottom boat to take in the coastline and look for marine life below. With snacks and soft drinks included, this 18:00 to 19:30 outing offers a gentle way to bring your island day to a close.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Snorkel and mask",
+        "inclusion_1": "Included: Soft drinks",
+        "inclusion_2": "Included: Snacks",
+        "metadata_0": "Duration: 1 hour 30 minutes",
+        "metadata_1": "Area: Westpunt"
+      }
+    },
+    "sunset-sail": {
+      "source_sha256": "3e19ed2691146b0a5cc1f40508810e9f2e0a8650d9756ac7aed1042dd73f2c7c",
+      "facts": {
+        "summary": "Picture yourself aboard a catamaran as day gives way to evening 🌊\n\nSail along Curaçao’s coast at sunset, with finger food and an open bar included. A lovely choice for guests who want time together on the water. Departure time and optional hotel transport charges need confirmation.",
+        "additional_information": "Good to know: Hotel transport is available at an additional charge; price and departure time need confirmation.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Open bar",
+        "inclusion_1": "Included: Finger food",
+        "metadata_0": "Duration: 2 hours 30 minutes",
+        "metadata_1": "Area: Spanish Water"
+      }
+    },
+    "sup-curacao-paddle-boarding": {
+      "source_sha256": "2eb9927a4b3e52ab709ce943bf036f240ae4942ac1d56010b0b47a734c7d62d7",
+      "facts": {
+        "summary": "Find your own rhythm, one paddle stroke at a time 🌊\n\nHead out with a guide in a small group of one to four, with instruction and SUP equipment included. Guests aged 12 and over can use their own board; younger children share an adult’s board at no extra charge under the published rules.",
+        "additional_information": "Good to know: Optional extras carry an additional charge; arrangements and prices need confirmation.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Instruction",
+        "inclusion_1": "Included: SUP equipment",
+        "inclusion_2": "Included: Water and snack",
+        "inclusion_3": "Included: Boat ride upwind",
+        "metadata_0": "Duration: 2 hours",
+        "metadata_1": "Area: Jan Thiel"
+      }
+    },
+    "tandem-skydive-experience": {
+      "source_sha256": "1e08b5619277366d2888433bbce0a3697286a32a2425c1e111f71451644bdcf0",
+      "facts": {
+        "summary": "A different kind of island adventure begins at 10,000 feet.\n\nThis tandem skydive combines approximately 45 seconds of freefall with around seven minutes under the parachute. Briefing, instructor guidance and equipment are included. Photo and video packages are optional extras.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Briefing",
+        "inclusion_1": "Included: Instructor guidance",
+        "inclusion_2": "Included: Parachute equipment",
+        "metadata_0": "Duration: 2 hours",
+        "metadata_1": "Area: St. Joris Bay"
+      }
+    },
+    "the-jungle-tour": {
+      "source_sha256": "6788a7f9a063b518d0ff43fb6325d5be201453ed8f39c5edf8e5932801ce808e",
+      "facts": {
+        "summary": "Follow your curiosity into Amazonia 🐒\n\nDiscover its reptiles, birds and monkeys on a 45 to 60-minute animal experience. An outing for guests who enjoy taking a closer look at the living world. Admission varies by age; cancellation terms need clarification before booking.",
+        "guarantees": "Cancellation: this listing contains conflicting terms, including non-refundable tickets. The applicable policy needs confirmation before you commit.",
+        "metadata_0": "Area: 1 hour of duration",
+        "metadata_1": "Area: Willemstad"
+      }
+    },
+    "tugboat-seabob": {
+      "source_sha256": "73d4a9e847fcbc8f85172fa365d75f75f290e444cb8255387941259eb749c57d",
+      "facts": {
+        "summary": "A wreck, corals and a new way to explore beneath the surface 🐠\n\nUse a Seabob to discover the Tugboat wreck, nearby corals and a dive wall in a small group of two or three. Snorkelling gear and a safety briefing are included in this one-hour underwater outing.",
+        "additional_information": "Good to know: Photo and video options cost extra; prices need confirmation.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Snorkeling gear",
+        "inclusion_1": "Included: Safety briefing",
+        "metadata_0": "Area: 1 hour of duration",
+        "metadata_1": "Area: Jan Thiel"
+      }
+    },
+    "west-coast-blue-room": {
+      "source_sha256": "3959fdb477fecf4b3d92d750b8ac83b1d47aef934f72457ccee6522ed14fa210",
+      "facts": {
+        "summary": "Let the west coast fill your day with discovery 🌊\n\nTravel by catamaran, stop at beaches, snorkel and enjoy BBQ lunch, then return by open-air bus. The Blue Cave adds another possibility to the outing, with entry always dependent on conditions. A full day for guests who love a mix of coast and sea.",
+        "additional_information": "Good to know: Optional extras and any additional charges need confirmation. Blue Cave entry depends on conditions.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Small breakfast",
+        "inclusion_1": "Included: BBQ lunch",
+        "inclusion_2": "Included: Open bar",
+        "inclusion_3": "Included: Fresh fruit",
+        "inclusion_4": "Included: Snorkel & mask",
+        "metadata_0": "Duration: 9 hours",
+        "metadata_1": "Area: Westpunt"
+      }
+    },
+    "wonders-of-curacao": {
+      "source_sha256": "607d00664958e6b903157b7264c5d4d9c51b403d2a16a1ff71c28974552e54cc",
+      "facts": {
+        "summary": "From caves to beach time, discover the island’s variety 🌴\n\nVisit Hato Caves, snorkel at Playa Piskado beach and unwind at Porto Marie, with a stop at the St. Willibrordus flamingo area. Hotel transport is included. A seven-hour outing for curious guests, with wildlife sightings left to nature.",
+        "additional_information": "Good to know: Hotel transport is included.",
+        "guarantees": "Cancellation: the listing advertises free cancellation up to 24 hours before the experience starts (local time) and a reservation deposit. Final terms need confirmation.",
+        "inclusion_0": "Included: Bottled water",
+        "inclusion_1": "Included: Entrance fee at all stops",
+        "inclusion_2": "Included: Tour guide",
+        "inclusion_3": "Included: Snorkel & mask",
+        "metadata_0": "Duration: 7 hours",
+        "metadata_1": "Area: Sint Willibrordus"
+      }
     }
-  }
+  },
+  "gallery_mode": "carousel"
 }

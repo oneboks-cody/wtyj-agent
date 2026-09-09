@@ -150,17 +150,24 @@ class DiscoveryStore:
             answer_status = ('human_requested' if decision['intent'] == 'human' else
                              'no_match' if not chosen else
                              'unavailable' if not decision['fact_keys'] and decision['question'].strip() else 'source_backed')
-            visual=visual or bool(hospitality and chosen and selected_intent is None and (card_texts or decision['intent']=='discover' or hospitality['photo']!='none'))
+            descriptive=bool(chosen and (not hospitality or hospitality.get('consent',{}).get('action','none')=='none') and (card_texts or decision['intent']=='discover' or 'summary' in decision['fact_keys'] or action_kind=='info'))
+            visual=visual or bool(hospitality and chosen and selected_intent is None and (descriptive or hospitality['photo']!='none'))
             visual_parts=None
             photo_preference=(hospitality or {}).get('photo','more' if action_kind=='photos' else 'initial')
+            photo_opt_out=(hospitality or {}).get('photo_opt_out',False)
             if action_token is not None and action_kind=='info':
-                photo_preference='none' if old.get('photo_preference')=='none' or info_offset else 'initial'
+                photo_opt_out=old.get('photo_opt_out',False)
+                photo_preference='none' if photo_opt_out else 'initial'
+            if descriptive and photo_preference=='none' and not photo_opt_out:
+                photo_preference='initial'
+            if photo_opt_out:photo_preference='none'
             if visual and answer_status=='source_backed' and selected_intent is None:
                 from agents.social.isluno_visual import build
                 visual_parts,asset_ids,missing=build(self,db,scope,chosen,{**decision,'translations':translations},button,labels,
                     texts=card_texts,common=response_text or '',question=next_question,photo=photo_preference,
                     location=photo_location,offset=offset,info_offset=info_offset,action_kind=action_kind,offer_selection=offer_selection,detail_keys=detail_keys)
-                body={'accountId':scope.account_id,'message':''.join(p['body']['message'] for p in visual_parts)}
+                from agents.social.isluno_wire import text_of
+                body={'accountId':scope.account_id,'message':''.join(text_of(p['body']) for p in visual_parts)}
                 fallback=None
             elif answer_status != 'source_backed':
                 clarification = CLARIFICATIONS[locale]
@@ -276,6 +283,8 @@ class DiscoveryStore:
             if visual_parts:
                 for part in parts:
                     tokens={b['payload'] for b in part['body'].get('buttons',[])}
+                    for card in part['body'].get('interactive',{}).get('action',{}).get('cards',[]):
+                        tokens.update(b['quick_reply']['id'] for b in card['action']['buttons'])
                     part['button_meanings']={t:a for t,a in actions.items() if t in tokens}
             else:visual=False
             payload = {'detail_translation_required':translation_required,'detail_fact_keys':detail_keys,'visual_cards':visual,'source_trigger_id':source_trigger_id or trigger_id,'parts':parts,'id': plan_id, 'scope': scope.__dict__, 'trigger_id': trigger_id, 'trigger_sent_at': sent_at,
@@ -283,7 +292,7 @@ class DiscoveryStore:
                        'product_ids': decision['product_ids'], 'language': locale, 'fact_keys': decision['fact_keys'],
                        'product_fact_keys': fact_association, 'answer_status': answer_status, 'translations': translations,
                        'body': body, 'offer_selection': offer_selection, 'next_question': next_question, 'button_meanings': actions, 'fallback': fallback, 'asset_ids': asset_ids, 'missing_asset_ids': missing,
-                       'selected_intent': selected_intent, 'requires_human': decision['intent'] == 'human', 'brand_asset_id': brand_asset_id, 'photo_preference': photo_preference,
+                       'selected_intent': selected_intent, 'requires_human': decision['intent'] == 'human', 'brand_asset_id': brand_asset_id, 'photo_preference': photo_preference, 'photo_opt_out': photo_opt_out,
                        'created_at': self.clock().isoformat(), 'expires_at': (self.clock() + timedelta(hours=24)).isoformat()}
             db.execute('INSERT INTO isluno_discovery_plans(id,scope_key,trigger_id,payload) VALUES(?,?,?,?)', (plan_id, scope.key, trigger_id, dump(payload)))
             for token, action in actions.items():

@@ -20,6 +20,7 @@ class JourneyConfigTests(unittest.TestCase):
         self.profile_path = self.directory / "isluno_profile.json"
         public_profile = Path(__file__).resolve().parents[3] / "clients/mermaid/config/isluno_profile.json"
         self.profile = json.loads(public_profile.read_text(encoding="utf-8"))
+        self.profile['gallery_mode'] = 'single'  # Baseline fixtures; carousel tests opt in explicitly.
         self.config = {
             "slug": "mermaid", "business": {"slug": "mermaid", "name": "Synthetic Mermaid"},
             "features": {identity.FEATURE: True},
