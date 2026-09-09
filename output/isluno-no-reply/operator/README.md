@@ -1,0 +1,1 @@
+Historical operator source reviewed for the completed rollout. Both dispatches are consumed. These copies are evidence, not permission to execute again; original runtime source is c04512cfc84ccae329c5d8de881fe9a010882e59. Normal application guards were not modified. Local paths in the scripts refer to the original isolated worktree.

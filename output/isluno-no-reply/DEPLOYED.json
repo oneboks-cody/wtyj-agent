@@ -1,0 +1,29 @@
+{
+  "agent_messages_sent": 0,
+  "container_id": "5acae4259714c41aeca3e310e6466cca27cfda19f0724d6439675c02e5c624b7",
+  "health": 200,
+  "image": "sha256:8d63e4d77862d9832892e788ceafc0f4d425aacf6ac594b7ee034aa1547068e3",
+  "ingress_generation": 5,
+  "marker_removed": true,
+  "packaged_hashes": {
+    "agents/marina/marina_agent.py": "53ac9d45abdbb01df54d8d370e7071ae49d0f2dc6b5bd212776a0e0a696924c1",
+    "agents/social/isluno_conversation.py": "fea3f7cc4c491e31b6f3d63f4fe036a5ad6d68bc2465bd11347ad0eb66092f40",
+    "agents/social/isluno_conversation_understanding.py": "c347bff856e04b37375ea700999db243d57998b67fa10d77e8c167e9bae14d79",
+    "agents/social/isluno_recovery_copy.py": "a1f9e8b24c31a6068bd0b385941546bb272957052b37fec995f66ecc22c48503",
+    "agents/social/isluno_understanding.py": "dcb0db9728b32e7847dc6a177db1a9ed717ec154da1541cbdd38db0bb6e6af35"
+  },
+  "preserved_tables": 91,
+  "retained_proof_sha256": "eff3f83c68b7f706298d456d6d85f1a967916ab1e0d0b340892859fac577ff86",
+  "runtime_generation": 6,
+  "source": "c04512cfc84ccae329c5d8de881fe9a010882e59",
+  "state": {
+    "gates_closed": true,
+    "image_changed": true,
+    "open": true,
+    "rolled_back": false,
+    "sealed": true
+  },
+  "status": "fix_deployed_open",
+  "watchdog_restored": true,
+  "worker_restored": true
+}

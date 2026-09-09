@@ -1,0 +1,30 @@
+{
+  "source_sha": "c04512cfc84ccae329c5d8de881fe9a010882e59",
+  "base_image_id": "sha256:2be4255cecfce5a7355e7868570cbfb7bddfec119bdb7d8f70391c7990df8fb9",
+  "files": {
+    "agents/marina/marina_agent.py": {
+      "sha256": "53ac9d45abdbb01df54d8d370e7071ae49d0f2dc6b5bd212776a0e0a696924c1",
+      "bytes": 129486
+    },
+    "agents/social/isluno_conversation.py": {
+      "sha256": "fea3f7cc4c491e31b6f3d63f4fe036a5ad6d68bc2465bd11347ad0eb66092f40",
+      "bytes": 34302
+    },
+    "agents/social/isluno_conversation_understanding.py": {
+      "sha256": "c347bff856e04b37375ea700999db243d57998b67fa10d77e8c167e9bae14d79",
+      "bytes": 9449
+    },
+    "agents/social/isluno_recovery_copy.py": {
+      "sha256": "a1f9e8b24c31a6068bd0b385941546bb272957052b37fec995f66ecc22c48503",
+      "bytes": 1012
+    },
+    "agents/social/isluno_understanding.py": {
+      "sha256": "dcb0db9728b32e7847dc6a177db1a9ed717ec154da1541cbdd38db0bb6e6af35",
+      "bytes": 5437
+    },
+    "Dockerfile": {
+      "sha256": "bb1671c3e4d41f235153fe27669bef204ce342d4f0914b70d3444b11957a310b",
+      "bytes": 547
+    }
+  }
+}

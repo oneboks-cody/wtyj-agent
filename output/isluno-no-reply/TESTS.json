@@ -1,0 +1,23 @@
+{
+  "source_sha": "c04512cfc84ccae329c5d8de881fe9a010882e59",
+  "network": "none",
+  "provider_calls": 0,
+  "agent_messages": 0,
+  "tests_passed": 8,
+  "batches": [
+    {
+      "tests": 7,
+      "seconds": 7.978
+    },
+    {
+      "tests": 1,
+      "seconds": 7.404
+    }
+  ],
+  "local_candidate_image_config": "sha256:5cf9ba6ddb4d51141bc9b548d55402b7ad2277dc0318d051ffcbf0a88937748f",
+  "local_candidate_image_index": "sha256:9f3886b5e15c00c09a2b7f60116c828b355555cc92fe4424e0b52701176ede6a",
+  "live_deployed": true,
+  "deployed_image_config": "sha256:8d63e4d77862d9832892e788ceafc0f4d425aacf6ac594b7ee034aa1547068e3",
+  "operator_tests_passed": 3,
+  "operator_test_seconds": 1.314
+}
