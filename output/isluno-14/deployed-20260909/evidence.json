@@ -1,0 +1,15 @@
+{
+  "files": {
+    "recovery-e-result.json": "52885eeba900550fdf563e270f5885218f9b3364661b769b1720059c4cc6771c",
+    "readiness.json": "0de305c176ad698a4fd213560da5e7e9a1fe5a9c6ef9cff2c1bbf9f2f8d294e7",
+    "pointer.json": "76c35f8f09c80a9dd2033fcc18dd60b0a65f37c8f90da660e8bbc8f222f0039a",
+    "authenticated-ui.json": "2d1aba8f31e7eaecd32db073a51a0d93effe781dd18f187ee9d6da1bf930e9b1",
+    "reopen.json": "8a506ed014285b7c4051e8618daa60cb1e5142aab34a9399f721b735baee867d",
+    "final-verification.json": "7adb7b685a2687151c4f547c36320a517ffdeb52088cda980e7d7c9b7a77bf11"
+  },
+  "reviewed_recovery_e_commit": "4dd976c2e8739f00487f8f15c11d56957480f115",
+  "runtime_source": "e2deab8c2ad6c4313324d5b94769b91a1f0ae168",
+  "frontend_source": "2c99c3a13e01af625432e5f681d4c065e95dd1a8",
+  "manual_whatsapp_e2e": "pending_Calvin",
+  "agent_test_messages": 0
+}

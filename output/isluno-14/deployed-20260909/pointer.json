@@ -1,0 +1,12 @@
+{
+  "status": "static_pointer_switched",
+  "files_verified": 66,
+  "index_sha256": "9c7639e7321a9d4cbb3047c5672a1c1878457f19af44a18c3c309a7e1a59028e",
+  "previous_pointer_retained_at": "/var/www/unboks-dashboard/.isluno-previous-20260909-a",
+  "new_target": "/var/www/unboks-dashboard/releases/isluno-2c99c3a-20260909-a",
+  "runtime_generation": 1,
+  "runtime_phase": "sealed",
+  "ingress_generation": 0,
+  "ingress_phase": "closed",
+  "gates_reopened": false
+}

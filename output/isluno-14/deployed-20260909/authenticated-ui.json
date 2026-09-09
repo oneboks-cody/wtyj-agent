@@ -1,0 +1,47 @@
+{
+  "status": "authenticated_Nr2_readiness_pass",
+  "verified_at": "2026-09-09T12:42:52.839459+00:00",
+  "backend_commit": "4dd976c2e8739f00487f8f15c11d56957480f115",
+  "runtime_source": "e2deab8c2ad6c4313324d5b94769b91a1f0ae168",
+  "frontend_commit": "2c99c3a13e01af625432e5f681d4c065e95dd1a8",
+  "session": {
+    "browser": "existing Codex in-app browser",
+    "tab": "2",
+    "fresh_reload": true,
+    "url": "https://dashboard.unboks.org/today",
+    "workspace": "mermaid",
+    "auth_form": false
+  },
+  "verified": {
+    "today_subtitle": "Isluno \u00b7 Itinerary operations",
+    "today_itineraries": 0,
+    "today_trip_items": 0,
+    "today_demo_paid": 0,
+    "today_pending_review": 71,
+    "quarantine_panel": "operator review, no automatic replay; originals retained",
+    "reminders": "disabled",
+    "catalog_count": 31,
+    "catalog_visible_count": 31,
+    "product_inspected": "Afternoon Explorer Tour",
+    "owner_controls": "settable name, category, visibility, guest ages, prices, schedule and gallery captions/order",
+    "publish": "disabled with unchanged data; no changes submitted",
+    "sample_gallery_image_elements": 7,
+    "gallery_validation_labels": "verified",
+    "itineraries": "Isluno itineraries loaded; 0, no API/auth error",
+    "guests": "Isluno guests loaded; 0, no API/auth error",
+    "legacy_links": "present; no historical customer record opened"
+  },
+  "builder_receipts": {
+    "readiness_result_sha256": "0de305c176ad698a4fd213560da5e7e9a1fe5a9c6ef9cff2c1bbf9f2f8d294e7",
+    "pointer_result_sha256": "76c35f8f09c80a9dd2033fcc18dd60b0a65f37c8f90da660e8bbc8f222f0039a"
+  },
+  "remaining": [
+    "exact_generation_runtime_and_ICP_reopening",
+    "appropriate_fence_restoration",
+    "Calvin_manual_WhatsApp_E2E"
+  ],
+  "dashboard_mutations": 0,
+  "agent_outbound_messages": 0,
+  "paid_evaluation_calls": 0,
+  "root_host_calls": 0
+}

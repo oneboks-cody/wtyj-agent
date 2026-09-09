@@ -1,0 +1,37 @@
+{
+  "status": "deployment_verified_open",
+  "original_records_verified_unchanged": 71,
+  "quarantine_references_verified": 71,
+  "runtime_phase": "open",
+  "runtime_generation": 2,
+  "ingress_phase": "open",
+  "ingress_generation": 1,
+  "services": [
+    {
+      "name": "wtyj-mermaid",
+      "image": "sha256:2be4255cecfce5a7355e7868570cbfb7bddfec119bdb7d8f70391c7990df8fb9",
+      "running": true
+    },
+    {
+      "name": "unboks-internal-control-panel-wtyj-admin-1",
+      "image": "sha256:2e547a43021e2c3f4e98b3404a0d4780d19af9c0cf751d84c25745eb6acff77c",
+      "running": true
+    }
+  ],
+  "units": {
+    "nr3-provision-worker.service": {
+      "MainPID": "1763000",
+      "ActiveState": "active",
+      "SubState": "running"
+    },
+    "unboks-tracy-watchdog.timer": {
+      "ActiveState": "active",
+      "SubState": "waiting"
+    }
+  },
+  "maintenance_marker_absent": true,
+  "health": 200,
+  "config_sha256": "1424d087d01af8f93cfa74feb677d603660a9128f5f1d686ee2778479ab7be7a",
+  "static_target": "/var/www/unboks-dashboard/releases/isluno-2c99c3a-20260909-a",
+  "manual_whatsapp_e2e": "pending_Calvin"
+}

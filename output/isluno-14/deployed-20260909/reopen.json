@@ -1,0 +1,35 @@
+{
+  "agent_messages_sent": 0,
+  "events": [
+    {
+      "at": 1788957947.4843607,
+      "phase": "runtime_reopen_dispatch"
+    },
+    {
+      "at": 1788957947.7988129,
+      "generation": 2,
+      "phase": "runtime_open"
+    },
+    {
+      "at": 1788957948.121619,
+      "generation": 1,
+      "phase": "ingress_open"
+    },
+    {
+      "at": 1788957948.222822,
+      "phase": "temporary_fences_restored"
+    }
+  ],
+  "ingress_generation": 1,
+  "ingress_phase": "open",
+  "maintenance_marker_removed": true,
+  "native_carousels_enabled": false,
+  "quarantined_preserved_records": 71,
+  "reminders_enabled": false,
+  "runtime_generation": 2,
+  "runtime_phase": "open",
+  "static_target": "/var/www/unboks-dashboard/releases/isluno-2c99c3a-20260909-a",
+  "status": "release_open",
+  "watchdog_timer_restored": true,
+  "worker_restored": true
+}

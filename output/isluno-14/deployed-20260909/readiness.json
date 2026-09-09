@@ -1,0 +1,51 @@
+{
+  "status": "readiness_before_ui_pass",
+  "internal": {
+    "capabilities": {
+      "schema_version": "isluno.v1",
+      "tenant_slug": "mermaid",
+      "known": true,
+      "enabled": true,
+      "journey_type": "isluno_itinerary_demo_v1",
+      "brand": {
+        "profile_version": "isluno-profile-v1-20260908",
+        "id": "isluno",
+        "name": "Isluno",
+        "assistant_name": "TRACY",
+        "website": "https://isluno.com",
+        "primary_color": "#125055"
+      },
+      "mode": "demo",
+      "capabilities": {
+        "brand_profile": true,
+        "isolated_context": true,
+        "itinerary_booking": true,
+        "demo_payment": true,
+        "catalog_editor": true,
+        "itinerary_workspace": true
+      },
+      "document_languages": [
+        "en",
+        "nl",
+        "de",
+        "es",
+        "pap",
+        "pt"
+      ]
+    },
+    "catalog_count": 31,
+    "catalog_revision": "dfa4ad5edfc6bda895b65fd77745805be35305efc44b578ca4e4e1ef0a6c5217",
+    "media_digest": "b82498413a6e4838b7497c61627b7204adc7827834e0e9c8d8007d167e18068d",
+    "jpeg_sha256": "ffdd4471b951fa3886b060307e514ebb1fd1c3216bf845c2ef348aa2fc4cf382",
+    "jpeg_bytes": 288380
+  },
+  "public_media": "verified_equal_bytes",
+  "document_route": "verified_rejects_invalid_document",
+  "unauthenticated_api_status": 401,
+  "generation": 1,
+  "phase": "sealed",
+  "quarantined": 71,
+  "ingress_phase": "closed",
+  "ingress_generation": 0,
+  "authenticated_ui_pending": true
+}

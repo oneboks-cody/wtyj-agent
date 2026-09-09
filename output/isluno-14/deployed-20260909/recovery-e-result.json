@@ -1,0 +1,80 @@
+{
+  "config_sha256": "1424d087d01af8f93cfa74feb677d603660a9128f5f1d686ee2778479ab7be7a",
+  "events": [
+    {
+      "at": 1788957261.9959888,
+      "phase": "recovery_helper_staged_bindings_verified"
+    },
+    {
+      "at": 1788957261.9978676,
+      "config_sha256": "dbb56a497007a7f52e6a31487803bd542bd7e01dfa0620ee5c5590af400d0fe1",
+      "db_bundle_sha256": "06d506ff40b091320a713a842d43fef7d113c1d517e71087920182f77d8e868a",
+      "phase": "quarantine_and_seal_dispatch"
+    },
+    {
+      "at": 1788957262.3486116,
+      "phase": "helper_returned",
+      "result": {
+        "application_workers_started": false,
+        "automatic_retry": false,
+        "deadline_epoch": 1788957382.2808568,
+        "generation": 1,
+        "preserved_unresolved_records": 71,
+        "private_source_bundle_sha256": "06d506ff40b091320a713a842d43fef7d113c1d517e71087920182f77d8e868a",
+        "private_source_bytes": 774144,
+        "private_source_files": 2,
+        "quarantined_no_replay": 71,
+        "reclassified_as_completed": 0,
+        "snapshot_sha256": "269a45bead0fd1dc85ab651bc256202db3e3dc6c52653195dce4d431741cd349",
+        "status": "sealed"
+      },
+      "script": "recover_isluno_staged_cutover_e.py"
+    },
+    {
+      "at": 1788957262.3488297,
+      "deadline": 1788957382.2808568,
+      "generation": 1,
+      "phase": "coordinator_sealed",
+      "preserved_unresolved": 71
+    },
+    {
+      "at": 1788957262.6890123,
+      "phase": "helper_returned",
+      "result": {
+        "changed_paths": [
+          "features.isluno_itinerary_demo_v1",
+          "mermaid_maintenance.activation_generation"
+        ],
+        "config_sha256": "1424d087d01af8f93cfa74feb677d603660a9128f5f1d686ee2778479ab7be7a",
+        "phase": "activate",
+        "status": "applied"
+      },
+      "script": "apply_isluno_release_config.py"
+    },
+    {
+      "at": 1788957262.689269,
+      "config_sha256": "1424d087d01af8f93cfa74feb677d603660a9128f5f1d686ee2778479ab7be7a",
+      "phase": "activation_config_written"
+    },
+    {
+      "at": 1788957267.344694,
+      "container_id": "a6a91d81b8a82b2f5ebbe63f7e132935401ff5d07e1bb3db7fbee502d3712873",
+      "generation": 1,
+      "phase": "runtime_started_gated"
+    }
+  ],
+  "frontend_pointer_changed": false,
+  "gates_reopened": false,
+  "generation": 1,
+  "icp_container_id": "6642944f55241667adabb002b16f0859817aa8ec962819ffc5dc61c89dedcb46",
+  "icp_generation": 0,
+  "mermaid_container_id": "a6a91d81b8a82b2f5ebbe63f7e132935401ff5d07e1bb3db7fbee502d3712873",
+  "preserved_unresolved_records": 71,
+  "state": {
+    "activated": true,
+    "gates_reopened": false,
+    "ingress_installed": true,
+    "mermaid_stopped": false
+  },
+  "status": "runtime_started_gated"
+}
