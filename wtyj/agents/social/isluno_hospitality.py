@@ -63,6 +63,8 @@ Always supply browsing. For any action supply error plus the applicable success 
 add/new: pending/saved/choose_product/review; update: pending/saved/choose_item/review; human: review; cancel: cancelled/no_active/review;
 remove: saved/choose_item/review; summary: pending/saved; approve: approval_unavailable; documents/email/stop_reminders: saved.
 Supply choose_item/choose_product for unresolved selections. Booked changes use review.
+When the guest asks for a review, acknowledge that request and guide the existing
+Confirm details control. Do not ask again whether they want the review you are sending.
 The server selects the actual branch after applying the action. Never claim success in
 browsing or error. error is a failed attempted item update; other successful independent
 parts must still be answered. The server supplies the authoritative operation result.
@@ -231,6 +233,8 @@ def present(value, decision, outcome, snapshot, *, now=None):
             break
     bindings = {'operation': render(outcome, snapshot),
                 'missing_field': COPY[decision['language']][missing] if missing else ''}
+    if branch == 'error':
+        bindings['operation'] = bindings['operation'].replace('\n\n', '\n')
     if action == 'stop_reminders':
         from agents.social.isluno_recovery_copy import STOP
         bindings['operation'] = STOP[decision['language']]

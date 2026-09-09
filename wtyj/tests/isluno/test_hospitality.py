@@ -58,6 +58,9 @@ class HospitalityTests(unittest.TestCase):
                  updates=None, guest=None, memory=None, photo='none', stage='exploration', language='en', replies=None):
         decision = fixtures.response(action, updates, guest, language=language,
                                      products=[] if products is None else products, fact_keys=[] if facts is None else facts)
+        if action == 'summary' and replies is None:
+            replies = operation_replies()
+            replies['saved'] = {'paragraphs':["Here's the review you asked for. Please check the details and use Confirm details when you're ready."], 'question':''}
         decision['hospitality'] = hospitality(text, question, action=action, evidence=evidence,
                 memory=memory, photo=photo, stage=stage, replies=replies or (operation_replies() if action != 'none' else {}))
         return decision
@@ -316,7 +319,7 @@ class HospitalityTests(unittest.TestCase):
           'nl':("Hoi, ik ben Calvin. We blijven een maand.","Hoi Calvin! Fijn dat jullie een maand de tijd hebben om het eiland te ontdekken.","Met wie kom je?","We zijn met twee volwassenen.","Dank je, dan zoeken we iets dat bij jullie past.","Willen jullie iets rustigs of actiefs?"),
           'de':("Hallo, ich bin Calvin. Wir bleiben einen Monat.","Hallo Calvin! Mit einem ganzen Monat könnt ihr die Insel in eurem Tempo entdecken.","Wer kommt mit?","Wir sind zwei Erwachsene.","Danke, dann suchen wir etwas Passendes für euch beide.","Möchtet ihr etwas Ruhiges oder Aktives?"),
           'es':("Hola, soy Calvin. Nos quedamos un mes.","¡Hola, Calvin! Con un mes podéis descubrir la isla a vuestro ritmo.","¿Con quién vienes?","Somos dos adultos.","Gracias, podemos buscar algo que os guste a los dos.","¿Preferís algo tranquilo o activo?"),
-          'pt':("Olá, sou o Calvin. Ficamos um mês.","Olá, Calvin! Com um mês podem descobrir a ilha ao vosso ritmo.","Quem vem contigo?","Somos dois adultos.","Obrigado, podemos encontrar algo que agrade aos dois.","Preferem algo tranquilo ou ativo?"),
+          'pt':("Olá, sou o Calvin. Ficamos um mês.","Olá, Calvin! Com um mês podem descobrir a ilha ao vosso ritmo.","Quem vem contigo?","Somos dois adultos.","Podemos encontrar algo que agrade aos dois.","Preferem algo tranquilo ou ativo?"),
           'pap':("Bon dia, mi ta Calvin. Nos ta keda un luna.","Bon dia Calvin! Ku un luna boso tin tempu pa eksplorá e isla na boso ritmo.","Ku ken bo ta bini?","Nos ta dos adulto.","Danki, nos por buska algu ku ta pas ku boso dos.","Boso ta preferá algu trankil òf aktivo?")}
         for lang,(guest,answer,question,second,reply,next_question) in [(language, samples[language])]:
             self.turn(guest,self.decision(answer,question,language=lang,guest={'name':'Calvin'},memory={'holiday':'One month'},stage='welcome'))
