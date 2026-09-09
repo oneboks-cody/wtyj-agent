@@ -16,6 +16,10 @@
     "sha256": "aa549a256dad6a633e6cfccb9118c592bb424a1075c44b7dc74d51036c1f33eb"
   },
   {
+    "file": "DASHBOARD-TENANT-APPROVAL.md",
+    "sha256": "b85bee73e38219e29049c7188b369def4a234c88afc27435c3a9304a8e7b2c1a"
+  },
+  {
     "file": "EVIDENCE-ACQUISITION.md",
     "sha256": "fc1f21b2482c80ef22c8d6adabb4be1d5602b506a3c14c78b969bdda583535d8"
   },
@@ -62,6 +66,14 @@
   {
     "file": "current-package-checks.json",
     "sha256": "93b1872b681815dfaaf13596f6337e1818ae15d6023fcba23a302031bf9a0e18"
+  },
+  {
+    "file": "dashboard-tenant-evidence.json",
+    "sha256": "f8ec194619feebc931b6c139de604d6c699cf2801c612d90727dd4a4af6207f9"
+  },
+  {
+    "file": "dashboard-tenant-tests.txt",
+    "sha256": "42f9e643ce816d4a13767cfa88e41d68165aea6fcb7a298af60d5f80c08a0649"
   },
   {
     "file": "frontend-build.config.ts",

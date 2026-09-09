@@ -1,0 +1,21 @@
+{
+  "status": "offline_candidate_pending_review",
+  "live_requests": 0,
+  "provider_calls": 0,
+  "tests": 10,
+  "source_sha256": {
+    "wtyj/scripts/check_isluno_dashboard_tenant.py": "c1334a61950dbed21bbad55b606a3b44b6395028938cc8e20813d56b6263a937",
+    "wtyj/tests/isluno/test_dashboard_tenant_check.py": "6dedf12bb0ec87cdce3e54482a970f6a512cc02e90f2fa04341f8579ad41245a"
+  },
+  "test_log": "dashboard-tenant-tests.txt",
+  "url": "https://api.unboks.org/api/mermaid/dashboard/api/client/profile",
+  "limits": {
+    "deadline_seconds": 10,
+    "raw_http_response_bytes": 8192,
+    "credential_input_bytes": 4096,
+    "http_requests": 1,
+    "redirects": 0,
+    "retries": 0
+  },
+  "execution_authorized": false
+}

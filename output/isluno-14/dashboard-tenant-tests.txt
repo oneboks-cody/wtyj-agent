@@ -1,0 +1,16 @@
+test_ambiguous_framing_rejected (test_dashboard_tenant_check.CheckTests.test_ambiguous_framing_rejected) ... ok
+test_chunked_and_short_read (test_dashboard_tenant_check.CheckTests.test_chunked_and_short_read) ... ok
+test_deadline_and_transport_errors_redacted (test_dashboard_tenant_check.CheckTests.test_deadline_and_transport_errors_redacted) ... ok
+test_fixed_request_and_private_values_suppressed (test_dashboard_tenant_check.CheckTests.test_fixed_request_and_private_values_suppressed) ... ok
+test_offline_default_and_authority_preflight (test_dashboard_tenant_check.CheckTests.test_offline_default_and_authority_preflight) ... ok
+test_protected_input_pipe_only_and_header_injection (test_dashboard_tenant_check.CheckTests.test_protected_input_pipe_only_and_header_injection) ... ok
+test_real_deadline_signal_handler_is_installed_and_restored (test_dashboard_tenant_check.CheckTests.test_real_deadline_signal_handler_is_installed_and_restored) ... ok
+test_redirect_and_401_never_retry (test_dashboard_tenant_check.CheckTests.test_redirect_and_401_never_retry) ... ok
+test_total_headers_and_body_cap (test_dashboard_tenant_check.CheckTests.test_total_headers_and_body_cap) ... ok
+test_wrong_slug_shapes_and_duplicate_keys (test_dashboard_tenant_check.CheckTests.test_wrong_slug_shapes_and_duplicate_keys) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.186s
+
+OK
+External sockets/DNS denied. No legacy pytest root fixtures loaded.
