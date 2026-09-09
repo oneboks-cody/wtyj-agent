@@ -159,6 +159,14 @@ class VisualDiscoveryTests(CommunicationWireTests):
         session=self.t.store.session(self.t.scope());self.assertTrue(session['pending'])
         self.assertEqual({p['product_id'] for p in session['pending'].values()},{'fixture-cruise'})
         self.assertFalse(self.t.itinerary.get(self.t.scope(),session['active_itinerary_id'])['items'])
+        self.assertNotIn('Demo itinerary saved',result['text'])
+        pending_id=next(iter(session['pending']))
+        d=response('update',updates=[{'item_id':pending_id}],guest={'name':'Alex'},products=['fixture-cruise'])
+        d['hospitality']=hospitality('Thanks, Alex.','Could you share the {missing_field}?',action='update',evidence='My name is Alex',replies={'error':{'paragraphs':['{operation}'],'question':''}})
+        updated,calls,_=self.h.call(d,'journey-intake',text='My name is Alex')
+        self.assertEqual(calls,1);self.assertNotIn('generation_failed',updated)
+        self.assertEqual(self.t.store.session(self.t.scope())['guest']['name'],'Alex')
+        self.assertIn('ages',updated['text'])
 
     def test_fresh_text_fallback_after_rejection_does_not_replay_media(self):
         first=self.visual();self.assertFalse(self.send(first,[(400,{'code':'INVALID_MEDIA'})]))

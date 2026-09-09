@@ -299,6 +299,8 @@ def render(outcome, snapshot):
                    'departure_day_unavailable': 6, 'invalid_guest_age': 5, 'guest_capacity_exceeded': 5,
                    'adult_required': 5, 'invalid_option_quantity': 10, 'pickup_option_mismatch': 8}.get(outcome['error'])
     lines = [outcomes.get(outcome['error']) or (words[12] + (': ' + words[error_field] if error_field else '')) if outcome['error'] else words[0]]
+    if not outcome['error'] and session['pending']:
+        lines=[]  # Native Plan starts intake; no claim that a trip has been saved.
     if itinerary:
         for item in itinerary['items'][:5]:
             lines.append(item['product']['name'] + ' · ' + item['selection']['date'] + ' · ' + item['starts_at'][11:16])
