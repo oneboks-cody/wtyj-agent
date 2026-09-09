@@ -1,0 +1,2 @@
+{"status": "preflight_pass", "proof": {"sha256": "5fb6320ba1f5a38246a52b20bd2c76753c16ec815b4e1d83addb6ca4bdfe4ea9", "classification": "old_failed_claim_completed_browsing_and_two_failed_style_turns_with_accepted_acknowledgements", "turns": 4, "accepted_plans": 3, "preserved_operator_review_incidents": 2, "unreviewed_ledgers": ["isluno_conversation_turns", "isluno_discovery_plans", "isluno_recovery_incidents"]}}
+

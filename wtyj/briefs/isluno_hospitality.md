@@ -1,5 +1,5 @@
 # Isluno hospitality conversation rewrite
-Status: Source 3a5f524 deployed on 2026-09-09. Two live introduction failures under investigation; typography correction in progress. Issues: #351, #356. Existing draft PR360.
+Status: Source 3a5f524 deployed on 2026-09-09. Two live introduction failures retained; typography correction f001cc7 deployed and verified, live conversational acceptance pending. Issues: #351, #356. Existing draft PR360.
 
 ## Context
 The controlling 19-section user brief is preserved in isluno_hospitality_user_brief.md.

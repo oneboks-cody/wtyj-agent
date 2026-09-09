@@ -1,0 +1,24 @@
+{
+  "agent_messages_sent": 0,
+  "automatic_retry": false,
+  "container_id": "1aa2e6946220f25f3130746f2cff5bf71412e320d1ec03078202e876640685b2",
+  "customer_tables_preserved": 91,
+  "health": 200,
+  "image": "sha256:f3cac23eaddd2b904f587399e2537e35b6bb40bc8c5310d4f76a0953cc6f1817",
+  "ingress_generation": 9,
+  "profile_sha256": "5c90d1979c7599e9bdd82a809a6cebe07db150692ed949b7a88e1070b16616b3",
+  "runtime_generation": 10,
+  "source": "f001cc7a73aaaac0679ba39d12cb60935035f97c",
+  "state": {
+    "gates_closed": true,
+    "image_changed": true,
+    "marker_created": true,
+    "open": true,
+    "rolled_back": false,
+    "sealed": true,
+    "watchdog_stopped": true,
+    "worker_stopped": true
+  },
+  "status": "fix_deployed_open",
+  "elapsed_seconds": 17.174
+}

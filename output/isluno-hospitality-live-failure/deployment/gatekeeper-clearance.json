@@ -1,0 +1,60 @@
+{
+  "decision": "Cleared for one bounded corrective deployment after fresh runtime preflight passes",
+  "source_commit": "f001cc7a73aaaac0679ba39d12cb60935035f97c",
+  "operator_commit": "578810e1490d65368281fea7a5bb5231da4250d9",
+  "packet_sha256": "3bf32ffd712fca8fe70b06d9bd80b3626dcd555ef9c3c98319bbe652f8b3360e",
+  "bundle_sha256": "9dbe71a4cbfc802c621b241ab6eb428f940e0f9513b006d48a65d1a03c966608",
+  "history_proof": "5fb6320ba1f5a38246a52b20bd2c76753c16ec815b4e1d83addb6ca4bdfe4ea9",
+  "review": [
+    "Actual two-file source diff reviewed; cosmetic normalization after fact expansion applies to delivered text and remembered question",
+    "Structural type, size, fact, authority and transaction checks remain strict",
+    "Independent source/manifest/tar/14 operator files and generated rollout payload hash bindings verified",
+    "Fresh four-turn proof: three accepted plans, two retained operator_review incidents, no uncertain work replay",
+    "Code-only runner reviewed against prior preserving rollout; no profile writer; bounded build, activation, abort and rollback paths"
+  ],
+  "independent_tests": [
+    {
+      "name": "presentation-and-no-reply",
+      "status": "PASS",
+      "collected_tests": 38,
+      "seconds": 28.271,
+      "path": "/tmp/isluno-gatekeeper-presentation-tests-20260909.txt",
+      "sha256": "d9c5ef61ed4efbdd38033db930b3d68ba1286ebc36968a26a3d980c59389f9ee",
+      "network": "disabled",
+      "note": "38 includes imported TestCase collections and is not 38 newly added unique tests"
+    },
+    {
+      "name": "operator",
+      "status": "PASS",
+      "collected_tests": 8,
+      "seconds": 8.263,
+      "path": "/tmp/isluno-gatekeeper-presentation-operator-tests-20260909.txt",
+      "sha256": "830fe2ae339a512c1f30bee5dfc09fe22a2048531d44d599656265115aa13f53",
+      "network": "disabled",
+      "note": "exact frozen operator candidate"
+    }
+  ],
+  "authority": {
+    "instruction": "deploy it , pu tit live",
+    "user_message_timestamp": "2026-09-09T15:48:15.652Z",
+    "source_task": "01a0811e-f378-76a1-af2e-3ad4548c2516",
+    "interpretation": "Continuing authorization covers the necessary narrow correction to the requested hospitality release; this does not reuse any historical C1 or recovery one-run approval"
+  },
+  "execution_owner": "Isluno — Builder",
+  "root_host_calls": 0,
+  "limits": {
+    "total_seconds": 900,
+    "transfer_count": 1,
+    "transfer_seconds": 60,
+    "build_seconds": 120,
+    "rollback_reserve_seconds": 180,
+    "automatic_retries": 0,
+    "agent_messages": 0,
+    "paid_test_budget_usd": 0
+  },
+  "limitations": [
+    "Both historical live errors were invalid_reply_style, but original reply inputs were not retained; exact historical subpredicate unknown",
+    "Punctuation cases are synthetic reproductions, not captured live model prose",
+    "Live customer conversational quality remains unverified after correction; no blind resend requested before deployment verification"
+  ]
+}
