@@ -14,6 +14,7 @@ import argparse
 import copy
 import ctypes
 import fcntl
+import hashlib
 import json
 import os
 import stat
@@ -440,6 +441,8 @@ def sync(
     *,
     apply: bool,
     service_stopped: bool = False,
+    expected_sha256: str | None = None,
+    merge_function=None,
 ) -> tuple[list[str], Path | None]:
     """Merge reviewed fields, requiring an offline service for any mutation.
 
@@ -464,6 +467,8 @@ def sync(
             target_path,
             label="target",
         )
+        if expected_sha256 is not None and hashlib.sha256(target_bytes).hexdigest() != expected_sha256:
+            raise ValueError("Protected config CAS mismatch")
         if (
             source_stat.st_dev == target_stat.st_dev
             and source_stat.st_ino == target_stat.st_ino
@@ -472,7 +477,7 @@ def sync(
         if stat.S_IMODE(target_stat.st_mode) != 0o600:
             raise ValueError("target client.json must have mode 0600 before sync")
         target = _load_object_bytes(target_bytes, "target")
-        updated, changed = merge_reviewed_fields(source, target)
+        updated, changed = (merge_function or merge_reviewed_fields)(source, target)
         if not apply or not changed:
             return changed, None
 

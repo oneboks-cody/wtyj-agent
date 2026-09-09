@@ -1,0 +1,23 @@
+test_business_cross_record_consistency (test_old_work_projection.ProjectionTests.test_business_cross_record_consistency) ... ok
+test_default_and_errors_redacted (test_old_work_projection.ProjectionTests.test_default_and_errors_redacted) ... ok
+test_empty_projection_readonly_same_byte_hash (test_old_work_projection.ProjectionTests.test_empty_projection_readonly_same_byte_hash) ... ok
+test_failed_send_not_terminal_and_draft_not_completed (test_old_work_projection.ProjectionTests.test_failed_send_not_terminal_and_draft_not_completed) ... ok
+test_lazy_tables_absent_and_card_uncertainty (test_old_work_projection.ProjectionTests.test_lazy_tables_absent_and_card_uncertainty) ... ok
+test_live_wal_permissions_symlink_nonregular_and_size_rejected (test_old_work_projection.ProjectionTests.test_live_wal_permissions_symlink_nonregular_and_size_rejected) ... ok
+test_missing_schema_and_row_cap_fail_no_partial (test_old_work_projection.ProjectionTests.test_missing_schema_and_row_cap_fail_no_partial) ... ok
+test_null_terminal_metadata_and_deadline_do_not_pass (test_old_work_projection.ProjectionTests.test_null_terminal_metadata_and_deadline_do_not_pass) ... ok
+test_settled_inbound_needs_dedup_and_exact_terminal_metadata (test_old_work_projection.ProjectionTests.test_settled_inbound_needs_dedup_and_exact_terminal_metadata) ... ok
+test_snapshot_changes_rejected (test_old_work_projection.ProjectionTests.test_snapshot_changes_rejected) ... ok
+test_status_mapping_all_sources (test_old_work_projection.ProjectionTests.test_status_mapping_all_sources) ... ok
+test_default_no_mutations (test_sealed_start.SealedTests.test_default_no_mutations) ... ok
+test_direct_activation_retains_waiting_draft_under_same_seal (test_sealed_start.SealedTests.test_direct_activation_retains_waiting_draft_under_same_seal) ... ok
+test_existing_backup_or_gate_no_overwrite (test_sealed_start.SealedTests.test_existing_backup_or_gate_no_overwrite) ... ok
+test_no_activation_during_preparation (test_sealed_start.SealedTests.test_no_activation_during_preparation) ... ok
+test_real_coordinator_seals_without_state_registry_or_workers (test_sealed_start.SealedTests.test_real_coordinator_seals_without_state_registry_or_workers) ... ok
+test_unresolved_card_or_send_stops_before_coordinator_write (test_sealed_start.SealedTests.test_unresolved_card_or_send_stops_before_coordinator_write) ... ok
+test_wrong_config_or_db_cas_no_backup_no_schema (test_sealed_start.SealedTests.test_wrong_config_or_db_cas_no_backup_no_schema) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.733s
+
+OK

@@ -1,11 +1,11 @@
 [
   {
     "file": "ACTION.md",
-    "sha256": "7c6df1335d08fe30885c68c42aebc879ef1ee53f4a456db48b65ccd79d6b0cc0"
+    "sha256": "3a4227dcc796ce43d2a9b27866e2d1f3ed6ea81fcde21bbfc887c428bb8b2d6a"
   },
   {
     "file": "BOOTSTRAP-MINIMUM.md",
-    "sha256": "0a24ad2efe0ad44a397c9972070ea679836b17584122bce16c88ef418efc040e"
+    "sha256": "fac3e9c727cc9331f2f1e4a8a5ecb5a0e3a58d86a4501af514288566c58967be"
   },
   {
     "file": "BUILD.md",
@@ -22,6 +22,10 @@
   {
     "file": "DASHBOARD-TENANT-APPROVAL.md",
     "sha256": "b85bee73e38219e29049c7188b369def4a234c88afc27435c3a9304a8e7b2c1a"
+  },
+  {
+    "file": "Dockerfile.icp-release",
+    "sha256": "8147f451c366b309c3102eee874bd921244fa7153c702b0e48b7b7839c3042eb"
   },
   {
     "file": "Dockerfile.release",
@@ -49,7 +53,7 @@
   },
   {
     "file": "RELEASE-SEQUENCE.md",
-    "sha256": "f532101f49a2cbe88fa24fa949e4f0e2b0b43eb6d708d9c9473d0287f5e19719"
+    "sha256": "f1fc766d41cbb56e337a4048a5bfad2e325545187b766a5767729586426977cb"
   },
   {
     "file": "artifacts.json",
@@ -72,8 +76,24 @@
     "sha256": "e599df3bffd9ba42fadf08bb0d7245cb158b8c9f79eda53b5f0ff05320546904"
   },
   {
+    "file": "config-release-image-tests.txt",
+    "sha256": "6431c9cb0d8110d5a96c7d3b914b2a4718d24977a0a9a283ba84ccb6de58c16a"
+  },
+  {
+    "file": "config-release-image-verifier.py",
+    "sha256": "0a1874a237ab068f460da445c44e259553274b21577991f2cecdfe56e7bbc25d"
+  },
+  {
+    "file": "config-writer-final-tests.txt",
+    "sha256": "ebf302f1eb8a6cd74d7a77fe3ffd8012b525db1cd45cc9d82b753dc770614df0"
+  },
+  {
+    "file": "config-writer-tests.txt",
+    "sha256": "fdf4f9e5e92f47886640a1ed606b0ed114425d7e4caccded7041275f8853a1f7"
+  },
+  {
     "file": "current-artifacts.json",
-    "sha256": "a8d3642aa375e2454f881641315dc59f5a88a87cdbf7f462eb4c7f3cb409e5cd"
+    "sha256": "cf16951bb04e4a8e2ddf753d18dc90e16096fbd4940c66f2bba1525e90e936a2"
   },
   {
     "file": "current-package-checks.json",
@@ -88,12 +108,24 @@
     "sha256": "42f9e643ce816d4a13767cfa88e41d68165aea6fcb7a298af60d5f80c08a0649"
   },
   {
+    "file": "direct-seal-image-tests.txt",
+    "sha256": "c885ee817b05b5dbca1bb40df322f30cc9c442a98837bd023ece0f17a4a77410"
+  },
+  {
     "file": "frontend-build.config.ts",
     "sha256": "4e23d132dc1cbc0a9b9582ea06051b56f6506ca7c9e4a301139ad2d431c29807"
   },
   {
     "file": "frontend-build.txt",
     "sha256": "fb32626ac4c19b9626f38c960ff3be2adafc1ac0427df7f3815a876cee972ee0"
+  },
+  {
+    "file": "icp-image-tests.txt",
+    "sha256": "ca3e804eccd397134e0383fc5c8015f2daefb3d0768d78a206d0523ac4f160de"
+  },
+  {
+    "file": "icp-image.json",
+    "sha256": "33a14cdef20615503127e28e60f67302f7cfa12e9beb7e5e9181352706bf15ed"
   },
   {
     "file": "image-build.txt",
@@ -176,8 +208,12 @@
     "sha256": "867d1a37e12c3fde77fde4dee3ae2db3adf29e19b6ba5d64cdb916eaf2097c8a"
   },
   {
+    "file": "release-helpers.json",
+    "sha256": "f092ec089854245c8647314b3a3a518e4f80bf62b860167ce41494ae5917fc3d"
+  },
+  {
     "file": "required-inputs.json",
-    "sha256": "b4be2b7ad3a507cdda124d66cf4381a292d7ff86fa1313381695cd36c9f7bd46"
+    "sha256": "7eb787e6796fad4851e73303a7d8545efee77baa2fe557b21b90f623d90f664e"
   },
   {
     "file": "runner-evidence.json",

@@ -1,0 +1,46 @@
+{
+  "status": "local_candidate_for_independent_review",
+  "mount": "/release-tools/wtyj/scripts",
+  "pythonpath": "/app",
+  "config_writer_timeout_seconds": 30,
+  "sealed_start_timeout_seconds": 45,
+  "files": [
+    {
+      "path": "wtyj/scripts/apply_isluno_release_config.py",
+      "sha256": "1e4147e11beb00816f7a784f064c3027d2b763f1c731caf99f0d9287f10b78d3"
+    },
+    {
+      "path": "wtyj/scripts/sync_mermaid_config_fields.py",
+      "sha256": "88a5223167275ece04761362e67554b3831f90b886cb6d26395595a6fabeec74"
+    },
+    {
+      "path": "wtyj/scripts/prepare_isluno_sealed_start.py",
+      "sha256": "a6dedfdbd721fc325a1d6ab45fa576fdd37b39ac0c407f426748d1cf5ebd1421"
+    },
+    {
+      "path": "wtyj/scripts/project_isluno_old_work.py",
+      "sha256": "755ac305bae04793748276e449cdd6747cd68723a5837e4be3e082dfba5a6c3c"
+    },
+    {
+      "path": "wtyj/scripts/inspect_isluno_target.py",
+      "sha256": "9a19b292999a1c20641f93bbaad9c7e7adbd984c355ea6325234651ceda4b60f"
+    },
+    {
+      "path": "wtyj/scripts/isluno-config-source.json",
+      "sha256": "17b3f6d2723f3fb0d7a1ffa8aed1458e006e7ac516becb403922f423579ad895"
+    }
+  ],
+  "archive": {
+    "path": "/Users/calvin/Projects/isluno-whatsapp-demo-20260908/tmp/isluno-release-helpers.tar",
+    "bytes": 81920,
+    "sha256": "61a218c70bafae0e03b8bd92f7a1638a5b46177574391aad41b25482d608f658"
+  },
+  "direct_seal_independent_evidence": "tmp/gatekeeper-direct-seal-checks.json",
+  "config_tests": {
+    "canonical_and_initial_writer": 42,
+    "final_writer": 12,
+    "actual_pinned_image_cli": "stage/activate/rollback; wrong config path and generation rejected; 3 private backups"
+  },
+  "actual_C1_runner_and_payload_unchanged": true,
+  "historical_canonical_writer_note": "sync_mermaid_config_fields gains optional CAS/merger arguments; prior C1 historical source digest is not asserted current. Executed C1 projector and inspect runner remain unchanged."
+}

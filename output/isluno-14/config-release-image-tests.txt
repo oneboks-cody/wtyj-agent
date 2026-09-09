@@ -1,0 +1,1 @@
+{"status": "pass", "actual_cli_phases": ["stage", "activate", "rollback"], "wrong_generation_rejected": true, "private_backups": 3, "state_registry_imported": false, "network": "none", "source_mount": "/release-tools/wtyj/scripts"}

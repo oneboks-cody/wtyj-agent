@@ -1,5 +1,5 @@
 {
-  "status": "ten point-in-time metadata bindings verified; release execution prohibited pending remaining facts",
+  "status": "Local runtime, ICP and dashboard artifacts verified; one selected release-time preflight and action authorization pending",
   "tenant": "mermaid",
   "brand": "Isluno",
   "number_intended": "+1 223 276 0075",
@@ -115,13 +115,11 @@
       "source": "Candidate deploy_mermaid_release.sh"
     }
   },
-  "inputs_semantics": "Non-null inputs are the ten metadata facts verified in the separately approved second H1-H7 attempt. Nulls remain unresolved; discovered_candidates are historical/documented only. Source SHA fields remain null because selected source/static hashes are not complete runtime/dependency/build attestation.",
+  "inputs_semantics": "Existing inputs retain point-in-time observations and explicitly unfilled protected/release authority fields. Current candidates are in current-artifacts.json; source discovery remains historical provenance. ACTION.md supersedes historical unresolved-work descriptions.",
   "remaining_verification": [
-    "Complete source/dependency/image recipe binding:112 selected Python hashes and3 frontend assets match baseline, but do not establish every runtime dependency or asset. Pin compatible immutable candidate base/dependencies and final OCI image digest.",
-    "C1: protected current strict account/feature projection and fresh config digest; exact CAS diff. Existing historical config hash is not freshly verified.",
-    "R1/P1/I1/I2: actual public routing, number ownership/sole consumer and ingress admission/drain/durable retention evidence. H1-H7 does not establish these.",
-    "Approved HTTPS media/document bases and exact tenant route mapping.",
-    "Private backup/restore plan, exact release authorization and change window; the two completed read-only approvals do not authorize mutation."
+    "One 120-second selected host preflight in ACTION.md: exact running Mermaid/ICP routing, stored single-account mapping, mounts, loaded dashboard/API paths, selected producer/watchdog fencing and fresh private config CAS. No provider API calls.",
+    "Conditional authorized execution proves retirement/quiescence, private consistent backup integrity, zero unresolved old work, exact sealed startup, tenant capabilities, static switch and verified reopening.",
+    "Final gatekeeper acceptance and action-specific release authorization including shared ICP/Nr2 impact. No agent outbound canary requested."
   ],
   "current_state_inspection": {
     "record": "inspection-repeat-summary.json",
@@ -217,5 +215,11 @@
     "evidence": "EVIDENCE-ACQUISITION.md",
     "status": "GitHub source/historical provenance only; current deployment/subscription/store binding and complete bootstrap disposition remain unverified",
     "warning": "Admin/status surfaces may synchronize provider state; not approved read-only probes."
+  },
+  "current_candidate_package": {
+    "manifest": "current-artifacts.json",
+    "helpers": "release-helpers.json",
+    "action": "ACTION.md",
+    "sequence": "RELEASE-SEQUENCE.md"
   }
 }

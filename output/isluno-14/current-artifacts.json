@@ -2567,7 +2567,7 @@
     "prior_archives_preserved": true
   },
   "oci_image": {
-    "status": "local_built_pending_independent_review",
+    "status": "local_built_independently_verified_not_deployed",
     "evidence": "local-image.json",
     "target_platform_observed": "linux/amd64",
     "index_digest": "sha256:7375faa0dd8484fa15b6d3095a54e014562cb20e9b622cceb294780fcd635bc6",
@@ -2580,5 +2580,26 @@
     },
     "published": false,
     "deployed": false
-  }
+  },
+  "icp_image": {
+    "source_commit": "70ea4a7e48758b8e3d99e84d1e6543657f5e80c0",
+    "platform": "linux/amd64",
+    "index_digest": "sha256:28caf44113a63cd9c825eb3c93955f1d77b4969195d6e7ca010c90e966e44f7c",
+    "platform_manifest_digest": "sha256:0f024ccad3f823beb03c603068974c62dfce23efcb0de93b0924025f85635744",
+    "config_digest": "sha256:2e547a43021e2c3f4e98b3404a0d4780d19af9c0cf751d84c25745eb6acff77c",
+    "archive": {
+      "path": "/Users/calvin/Projects/isluno-control-plane-20260909/tmp/isluno-icp-image-70ea4a7/isluno-icp-image.tar",
+      "bytes": 63651328,
+      "sha256": "06f0a11c8b9d3a7d2dc1d86a9dbd39b6342d5956a73275b444f9ff4343ab6e46"
+    },
+    "published": false,
+    "deployed": false,
+    "verification": {
+      "focused_image_tests": 29,
+      "seconds": 5.43,
+      "installed_source_files_independently_matched": 62,
+      "gatekeeper_evidence": "tmp/gatekeeper-icp-image-check.json"
+    }
+  },
+  "operator_helpers_manifest": "release-helpers.json"
 }
