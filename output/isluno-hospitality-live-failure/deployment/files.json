@@ -1,0 +1,23 @@
+{
+  "source_commit": "f001cc7a73aaaac0679ba39d12cb60935035f97c",
+  "base_image": "sha256:f80fefc3b9e49f2580f0e1b0c5b7affc643b129d80a54d32c8c4abd64538f7ac",
+  "profile_merge_keys": [],
+  "files": {
+    "Dockerfile": {
+      "bytes": 273,
+      "sha256": "fa44c60dbafdac1c050d86dfec4727555752c27b696fba86f185cbe3c6312da2"
+    },
+    "agents/marina/marina_agent.py": {
+      "bytes": 130059,
+      "sha256": "a050a2f884b235d4895318a4dea91986ef3b7937fa3b256ca823259a8ab43d42"
+    },
+    "agents/social/isluno_hospitality.py": {
+      "bytes": 21065,
+      "sha256": "ecd2e08763a79872b80c6567bd56a0a1ec32790841b43f62ddc84c55788b94d2"
+    }
+  },
+  "bundle": {
+    "bytes": 163840,
+    "sha256": "9dbe71a4cbfc802c621b241ab6eb428f940e0f9513b006d48a65d1a03c966608"
+  }
+}

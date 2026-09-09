@@ -1,0 +1,20 @@
+{
+  "packet_sha256": "3bf32ffd712fca8fe70b06d9bd80b3626dcd555ef9c3c98319bbe652f8b3360e",
+  "source_commit": "f001cc7a73aaaac0679ba39d12cb60935035f97c",
+  "preflight_sha256": "6ac25829554322f2d2784a33deeff82cd97130fe3a472bda3f52a6b8ef7cf449",
+  "stage_sha256": "14d15fa5bbf9a3e96300bd4b604f24696cd5307ef4fc10438dc2fe88cfdd0bbd",
+  "rollout_template_sha256": "bae425f8e9e1d0cf11023cf5e8a31fda5cb8821b31756c8f890a37a9bb0f7677",
+  "bundle": {
+    "bytes": 163840,
+    "sha256": "9dbe71a4cbfc802c621b241ab6eb428f940e0f9513b006d48a65d1a03c966608"
+  },
+  "history_proof": "5fb6320ba1f5a38246a52b20bd2c76753c16ec815b4e1d83addb6ca4bdfe4ea9",
+  "overall_seconds": 900,
+  "transfers": 1,
+  "transfer_seconds": 60,
+  "build_seconds": 120,
+  "minimum_before_disruption_seconds": 500,
+  "minimum_before_activation_seconds": 300,
+  "rollback_reserve_seconds": 180,
+  "no_automatic_retries": true
+}
