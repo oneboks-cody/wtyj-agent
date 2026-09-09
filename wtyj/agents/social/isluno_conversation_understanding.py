@@ -99,11 +99,35 @@ def validate_translations(translations, decision, catalog):
 
 
 
+def delivery_context(saved):
+    """Only this scope's correlated delivery evidence permits prior-sharing claims."""
+    history = saved.get('history', [])
+    confirmed = [entry['delivery_id'] for entry in history
+                 if entry.get('role') == 'assistant' and entry.get('delivery_id')
+                 and entry.get('delivery_status') == 'accepted'
+                 and entry.get('provider_delivery_status') in {'delivered', 'read'}]
+    return {'confirmed_message_ids': confirmed,
+            'prior_guest_turns': sum(entry.get('role') == 'user' for entry in history)}
+
+
+def prompt_history(saved):
+    """Keep delivery failures visible without presenting their unsent prose as dialogue."""
+    result = []
+    for entry in saved.get('history', []):
+        value = copy.deepcopy(entry)
+        if value.get('role') == 'assistant' and value.get('delivery_status') != 'accepted':
+            value = {key: value[key] for key in ('role', 'delivery_id', 'delivery_status', 'provider_delivery_status') if key in value}
+            value.setdefault('delivery_status', 'legacy_unverified')
+        result.append(value)
+    return result
+
+
 def prompt_state(saved):
     """Project current conversational state; history has one separate owner."""
     keys=('revision','guest','pending','active_itinerary_id','chat_language','document_language',
           'item_details','browsing','stage','native_detail_request','last_accepted_question','current_time','timezone','discovery','quote_context')
     result={k:copy.deepcopy(saved[k]) for k in keys if k in saved}
+    result['delivery_context'] = delivery_context(saved)
     itinerary=saved.get('itinerary')
     if itinerary:
         result['itinerary']={k:copy.deepcopy(itinerary[k]) for k in ('id','revision','status','totals') if k in itinerary}
@@ -122,7 +146,7 @@ def understand(scope, text, saved, snapshot):
         entry['booking_rules'] = quote_rules(product, mode='demo') if product['readiness']['quotable'] else None
     result = marina_agent.process_message(from_email=scope.customer_ref, subject='Isluno itinerary', body=text,
         thread_fields={'catalog': catalog, **prompt_state(saved)}, thread_flags={}, channel='whatsapp',
-        messages=saved.get('history', []), response_contract='isluno_conversation')
+        messages=prompt_history(saved), response_contract='isluno_conversation')
     check(not result.get('generation_failed'), (result.get('model_error') or {}).get('code') or 'conversation_generation_failed')
     validated = validate(result, catalog)
     if 'hospitality' in validated:

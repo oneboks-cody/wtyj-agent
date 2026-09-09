@@ -1,0 +1,14 @@
+{
+  "evidence": "Network-disabled Docker, scripted SDK and strict fake HTTP; no paid model calls or customer sends",
+  "focused": {
+    "tests": 4,
+    "seconds": 3.035,
+    "passed": true
+  },
+  "affected_regression": {
+    "tests": 64,
+    "seconds": 33.761,
+    "passed": true
+  },
+  "live": false
+}
