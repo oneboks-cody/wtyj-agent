@@ -1,0 +1,64 @@
+{
+  "status": "local_image_built_synthetic_checks_passed",
+  "source_commit": "e2deab8c2ad6c4313324d5b94769b91a1f0ae168",
+  "engine": "unix:///Users/calvin/.colima/default/docker.sock",
+  "platform": "linux/amd64",
+  "base_reference": "python@sha256:2fe5997d249a808b8eeea52c58a1dbffbba28754dc11699ef5c029f2d818ce79",
+  "gws_release_asset_sha256": "4b2dbc3b1716aa0cbfd91d59ea896dbf5e893a151594c363f0c98e760e2e5046",
+  "local_tag": "isluno-local:e2deab8",
+  "local_image_index_digest": "sha256:7375faa0dd8484fa15b6d3095a54e014562cb20e9b622cceb294780fcd635bc6",
+  "platform_manifest_digest": "sha256:6844d677b1083f4430eb040762278d67abebfea0fe8bac38417c73115d8ef9ee",
+  "image_config_digest": "sha256:2be4255cecfce5a7355e7868570cbfb7bddfec119bdb7d8f70391c7990df8fb9",
+  "published": false,
+  "archive": {
+    "path": "/Users/calvin/Projects/isluno-whatsapp-demo-20260908/tmp/isluno-image-e2deab8/isluno-image.tar",
+    "sha256": "b1ec5bb6733efb1cfa092ee7d7ac884b7715f73ebb340e3d66c7d98cd98151da",
+    "bytes": 169445888
+  },
+  "image_cmd": [
+    "supervisord",
+    "-c",
+    "/etc/supervisord.conf"
+  ],
+  "image_workdir": "/app",
+  "source_members_verified": 364,
+  "context_members": 365,
+  "context_has_protected_runtime_inputs": false,
+  "direct_requirements_changed": false,
+  "dependency_inventory": "image-dependencies.json",
+  "tests": {
+    "unique_tests_passed": 65,
+    "first_run_total": 65,
+    "first_run_passed": 24,
+    "first_run_fixture_errors": 41,
+    "retry_passed": 41,
+    "retry_seconds": 29.869,
+    "cause": "Existing test fixture creates identity-test dirs beside tests; original read-only fixture mount rejected writes. Retry copied only fixture tree into ephemeral container /tmp, actual runtime remained /app. No runtime/testsource change.",
+    "network": "Docker none plus denied sockets/DNS",
+    "coverage": [
+      "23 maintenance tests",
+      "integrated inbound/booking/demo-payment/documents/rollback",
+      "quotes",
+      "discovery and234 original-image conversions"
+    ]
+  },
+  "provider_calls": 0,
+  "remote_operations": 0,
+  "deployment_authorized": false,
+  "files": {
+    "Dockerfile.release": "a219e1d763eab4ffc5fd37e9fc68c50f6a2e86f3f197412cfb54b8b6685c8a6e",
+    "image-dependencies.json": "0d30a251d3c13cb6ed3a77e47209552bfc348b02d14017922c8e7ed749425d39",
+    "image-build.txt": "1d73aa091cc950312e0105e121ffec4b659083fad2e5c349c817f71cbbdf4587",
+    "image-tests-initial.txt": "f71a94d32109d570c1707761d1e34040a1042e6920a19fb92b2af9af8c68f43c",
+    "image-tests-retry.txt": "27226641f4b2364968184343a7ca43d12848f7fcf4af764b284aa52c344c4957",
+    "image-module-proof.json": "4fe0d2bebbef281f2331967de935ece9c6a5d04fdd2ab1500fd708fd614ee78f",
+    "image-context.json": "697d79c4a288987da2cc911325e43187d009bc0358fc2db4de6d0c13c76f4294",
+    "image-fixtures.json": "638aad77cb097c12ac291e00e5f6d2a77a6569318fe048d713baf693a137db0f"
+  },
+  "module_import_proof": {
+    "file": "image-module-proof.json",
+    "runtime_module_count": 46,
+    "all_resolved_under": "/app",
+    "scope": "Fresh import check using same harness path order; no unchanged tests rerun."
+  }
+}

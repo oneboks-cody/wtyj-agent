@@ -1,0 +1,775 @@
+test_accepted_commit_survives_crash_and_duplicate (test_maintenance.MaintenanceTests.test_accepted_commit_survives_crash_and_duplicate) ... ok
+test_active_worker_blocks_seal_and_nested_completion (test_maintenance.MaintenanceTests.test_active_worker_blocks_seal_and_nested_completion) ... ok
+test_actual_sdk_text_open_nested_default_off_and_other_tenant (test_maintenance.MaintenanceTests.test_actual_sdk_text_open_nested_default_off_and_other_tenant) ... ok
+test_actual_supersession_is_not_causal_resolution (test_maintenance.MaintenanceTests.test_actual_supersession_is_not_causal_resolution) ... ok
+test_actual_unconfirmed_delivery_transition_blocks_seal (test_maintenance.MaintenanceTests.test_actual_unconfirmed_delivery_transition_blocks_seal) ... ok
+test_actual_zernio_ack_boundary (test_maintenance.MaintenanceTests.test_actual_zernio_ack_boundary) ... ok
+test_atomic_closure_acceptance_race (test_maintenance.MaintenanceTests.test_atomic_closure_acceptance_race) ... ok
+test_caught_sdk_exception_retains_unknown_outbound_claim (test_maintenance.MaintenanceTests.test_caught_sdk_exception_retains_unknown_outbound_claim) ... ok
+test_deadline_and_stale_generation (test_maintenance.MaintenanceTests.test_deadline_and_stale_generation) ... ok
+test_first_cutover_requires_sealed_when_gate_installed (test_maintenance.MaintenanceTests.test_first_cutover_requires_sealed_when_gate_installed) ... ok
+test_flag_off_does_not_remove_existing_fence (test_maintenance.MaintenanceTests.test_flag_off_does_not_remove_existing_fence) ... ok
+test_inactive_and_other_tenant_behavior (test_maintenance.MaintenanceTests.test_inactive_and_other_tenant_behavior) ... ok
+test_incomplete_coverage_and_unknown_producer (test_maintenance.MaintenanceTests.test_incomplete_coverage_and_unknown_producer) ... ok
+test_missing_unknown_and_superseded_snapshot_members_block (test_maintenance.MaintenanceTests.test_missing_unknown_and_superseded_snapshot_members_block) ... ok
+test_noncustomer_event_semantics (test_maintenance.MaintenanceTests.test_noncustomer_event_semantics) ... ok
+test_pending_failed_and_unknown_ledger_prevent_false_ready (test_maintenance.MaintenanceTests.test_pending_failed_and_unknown_ledger_prevent_false_ready) ... ok
+test_real_email_transport_denied_before_credentials_or_smtp (test_maintenance.MaintenanceTests.test_real_email_transport_denied_before_credentials_or_smtp) ... ok
+test_returned_send_with_ambiguous_business_ledger_blocks_seal (test_maintenance.MaintenanceTests.test_returned_send_with_ambiguous_business_ledger_blocks_seal) ... ok
+test_reviewed_completed_and_owner_dispositions_can_seal (test_maintenance.MaintenanceTests.test_reviewed_completed_and_owner_dispositions_can_seal) ... ok
+test_scheduled_and_outbound_roots_blocked_before_side_effect (test_maintenance.MaintenanceTests.test_scheduled_and_outbound_roots_blocked_before_side_effect) ... ok
+test_sdk_text_denied_before_credentials_or_client_in_draining_and_sealed (test_maintenance.MaintenanceTests.test_sdk_text_denied_before_credentials_or_client_in_draining_and_sealed) ... ok
+test_sealed_generation_and_deadline_rechecked_at_activation (test_maintenance.MaintenanceTests.test_sealed_generation_and_deadline_rechecked_at_activation) ... ok
+test_unknown_crash_and_ambiguous_send_remain_visible (test_maintenance.MaintenanceTests.test_unknown_crash_and_ambiguous_send_remain_visible) ... ok
+test_new_journeys_and_ledgers_survive_cutover_rollback_without_replay (test_integrated.IntegratedTests.test_new_journeys_and_ledgers_survive_cutover_rollback_without_replay) ... ERROR
+test_actual_flow_separate_confirm_approve_and_duplicate_taps (test_quotes.QuoteTests.test_actual_flow_separate_confirm_approve_and_duplicate_taps) ... ERROR
+test_ambiguous_and_claimed_delivery_never_retry_or_claim_delivered (test_quotes.QuoteTests.test_ambiguous_and_claimed_delivery_never_retry_or_claim_delivered) ... ERROR
+test_catalog_publication_revokes_actions_without_repricing_frozen_items (test_quotes.QuoteTests.test_catalog_publication_revokes_actions_without_repricing_frozen_items) ... ERROR
+test_closed_window_and_correction_during_send_stop_before_next_part (test_quotes.QuoteTests.test_closed_window_and_correction_during_send_stop_before_next_part) ... ERROR
+test_correction_creates_new_version_revokes_every_old_action_and_document (test_quotes.QuoteTests.test_correction_creates_new_version_revokes_every_old_action_and_document) ... ERROR
+test_correction_replay_returns_same_quote_job_without_second_reply_plan (test_quotes.QuoteTests.test_correction_replay_returns_same_quote_job_without_second_reply_plan) ... ERROR
+test_document_language_guest_only_and_incomplete_corrections_revoke (test_quotes.QuoteTests.test_document_language_guest_only_and_incomplete_corrections_revoke) ... ERROR
+test_immutable_pdf_and_snapshot_and_complete_long_summary (test_quotes.QuoteTests.test_immutable_pdf_and_snapshot_and_complete_long_summary) ... ERROR
+test_line_total_mismatch_cannot_render (test_quotes.QuoteTests.test_line_total_mismatch_cannot_render) ... ERROR
+test_missing_document_base_does_not_send_approval_button (test_quotes.QuoteTests.test_missing_document_base_does_not_send_approval_button) ... ERROR
+test_mixed_unavailable_question_and_quote_correction_preserve_help (test_quotes.QuoteTests.test_mixed_unavailable_question_and_quote_correction_preserve_help) ... ERROR
+test_multi_item_snapshot_keeps_different_guests_pickups_and_exact_prices (test_quotes.QuoteTests.test_multi_item_snapshot_keeps_different_guests_pickups_and_exact_prices) ... ERROR
+test_question_is_not_approval_and_chat_language_is_separate (test_quotes.QuoteTests.test_question_is_not_approval_and_chat_language_is_separate) ... ERROR
+test_real_sender_dispatch_and_public_document_auth_projection (test_quotes.QuoteTests.test_real_sender_dispatch_and_public_document_auth_projection) ... ERROR
+test_reserved_old_understanding_cannot_overwrite_native_confirmation (test_quotes.QuoteTests.test_reserved_old_understanding_cannot_overwrite_native_confirmation) ... ERROR
+test_superseded_discovery_add_button_cannot_change_new_quote (test_quotes.QuoteTests.test_superseded_discovery_add_button_cannot_change_new_quote) ... ERROR
+test_targeted_guest_name_change_preserves_other_item_party (test_quotes.QuoteTests.test_targeted_guest_name_change_preserves_other_item_party) ... ERROR
+test_unaccepted_summary_and_quote_cannot_advance (test_quotes.QuoteTests.test_unaccepted_summary_and_quote_cannot_advance) ... ERROR
+test_wrong_customer_plaintext_expired_and_duplicate_key_conflict (test_quotes.QuoteTests.test_wrong_customer_plaintext_expired_and_duplicate_key_conflict) ... ERROR
+test_actual_channel_normalization_and_handler_replay (test_discovery.DiscoveryTests.test_actual_channel_normalization_and_handler_replay) ... ERROR
+test_all_gallery_sizes_are_accessible_and_correctly_associated (test_discovery.DiscoveryTests.test_all_gallery_sizes_are_accessible_and_correctly_associated) ... ERROR
+test_choose_add_and_duplicate_turn_do_not_create_booking (test_discovery.DiscoveryTests.test_choose_add_and_duplicate_turn_do_not_create_booking) ... ERROR
+test_claimed_crash_cannot_be_replayed_as_a_new_send (test_discovery.DiscoveryTests.test_claimed_crash_cannot_be_replayed_as_a_new_send) ... ERROR
+test_delivery_superseded_during_window_check_never_posts (test_discovery.DiscoveryTests.test_delivery_superseded_during_window_check_never_posts) ... ERROR
+test_documented_provider_errors_do_not_trigger_unproven_fallback (test_discovery.DiscoveryTests.test_documented_provider_errors_do_not_trigger_unproven_fallback) ... ERROR
+test_expired_action_and_old_delivery_are_rejected (test_discovery.DiscoveryTests.test_expired_action_and_old_delivery_are_rejected) ... ERROR
+test_future_inbound_and_disabled_sender_fail_closed (test_discovery.DiscoveryTests.test_future_inbound_and_disabled_sender_fail_closed) ... ERROR
+test_heterogeneous_fact_sets_choose_via_actual_handler (test_discovery.DiscoveryTests.test_heterogeneous_fact_sets_choose_via_actual_handler) ... ERROR
+test_marina_existing_entry_point_uses_same_model_and_no_sdk_retry (test_discovery.DiscoveryTests.test_marina_existing_entry_point_uses_same_model_and_no_sdk_retry) ... ERROR
+test_missing_media_is_reported_without_product_substitution (test_discovery.DiscoveryTests.test_missing_media_is_reported_without_product_substitution) ... ERROR
+test_more_info_retains_long_source_text (test_discovery.DiscoveryTests.test_more_info_retains_long_source_text) ... ERROR
+test_one_post_only_on_timeout_partial_warning_or_missing_id (test_discovery.DiscoveryTests.test_one_post_only_on_timeout_partial_warning_or_missing_id) ... ERROR
+test_public_media_route_gates_identity_and_serves_verified_jpeg (test_discovery.DiscoveryTests.test_public_media_route_gates_identity_and_serves_verified_jpeg) ... ERROR
+test_real_orchestrator_routes_before_legacy_state (test_discovery.DiscoveryTests.test_real_orchestrator_routes_before_legacy_state) ... ERROR
+test_scope_stale_unverified_and_changed_catalog_actions (test_discovery.DiscoveryTests.test_scope_stale_unverified_and_changed_catalog_actions) ... ERROR
+test_sender_adapter_routes_to_durable_plan_delivery (test_discovery.DiscoveryTests.test_sender_adapter_routes_to_durable_plan_delivery) ... ERROR
+test_single_image_fallback_mode_keeps_every_photo_in_chat (test_discovery.DiscoveryTests.test_single_image_fallback_mode_keeps_every_photo_in_chat) ... ERROR
+test_unknown_model_product_or_fact_is_rejected (test_discovery.DiscoveryTests.test_unknown_model_product_or_fact_is_rejected) ... ERROR
+test_unsupported_questions_and_no_match_get_safe_clarification (test_discovery.DiscoveryTests.test_unsupported_questions_and_no_match_get_safe_clarification) ... ERROR
+test_window_pacing_replay_and_ambiguous_delivery (test_discovery.DiscoveryTests.test_window_pacing_replay_and_ambiguous_delivery) ... ERROR
+test_all_originals_convert_to_bounded_jpegs_without_network_or_new_downloads (test_discovery.MediaTests.test_all_originals_convert_to_bounded_jpegs_without_network_or_new_downloads) ... ok
+
+======================================================================
+ERROR: test_new_journeys_and_ledgers_survive_cutover_rollback_without_replay (test_integrated.IntegratedTests.test_new_journeys_and_ledgers_survive_cutover_rollback_without_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_integrated.py", line 29, in setUp
+    self.t=operations.OperationsTests();self.t.setUp();self.addCleanup(self.t.doCleanups)
+                                        ^^^^^^^^^^^^^^
+  File "/verification/wtyj/tests/isluno/test_operations.py", line 18, in setUp
+    payments.PaymentTests.setUp(self);self.operations=Operations(self.store)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/verification/wtyj/tests/isluno/test_payments.py", line 27, in setUp
+    quote_tests.QuoteTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-v9hx9fdh'
+
+======================================================================
+ERROR: test_actual_flow_separate_confirm_approve_and_duplicate_taps (test_quotes.QuoteTests.test_actual_flow_separate_confirm_approve_and_duplicate_taps)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-fmmb0teg'
+
+======================================================================
+ERROR: test_ambiguous_and_claimed_delivery_never_retry_or_claim_delivered (test_quotes.QuoteTests.test_ambiguous_and_claimed_delivery_never_retry_or_claim_delivered)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-cjwbnc1i'
+
+======================================================================
+ERROR: test_catalog_publication_revokes_actions_without_repricing_frozen_items (test_quotes.QuoteTests.test_catalog_publication_revokes_actions_without_repricing_frozen_items)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-iuc2p8k4'
+
+======================================================================
+ERROR: test_closed_window_and_correction_during_send_stop_before_next_part (test_quotes.QuoteTests.test_closed_window_and_correction_during_send_stop_before_next_part)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-m0aqnqgx'
+
+======================================================================
+ERROR: test_correction_creates_new_version_revokes_every_old_action_and_document (test_quotes.QuoteTests.test_correction_creates_new_version_revokes_every_old_action_and_document)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-u9dqzztv'
+
+======================================================================
+ERROR: test_correction_replay_returns_same_quote_job_without_second_reply_plan (test_quotes.QuoteTests.test_correction_replay_returns_same_quote_job_without_second_reply_plan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-8xv_p4mr'
+
+======================================================================
+ERROR: test_document_language_guest_only_and_incomplete_corrections_revoke (test_quotes.QuoteTests.test_document_language_guest_only_and_incomplete_corrections_revoke)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-hlomumqp'
+
+======================================================================
+ERROR: test_immutable_pdf_and_snapshot_and_complete_long_summary (test_quotes.QuoteTests.test_immutable_pdf_and_snapshot_and_complete_long_summary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-pyjqslfi'
+
+======================================================================
+ERROR: test_line_total_mismatch_cannot_render (test_quotes.QuoteTests.test_line_total_mismatch_cannot_render)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-glbsz4dz'
+
+======================================================================
+ERROR: test_missing_document_base_does_not_send_approval_button (test_quotes.QuoteTests.test_missing_document_base_does_not_send_approval_button)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-i3xeepbz'
+
+======================================================================
+ERROR: test_mixed_unavailable_question_and_quote_correction_preserve_help (test_quotes.QuoteTests.test_mixed_unavailable_question_and_quote_correction_preserve_help)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-bxgmk3b9'
+
+======================================================================
+ERROR: test_multi_item_snapshot_keeps_different_guests_pickups_and_exact_prices (test_quotes.QuoteTests.test_multi_item_snapshot_keeps_different_guests_pickups_and_exact_prices)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-k65cx2hc'
+
+======================================================================
+ERROR: test_question_is_not_approval_and_chat_language_is_separate (test_quotes.QuoteTests.test_question_is_not_approval_and_chat_language_is_separate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-ktzatypi'
+
+======================================================================
+ERROR: test_real_sender_dispatch_and_public_document_auth_projection (test_quotes.QuoteTests.test_real_sender_dispatch_and_public_document_auth_projection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-22kbubpr'
+
+======================================================================
+ERROR: test_reserved_old_understanding_cannot_overwrite_native_confirmation (test_quotes.QuoteTests.test_reserved_old_understanding_cannot_overwrite_native_confirmation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-ixmqh0i6'
+
+======================================================================
+ERROR: test_superseded_discovery_add_button_cannot_change_new_quote (test_quotes.QuoteTests.test_superseded_discovery_add_button_cannot_change_new_quote)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-hje3lchp'
+
+======================================================================
+ERROR: test_targeted_guest_name_change_preserves_other_item_party (test_quotes.QuoteTests.test_targeted_guest_name_change_preserves_other_item_party)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-xyirxq9_'
+
+======================================================================
+ERROR: test_unaccepted_summary_and_quote_cannot_advance (test_quotes.QuoteTests.test_unaccepted_summary_and_quote_cannot_advance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-c7vomleg'
+
+======================================================================
+ERROR: test_wrong_customer_plaintext_expired_and_duplicate_key_conflict (test_quotes.QuoteTests.test_wrong_customer_plaintext_expired_and_duplicate_key_conflict)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_quotes.py", line 28, in setUp
+    conversation.ConversationTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_conversation.py", line 35, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-ixfyramp'
+
+======================================================================
+ERROR: test_actual_channel_normalization_and_handler_replay (test_discovery.DiscoveryTests.test_actual_channel_normalization_and_handler_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-69731iv1'
+
+======================================================================
+ERROR: test_all_gallery_sizes_are_accessible_and_correctly_associated (test_discovery.DiscoveryTests.test_all_gallery_sizes_are_accessible_and_correctly_associated)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-7l4whwc4'
+
+======================================================================
+ERROR: test_choose_add_and_duplicate_turn_do_not_create_booking (test_discovery.DiscoveryTests.test_choose_add_and_duplicate_turn_do_not_create_booking)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-gdt5j8bz'
+
+======================================================================
+ERROR: test_claimed_crash_cannot_be_replayed_as_a_new_send (test_discovery.DiscoveryTests.test_claimed_crash_cannot_be_replayed_as_a_new_send)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-9_dnw9ob'
+
+======================================================================
+ERROR: test_delivery_superseded_during_window_check_never_posts (test_discovery.DiscoveryTests.test_delivery_superseded_during_window_check_never_posts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-2ptkw78m'
+
+======================================================================
+ERROR: test_documented_provider_errors_do_not_trigger_unproven_fallback (test_discovery.DiscoveryTests.test_documented_provider_errors_do_not_trigger_unproven_fallback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-2s33fyx9'
+
+======================================================================
+ERROR: test_expired_action_and_old_delivery_are_rejected (test_discovery.DiscoveryTests.test_expired_action_and_old_delivery_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-04rgngxd'
+
+======================================================================
+ERROR: test_future_inbound_and_disabled_sender_fail_closed (test_discovery.DiscoveryTests.test_future_inbound_and_disabled_sender_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-gtz_hmxx'
+
+======================================================================
+ERROR: test_heterogeneous_fact_sets_choose_via_actual_handler (test_discovery.DiscoveryTests.test_heterogeneous_fact_sets_choose_via_actual_handler)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-pu3iezvf'
+
+======================================================================
+ERROR: test_marina_existing_entry_point_uses_same_model_and_no_sdk_retry (test_discovery.DiscoveryTests.test_marina_existing_entry_point_uses_same_model_and_no_sdk_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-ux5yfp7r'
+
+======================================================================
+ERROR: test_missing_media_is_reported_without_product_substitution (test_discovery.DiscoveryTests.test_missing_media_is_reported_without_product_substitution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-zd8_zrx3'
+
+======================================================================
+ERROR: test_more_info_retains_long_source_text (test_discovery.DiscoveryTests.test_more_info_retains_long_source_text)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-yc4fxumw'
+
+======================================================================
+ERROR: test_one_post_only_on_timeout_partial_warning_or_missing_id (test_discovery.DiscoveryTests.test_one_post_only_on_timeout_partial_warning_or_missing_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-akl_y7ah'
+
+======================================================================
+ERROR: test_public_media_route_gates_identity_and_serves_verified_jpeg (test_discovery.DiscoveryTests.test_public_media_route_gates_identity_and_serves_verified_jpeg)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-zprn9qv8'
+
+======================================================================
+ERROR: test_real_orchestrator_routes_before_legacy_state (test_discovery.DiscoveryTests.test_real_orchestrator_routes_before_legacy_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-x6qnegdt'
+
+======================================================================
+ERROR: test_scope_stale_unverified_and_changed_catalog_actions (test_discovery.DiscoveryTests.test_scope_stale_unverified_and_changed_catalog_actions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-yex3p8g0'
+
+======================================================================
+ERROR: test_sender_adapter_routes_to_durable_plan_delivery (test_discovery.DiscoveryTests.test_sender_adapter_routes_to_durable_plan_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-9q1dqwn6'
+
+======================================================================
+ERROR: test_single_image_fallback_mode_keeps_every_photo_in_chat (test_discovery.DiscoveryTests.test_single_image_fallback_mode_keeps_every_photo_in_chat)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-iyous4em'
+
+======================================================================
+ERROR: test_unknown_model_product_or_fact_is_rejected (test_discovery.DiscoveryTests.test_unknown_model_product_or_fact_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-pk_1llcv'
+
+======================================================================
+ERROR: test_unsupported_questions_and_no_match_get_safe_clarification (test_discovery.DiscoveryTests.test_unsupported_questions_and_no_match_get_safe_clarification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-njbovbjm'
+
+======================================================================
+ERROR: test_window_pacing_replay_and_ambiguous_delivery (test_discovery.DiscoveryTests.test_window_pacing_replay_and_ambiguous_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/verification/wtyj/tests/isluno/test_discovery.py", line 52, in setUp
+    fixtures.JourneyConfigTests.setUp(self)
+  File "/verification/wtyj/tests/isluno/test_journey_config.py", line 16, in setUp
+    temporary = tempfile.TemporaryDirectory(prefix="identity-test-", dir=Path(__file__).parent)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 886, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/tempfile.py", line 384, in mkdtemp
+    _os.mkdir(file, 0o700)
+OSError: [Errno 30] Read-only file system: '/verification/wtyj/tests/isluno/identity-test-prmj3qy4'
+
+----------------------------------------------------------------------
+Ran 65 tests in 123.259s
+
+FAILED (errors=41)
+Actual /app runtime, synthetic fixtures, Docker network none plus sockets/DNS denied.

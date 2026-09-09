@@ -1,3 +1,5 @@
+CURRENT UPDATE: local image build and65 unique image tests are complete; see local-image.json, RELEASE-SEQUENCE.md and BOOTSTRAP-MINIMUM.md. Historical absent-image/C1-unread statements below describe their prior checkpoint. No deployment is authorized or performed.
+
 # ISL14 current release packet — preparation accepted; execution still gated
 
 Current accepted backend runtime: **e2deab8c2ad6c4313324d5b94769b91a1f0ae168**. Dashboard source: **2c99c3a13e01af625432e5f681d4c065e95dd1a8**, unchanged. Gatekeeper independently accepted the maintenance implementation and its focused regressions. This packaging update changes documentation/reproduction evidence only. Counts remain13/14 accepted in candidate,0/14 merged/verified,3 deferred; no ISL14 live criterion is implied complete.

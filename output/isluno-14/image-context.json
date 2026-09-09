@@ -1,0 +1,1831 @@
+{
+  "source_commit": "e2deab8c2ad6c4313324d5b94769b91a1f0ae168",
+  "sole_source_recipe_difference": "Dockerfile overridden by Dockerfile.release; all other364 source members unchanged",
+  "members": [
+    {
+      "path": "Dockerfile",
+      "sha256": "a219e1d763eab4ffc5fd37e9fc68c50f6a2e86f3f197412cfb54b8b6685c8a6e",
+      "bytes": 1328
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "13f873c191dba61fcc6f42954d3ad898ec39f785a583f6a9a0210e8fa89abf71",
+      "bytes": 541
+    },
+    {
+      "path": "supervisord.conf",
+      "sha256": "c9f8641eb6d9198b94157426e2e4e13a687f43a8b0869ebc72e737a215e2e686",
+      "bytes": 1194
+    },
+    {
+      "path": "wtyj/agents/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "wtyj/agents/marina/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "wtyj/agents/marina/email_adapter.py",
+      "sha256": "5cf1e2bc8ff95e29299c0d95a950a96ae36977b212d11a28bc0dc9b7511f5c0c",
+      "bytes": 10773
+    },
+    {
+      "path": "wtyj/agents/marina/email_poller.py",
+      "sha256": "cda1c2d3dd71219e02cb7d5da579bd856c46986be189bff71a7180094e88f2f1",
+      "bytes": 86373
+    },
+    {
+      "path": "wtyj/agents/marina/format_sheets.py",
+      "sha256": "94643f187b2bb39bf45966f6622525b38b78104beb8eeb15b825ec6feb676e80",
+      "bytes": 12193
+    },
+    {
+      "path": "wtyj/agents/marina/gws_calendar.py",
+      "sha256": "3369ac4aa54a9fafe036197fde3d0403133ec954f6038b105ba52f51021397a8",
+      "bytes": 12052
+    },
+    {
+      "path": "wtyj/agents/marina/hold_reaper.py",
+      "sha256": "1d00b690abccb027ba3a08b63ded9bcf54b582e26f3ead04b6ec674827ece614",
+      "bytes": 6117
+    },
+    {
+      "path": "wtyj/agents/marina/marina_agent.py",
+      "sha256": "7c264de62dacc0888fa83afc0f7bf00a978785bf2cb5d52f658976cafff447f1",
+      "bytes": 128400
+    },
+    {
+      "path": "wtyj/agents/marina/payment_stub.py",
+      "sha256": "70c8ba27dbb3903cf7b6d1331fcaab13db8c3fa4dc467e6330b48ae0c2147a21",
+      "bytes": 1457
+    },
+    {
+      "path": "wtyj/agents/marina/sheets_writer.py",
+      "sha256": "5c158ef15ae8d567beee172921c6eef2e4f21332e2476fbcf8355abbdb91ef20",
+      "bytes": 5390
+    },
+    {
+      "path": "wtyj/agents/social/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "wtyj/agents/social/ali_customer_dossier.py",
+      "sha256": "2ac46f8486ad98478dc62dcec8c284c23abe405e5f7e2f1a19044f6f3e7d4cf4",
+      "bytes": 156583
+    },
+    {
+      "path": "wtyj/agents/social/ali_lead_follow_up.py",
+      "sha256": "5df2edbfd4500b04aca997508c26d347a1a4f0127668edefd832d7e505a1d154",
+      "bytes": 21767
+    },
+    {
+      "path": "wtyj/agents/social/ali_media_first.py",
+      "sha256": "8251569d85efd682c715075cc4ebc5bb17b688409d2ba8037f2724fcb4a91e83",
+      "bytes": 64458
+    },
+    {
+      "path": "wtyj/agents/social/ali_quote_brand_card.py",
+      "sha256": "684ffc2602eee09f813eecfed3beabc4690515fe862944c703ff2f3b2a82d85c",
+      "bytes": 5423
+    },
+    {
+      "path": "wtyj/agents/social/ali_quote_delivery.py",
+      "sha256": "bd7b253e94785596771d53b6d359522df7b917eb87128a093c2b799a3a2d629c",
+      "bytes": 35741
+    },
+    {
+      "path": "wtyj/agents/social/ali_quote_download.py",
+      "sha256": "f321a6985acb2846635b37d2dafdfdac8a40805d1e19d848d468f2e7b18c3914",
+      "bytes": 4847
+    },
+    {
+      "path": "wtyj/agents/social/ali_quote_pdf.py",
+      "sha256": "4065955bc1ec2bb12047691932ce180c184d53554d4f56b89eca3c8ab6f22d75",
+      "bytes": 15751
+    },
+    {
+      "path": "wtyj/agents/social/ali_quote_presentation.py",
+      "sha256": "6f2d811273f32e50c44655dc7ef8caa31e3f7490c22f2a7a2415880ed4b55974",
+      "bytes": 5485
+    },
+    {
+      "path": "wtyj/agents/social/ali_quote_recovery.py",
+      "sha256": "2d51b8ffaf46da0509db420c9ddf26aa193f2bb8b36856a7304139e29c79d6c7",
+      "bytes": 15907
+    },
+    {
+      "path": "wtyj/agents/social/ali_quote_workflow.py",
+      "sha256": "9643c3ced3cea83dab77c0de70b2bf17bb651d96d5f20e8be0bc6f9b25c38195",
+      "bytes": 153670
+    },
+    {
+      "path": "wtyj/agents/social/ali_reservation_confirmation_pdf.py",
+      "sha256": "dcc4faddc2ac0fc2f5760a410a32cba65f27e314eb5e84140ecc17d7aef499eb",
+      "bytes": 11233
+    },
+    {
+      "path": "wtyj/agents/social/ali_reservation_v2.py",
+      "sha256": "fe6100f1a976b0463c4cb2682bcbbe60a04882c18f99909194312adf3e11b5f8",
+      "bytes": 69747
+    },
+    {
+      "path": "wtyj/agents/social/ali_reservation_v2_automation.py",
+      "sha256": "3e888552155888e08aabad0f964a152e0a2b14d114a951860b5f44e46bb6744a",
+      "bytes": 14916
+    },
+    {
+      "path": "wtyj/agents/social/ali_reservation_v2_inbound.py",
+      "sha256": "75768f75e962e3e364b9c991d9c36dd4b78c2a14ae9c1b38d0427e67a8a62942",
+      "bytes": 28141
+    },
+    {
+      "path": "wtyj/agents/social/ali_reservation_workflow.py",
+      "sha256": "6b383089a739741bdecbaa79fae5ce8b9918a93ab751d6c634388ec97cb85dd4",
+      "bytes": 58101
+    },
+    {
+      "path": "wtyj/agents/social/ali_vehicle_recommendations.py",
+      "sha256": "8d43474b15aa252bec2b64d22cf4857a52809608e5ad5d9fcc236bf54aa48c42",
+      "bytes": 25980
+    },
+    {
+      "path": "wtyj/agents/social/ali_vehicle_selection.py",
+      "sha256": "6414f1e730d69cd2c50c6ebf28e8080118e57ede7f89c19212059bdb4f62fa58",
+      "bytes": 6099
+    },
+    {
+      "path": "wtyj/agents/social/auto_poster.py",
+      "sha256": "d9666c94234fe1bdb8a2230e89f9dd207d4cae47adb1bfe987d1f373e7ed2ec9",
+      "bytes": 8170
+    },
+    {
+      "path": "wtyj/agents/social/channels/__init__.py",
+      "sha256": "daf5fe4a8e3e75e13de286c4a848298e80af1fda8e490a40500f3088b4e32344",
+      "bytes": 1000
+    },
+    {
+      "path": "wtyj/agents/social/channels/base.py",
+      "sha256": "a4170d83f958591d9650b726d7e15da8533cba439aad43574706dec469dd17b8",
+      "bytes": 1099
+    },
+    {
+      "path": "wtyj/agents/social/channels/whatsapp_zernio.py",
+      "sha256": "f5e5df996a4a6b9ba885e25ba329ec90b0f08c290b20051a2a4f8c6476ebc81b",
+      "bytes": 2159
+    },
+    {
+      "path": "wtyj/agents/social/channels/zernio_dm.py",
+      "sha256": "3a521166edd657c26e7672d7f9f9eaad6f159d03e9f3c45af57e242ffd1f15a1",
+      "bytes": 892
+    },
+    {
+      "path": "wtyj/agents/social/content_agent.py",
+      "sha256": "8cdfa9f6ad1a85302938a8f5a4862dd5f7227efc5befb6205ccba8184b803618",
+      "bytes": 26166
+    },
+    {
+      "path": "wtyj/agents/social/dm_agent.py",
+      "sha256": "7271d2baff53eb1277225376f9fb21c3d20c78122ac7e771c31c42bace92a29e",
+      "bytes": 19684
+    },
+    {
+      "path": "wtyj/agents/social/graphics_engine.py",
+      "sha256": "34a76a450fe93ecbe2435c62e511d73aada5400c7486a11aab91b83128c4206a",
+      "bytes": 11637
+    },
+    {
+      "path": "wtyj/agents/social/isluno_context.py",
+      "sha256": "e7db6a78b8f4f3b61b9e60b93054daef1cc8dcb21dba6b9b5f61068572b0ce94",
+      "bytes": 7300
+    },
+    {
+      "path": "wtyj/agents/social/isluno_conversation.py",
+      "sha256": "17c7d9a3f2b2a8e0f64621bbd1188c4267a9ff2fabae09759d1e3eadb26e1678",
+      "bytes": 33734
+    },
+    {
+      "path": "wtyj/agents/social/isluno_conversation_understanding.py",
+      "sha256": "d28743051a42727dde2367af683fc8757366cd3befaf87e0500cf8529016bf85",
+      "bytes": 9400
+    },
+    {
+      "path": "wtyj/agents/social/isluno_delivery.py",
+      "sha256": "926ba09f9e3e15565c64f75492ac72b84eac326ec844c621f702fb2b2e75cc56",
+      "bytes": 5071
+    },
+    {
+      "path": "wtyj/agents/social/isluno_discovery.py",
+      "sha256": "1b7deda3ffabd1cc47c6e9ac720eff431e1a6b0b703a476c29acbe96493c6bea",
+      "bytes": 22212
+    },
+    {
+      "path": "wtyj/agents/social/isluno_fulfillment.py",
+      "sha256": "fdaf399e92b8f9eec8111beea4a7c950150ca3c47518ef97228a9cd274fb75ed",
+      "bytes": 5791
+    },
+    {
+      "path": "wtyj/agents/social/isluno_itinerary.py",
+      "sha256": "2a9a16ff8834f692ef3eaad62702f89998ed394f7a47540db58c361169b26e29",
+      "bytes": 10010
+    },
+    {
+      "path": "wtyj/agents/social/isluno_payment_copy.py",
+      "sha256": "fc7c09ba7dcaa692b1d6cd1e9cbc2a2db0f8c88aa6f0017609275d067078a94a",
+      "bytes": 2438
+    },
+    {
+      "path": "wtyj/agents/social/isluno_payments.py",
+      "sha256": "f5e3daf36fdf73e2df0df05c600af0c45aa77c3eab65abfa91321bbb1a5efd8c",
+      "bytes": 20186
+    },
+    {
+      "path": "wtyj/agents/social/isluno_quote_delivery.py",
+      "sha256": "cb14dacdb8cb6f000063e94d201242cbdd894c5604b79126c5654e2100adfe55",
+      "bytes": 4073
+    },
+    {
+      "path": "wtyj/agents/social/isluno_quote_documents.py",
+      "sha256": "63d5df8525f7a997a30c12373f9d12868ef923b3efadcc6e851b2a63eb734784",
+      "bytes": 14440
+    },
+    {
+      "path": "wtyj/agents/social/isluno_quotes.py",
+      "sha256": "ad41e5e536f5cc7b6872268290e12141b01207fcb2916e856cd46f40280d96b3",
+      "bytes": 19960
+    },
+    {
+      "path": "wtyj/agents/social/isluno_recovery.py",
+      "sha256": "17b974e60094113d5555203f8c59b93d85fae797dc0a291f71a1edbbba597004",
+      "bytes": 18192
+    },
+    {
+      "path": "wtyj/agents/social/isluno_recovery_copy.py",
+      "sha256": "10ed10c47848c558dac965839493fa30714798c73bd723749c9aac3fd8bd501f",
+      "bytes": 313
+    },
+    {
+      "path": "wtyj/agents/social/isluno_transition.py",
+      "sha256": "cd3a98a5034cc65d1c281b54d4fb94e0ead182d4ad6e6dcd16bb6e8414e944ce",
+      "bytes": 6196
+    },
+    {
+      "path": "wtyj/agents/social/isluno_understanding.py",
+      "sha256": "d3b73fc534db03a35326a6f569dfe2aca364c4ab111215b6e433b5702293746a",
+      "bytes": 5010
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_abandoned_reminders.py",
+      "sha256": "4a661ab954e57409b64d21090c9351a348ff305fedf4aea4f2164a56d0a2ddab",
+      "bytes": 7302
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_autoreply_guard.py",
+      "sha256": "f12eec76c8f04b912074810493779ff75295e89f1510686301196335f888556a",
+      "bytes": 1680
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_crew_assistance.py",
+      "sha256": "844478e764dcf436e74b0834251fdc588dce5c4459dfa7b453d3b7ffaa852479",
+      "bytes": 54129
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_date_changes.py",
+      "sha256": "3a9ecd281bac598c07d935acfd5423ff6bdc2608ac37ee18c67afdee230b8cb5",
+      "bytes": 17012
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_delivery_reconciliation.py",
+      "sha256": "319928b6d6c39429769ea9e6fdf10fe2b17f7df29e5ed077ca46a1254e8bfadd",
+      "bytes": 7457
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_demo_payment.py",
+      "sha256": "e22afc7a994ba76638129ba8a3a389c2d450e723cc1103687e6d0ea50e02b745",
+      "bytes": 13434
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_document_cards.py",
+      "sha256": "3969c6dc94ce9691593d78dda013ac9248dc9bf810f32658fde0503c34c0ba53",
+      "bytes": 12996
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_document_copy.py",
+      "sha256": "1f1bc9772739e0cbd001260fdae39639d8ea2965ae3a2f7eefcb3c5b35bf55f2",
+      "bytes": 1316
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_document_language.py",
+      "sha256": "36ff6b8c58f6f6c1f8349651618dc4355dfd314e47f30134b95fac05375839e4",
+      "bytes": 5425
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_documents.py",
+      "sha256": "744d8628f5bf06329609e0f3d953413225f7c755ede9f051701f9c10ac303666",
+      "bytes": 45039
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_email_template.py",
+      "sha256": "87e2308a37d708d5134c33932634d502b49c61d13630734e4aba1792fd571ae5",
+      "bytes": 11225
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_email_transport.py",
+      "sha256": "3de34657d446c195ff3aa633892a09400a940f411fa75d20830da8d8a3e73b65",
+      "bytes": 8811
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_guest_experience.py",
+      "sha256": "d4eccf15b91a59571da02fb6a129cff880654a9be88f518cbfbcd67e03b3b912",
+      "bytes": 4662
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_model_recovery.py",
+      "sha256": "c0bc2844f6218e41701a787441a442dc89358f1b5612f7ba6798e1b9aa9dd446",
+      "bytes": 33931
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_pdf_structure.py",
+      "sha256": "5d432d1db06c3922b958e073be0779d64014583eac87b4146102abf189044d19",
+      "bytes": 5606
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_reply_planning.py",
+      "sha256": "312110258a39fa9c8508b4c19f01cce24dbb2b2fe458af17ad0d3e9a368e602c",
+      "bytes": 3121
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_reservation_email.py",
+      "sha256": "86d0cd9aa968a96af48f4eebbc62a55aa483c46528b4528faad3d9c1ca06d14d",
+      "bytes": 16832
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_reservation_store.py",
+      "sha256": "09a87c3bbf2a0f657a1384e4112be20be81cc1cc69782c81b8e97b84fcd6aeb2",
+      "bytes": 38275
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_reservation_workflow.py",
+      "sha256": "57af5404041025ffb3783f9c7021482da7d9d65d522a85ae9e04313f26c5837f",
+      "bytes": 125297
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_response_policy.py",
+      "sha256": "7dc532d1b06df4738fe9be7cabdeb8d0247306bfb2a3ed3217ce2ca227d92580",
+      "bytes": 13631
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_understanding.py",
+      "sha256": "7f8a766e526f849c1f60cdd4d0699684a50913e3d1dee606ee51ab1d184fd058",
+      "bytes": 51648
+    },
+    {
+      "path": "wtyj/agents/social/rental_catalog_preview.py",
+      "sha256": "1ab17f4334c1f38e64f24ce09fc095812a1aa25f40d84f54ee8357b126b1d29d",
+      "bytes": 6752
+    },
+    {
+      "path": "wtyj/agents/social/scheduler.py",
+      "sha256": "ddaa309915b28637372ebad7ccd77dcd2432ab7ea7d5f9ed293f72f7d1c8dd17",
+      "bytes": 7314
+    },
+    {
+      "path": "wtyj/agents/social/senders/__init__.py",
+      "sha256": "132594850b1122fb215cbbf8674b92d9b88fda3340f45e011271b1dcf9b1300a",
+      "bytes": 2300
+    },
+    {
+      "path": "wtyj/agents/social/senders/base.py",
+      "sha256": "c67f91422f5457aaed4ebfb36029fe04550ab814e36ac76d2d6907919137d966",
+      "bytes": 1805
+    },
+    {
+      "path": "wtyj/agents/social/senders/zernio.py",
+      "sha256": "3ca5a6a04a140c1a7684434981a77e6cce810d96b0d2ba9bef56aa33b6eab7c5",
+      "bytes": 2901
+    },
+    {
+      "path": "wtyj/agents/social/social_agent.py",
+      "sha256": "fc5d646da4c83da60892454c7fdaac79b40dcaf1d0c43af4cdc50bddea096e04",
+      "bytes": 141323
+    },
+    {
+      "path": "wtyj/agents/social/social_publisher.py",
+      "sha256": "ba56c7c7b0eb7fa77e45e823cf733e7918f957adc3a047900b5cdf0d88a39836",
+      "bytes": 13663
+    },
+    {
+      "path": "wtyj/agents/social/webhook_server.py",
+      "sha256": "2fee3faed10e635a8bb29009f757a7a67bef0f459d0ee8c277ab8ea7bbacf70d",
+      "bytes": 158862
+    },
+    {
+      "path": "wtyj/agents/social/whatsapp_client.py",
+      "sha256": "3182e3e78959998a13f47ffd32ec0c7a3e2a820e6c19e1aa9d89f4f5cc458736",
+      "bytes": 16545
+    },
+    {
+      "path": "wtyj/agents/social/zernio_dm_client.py",
+      "sha256": "69c0c71caa63ea2fff051a85b646a0cb334dfd161b43c1fbf5824b1f579d1a8c",
+      "bytes": 97414
+    },
+    {
+      "path": "wtyj/agents/social/zernio_whatsapp_media.py",
+      "sha256": "30cd88a3915be20361c9bb0a185ab24dce775e426af4d46dcd7aba4fb51257f7",
+      "bytes": 4209
+    },
+    {
+      "path": "wtyj/assets/ali-logo-full-premium.png",
+      "sha256": "e0e9ea4a2c0e6b14d9131bd8b4c3b70b4e9930a867ef43a5c0d98a99a5169925",
+      "bytes": 32144
+    },
+    {
+      "path": "wtyj/assets/fonts/dejavu/DejaVuSans-Bold.ttf",
+      "sha256": "e6476c1b80502924294eed40894c5b18e06c181444ca953e5334262df9c27724",
+      "bytes": 705684
+    },
+    {
+      "path": "wtyj/assets/fonts/dejavu/DejaVuSans.ttf",
+      "sha256": "7da195a74c55bef988d0d48f9508bd5d849425c1770dba5d7bfc6ce9ed848954",
+      "bytes": 757076
+    },
+    {
+      "path": "wtyj/assets/fonts/dejavu/LICENSE.txt",
+      "sha256": "f88d5294af5a772f9114eb385009e3478d62b21f3e5bbc34d159d328047c8867",
+      "bytes": 8815
+    },
+    {
+      "path": "wtyj/assets/isluno/019c7322b0170b27d6f3a7af1c8f196440dd3acc909960cb091f87c4dcb54836.webp",
+      "sha256": "019c7322b0170b27d6f3a7af1c8f196440dd3acc909960cb091f87c4dcb54836",
+      "bytes": 151616
+    },
+    {
+      "path": "wtyj/assets/isluno/027df55ca7bdcd14710ef8fd607fc7cc363e3e5f54a1bd6740ab92513eb4b08d.webp",
+      "sha256": "027df55ca7bdcd14710ef8fd607fc7cc363e3e5f54a1bd6740ab92513eb4b08d",
+      "bytes": 121620
+    },
+    {
+      "path": "wtyj/assets/isluno/0350c3cba99263d51e46b66d1f05ceb60bec6e90509701a7739328b4834a071e.webp",
+      "sha256": "0350c3cba99263d51e46b66d1f05ceb60bec6e90509701a7739328b4834a071e",
+      "bytes": 76266
+    },
+    {
+      "path": "wtyj/assets/isluno/0588afcff29d494cd054802a79a9e2edc49444271a99ba1bfcdef6efa2a2e410.webp",
+      "sha256": "0588afcff29d494cd054802a79a9e2edc49444271a99ba1bfcdef6efa2a2e410",
+      "bytes": 310226
+    },
+    {
+      "path": "wtyj/assets/isluno/05a959c6d1f836caf9f1ff64531a2990f8b19b9f0d9712dea47edfa93014e638.webp",
+      "sha256": "05a959c6d1f836caf9f1ff64531a2990f8b19b9f0d9712dea47edfa93014e638",
+      "bytes": 443748
+    },
+    {
+      "path": "wtyj/assets/isluno/06b713398798ddd7e1d5fccd6e672f6ad0b88a6764b8b618b2bc8f53ff0c5c5a.webp",
+      "sha256": "06b713398798ddd7e1d5fccd6e672f6ad0b88a6764b8b618b2bc8f53ff0c5c5a",
+      "bytes": 73498
+    },
+    {
+      "path": "wtyj/assets/isluno/07c82a7369130dba21f9b32b5d948da9723c7774da85188694fd547c327de8bf.webp",
+      "sha256": "07c82a7369130dba21f9b32b5d948da9723c7774da85188694fd547c327de8bf",
+      "bytes": 168346
+    },
+    {
+      "path": "wtyj/assets/isluno/0806bb55bcdc41af8f9fff70b872e07f8c61babb0ea7f420ac6702a6e9e52e94.webp",
+      "sha256": "0806bb55bcdc41af8f9fff70b872e07f8c61babb0ea7f420ac6702a6e9e52e94",
+      "bytes": 540608
+    },
+    {
+      "path": "wtyj/assets/isluno/09070ad7c5b21cac922f34af8400817ed8b98d9d2a241481400bc5e068843a4e.webp",
+      "sha256": "09070ad7c5b21cac922f34af8400817ed8b98d9d2a241481400bc5e068843a4e",
+      "bytes": 113706
+    },
+    {
+      "path": "wtyj/assets/isluno/0a673d924ea9ab245030f946a9a3e32b6ab60d056597f12a8305177f834bf90a.webp",
+      "sha256": "0a673d924ea9ab245030f946a9a3e32b6ab60d056597f12a8305177f834bf90a",
+      "bytes": 285178
+    },
+    {
+      "path": "wtyj/assets/isluno/0afc2053e63c8788c563c91a7fbe502a67bf902580ca23ae13db6ca7d7764753.webp",
+      "sha256": "0afc2053e63c8788c563c91a7fbe502a67bf902580ca23ae13db6ca7d7764753",
+      "bytes": 143746
+    },
+    {
+      "path": "wtyj/assets/isluno/0b86f35881905865fa1b2f8de24b4fd062501a8e61cadf69c3753d4cd90e1549.webp",
+      "sha256": "0b86f35881905865fa1b2f8de24b4fd062501a8e61cadf69c3753d4cd90e1549",
+      "bytes": 168676
+    },
+    {
+      "path": "wtyj/assets/isluno/0c3bc47d3bc97b6285d8dfb7f692801ec715576b4ab928960513297b74a13063.webp",
+      "sha256": "0c3bc47d3bc97b6285d8dfb7f692801ec715576b4ab928960513297b74a13063",
+      "bytes": 158876
+    },
+    {
+      "path": "wtyj/assets/isluno/0d4e05006c778d3e0f81f75144bf4dd103716a27258c585f47d6ac8829150a18.webp",
+      "sha256": "0d4e05006c778d3e0f81f75144bf4dd103716a27258c585f47d6ac8829150a18",
+      "bytes": 106972
+    },
+    {
+      "path": "wtyj/assets/isluno/0d57975be77cc37d5e56a047e30e798ee4d10e472476409393725aa0b6a1c756.webp",
+      "sha256": "0d57975be77cc37d5e56a047e30e798ee4d10e472476409393725aa0b6a1c756",
+      "bytes": 509314
+    },
+    {
+      "path": "wtyj/assets/isluno/0de067776fe35e0898ca8ebd4493ee0aaf83ab755cf5c0edb2ff224e6ba3b18d.webp",
+      "sha256": "0de067776fe35e0898ca8ebd4493ee0aaf83ab755cf5c0edb2ff224e6ba3b18d",
+      "bytes": 334884
+    },
+    {
+      "path": "wtyj/assets/isluno/0e09438e6391c01c8ee75c6bb49e68b8eecdf70a09370f95e77a75febe89b2a2.webp",
+      "sha256": "0e09438e6391c01c8ee75c6bb49e68b8eecdf70a09370f95e77a75febe89b2a2",
+      "bytes": 233694
+    },
+    {
+      "path": "wtyj/assets/isluno/0e4aec39e3d91dfa25e8bec92c6cb4898f9ea79e4ae7719d01a606521dfde193.webp",
+      "sha256": "0e4aec39e3d91dfa25e8bec92c6cb4898f9ea79e4ae7719d01a606521dfde193",
+      "bytes": 38580
+    },
+    {
+      "path": "wtyj/assets/isluno/0f02b6894c87ddfb392bc79fbbb8e6756eb6fba791ed772e3e7c37f163025ac4.webp",
+      "sha256": "0f02b6894c87ddfb392bc79fbbb8e6756eb6fba791ed772e3e7c37f163025ac4",
+      "bytes": 126548
+    },
+    {
+      "path": "wtyj/assets/isluno/0f24faea5a4a3c42d907cc2b31032c3b74531c9ce124db6ed2c7e548ce5219b1.webp",
+      "sha256": "0f24faea5a4a3c42d907cc2b31032c3b74531c9ce124db6ed2c7e548ce5219b1",
+      "bytes": 91354
+    },
+    {
+      "path": "wtyj/assets/isluno/0f4bbfb014224299ed70f42f9acc197c70cd9341ff70a6489dbed41588a6982d.webp",
+      "sha256": "0f4bbfb014224299ed70f42f9acc197c70cd9341ff70a6489dbed41588a6982d",
+      "bytes": 197632
+    },
+    {
+      "path": "wtyj/assets/isluno/10bef12d71f8e4b4fb39064905518b63ce1063cff806a41e4d18a37f1a9bf35b.webp",
+      "sha256": "10bef12d71f8e4b4fb39064905518b63ce1063cff806a41e4d18a37f1a9bf35b",
+      "bytes": 94372
+    },
+    {
+      "path": "wtyj/assets/isluno/110a35161c0be2e303d5fb275f5b05249e60ecc139cd04dbcbdffbfc8c0c4762.webp",
+      "sha256": "110a35161c0be2e303d5fb275f5b05249e60ecc139cd04dbcbdffbfc8c0c4762",
+      "bytes": 374570
+    },
+    {
+      "path": "wtyj/assets/isluno/150d1be259cf8d6e56c5cadcfae441d9d5b16dc5050ef55a4fa0d531538b15ac.webp",
+      "sha256": "150d1be259cf8d6e56c5cadcfae441d9d5b16dc5050ef55a4fa0d531538b15ac",
+      "bytes": 88158
+    },
+    {
+      "path": "wtyj/assets/isluno/1579a631eddccb1207e919c6452232f250e1ed20aa8597cc62a9f4c73c96b77a.webp",
+      "sha256": "1579a631eddccb1207e919c6452232f250e1ed20aa8597cc62a9f4c73c96b77a",
+      "bytes": 390494
+    },
+    {
+      "path": "wtyj/assets/isluno/17125cbe1a2085e19c13bbbf72b16ff99b5b1d392837d7fe742c89b97564f72f.webp",
+      "sha256": "17125cbe1a2085e19c13bbbf72b16ff99b5b1d392837d7fe742c89b97564f72f",
+      "bytes": 314582
+    },
+    {
+      "path": "wtyj/assets/isluno/187255fda3f10748305f41bc59bc757558e0609ea65d992fa04d3b81f827235f.webp",
+      "sha256": "187255fda3f10748305f41bc59bc757558e0609ea65d992fa04d3b81f827235f",
+      "bytes": 323810
+    },
+    {
+      "path": "wtyj/assets/isluno/19688a2dd68201f09d6095998d4717f4c8ba613a627286afae1099efc12ce8f3.webp",
+      "sha256": "19688a2dd68201f09d6095998d4717f4c8ba613a627286afae1099efc12ce8f3",
+      "bytes": 257948
+    },
+    {
+      "path": "wtyj/assets/isluno/19762ad492fd2aa2e723c6e2ff02f85da3d53bd515df71f7f5d4334009c79a8e.webp",
+      "sha256": "19762ad492fd2aa2e723c6e2ff02f85da3d53bd515df71f7f5d4334009c79a8e",
+      "bytes": 200424
+    },
+    {
+      "path": "wtyj/assets/isluno/19ee729ad4b2b465328a511bb337fefd161cf2f42671ae2520f4a69d1c7d4d87.webp",
+      "sha256": "19ee729ad4b2b465328a511bb337fefd161cf2f42671ae2520f4a69d1c7d4d87",
+      "bytes": 126776
+    },
+    {
+      "path": "wtyj/assets/isluno/1ad98ece0a3a5f8c0f7754aabbe684e6f3758d24f071361a4e3e454c16f16d66.webp",
+      "sha256": "1ad98ece0a3a5f8c0f7754aabbe684e6f3758d24f071361a4e3e454c16f16d66",
+      "bytes": 147912
+    },
+    {
+      "path": "wtyj/assets/isluno/1aec4eb55e192f41367e04472443d517a6d113942c44ab782a51f3f928c98981.webp",
+      "sha256": "1aec4eb55e192f41367e04472443d517a6d113942c44ab782a51f3f928c98981",
+      "bytes": 108216
+    },
+    {
+      "path": "wtyj/assets/isluno/1d425b64da17a1eb0dc60d4389b460db1676e3012db72e5bcf411272d805c668.webp",
+      "sha256": "1d425b64da17a1eb0dc60d4389b460db1676e3012db72e5bcf411272d805c668",
+      "bytes": 260254
+    },
+    {
+      "path": "wtyj/assets/isluno/1f4854130df38ec23438f1179a849e4af180e2e73a2398671dd67af02fac6d13.webp",
+      "sha256": "1f4854130df38ec23438f1179a849e4af180e2e73a2398671dd67af02fac6d13",
+      "bytes": 234328
+    },
+    {
+      "path": "wtyj/assets/isluno/22a42c4a41871127d59bdc8032414f125c2cb243bd7be9b232a36d26c8b18d2c.webp",
+      "sha256": "22a42c4a41871127d59bdc8032414f125c2cb243bd7be9b232a36d26c8b18d2c",
+      "bytes": 82936
+    },
+    {
+      "path": "wtyj/assets/isluno/22b693a4b8a5bd9bdf02717b9e1ced3e6b51e2edd8aee47a97a6b24669268cc2.webp",
+      "sha256": "22b693a4b8a5bd9bdf02717b9e1ced3e6b51e2edd8aee47a97a6b24669268cc2",
+      "bytes": 232346
+    },
+    {
+      "path": "wtyj/assets/isluno/24d3be9e1098e0ee9d51938580e198ffa3b4a773648b36be71a69a7f72a217e0.webp",
+      "sha256": "24d3be9e1098e0ee9d51938580e198ffa3b4a773648b36be71a69a7f72a217e0",
+      "bytes": 86104
+    },
+    {
+      "path": "wtyj/assets/isluno/24ee8dc1b51b3c3aecb9e0771bacaf592e24911e117d2b79424acba77a8975ff.webp",
+      "sha256": "24ee8dc1b51b3c3aecb9e0771bacaf592e24911e117d2b79424acba77a8975ff",
+      "bytes": 407486
+    },
+    {
+      "path": "wtyj/assets/isluno/2620ef9616f38c6c42412f0eecb92840535664515a922b7e34aa922e7ff7eefa.webp",
+      "sha256": "2620ef9616f38c6c42412f0eecb92840535664515a922b7e34aa922e7ff7eefa",
+      "bytes": 308806
+    },
+    {
+      "path": "wtyj/assets/isluno/273d9ded473beec515ed2c6213b3468097b61644a9a3e352b47be1fad68b3633.webp",
+      "sha256": "273d9ded473beec515ed2c6213b3468097b61644a9a3e352b47be1fad68b3633",
+      "bytes": 574858
+    },
+    {
+      "path": "wtyj/assets/isluno/27a1f71550d5fe19093f02e9f16a100cbc9afa29387fb59a2ca0d6648746ebfb.webp",
+      "sha256": "27a1f71550d5fe19093f02e9f16a100cbc9afa29387fb59a2ca0d6648746ebfb",
+      "bytes": 359462
+    },
+    {
+      "path": "wtyj/assets/isluno/27f41a8948ef2416640e61c1169a278855f9848ede69823769c9761df326b79f.webp",
+      "sha256": "27f41a8948ef2416640e61c1169a278855f9848ede69823769c9761df326b79f",
+      "bytes": 87526
+    },
+    {
+      "path": "wtyj/assets/isluno/27fd0caea48fd3b1cf43b6befd510360b8bbe9d1e86c19f7a361a33234be7cb5.webp",
+      "sha256": "27fd0caea48fd3b1cf43b6befd510360b8bbe9d1e86c19f7a361a33234be7cb5",
+      "bytes": 56238
+    },
+    {
+      "path": "wtyj/assets/isluno/288da9bb7d41bb43a6bfccf6a0ba9f7579a75b328650bacbdde6a5479c7d5714.webp",
+      "sha256": "288da9bb7d41bb43a6bfccf6a0ba9f7579a75b328650bacbdde6a5479c7d5714",
+      "bytes": 145760
+    },
+    {
+      "path": "wtyj/assets/isluno/2938807c46bef5e385b8ddea6b77f7aca8c421753768e2dbb5ccf86e8cfdfe60.webp",
+      "sha256": "2938807c46bef5e385b8ddea6b77f7aca8c421753768e2dbb5ccf86e8cfdfe60",
+      "bytes": 494222
+    },
+    {
+      "path": "wtyj/assets/isluno/299ae57bda78f901c3894998c90e17e5cc4d7283ac977ff24783e0362af8f24c.webp",
+      "sha256": "299ae57bda78f901c3894998c90e17e5cc4d7283ac977ff24783e0362af8f24c",
+      "bytes": 292114
+    },
+    {
+      "path": "wtyj/assets/isluno/2c76fccd4730709a1d64f8236d75508152005c12774a8bed7ba64c73d706509f.webp",
+      "sha256": "2c76fccd4730709a1d64f8236d75508152005c12774a8bed7ba64c73d706509f",
+      "bytes": 362176
+    },
+    {
+      "path": "wtyj/assets/isluno/2e1258da7bf046af2fdef381caad456c541982b9765695c3b775ec81c92997dc.webp",
+      "sha256": "2e1258da7bf046af2fdef381caad456c541982b9765695c3b775ec81c92997dc",
+      "bytes": 150418
+    },
+    {
+      "path": "wtyj/assets/isluno/2ed3c2f143e16e10919ac545cb96fa2d7edd480a9e446ec59066545dae21406b.webp",
+      "sha256": "2ed3c2f143e16e10919ac545cb96fa2d7edd480a9e446ec59066545dae21406b",
+      "bytes": 51360
+    },
+    {
+      "path": "wtyj/assets/isluno/2f3f2ba015b4ef894b3a9f237ec97ab213a937199ab88ba1f1cf313066b5bfe5.webp",
+      "sha256": "2f3f2ba015b4ef894b3a9f237ec97ab213a937199ab88ba1f1cf313066b5bfe5",
+      "bytes": 235918
+    },
+    {
+      "path": "wtyj/assets/isluno/30574fa9ecd5480933dcc024af3c2063fa4c1594fb38be0e38088efbc104e3fe.webp",
+      "sha256": "30574fa9ecd5480933dcc024af3c2063fa4c1594fb38be0e38088efbc104e3fe",
+      "bytes": 425418
+    },
+    {
+      "path": "wtyj/assets/isluno/30f41da674dc34988753997debf9324559c899efd76b0f8c5e9f55f6602c547b.webp",
+      "sha256": "30f41da674dc34988753997debf9324559c899efd76b0f8c5e9f55f6602c547b",
+      "bytes": 539270
+    },
+    {
+      "path": "wtyj/assets/isluno/33276c0c448e831d966c5d49b38129113c6b1b45bfa8dccb0e7eac078e50b550.webp",
+      "sha256": "33276c0c448e831d966c5d49b38129113c6b1b45bfa8dccb0e7eac078e50b550",
+      "bytes": 215656
+    },
+    {
+      "path": "wtyj/assets/isluno/37f4e4f19e67d12014a214c78d7038112d699107caef12e2a93d8e17bb2d9acd.webp",
+      "sha256": "37f4e4f19e67d12014a214c78d7038112d699107caef12e2a93d8e17bb2d9acd",
+      "bytes": 131116
+    },
+    {
+      "path": "wtyj/assets/isluno/3c5e423079e857cfc38504d8060b8f35e14828775708e4183ed1d688f4d73b71.webp",
+      "sha256": "3c5e423079e857cfc38504d8060b8f35e14828775708e4183ed1d688f4d73b71",
+      "bytes": 180916
+    },
+    {
+      "path": "wtyj/assets/isluno/3d2d105e8ab429e869be7a01092736ce00d1cec6d8ca99ae4d2144a5c764a91d.webp",
+      "sha256": "3d2d105e8ab429e869be7a01092736ce00d1cec6d8ca99ae4d2144a5c764a91d",
+      "bytes": 76846
+    },
+    {
+      "path": "wtyj/assets/isluno/3d60653d2cb1ac3b9c1ec12ff1583da685e210fa0e179deb50dbb742010764dc.webp",
+      "sha256": "3d60653d2cb1ac3b9c1ec12ff1583da685e210fa0e179deb50dbb742010764dc",
+      "bytes": 290976
+    },
+    {
+      "path": "wtyj/assets/isluno/3f099274e02d8d4cc01677749c6230536dee268bcf5ca7cd5f813d03f6e5438c.webp",
+      "sha256": "3f099274e02d8d4cc01677749c6230536dee268bcf5ca7cd5f813d03f6e5438c",
+      "bytes": 215780
+    },
+    {
+      "path": "wtyj/assets/isluno/3f5ee3b869dde53df1852c0210ff2368393f7372d0b8cbb729f737f5c389cf57.webp",
+      "sha256": "3f5ee3b869dde53df1852c0210ff2368393f7372d0b8cbb729f737f5c389cf57",
+      "bytes": 115558
+    },
+    {
+      "path": "wtyj/assets/isluno/3fff9c9b1881c6858a512330936a18acacce5457be464fdfb92261ca7603f581.webp",
+      "sha256": "3fff9c9b1881c6858a512330936a18acacce5457be464fdfb92261ca7603f581",
+      "bytes": 293430
+    },
+    {
+      "path": "wtyj/assets/isluno/40ced2ddf10664135c741da8e0731deb0e11a16689923fe72b9441f4bda48a7b.webp",
+      "sha256": "40ced2ddf10664135c741da8e0731deb0e11a16689923fe72b9441f4bda48a7b",
+      "bytes": 80080
+    },
+    {
+      "path": "wtyj/assets/isluno/40de9ea2da364835c014a3c66495cdf6eb0ccbc03094d85fd25195912c5cb107.webp",
+      "sha256": "40de9ea2da364835c014a3c66495cdf6eb0ccbc03094d85fd25195912c5cb107",
+      "bytes": 113954
+    },
+    {
+      "path": "wtyj/assets/isluno/445e392baa07c8123f7c79cb681990cf84b219f152b6cab2808bf3cc6bbd9d77.webp",
+      "sha256": "445e392baa07c8123f7c79cb681990cf84b219f152b6cab2808bf3cc6bbd9d77",
+      "bytes": 310306
+    },
+    {
+      "path": "wtyj/assets/isluno/452f52be69708163b08d7705c11a20438bb6ef974543c1728a04c30de0b21754.webp",
+      "sha256": "452f52be69708163b08d7705c11a20438bb6ef974543c1728a04c30de0b21754",
+      "bytes": 323188
+    },
+    {
+      "path": "wtyj/assets/isluno/46d2dd481f2d9ee351402e1b03312949234d3ba171933b58f47cb8b51ef8dae6.webp",
+      "sha256": "46d2dd481f2d9ee351402e1b03312949234d3ba171933b58f47cb8b51ef8dae6",
+      "bytes": 210406
+    },
+    {
+      "path": "wtyj/assets/isluno/49d8516442420f271d79e5f2a7bcefb2c34a95f0726bb838b566b0775500b762.webp",
+      "sha256": "49d8516442420f271d79e5f2a7bcefb2c34a95f0726bb838b566b0775500b762",
+      "bytes": 655126
+    },
+    {
+      "path": "wtyj/assets/isluno/4eb38d46981d7885d98257b1ae52e332d1e901c240bffe7ead11e473540b3733.webp",
+      "sha256": "4eb38d46981d7885d98257b1ae52e332d1e901c240bffe7ead11e473540b3733",
+      "bytes": 137652
+    },
+    {
+      "path": "wtyj/assets/isluno/513cd49019d1c37671f4623a0d0b065552cf1383c4fa743349b1de4bd512835b.webp",
+      "sha256": "513cd49019d1c37671f4623a0d0b065552cf1383c4fa743349b1de4bd512835b",
+      "bytes": 157868
+    },
+    {
+      "path": "wtyj/assets/isluno/515cd342aff531e68fdd2fba735a76618da3ecf9185a023d18b0826434f0d93a.webp",
+      "sha256": "515cd342aff531e68fdd2fba735a76618da3ecf9185a023d18b0826434f0d93a",
+      "bytes": 411914
+    },
+    {
+      "path": "wtyj/assets/isluno/529f3d388e6629da2d47db7ff4c5fbd96a7553609bf73a346f0c485a4446e9b4.webp",
+      "sha256": "529f3d388e6629da2d47db7ff4c5fbd96a7553609bf73a346f0c485a4446e9b4",
+      "bytes": 153048
+    },
+    {
+      "path": "wtyj/assets/isluno/52fbb88f3bcdb91b88b1cda1eb23ba803ec0a5201acaa38cac85643be9b811a2.webp",
+      "sha256": "52fbb88f3bcdb91b88b1cda1eb23ba803ec0a5201acaa38cac85643be9b811a2",
+      "bytes": 657758
+    },
+    {
+      "path": "wtyj/assets/isluno/5305630b6e5eb7ee9462a359572b235404424eb4a66408e2c17e3e3526254804.webp",
+      "sha256": "5305630b6e5eb7ee9462a359572b235404424eb4a66408e2c17e3e3526254804",
+      "bytes": 178430
+    },
+    {
+      "path": "wtyj/assets/isluno/54c12d2708c8ed34aabedd5e58b8c8fd08b5e911ec3e1f24f7f95ab8fed366f5.webp",
+      "sha256": "54c12d2708c8ed34aabedd5e58b8c8fd08b5e911ec3e1f24f7f95ab8fed366f5",
+      "bytes": 355360
+    },
+    {
+      "path": "wtyj/assets/isluno/559ca11bd4a7395aeb6a98e0732fce4445d8e0976938136f8636d52164c8b411.webp",
+      "sha256": "559ca11bd4a7395aeb6a98e0732fce4445d8e0976938136f8636d52164c8b411",
+      "bytes": 183296
+    },
+    {
+      "path": "wtyj/assets/isluno/58f9eae01d69bb8f1afe8430d755a09fdca6b1269218aa8d67ab397f94c77e61.webp",
+      "sha256": "58f9eae01d69bb8f1afe8430d755a09fdca6b1269218aa8d67ab397f94c77e61",
+      "bytes": 181466
+    },
+    {
+      "path": "wtyj/assets/isluno/59368ad94977038125ff321c506358dfd631cd4d0e4141aadb6dc70e9e377b1c.webp",
+      "sha256": "59368ad94977038125ff321c506358dfd631cd4d0e4141aadb6dc70e9e377b1c",
+      "bytes": 406658
+    },
+    {
+      "path": "wtyj/assets/isluno/5a29a575607d89ad9844ea0f8968585a1acc555574ab2f6b33cd820e033d3242.webp",
+      "sha256": "5a29a575607d89ad9844ea0f8968585a1acc555574ab2f6b33cd820e033d3242",
+      "bytes": 130694
+    },
+    {
+      "path": "wtyj/assets/isluno/5a85a54121336fe25a21c1af1b64cdafd47249177141509f0f5ac35eecf24367.webp",
+      "sha256": "5a85a54121336fe25a21c1af1b64cdafd47249177141509f0f5ac35eecf24367",
+      "bytes": 204010
+    },
+    {
+      "path": "wtyj/assets/isluno/5ac2c70680237e3d3ea44e6e9b4dab1a9e03f5b9a09d0fea4e0c8d90a2a83f22.webp",
+      "sha256": "5ac2c70680237e3d3ea44e6e9b4dab1a9e03f5b9a09d0fea4e0c8d90a2a83f22",
+      "bytes": 413654
+    },
+    {
+      "path": "wtyj/assets/isluno/5acc5e30975428b35d77b76fced6ab4071dfaa07ba34d5b455220b9e7129c973.webp",
+      "sha256": "5acc5e30975428b35d77b76fced6ab4071dfaa07ba34d5b455220b9e7129c973",
+      "bytes": 423514
+    },
+    {
+      "path": "wtyj/assets/isluno/5c0eede8dca9eee384a25036e83026a67c4bbb361063707886727b283f81b91c.webp",
+      "sha256": "5c0eede8dca9eee384a25036e83026a67c4bbb361063707886727b283f81b91c",
+      "bytes": 168034
+    },
+    {
+      "path": "wtyj/assets/isluno/5cea0d6cb6419ea23ade6084e099ee5240c6573fa6b5e473d0f26693f5d77e02.webp",
+      "sha256": "5cea0d6cb6419ea23ade6084e099ee5240c6573fa6b5e473d0f26693f5d77e02",
+      "bytes": 87194
+    },
+    {
+      "path": "wtyj/assets/isluno/5cf3b95e2f1cd615fc4654be8e535758ecce4f95aca36da001cbf87b4608f7d2.webp",
+      "sha256": "5cf3b95e2f1cd615fc4654be8e535758ecce4f95aca36da001cbf87b4608f7d2",
+      "bytes": 272536
+    },
+    {
+      "path": "wtyj/assets/isluno/5e4f5083b4aff3b62c97d01cb0e4fe9ea7017388d47e68a9a08d858863ec6e12.webp",
+      "sha256": "5e4f5083b4aff3b62c97d01cb0e4fe9ea7017388d47e68a9a08d858863ec6e12",
+      "bytes": 301638
+    },
+    {
+      "path": "wtyj/assets/isluno/639113578c20ec1b965d8f19209c06cdbec374dcdd851b0619a6b80d7f424a58.webp",
+      "sha256": "639113578c20ec1b965d8f19209c06cdbec374dcdd851b0619a6b80d7f424a58",
+      "bytes": 74516
+    },
+    {
+      "path": "wtyj/assets/isluno/646839c90b37a9f4d0c115faaf15d69143162cb85df70aa989b4f7623eb31b8e.webp",
+      "sha256": "646839c90b37a9f4d0c115faaf15d69143162cb85df70aa989b4f7623eb31b8e",
+      "bytes": 292616
+    },
+    {
+      "path": "wtyj/assets/isluno/646c60019a9c9b1fafecd668cc471ffe4b002f4c34aaf085cf47eda5252ff9de.webp",
+      "sha256": "646c60019a9c9b1fafecd668cc471ffe4b002f4c34aaf085cf47eda5252ff9de",
+      "bytes": 403636
+    },
+    {
+      "path": "wtyj/assets/isluno/649a33b148f276f7be986426f3f667355635ddb9b58d4aff2a69e522b24469b0.webp",
+      "sha256": "649a33b148f276f7be986426f3f667355635ddb9b58d4aff2a69e522b24469b0",
+      "bytes": 339606
+    },
+    {
+      "path": "wtyj/assets/isluno/65c13ec2b326285134725a3e732a2c4a014159f1d63b61b8a94dc0b991c1b0df.webp",
+      "sha256": "65c13ec2b326285134725a3e732a2c4a014159f1d63b61b8a94dc0b991c1b0df",
+      "bytes": 68044
+    },
+    {
+      "path": "wtyj/assets/isluno/66e72493aca671b32ba05ea9a894b73d6399697aad1d7c41d9a5e0fa3960e95e.webp",
+      "sha256": "66e72493aca671b32ba05ea9a894b73d6399697aad1d7c41d9a5e0fa3960e95e",
+      "bytes": 169214
+    },
+    {
+      "path": "wtyj/assets/isluno/671a6593fabc01554b4cd92ea1e9d9a490465fa8b76a4d3e5475cfcbc5a92d94.webp",
+      "sha256": "671a6593fabc01554b4cd92ea1e9d9a490465fa8b76a4d3e5475cfcbc5a92d94",
+      "bytes": 271296
+    },
+    {
+      "path": "wtyj/assets/isluno/6911d092fa73d81156167da179a6c29d94f8bcd5fc122bf67f5cde0820a4626a.webp",
+      "sha256": "6911d092fa73d81156167da179a6c29d94f8bcd5fc122bf67f5cde0820a4626a",
+      "bytes": 307920
+    },
+    {
+      "path": "wtyj/assets/isluno/6c20a35850b2ce61e46b8be17768fe6db6432bcffa2c5cdc70a613fdeb850fa5.webp",
+      "sha256": "6c20a35850b2ce61e46b8be17768fe6db6432bcffa2c5cdc70a613fdeb850fa5",
+      "bytes": 226568
+    },
+    {
+      "path": "wtyj/assets/isluno/6c2f472b94e8c61db59507355980838f7a454caebe891799afb835b639efde4a.webp",
+      "sha256": "6c2f472b94e8c61db59507355980838f7a454caebe891799afb835b639efde4a",
+      "bytes": 179244
+    },
+    {
+      "path": "wtyj/assets/isluno/6d704902a33eb1753049409fe4f241424d9fd3a0700f66088f668b3e2e51e714.webp",
+      "sha256": "6d704902a33eb1753049409fe4f241424d9fd3a0700f66088f668b3e2e51e714",
+      "bytes": 781554
+    },
+    {
+      "path": "wtyj/assets/isluno/6f4db12ffc99c2c921ea8d013364331e6803cee5eaeb455f12dbdb976fb92bdd.webp",
+      "sha256": "6f4db12ffc99c2c921ea8d013364331e6803cee5eaeb455f12dbdb976fb92bdd",
+      "bytes": 294114
+    },
+    {
+      "path": "wtyj/assets/isluno/73e95153ca292eb9d0221013e9615fef45ba014b617a57b68c2745dc84358416.webp",
+      "sha256": "73e95153ca292eb9d0221013e9615fef45ba014b617a57b68c2745dc84358416",
+      "bytes": 130208
+    },
+    {
+      "path": "wtyj/assets/isluno/7459c304d0af883fb92ceec6b3bc7d4a1d3797637e5cfeeb3f9f37469ea7757e.webp",
+      "sha256": "7459c304d0af883fb92ceec6b3bc7d4a1d3797637e5cfeeb3f9f37469ea7757e",
+      "bytes": 266666
+    },
+    {
+      "path": "wtyj/assets/isluno/76b3ca2003051911174086fde5e1026826dd8819d79ee9a6955d800a2646dc23.webp",
+      "sha256": "76b3ca2003051911174086fde5e1026826dd8819d79ee9a6955d800a2646dc23",
+      "bytes": 383402
+    },
+    {
+      "path": "wtyj/assets/isluno/76d86d0eea0cc98bde0dc714c47ea92336b84a0c6c78706db22ffcf37cbdb014.webp",
+      "sha256": "76d86d0eea0cc98bde0dc714c47ea92336b84a0c6c78706db22ffcf37cbdb014",
+      "bytes": 321010
+    },
+    {
+      "path": "wtyj/assets/isluno/77295b6f47dad62eaffdc0d4f7839894d83c3487282e2c34629128849ae9582d.webp",
+      "sha256": "77295b6f47dad62eaffdc0d4f7839894d83c3487282e2c34629128849ae9582d",
+      "bytes": 425544
+    },
+    {
+      "path": "wtyj/assets/isluno/774619c406e9da68d48c47598b2b44bb6daf6a68e079eeb80d541af4a31768ac.webp",
+      "sha256": "774619c406e9da68d48c47598b2b44bb6daf6a68e079eeb80d541af4a31768ac",
+      "bytes": 598334
+    },
+    {
+      "path": "wtyj/assets/isluno/78d901b3986807ed35b27e4f018454572071f5e91701cf13556ee7424b8cb607.webp",
+      "sha256": "78d901b3986807ed35b27e4f018454572071f5e91701cf13556ee7424b8cb607",
+      "bytes": 402694
+    },
+    {
+      "path": "wtyj/assets/isluno/7950c94ad3788369dc5fededd953452814285d934c5dd5dab491e6a9d7899ba0.webp",
+      "sha256": "7950c94ad3788369dc5fededd953452814285d934c5dd5dab491e6a9d7899ba0",
+      "bytes": 798382
+    },
+    {
+      "path": "wtyj/assets/isluno/7985ae666df68d6ffcf18b3a9960c39cc3dfe632fa0bc16220caaba044b8ceaf.webp",
+      "sha256": "7985ae666df68d6ffcf18b3a9960c39cc3dfe632fa0bc16220caaba044b8ceaf",
+      "bytes": 283316
+    },
+    {
+      "path": "wtyj/assets/isluno/7dc580e411170a783a7de980b8f672b26a77aa51a3e0eee7b9b496a1d7c7c5e6.webp",
+      "sha256": "7dc580e411170a783a7de980b8f672b26a77aa51a3e0eee7b9b496a1d7c7c5e6",
+      "bytes": 68250
+    },
+    {
+      "path": "wtyj/assets/isluno/7dd9db49bc0440e54c16d44eb43ff74d3f1a7201cbabf666193886b8723994aa.webp",
+      "sha256": "7dd9db49bc0440e54c16d44eb43ff74d3f1a7201cbabf666193886b8723994aa",
+      "bytes": 448352
+    },
+    {
+      "path": "wtyj/assets/isluno/7e2b2e8e3f85afe38a5f3ac8cd5a8827ac755fd58b564e9bf50057757b33489d.webp",
+      "sha256": "7e2b2e8e3f85afe38a5f3ac8cd5a8827ac755fd58b564e9bf50057757b33489d",
+      "bytes": 122472
+    },
+    {
+      "path": "wtyj/assets/isluno/7e46c50d9c973f1548ffdc0cdb65fe9bfd56f5905740c09909b5308357171084.webp",
+      "sha256": "7e46c50d9c973f1548ffdc0cdb65fe9bfd56f5905740c09909b5308357171084",
+      "bytes": 169938
+    },
+    {
+      "path": "wtyj/assets/isluno/7ebcc149079f27e05cf77552a204cf754fe83cf3cdcc63f943cac0468e129dcc.webp",
+      "sha256": "7ebcc149079f27e05cf77552a204cf754fe83cf3cdcc63f943cac0468e129dcc",
+      "bytes": 224462
+    },
+    {
+      "path": "wtyj/assets/isluno/7fc8141a0cf3a1e5b23a30469ba50d7ebe82b3752afcfdbfdb9c2ec214ecca4d.webp",
+      "sha256": "7fc8141a0cf3a1e5b23a30469ba50d7ebe82b3752afcfdbfdb9c2ec214ecca4d",
+      "bytes": 205312
+    },
+    {
+      "path": "wtyj/assets/isluno/8134b4e0c5ed385f907bd06823582205c71107db9dae2d645766ba78fbdec72c.webp",
+      "sha256": "8134b4e0c5ed385f907bd06823582205c71107db9dae2d645766ba78fbdec72c",
+      "bytes": 481336
+    },
+    {
+      "path": "wtyj/assets/isluno/817a399bf6532a0a3f0c93c3d523ae8bbf8c803eb3b36c563b6b6a4632075dba.webp",
+      "sha256": "817a399bf6532a0a3f0c93c3d523ae8bbf8c803eb3b36c563b6b6a4632075dba",
+      "bytes": 375688
+    },
+    {
+      "path": "wtyj/assets/isluno/81f342d6122bc5f849480daedb28eb919ae84979679bcc7bda378c03a3dd767f.webp",
+      "sha256": "81f342d6122bc5f849480daedb28eb919ae84979679bcc7bda378c03a3dd767f",
+      "bytes": 162196
+    },
+    {
+      "path": "wtyj/assets/isluno/82ae3eb7a9f0d70b9fdd3b4669b77dfffdf41c20e5634a168b5955f93482967b.webp",
+      "sha256": "82ae3eb7a9f0d70b9fdd3b4669b77dfffdf41c20e5634a168b5955f93482967b",
+      "bytes": 305016
+    },
+    {
+      "path": "wtyj/assets/isluno/842f49e603a3c5a4bcac65e608f0f2187c1f679e25ffb9f424ee5f344c035633.webp",
+      "sha256": "842f49e603a3c5a4bcac65e608f0f2187c1f679e25ffb9f424ee5f344c035633",
+      "bytes": 103048
+    },
+    {
+      "path": "wtyj/assets/isluno/8483f722b43cd6f9c4b8c937486e4d91315be53ba998efc3d8d7964447f067ad.webp",
+      "sha256": "8483f722b43cd6f9c4b8c937486e4d91315be53ba998efc3d8d7964447f067ad",
+      "bytes": 268644
+    },
+    {
+      "path": "wtyj/assets/isluno/869fd551ad8e4eac5f7d3242ceca596089b0e99dd322c3f31ef12265252fb4da.webp",
+      "sha256": "869fd551ad8e4eac5f7d3242ceca596089b0e99dd322c3f31ef12265252fb4da",
+      "bytes": 284960
+    },
+    {
+      "path": "wtyj/assets/isluno/8769301343fc54b8c83f7235687436151631e1956fcacb382562bf70a356587a.webp",
+      "sha256": "8769301343fc54b8c83f7235687436151631e1956fcacb382562bf70a356587a",
+      "bytes": 109282
+    },
+    {
+      "path": "wtyj/assets/isluno/89116b31f50513b5490b57f5a3e6e4556e87e5dbb74a507179d364d706229424.webp",
+      "sha256": "89116b31f50513b5490b57f5a3e6e4556e87e5dbb74a507179d364d706229424",
+      "bytes": 129282
+    },
+    {
+      "path": "wtyj/assets/isluno/899c10e408bac2c3749fac0db909e4dd8bf409fe7d8464c82268c4971f0cd3db.webp",
+      "sha256": "899c10e408bac2c3749fac0db909e4dd8bf409fe7d8464c82268c4971f0cd3db",
+      "bytes": 73674
+    },
+    {
+      "path": "wtyj/assets/isluno/8a03be62f4ab5f6321a6f6f834b3be00a0c1bcbce1a4a78a3ebd9fa3fba8f476.webp",
+      "sha256": "8a03be62f4ab5f6321a6f6f834b3be00a0c1bcbce1a4a78a3ebd9fa3fba8f476",
+      "bytes": 291532
+    },
+    {
+      "path": "wtyj/assets/isluno/8a094135494c39661cd7ae135304d26af7457cef531b1fa429c36d1456a3f99d.webp",
+      "sha256": "8a094135494c39661cd7ae135304d26af7457cef531b1fa429c36d1456a3f99d",
+      "bytes": 256388
+    },
+    {
+      "path": "wtyj/assets/isluno/8a7960acd3a0fd60c387715abb78cf05a7b1877a2e4499d7ed2bb8be5edc868b.webp",
+      "sha256": "8a7960acd3a0fd60c387715abb78cf05a7b1877a2e4499d7ed2bb8be5edc868b",
+      "bytes": 119732
+    },
+    {
+      "path": "wtyj/assets/isluno/8d42e875c2dcbcabef1324e2c1c8856fb4689cacf76a4202a84b3b7cdc8b4ca0.webp",
+      "sha256": "8d42e875c2dcbcabef1324e2c1c8856fb4689cacf76a4202a84b3b7cdc8b4ca0",
+      "bytes": 261112
+    },
+    {
+      "path": "wtyj/assets/isluno/8e2becfe883ce2eb40945edd3f1fba9fdf7bcef5e11f52bd42b5a28a812af170.webp",
+      "sha256": "8e2becfe883ce2eb40945edd3f1fba9fdf7bcef5e11f52bd42b5a28a812af170",
+      "bytes": 315324
+    },
+    {
+      "path": "wtyj/assets/isluno/9061f043ec52fe09fa5c16e5831a4a49cf69256e1abd1b81cfa0b412597cac8b.webp",
+      "sha256": "9061f043ec52fe09fa5c16e5831a4a49cf69256e1abd1b81cfa0b412597cac8b",
+      "bytes": 173164
+    },
+    {
+      "path": "wtyj/assets/isluno/9108bd79ff81256e2f0150276fab85eaa43747454ace2be627a9fd55f670fe00.webp",
+      "sha256": "9108bd79ff81256e2f0150276fab85eaa43747454ace2be627a9fd55f670fe00",
+      "bytes": 203708
+    },
+    {
+      "path": "wtyj/assets/isluno/914786f92e6ca1335606cc9d93d4a8c0fe200ba1bd9312fc832522459d13c593.webp",
+      "sha256": "914786f92e6ca1335606cc9d93d4a8c0fe200ba1bd9312fc832522459d13c593",
+      "bytes": 373858
+    },
+    {
+      "path": "wtyj/assets/isluno/916de9ab231ce2765d1165690bb773761ee6f516854f3d7715876949d24d6d25.webp",
+      "sha256": "916de9ab231ce2765d1165690bb773761ee6f516854f3d7715876949d24d6d25",
+      "bytes": 148910
+    },
+    {
+      "path": "wtyj/assets/isluno/931305e8252651b0c22d9787c9ca297b51ad4ebe1264a071362b7601ee689fe4.webp",
+      "sha256": "931305e8252651b0c22d9787c9ca297b51ad4ebe1264a071362b7601ee689fe4",
+      "bytes": 562192
+    },
+    {
+      "path": "wtyj/assets/isluno/9313d580e7de7d6128777aeb1ac0b449ea4e64045b283f50b7ece837b110b5cd.webp",
+      "sha256": "9313d580e7de7d6128777aeb1ac0b449ea4e64045b283f50b7ece837b110b5cd",
+      "bytes": 315940
+    },
+    {
+      "path": "wtyj/assets/isluno/94d9d67fa209e83b66134c7f5838a2f5f9303d047da45b6ee6d796e253e85f07.webp",
+      "sha256": "94d9d67fa209e83b66134c7f5838a2f5f9303d047da45b6ee6d796e253e85f07",
+      "bytes": 80370
+    },
+    {
+      "path": "wtyj/assets/isluno/958725264d56fa17a040b936866b778dcbdf1156571bae5c68050be662e2f19d.webp",
+      "sha256": "958725264d56fa17a040b936866b778dcbdf1156571bae5c68050be662e2f19d",
+      "bytes": 156658
+    },
+    {
+      "path": "wtyj/assets/isluno/95b7ceefc30966fde81be4a71133c682a01682453e5bbe070f3f66abbf2ae046.webp",
+      "sha256": "95b7ceefc30966fde81be4a71133c682a01682453e5bbe070f3f66abbf2ae046",
+      "bytes": 211544
+    },
+    {
+      "path": "wtyj/assets/isluno/96f4e4dfc93d795944567ff069bc99a8fc716c3878cbf0c78c7b9bc1a2bb39d7.webp",
+      "sha256": "96f4e4dfc93d795944567ff069bc99a8fc716c3878cbf0c78c7b9bc1a2bb39d7",
+      "bytes": 258190
+    },
+    {
+      "path": "wtyj/assets/isluno/97fd58cc2d2a9a41f2b46d685e5e47ff6e0176aab8223d6074f825fa3790f979.webp",
+      "sha256": "97fd58cc2d2a9a41f2b46d685e5e47ff6e0176aab8223d6074f825fa3790f979",
+      "bytes": 326070
+    },
+    {
+      "path": "wtyj/assets/isluno/98346faae6cf9a2b5e25d79d932bf96b0a8d6e80d5817cef67769b175208ab65.webp",
+      "sha256": "98346faae6cf9a2b5e25d79d932bf96b0a8d6e80d5817cef67769b175208ab65",
+      "bytes": 223816
+    },
+    {
+      "path": "wtyj/assets/isluno/9b0157b80bb19d01b8977d8fce2261d11bfb2c813a3b3072cc701b7e5071312c.webp",
+      "sha256": "9b0157b80bb19d01b8977d8fce2261d11bfb2c813a3b3072cc701b7e5071312c",
+      "bytes": 785550
+    },
+    {
+      "path": "wtyj/assets/isluno/9b0c691e29d533a5bab712a881dad417e4a5977c43f810927a43db7d3404af06.webp",
+      "sha256": "9b0c691e29d533a5bab712a881dad417e4a5977c43f810927a43db7d3404af06",
+      "bytes": 90928
+    },
+    {
+      "path": "wtyj/assets/isluno/9d274b3186223c54410993accf11ce182d036f3218d672516eaef829871fe343.webp",
+      "sha256": "9d274b3186223c54410993accf11ce182d036f3218d672516eaef829871fe343",
+      "bytes": 320732
+    },
+    {
+      "path": "wtyj/assets/isluno/9dcc7ffff789f224bd023dd866fe3f77bf1e505360853bc0098803375fc4c90a.webp",
+      "sha256": "9dcc7ffff789f224bd023dd866fe3f77bf1e505360853bc0098803375fc4c90a",
+      "bytes": 519398
+    },
+    {
+      "path": "wtyj/assets/isluno/9fefc97b667f56b3582e8e48ca45b48ff7b669db92d13700d2287f0e810cffed.webp",
+      "sha256": "9fefc97b667f56b3582e8e48ca45b48ff7b669db92d13700d2287f0e810cffed",
+      "bytes": 250622
+    },
+    {
+      "path": "wtyj/assets/isluno/a06099cea02c9ec0c8e1cf7192ca00b8afa0840cdcc6ded063d2b3eb2085c0b1.webp",
+      "sha256": "a06099cea02c9ec0c8e1cf7192ca00b8afa0840cdcc6ded063d2b3eb2085c0b1",
+      "bytes": 164256
+    },
+    {
+      "path": "wtyj/assets/isluno/a122498a603ca89828be900d2b8f15f610d9c48de72e713061e2b228a4f52683.webp",
+      "sha256": "a122498a603ca89828be900d2b8f15f610d9c48de72e713061e2b228a4f52683",
+      "bytes": 68442
+    },
+    {
+      "path": "wtyj/assets/isluno/a1e75a3c47832d6bd949843994b47d6f733ce1640f0ef4c56c72b308578e8fd9.webp",
+      "sha256": "a1e75a3c47832d6bd949843994b47d6f733ce1640f0ef4c56c72b308578e8fd9",
+      "bytes": 248298
+    },
+    {
+      "path": "wtyj/assets/isluno/a29b90c907a8610176ef762ab21c474bc01593a8d0059212cdd9e5693dcbffc3.webp",
+      "sha256": "a29b90c907a8610176ef762ab21c474bc01593a8d0059212cdd9e5693dcbffc3",
+      "bytes": 251814
+    },
+    {
+      "path": "wtyj/assets/isluno/a35d7f31df9b09f7e033111d5b38403cf4693c5cd0a642bbf240c732753a72ed.webp",
+      "sha256": "a35d7f31df9b09f7e033111d5b38403cf4693c5cd0a642bbf240c732753a72ed",
+      "bytes": 218852
+    },
+    {
+      "path": "wtyj/assets/isluno/a4ba254cd9f9f743a0dc9e01fd8fef1fd5865a904502b3edf3da9d7b224a5a54.webp",
+      "sha256": "a4ba254cd9f9f743a0dc9e01fd8fef1fd5865a904502b3edf3da9d7b224a5a54",
+      "bytes": 141340
+    },
+    {
+      "path": "wtyj/assets/isluno/a51fce1bdcce1100055a6b4a943f5cead48e51814a21e3e0cbda74a9be101f3c.webp",
+      "sha256": "a51fce1bdcce1100055a6b4a943f5cead48e51814a21e3e0cbda74a9be101f3c",
+      "bytes": 140576
+    },
+    {
+      "path": "wtyj/assets/isluno/a686693163b8da5f13794d4c2219b2b233fc2e5eef3aab47825e7aacba5294be.webp",
+      "sha256": "a686693163b8da5f13794d4c2219b2b233fc2e5eef3aab47825e7aacba5294be",
+      "bytes": 108424
+    },
+    {
+      "path": "wtyj/assets/isluno/a70eab335e08303435a372b61b98177e280984369028088111a10ac7f2bcac84.webp",
+      "sha256": "a70eab335e08303435a372b61b98177e280984369028088111a10ac7f2bcac84",
+      "bytes": 146620
+    },
+    {
+      "path": "wtyj/assets/isluno/a740055d4f24d681446139c10d62f2192761aef8aab05db15cabcf7529599fb6.webp",
+      "sha256": "a740055d4f24d681446139c10d62f2192761aef8aab05db15cabcf7529599fb6",
+      "bytes": 243742
+    },
+    {
+      "path": "wtyj/assets/isluno/a7fbd2e4015d71242035aee45b770b7a99f306d011d074c51f2fdd5e1c364430.webp",
+      "sha256": "a7fbd2e4015d71242035aee45b770b7a99f306d011d074c51f2fdd5e1c364430",
+      "bytes": 90504
+    },
+    {
+      "path": "wtyj/assets/isluno/a997b4ad3317f81628ee6296ea0612f4842904e8e0c396ea3674304030825807.webp",
+      "sha256": "a997b4ad3317f81628ee6296ea0612f4842904e8e0c396ea3674304030825807",
+      "bytes": 104598
+    },
+    {
+      "path": "wtyj/assets/isluno/ae616ec555776b9dac361263e217dace5bbdf37de503f536a56b08ed6d48b329.webp",
+      "sha256": "ae616ec555776b9dac361263e217dace5bbdf37de503f536a56b08ed6d48b329",
+      "bytes": 136276
+    },
+    {
+      "path": "wtyj/assets/isluno/b028f7705f8b3d50441fcac177e59796173a62d206434826583c24336c41cdb4.webp",
+      "sha256": "b028f7705f8b3d50441fcac177e59796173a62d206434826583c24336c41cdb4",
+      "bytes": 624792
+    },
+    {
+      "path": "wtyj/assets/isluno/b24ae3a0b4d6dae536e77943c072f570080a43f2686d7be38d1f8271353dea81.webp",
+      "sha256": "b24ae3a0b4d6dae536e77943c072f570080a43f2686d7be38d1f8271353dea81",
+      "bytes": 250528
+    },
+    {
+      "path": "wtyj/assets/isluno/b2e61805cd84df4b361f9b5a520797e8aa1238999a4cb4939429438cc8e429f2.webp",
+      "sha256": "b2e61805cd84df4b361f9b5a520797e8aa1238999a4cb4939429438cc8e429f2",
+      "bytes": 182192
+    },
+    {
+      "path": "wtyj/assets/isluno/b2e9b7f044ba8730e4a56b91286920e1dd0904eb6e6ed34ade9e080720201b9c.webp",
+      "sha256": "b2e9b7f044ba8730e4a56b91286920e1dd0904eb6e6ed34ade9e080720201b9c",
+      "bytes": 321286
+    },
+    {
+      "path": "wtyj/assets/isluno/b32be40275db8fa5f87d8741be989c92b9205ebfe76b6fbc96f6856a768aff1d.webp",
+      "sha256": "b32be40275db8fa5f87d8741be989c92b9205ebfe76b6fbc96f6856a768aff1d",
+      "bytes": 246440
+    },
+    {
+      "path": "wtyj/assets/isluno/b4b1abb7ec9c72b70fdaca22bf6015361844e4605952071c2b36f95045510827.webp",
+      "sha256": "b4b1abb7ec9c72b70fdaca22bf6015361844e4605952071c2b36f95045510827",
+      "bytes": 315930
+    },
+    {
+      "path": "wtyj/assets/isluno/b6e2022bb01443b487865209198eaa753a5d6ac525ab32f77bd0e12e4729938b.webp",
+      "sha256": "b6e2022bb01443b487865209198eaa753a5d6ac525ab32f77bd0e12e4729938b",
+      "bytes": 252576
+    },
+    {
+      "path": "wtyj/assets/isluno/b82498413a6e4838b7497c61627b7204adc7827834e0e9c8d8007d167e18068d.webp",
+      "sha256": "b82498413a6e4838b7497c61627b7204adc7827834e0e9c8d8007d167e18068d",
+      "bytes": 254400
+    },
+    {
+      "path": "wtyj/assets/isluno/b836b925b990c595136570422506b92fb0c44943e5e1cb330c59fb912593e7a6.webp",
+      "sha256": "b836b925b990c595136570422506b92fb0c44943e5e1cb330c59fb912593e7a6",
+      "bytes": 358676
+    },
+    {
+      "path": "wtyj/assets/isluno/b85722fadc3f0fdeaec9ae21e95e29d0221436ffbf104a6b1cc38556d69e06cb.webp",
+      "sha256": "b85722fadc3f0fdeaec9ae21e95e29d0221436ffbf104a6b1cc38556d69e06cb",
+      "bytes": 118244
+    },
+    {
+      "path": "wtyj/assets/isluno/b924a569e3fa7faff908ea6e1e5838a071805eabc13667f8581ffa4fd062f87e.webp",
+      "sha256": "b924a569e3fa7faff908ea6e1e5838a071805eabc13667f8581ffa4fd062f87e",
+      "bytes": 292352
+    },
+    {
+      "path": "wtyj/assets/isluno/b98c5d3cf90bbb04523c8e1fe831abe5cf284e77ccfde730fea807c7946eaa81.webp",
+      "sha256": "b98c5d3cf90bbb04523c8e1fe831abe5cf284e77ccfde730fea807c7946eaa81",
+      "bytes": 53330
+    },
+    {
+      "path": "wtyj/assets/isluno/b9971d919ebae0d1e2d639421b4add8fce1896c57ba2840fdd72e301ba2375ad.webp",
+      "sha256": "b9971d919ebae0d1e2d639421b4add8fce1896c57ba2840fdd72e301ba2375ad",
+      "bytes": 176244
+    },
+    {
+      "path": "wtyj/assets/isluno/b99a76971db37f896a31f3d2bccf14660d5467e9781a6d3c03d8aa050d2a6436.webp",
+      "sha256": "b99a76971db37f896a31f3d2bccf14660d5467e9781a6d3c03d8aa050d2a6436",
+      "bytes": 144860
+    },
+    {
+      "path": "wtyj/assets/isluno/b9ddc98dcf4d74a98e59f4d297fa906e449a036420a64da36a9794cfd3da4b13.webp",
+      "sha256": "b9ddc98dcf4d74a98e59f4d297fa906e449a036420a64da36a9794cfd3da4b13",
+      "bytes": 49908
+    },
+    {
+      "path": "wtyj/assets/isluno/ba6e54c7521ed024470deeacbefa1bc03a00dd051363076a172d9b4e9395129b.webp",
+      "sha256": "ba6e54c7521ed024470deeacbefa1bc03a00dd051363076a172d9b4e9395129b",
+      "bytes": 300540
+    },
+    {
+      "path": "wtyj/assets/isluno/bb5e6a504dc79c6bc281e38e4d595c9f0fc1166c1ed539c4fa720dfc4e5c0d80.webp",
+      "sha256": "bb5e6a504dc79c6bc281e38e4d595c9f0fc1166c1ed539c4fa720dfc4e5c0d80",
+      "bytes": 12950
+    },
+    {
+      "path": "wtyj/assets/isluno/bca802e3260cf7fed6268c18fbf0efae59915d0e1011fd31e3d203f90f8de637.webp",
+      "sha256": "bca802e3260cf7fed6268c18fbf0efae59915d0e1011fd31e3d203f90f8de637",
+      "bytes": 160710
+    },
+    {
+      "path": "wtyj/assets/isluno/bcd83b7a71864a83afd4bbca513c9b6b11e8e37a9e2115b3a0b76c39ce943354.webp",
+      "sha256": "bcd83b7a71864a83afd4bbca513c9b6b11e8e37a9e2115b3a0b76c39ce943354",
+      "bytes": 365700
+    },
+    {
+      "path": "wtyj/assets/isluno/beffc496abcadd2e1c39ec198c1d8fe78a757005fbed3bd55e03f41e46a54ac3.webp",
+      "sha256": "beffc496abcadd2e1c39ec198c1d8fe78a757005fbed3bd55e03f41e46a54ac3",
+      "bytes": 86258
+    },
+    {
+      "path": "wtyj/assets/isluno/c0739498ffaf386860ebc7cb51cc54aa76db9b01b3f402754adc92a96fa38073.webp",
+      "sha256": "c0739498ffaf386860ebc7cb51cc54aa76db9b01b3f402754adc92a96fa38073",
+      "bytes": 117292
+    },
+    {
+      "path": "wtyj/assets/isluno/c092c5353f6e549894e29cbf39c66fd79f3e983537c0efed22cacebcfd0585d6.webp",
+      "sha256": "c092c5353f6e549894e29cbf39c66fd79f3e983537c0efed22cacebcfd0585d6",
+      "bytes": 67034
+    },
+    {
+      "path": "wtyj/assets/isluno/c14bfb99a05ea1c054c55febcda5f43f4a6662bf41373b4cb060e0e8f73fd1ba.webp",
+      "sha256": "c14bfb99a05ea1c054c55febcda5f43f4a6662bf41373b4cb060e0e8f73fd1ba",
+      "bytes": 298912
+    },
+    {
+      "path": "wtyj/assets/isluno/c16f7b0571b03c93c86e62a49938c822ff3a7d284cc9b037ece68d0042baf077.webp",
+      "sha256": "c16f7b0571b03c93c86e62a49938c822ff3a7d284cc9b037ece68d0042baf077",
+      "bytes": 210974
+    },
+    {
+      "path": "wtyj/assets/isluno/c38eaf1be48d06e2d562ada12c7ff2a22af936ceaf66669c906747ede3e95f93.webp",
+      "sha256": "c38eaf1be48d06e2d562ada12c7ff2a22af936ceaf66669c906747ede3e95f93",
+      "bytes": 272846
+    },
+    {
+      "path": "wtyj/assets/isluno/c7635d0531685d9be8a2cf5bde3e4519833e37c10915140f9b038c0971d24d7c.webp",
+      "sha256": "c7635d0531685d9be8a2cf5bde3e4519833e37c10915140f9b038c0971d24d7c",
+      "bytes": 357018
+    },
+    {
+      "path": "wtyj/assets/isluno/c8378cd1d94f8d08072789309ec7134ca9719caee46c57bcfeaa89c76a61a6b2.webp",
+      "sha256": "c8378cd1d94f8d08072789309ec7134ca9719caee46c57bcfeaa89c76a61a6b2",
+      "bytes": 112790
+    },
+    {
+      "path": "wtyj/assets/isluno/c886d2e8c10017765fe37dcb3406ad4872ebe0b838e0d43af55f247384ab0e6b.webp",
+      "sha256": "c886d2e8c10017765fe37dcb3406ad4872ebe0b838e0d43af55f247384ab0e6b",
+      "bytes": 211262
+    },
+    {
+      "path": "wtyj/assets/isluno/c8c2a9189314a680e27000d3c1b9d5a0bb07b33dfea59d5fd343970202532333.webp",
+      "sha256": "c8c2a9189314a680e27000d3c1b9d5a0bb07b33dfea59d5fd343970202532333",
+      "bytes": 75242
+    },
+    {
+      "path": "wtyj/assets/isluno/c90677d7ba133b706fedc7bef47a47b73752bc482808f42a8713cb01715e579c.webp",
+      "sha256": "c90677d7ba133b706fedc7bef47a47b73752bc482808f42a8713cb01715e579c",
+      "bytes": 314706
+    },
+    {
+      "path": "wtyj/assets/isluno/c9764346fdf4e785f1b72f89b6bb1fc1257d824bcaa99987fd14ac18680bfad1.webp",
+      "sha256": "c9764346fdf4e785f1b72f89b6bb1fc1257d824bcaa99987fd14ac18680bfad1",
+      "bytes": 239216
+    },
+    {
+      "path": "wtyj/assets/isluno/ca7fb6d846a01013d9644d9ff706df406af21b766f60efd110dcb19c09340bf9.webp",
+      "sha256": "ca7fb6d846a01013d9644d9ff706df406af21b766f60efd110dcb19c09340bf9",
+      "bytes": 224468
+    },
+    {
+      "path": "wtyj/assets/isluno/cd34e29b1464864928aaec16419f7b9cbeb29671cde2db22da6ec1492fd329cd.webp",
+      "sha256": "cd34e29b1464864928aaec16419f7b9cbeb29671cde2db22da6ec1492fd329cd",
+      "bytes": 134776
+    },
+    {
+      "path": "wtyj/assets/isluno/d44fb6ab2837ab2c222daa90c794c9c44ae1b85123daea3c3f6cc9e1be7b6e42.webp",
+      "sha256": "d44fb6ab2837ab2c222daa90c794c9c44ae1b85123daea3c3f6cc9e1be7b6e42",
+      "bytes": 539674
+    },
+    {
+      "path": "wtyj/assets/isluno/d59bc0f26892cdc5ae2a0ad37d29e10d2816404eb4160a62a59ecb69d2f56111.webp",
+      "sha256": "d59bc0f26892cdc5ae2a0ad37d29e10d2816404eb4160a62a59ecb69d2f56111",
+      "bytes": 201250
+    },
+    {
+      "path": "wtyj/assets/isluno/d5e460c8bd8b69417d08533e99686a086b60dded7eec5d140807777b6aba06a4.webp",
+      "sha256": "d5e460c8bd8b69417d08533e99686a086b60dded7eec5d140807777b6aba06a4",
+      "bytes": 45258
+    },
+    {
+      "path": "wtyj/assets/isluno/d79e8370cb05ec8499439af926b68d125693bf850758de800be5a805c674f3ee.webp",
+      "sha256": "d79e8370cb05ec8499439af926b68d125693bf850758de800be5a805c674f3ee",
+      "bytes": 165996
+    },
+    {
+      "path": "wtyj/assets/isluno/d7fbcc20bb2317e418ae0057a13052b0a976fb4299eff47f2b6c1d618316689a.webp",
+      "sha256": "d7fbcc20bb2317e418ae0057a13052b0a976fb4299eff47f2b6c1d618316689a",
+      "bytes": 366310
+    },
+    {
+      "path": "wtyj/assets/isluno/dcc153fac65ed2b8dfb6b351c7a99c89f044a874be433e4b6198eb2dda6b80a5.webp",
+      "sha256": "dcc153fac65ed2b8dfb6b351c7a99c89f044a874be433e4b6198eb2dda6b80a5",
+      "bytes": 74630
+    },
+    {
+      "path": "wtyj/assets/isluno/de4be949d4206f8c35067f5719ea1b761f89c0ca77bd5acfad924795d2b1ff73.webp",
+      "sha256": "de4be949d4206f8c35067f5719ea1b761f89c0ca77bd5acfad924795d2b1ff73",
+      "bytes": 691312
+    },
+    {
+      "path": "wtyj/assets/isluno/dfefd1aa56caaf760e7489b9abe1ca195aaf0cf1159aa016ea5f18c09b9946d3.webp",
+      "sha256": "dfefd1aa56caaf760e7489b9abe1ca195aaf0cf1159aa016ea5f18c09b9946d3",
+      "bytes": 105302
+    },
+    {
+      "path": "wtyj/assets/isluno/e042562255bc0358c27a6f3686831330ee2ec5714d2722015489c5370b028ff3.webp",
+      "sha256": "e042562255bc0358c27a6f3686831330ee2ec5714d2722015489c5370b028ff3",
+      "bytes": 90742
+    },
+    {
+      "path": "wtyj/assets/isluno/e2cf08435d9ba79d97d7cb0991f44b8c17363db5b29d53ff3b489ea015575e65.webp",
+      "sha256": "e2cf08435d9ba79d97d7cb0991f44b8c17363db5b29d53ff3b489ea015575e65",
+      "bytes": 198180
+    },
+    {
+      "path": "wtyj/assets/isluno/e3013dcdaa0241b84cdb9962fcf394d80a1006c60953e00bfcbc921d3042c6e1.webp",
+      "sha256": "e3013dcdaa0241b84cdb9962fcf394d80a1006c60953e00bfcbc921d3042c6e1",
+      "bytes": 132948
+    },
+    {
+      "path": "wtyj/assets/isluno/e51e2adbb60fe9c9406abcbb49579820c9b64fede48d982ed8ab9a68be5a9eae.webp",
+      "sha256": "e51e2adbb60fe9c9406abcbb49579820c9b64fede48d982ed8ab9a68be5a9eae",
+      "bytes": 142332
+    },
+    {
+      "path": "wtyj/assets/isluno/e8adda7d7bb38fe5aa03399e791758378ec0e07831c6281a2953a454eca10058.webp",
+      "sha256": "e8adda7d7bb38fe5aa03399e791758378ec0e07831c6281a2953a454eca10058",
+      "bytes": 207720
+    },
+    {
+      "path": "wtyj/assets/isluno/e94c6aea188838ed2fdb528fe9a1cdc444f17753dadce0a80ad663ecab8fbbb2.webp",
+      "sha256": "e94c6aea188838ed2fdb528fe9a1cdc444f17753dadce0a80ad663ecab8fbbb2",
+      "bytes": 453898
+    },
+    {
+      "path": "wtyj/assets/isluno/eb887a0b1c0aacb5676a6494ae7d548630e5c5e787bc03f9691022ddd64d631c.webp",
+      "sha256": "eb887a0b1c0aacb5676a6494ae7d548630e5c5e787bc03f9691022ddd64d631c",
+      "bytes": 175854
+    },
+    {
+      "path": "wtyj/assets/isluno/ed194cc7a4f3e70d2d42b16658b87d695e096f91a0e69c197f1939ba0dfdf2fb.webp",
+      "sha256": "ed194cc7a4f3e70d2d42b16658b87d695e096f91a0e69c197f1939ba0dfdf2fb",
+      "bytes": 225102
+    },
+    {
+      "path": "wtyj/assets/isluno/ee090d33e09979909957de6d0ddccd66ad687f74936f5411764b1287c7abe3b7.webp",
+      "sha256": "ee090d33e09979909957de6d0ddccd66ad687f74936f5411764b1287c7abe3b7",
+      "bytes": 221630
+    },
+    {
+      "path": "wtyj/assets/isluno/ee26e82609cfc74a25275113373e9e59d8ac154c32b505aa8bf3f4db97892a56.webp",
+      "sha256": "ee26e82609cfc74a25275113373e9e59d8ac154c32b505aa8bf3f4db97892a56",
+      "bytes": 342166
+    },
+    {
+      "path": "wtyj/assets/isluno/ee6babe4f56bcaf425ae2c3dba6972da5e54c78c8529fef7ac4ccb3778b74bbb.webp",
+      "sha256": "ee6babe4f56bcaf425ae2c3dba6972da5e54c78c8529fef7ac4ccb3778b74bbb",
+      "bytes": 111470
+    },
+    {
+      "path": "wtyj/assets/isluno/ef36ce5e9c89f6e5b00fc8557d3562968b2c4e80d25ce5f4e0329a560d723783.webp",
+      "sha256": "ef36ce5e9c89f6e5b00fc8557d3562968b2c4e80d25ce5f4e0329a560d723783",
+      "bytes": 169712
+    },
+    {
+      "path": "wtyj/assets/isluno/f1d4ecd77f98f2b1367bb3c8a19c5ec76233bc8b25085eefc0bde905f6567f63.webp",
+      "sha256": "f1d4ecd77f98f2b1367bb3c8a19c5ec76233bc8b25085eefc0bde905f6567f63",
+      "bytes": 63602
+    },
+    {
+      "path": "wtyj/assets/isluno/f1f26aa013e21e515704bd51bceeb019b01cb355fdb8cd83a60dec5dd7b9f81f.webp",
+      "sha256": "f1f26aa013e21e515704bd51bceeb019b01cb355fdb8cd83a60dec5dd7b9f81f",
+      "bytes": 139146
+    },
+    {
+      "path": "wtyj/assets/isluno/f465e5443304b58d220f8964f021d17126b3948b3e4cd89975a777cc98903946.webp",
+      "sha256": "f465e5443304b58d220f8964f021d17126b3948b3e4cd89975a777cc98903946",
+      "bytes": 397276
+    },
+    {
+      "path": "wtyj/assets/isluno/f46eb73efddd590771424a387658ff4b824abf4f5d8184eaf73fe7647ec602de.webp",
+      "sha256": "f46eb73efddd590771424a387658ff4b824abf4f5d8184eaf73fe7647ec602de",
+      "bytes": 109192
+    },
+    {
+      "path": "wtyj/assets/isluno/f4f4790c524bbdbc3cc26339a8b5700a85fa22c206f2611322c0d5f72c170eae.webp",
+      "sha256": "f4f4790c524bbdbc3cc26339a8b5700a85fa22c206f2611322c0d5f72c170eae",
+      "bytes": 444728
+    },
+    {
+      "path": "wtyj/assets/isluno/f4f6d048092124b2ccf6d192118eb191f63db7afab3e14e85eaa254ece686485.webp",
+      "sha256": "f4f6d048092124b2ccf6d192118eb191f63db7afab3e14e85eaa254ece686485",
+      "bytes": 130922
+    },
+    {
+      "path": "wtyj/assets/isluno/f5c463dc9db6d2e0b9a7755d8634a314093d383a58c969adde56267fb9fdb56d.webp",
+      "sha256": "f5c463dc9db6d2e0b9a7755d8634a314093d383a58c969adde56267fb9fdb56d",
+      "bytes": 191378
+    },
+    {
+      "path": "wtyj/assets/isluno/f646c3fb89b6ea1cda6ff18e5d3bd12467cf25bb6fcc67968a5611308817bfde.webp",
+      "sha256": "f646c3fb89b6ea1cda6ff18e5d3bd12467cf25bb6fcc67968a5611308817bfde",
+      "bytes": 268320
+    },
+    {
+      "path": "wtyj/assets/isluno/f6f92f5831f0e08fe6520aa98e44a49e8b9208e08b7949476bf81e40bfc64a01.webp",
+      "sha256": "f6f92f5831f0e08fe6520aa98e44a49e8b9208e08b7949476bf81e40bfc64a01",
+      "bytes": 174328
+    },
+    {
+      "path": "wtyj/assets/isluno/f7796e7d0b3237dc738d6dd156f18d45bcfc243d2ed7bfbbbe3dc38e447f7ae2.webp",
+      "sha256": "f7796e7d0b3237dc738d6dd156f18d45bcfc243d2ed7bfbbbe3dc38e447f7ae2",
+      "bytes": 244404
+    },
+    {
+      "path": "wtyj/assets/isluno/f77c44cc9d5e3a55db2d8fb44f45327abdc49560012ca8d2e262036ede2d30bf.webp",
+      "sha256": "f77c44cc9d5e3a55db2d8fb44f45327abdc49560012ca8d2e262036ede2d30bf",
+      "bytes": 49894
+    },
+    {
+      "path": "wtyj/assets/isluno/f7c30914932bd8231ff818e32abcf649a8e24c13085c02a296ee9fe0fdca00f7.webp",
+      "sha256": "f7c30914932bd8231ff818e32abcf649a8e24c13085c02a296ee9fe0fdca00f7",
+      "bytes": 308510
+    },
+    {
+      "path": "wtyj/assets/isluno/f7e6fb74cc5e0479925277dc8f100fe9e8945812f2a6702a2963b0b8d85464e3.webp",
+      "sha256": "f7e6fb74cc5e0479925277dc8f100fe9e8945812f2a6702a2963b0b8d85464e3",
+      "bytes": 359438
+    },
+    {
+      "path": "wtyj/assets/isluno/f870666387e9cff217aae54b7a2b0b7fe3062b396281e07686ccdc0aa07e009e.webp",
+      "sha256": "f870666387e9cff217aae54b7a2b0b7fe3062b396281e07686ccdc0aa07e009e",
+      "bytes": 189758
+    },
+    {
+      "path": "wtyj/assets/isluno/f92215e8bea003ac23cf1fef740e80c2668bfdee17a3b0cd8dd34352b7e640d8.webp",
+      "sha256": "f92215e8bea003ac23cf1fef740e80c2668bfdee17a3b0cd8dd34352b7e640d8",
+      "bytes": 191056
+    },
+    {
+      "path": "wtyj/assets/isluno/f98b8998002a4287897de0e22979011e43983d70bec2bf11fdef24f71398f21c.webp",
+      "sha256": "f98b8998002a4287897de0e22979011e43983d70bec2bf11fdef24f71398f21c",
+      "bytes": 243968
+    },
+    {
+      "path": "wtyj/assets/isluno/faf7fb3815fbc0ba95046324ac3f98db44331cb7772c839e2dfa3ef996df1af3.webp",
+      "sha256": "faf7fb3815fbc0ba95046324ac3f98db44331cb7772c839e2dfa3ef996df1af3",
+      "bytes": 187358
+    },
+    {
+      "path": "wtyj/assets/isluno/fb833f20e2a7671ffc8a191603a02ec176afe8b1cbad3b219ee02fa9039ec874.webp",
+      "sha256": "fb833f20e2a7671ffc8a191603a02ec176afe8b1cbad3b219ee02fa9039ec874",
+      "bytes": 263190
+    },
+    {
+      "path": "wtyj/assets/isluno/fc5c6e868e0c86e0a20c9de93ae77f1bcea29d6c798ecd29e9e08e05ad566ca1.webp",
+      "sha256": "fc5c6e868e0c86e0a20c9de93ae77f1bcea29d6c798ecd29e9e08e05ad566ca1",
+      "bytes": 44254
+    },
+    {
+      "path": "wtyj/assets/isluno/fc7c43a4d245a4bbbf5c1f10e7da3d9387679a5d25fee6b1a4678c6d146c8702.webp",
+      "sha256": "fc7c43a4d245a4bbbf5c1f10e7da3d9387679a5d25fee6b1a4678c6d146c8702",
+      "bytes": 877292
+    },
+    {
+      "path": "wtyj/assets/isluno/fcd122c33781ae4e395784c0a48c24503b33cd1b06e968a4fde263363fc56528.webp",
+      "sha256": "fcd122c33781ae4e395784c0a48c24503b33cd1b06e968a4fde263363fc56528",
+      "bytes": 253354
+    },
+    {
+      "path": "wtyj/assets/isluno/fcf24046df1350204316bb47df27272ebbff82163c72a45d3371f6e472c5bd01.webp",
+      "sha256": "fcf24046df1350204316bb47df27272ebbff82163c72a45d3371f6e472c5bd01",
+      "bytes": 147464
+    },
+    {
+      "path": "wtyj/assets/isluno/fe1b6b0dc2d4934a2b11e6003e5892927a22c7ba6468a96c3e02756f3c497f63.webp",
+      "sha256": "fe1b6b0dc2d4934a2b11e6003e5892927a22c7ba6468a96c3e02756f3c497f63",
+      "bytes": 291774
+    },
+    {
+      "path": "wtyj/assets/isluno/fe57bef85874fd9f8d86b1866082d24b6ea59620d893ca16221e4bee2bef0cd1.webp",
+      "sha256": "fe57bef85874fd9f8d86b1866082d24b6ea59620d893ca16221e4bee2bef0cd1",
+      "bytes": 134458
+    },
+    {
+      "path": "wtyj/assets/isluno/ff186350c7ef13426481db45c874896bd4df7862c52026bd37a62b38b7e43ff9.webp",
+      "sha256": "ff186350c7ef13426481db45c874896bd4df7862c52026bd37a62b38b7e43ff9",
+      "bytes": 145998
+    },
+    {
+      "path": "wtyj/assets/mermaid-image-source.md",
+      "sha256": "90612630a715d908398371f0d5968a58b40e120dbf5de09e4a600d77acf7c3bd",
+      "bytes": 425
+    },
+    {
+      "path": "wtyj/assets/mermaid-klein-curacao.jpg",
+      "sha256": "dbadfa97887e6fb4b04fed34ecfc1082579643bcd4aa6d77061ea62014902187",
+      "bytes": 121884
+    },
+    {
+      "path": "wtyj/assets/mermaid-tropical-hero.md",
+      "sha256": "848b8d2648596ce3d4f63e0f9371cb97b1204ec22abb7aa04062ea930f69ccf8",
+      "bytes": 1766
+    },
+    {
+      "path": "wtyj/assets/mermaid-tropical-hero.png",
+      "sha256": "916b055f1534ec5f2ed0d55df936736cef17d46307a82ab3ca72a98da91973ef",
+      "bytes": 2179556
+    },
+    {
+      "path": "wtyj/dashboard/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "wtyj/dashboard/api.py",
+      "sha256": "45e9b60c21b0dbadb334eaaab034d92d51fbc1913309a1ff1f1a5e2be15ce11e",
+      "bytes": 328806
+    },
+    {
+      "path": "wtyj/dashboard/escalation_summary.py",
+      "sha256": "a3b88d26ec30e4c3c08725391f2566e9ff5287d22308d11a895c99e10aa43db9",
+      "bytes": 15312
+    },
+    {
+      "path": "wtyj/dashboard/isluno_api.py",
+      "sha256": "4ee84f8c277fb3fe9a317b6a7ac807dea96cf01ffa84b9f66efa679a66891752",
+      "bytes": 4895
+    },
+    {
+      "path": "wtyj/dashboard/isluno_catalog_api.py",
+      "sha256": "be49d95260483db50a6f2c3ed734edbcd4adf39ba3d68cd924a1ba3c15354c05",
+      "bytes": 2821
+    },
+    {
+      "path": "wtyj/dashboard/isluno_operations.py",
+      "sha256": "43da306d3e46627bf22d8626b5b8aad69710dda903831d06c43361f5cbc352b1",
+      "bytes": 17461
+    },
+    {
+      "path": "wtyj/dashboard/knowledge_extract.py",
+      "sha256": "f1c9f5e1f1880314c3c8476e1fdf1a17c46ab15c330f2e50687d9d2e2fec1295",
+      "bytes": 5000
+    },
+    {
+      "path": "wtyj/dashboard/operator_delivery.py",
+      "sha256": "c93ec54a7a323a6eff430ffc2dc4694d62f550fe387b2088d5fcdfe5666e1397",
+      "bytes": 24287
+    },
+    {
+      "path": "wtyj/dashboard/tasks_api.py",
+      "sha256": "66fc70b45f4ead5ffe4379c4b5e4c58b68dae096258beece15b17886bc677f1e",
+      "bytes": 6291
+    },
+    {
+      "path": "wtyj/shared/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "wtyj/shared/agent_identity.py",
+      "sha256": "5e02862def68afcbaea36609991e8d341025e14bee40dddd088898a42dacc91c",
+      "bytes": 3537
+    },
+    {
+      "path": "wtyj/shared/appointment_detector.py",
+      "sha256": "2e81ce6f0b87594ec49d80f693a7d3c79937ca83bf24a7bdd9e1730e932e3b85",
+      "bytes": 5693
+    },
+    {
+      "path": "wtyj/shared/auto_block.py",
+      "sha256": "b021341b1e8942f0bcd92107e6d43406c36a514b79f8d74bd8329af96bf1c2dd",
+      "bytes": 18272
+    },
+    {
+      "path": "wtyj/shared/bm_logger.py",
+      "sha256": "a1676c1e5c8fc80e92fccc44f6c25211d45d558e172246b983928bb8c30bd1de",
+      "bytes": 737
+    },
+    {
+      "path": "wtyj/shared/config_loader.py",
+      "sha256": "4625542e3d701e0da325d71d0d5ac6fc073c44df3aca00b140ce8c4f26aa2964",
+      "bytes": 15174
+    },
+    {
+      "path": "wtyj/shared/dashboard_prompts.py",
+      "sha256": "a14610df081930230ab798c1e712588af613197817e5d764cc1cc4dcf9130aae",
+      "bytes": 1449
+    },
+    {
+      "path": "wtyj/shared/deploy_queue.py",
+      "sha256": "a7f190a9cf7a097e6749678bf3cc7ad5a7809f8e84994ca06afd15346eec1326",
+      "bytes": 5459
+    },
+    {
+      "path": "wtyj/shared/escalation_dispatcher.py",
+      "sha256": "13a53734ca5890fcbf2b291dffcd09096f388c1f78ed6fbb8d5c898155f3e354",
+      "bytes": 5378
+    },
+    {
+      "path": "wtyj/shared/icp_overrides.py",
+      "sha256": "364174bb1aaf97b9c4c6926d8d1a5e0bfadeb25599163ba8e0856952988444a8",
+      "bytes": 21117
+    },
+    {
+      "path": "wtyj/shared/isluno_catalog.py",
+      "sha256": "edc9ac75d7d24dd046a3a2312379977d71577285cea7ab8990285c80019f988e",
+      "bytes": 19748
+    },
+    {
+      "path": "wtyj/shared/isluno_config.py",
+      "sha256": "2445743f6e2adfb2a4b5bd1b580e9d173669ae633e5280ab9d5d9f1637f0e0a0",
+      "bytes": 6147
+    },
+    {
+      "path": "wtyj/shared/isluno_media.py",
+      "sha256": "b558ba66a9286b4ae5b368b91364b961b7c509f73069265603169264b8c71317",
+      "bytes": 3705
+    },
+    {
+      "path": "wtyj/shared/isluno_pricing.py",
+      "sha256": "59346acc7c0d2bf350c77c2c7661e363bb60c217ce2e466a8ae1011fdca1adfa",
+      "bytes": 7544
+    },
+    {
+      "path": "wtyj/shared/mermaid_catalog.py",
+      "sha256": "d33435c2ee67f9f01aa06e6a3e2878f608703fb7beca05a4b5ee2077f85664fc",
+      "bytes": 14025
+    },
+    {
+      "path": "wtyj/shared/mermaid_contact.py",
+      "sha256": "eccf429028331960dc2b4065c363603fda2b3c8adf430825e4abccb7980edc1d",
+      "bytes": 611
+    },
+    {
+      "path": "wtyj/shared/mermaid_customers.py",
+      "sha256": "f25d8265542856bd21bad11fd6e90d0e5a4184376b585427acea121b1bd3e3ca",
+      "bytes": 11737
+    },
+    {
+      "path": "wtyj/shared/mermaid_guest_ages.py",
+      "sha256": "cf570143a2bb32b847c6b8fe21f0f6290966165171549b97df5ccaf769082bde",
+      "bytes": 1015
+    },
+    {
+      "path": "wtyj/shared/mermaid_maintenance.py",
+      "sha256": "927ac23d7993ea5970dd0fae828e549fe33911fd41e77dd3db3765734585f9d1",
+      "bytes": 14077
+    },
+    {
+      "path": "wtyj/shared/public_business_config.py",
+      "sha256": "d08a081062ce56b65eef3ad6e602dd6a784b778a6d8419b2c1f07de461d0f297",
+      "bytes": 7496
+    },
+    {
+      "path": "wtyj/shared/rental_catalog.py",
+      "sha256": "385f49da7050a17686d5c5ba0fc9c633eb247a5c079797d9efa10d16ff271d45",
+      "bytes": 48006
+    },
+    {
+      "path": "wtyj/shared/response_timing.py",
+      "sha256": "3ed836e47d650f40d4a6bf6fcf4503361005ead39aac0d12c0c6d7ffa393bb4e",
+      "bytes": 6433
+    },
+    {
+      "path": "wtyj/shared/runtime_prompt_manifest.py",
+      "sha256": "d5bc0e782487db2d131f39ae756aae42d1e08ab961900f98efc6a4427293ac06",
+      "bytes": 8063
+    },
+    {
+      "path": "wtyj/shared/state_registry.py",
+      "sha256": "c9a2a906a25daefa18a95c7beba9fd5a4d81b831ea6b0d4b0ead4b3fa87f243d",
+      "bytes": 404364
+    },
+    {
+      "path": "wtyj/shared/tenant_guard.py",
+      "sha256": "9a14c0d92eb7c31f836694491cc8e71cf68fa7a98a3deb1af12ce68d3ec97552",
+      "bytes": 4695
+    },
+    {
+      "path": "wtyj/shared/tenant_hard_rules.py",
+      "sha256": "625349995d56b819768f8259e1474720776889defe9274872eb341274b94fb14",
+      "bytes": 45806
+    },
+    {
+      "path": "wtyj/templates/client.json.template",
+      "sha256": "66f7646a80970e864b873126e107a884edefd80cb9e3cb80a530e60b080a1886",
+      "bytes": 1664
+    }
+  ]
+}

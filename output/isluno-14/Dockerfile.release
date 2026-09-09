@@ -1,0 +1,34 @@
+FROM python@sha256:2fe5997d249a808b8eeea52c58a1dbffbba28754dc11699ef5c029f2d818ce79
+
+# System dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
+
+# Download gws CLI binary
+RUN curl --fail --location --max-time 120 https://github.com/googleworkspace/cli/releases/download/v0.8.0/gws-x86_64-unknown-linux-gnu.tar.gz -o /tmp/gws.tar.gz && \
+    echo '4b2dbc3b1716aa0cbfd91d59ea896dbf5e893a151594c363f0c98e760e2e5046  /tmp/gws.tar.gz' | sha256sum -c - && \
+    tar xzf /tmp/gws.tar.gz --strip-components=1 -C /usr/local/bin/ gws-x86_64-unknown-linux-gnu/gws && \
+    chmod +x /usr/local/bin/gws && rm /tmp/gws.tar.gz
+
+# Set working directory
+WORKDIR /app
+
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir --index-url https://pypi.org/simple --report /usr/local/share/isluno-pip-report.json -r requirements.txt && pip check
+
+# Copy application source (Brief 151: bluemarlin/ renamed to wtyj/)
+COPY wtyj/ /app/
+
+# Copy supervisord config
+COPY supervisord.conf /etc/supervisord.conf
+
+# Create directories for mounted volumes (defaults if not mounted)
+RUN mkdir -p /app/config /app/data /app/logs
+
+# Expose webhook server port
+EXPOSE 8001
+
+# Run supervisord
+CMD ["supervisord", "-c", "/etc/supervisord.conf"]

@@ -1,0 +1,286 @@
+[
+  {
+    "path": "clients/mermaid/config/isluno_catalog.json",
+    "sha256": "1d64f391daeaae93cdd16be9ce18f3abb94162eba0f7321132f2c2626ea5bdd3"
+  },
+  {
+    "path": "clients/mermaid/config/isluno_feature_patch.json",
+    "sha256": "20d0455638b10e3cd1fea8f415610c897af7f3119658b66f1a2bb803612e9ae3"
+  },
+  {
+    "path": "clients/mermaid/config/isluno_inventory_report.json",
+    "sha256": "6e1c486d33da4a2c1183a408f78b14842c9fac38eca82bc4e1e4ede79cb3c1bf"
+  },
+  {
+    "path": "clients/mermaid/config/isluno_profile.json",
+    "sha256": "1be5a6297fd2fe3e5609214925a220c1b80598eb7a5f031d8af8caa80b2fce58"
+  },
+  {
+    "path": "clients/mermaid/config/isluno_recovery.json",
+    "sha256": "6c59a7fc0aa15e7d94e79ad9215f54d28987af93ce3a1e8579e30326b44a91e2"
+  },
+  {
+    "path": "expected.json",
+    "sha256": "9ac6e128a7f9fb3dda1af03d3eb4900cd2302ac7e5c405e69e006781b988dbab"
+  },
+  {
+    "path": "image_inventory.py",
+    "sha256": "33ee6ea7c874bfe2ff15de45d4c5f1868020adf84a5b0b2dafdfa8194e321917"
+  },
+  {
+    "path": "module_proof.py",
+    "sha256": "14ce3b1c1e60bfbdee7666523108bc27cfcc113ab7c2841c25d0b1bf10a46a30"
+  },
+  {
+    "path": "run_retry.py",
+    "sha256": "e191236ae49694147258fa572a257ce6ac3834a0235c95ea04881393c9239a1f"
+  },
+  {
+    "path": "run_selected.py",
+    "sha256": "6244bfa50481d273d386fa0d46ee261cbbb4f1722be427c0bbcd48360aaf9cae"
+  },
+  {
+    "path": "wtyj/agents",
+    "symlink": "/app/agents"
+  },
+  {
+    "path": "wtyj/assets",
+    "symlink": "/app/assets"
+  },
+  {
+    "path": "wtyj/dashboard",
+    "symlink": "/app/dashboard"
+  },
+  {
+    "path": "wtyj/scripts/connect_mermaid_gmail.py",
+    "sha256": "528858a2122f63873f2ed8100b7a8371401064fc9a6db6b056a6a53909295346"
+  },
+  {
+    "path": "wtyj/scripts/cutover_unboks_domain.sh",
+    "sha256": "2b212355ada10084292939f47040e6264d70f1e2f9491ea0378d3095d8854440"
+  },
+  {
+    "path": "wtyj/scripts/deploy_mermaid_release.sh",
+    "sha256": "e4f7abbe10cd94b686f8ce19a5d52c7141888c75d2b1f29e031c0e65bd5cde86"
+  },
+  {
+    "path": "wtyj/scripts/e2e_canary_test.sh",
+    "sha256": "819e38438407030a8403796aa6decb4e05656372d009ac668b718da8b7036e0d"
+  },
+  {
+    "path": "wtyj/scripts/ensure_dashboard_nginx.py",
+    "sha256": "5fddb9fdb3e027d85d95974c11f11a54ce4095b8ea61c9fbe229a1516149b5a7"
+  },
+  {
+    "path": "wtyj/scripts/import_isluno_public_catalog.py",
+    "sha256": "06837b0a1febe06e0d190c2129c39133505b46aafcde87679d407983f2e5727d"
+  },
+  {
+    "path": "wtyj/scripts/inspect_isluno_target.py",
+    "sha256": "9a19b292999a1c20641f93bbaad9c7e7adbd984c355ea6325234651ceda4b60f"
+  },
+  {
+    "path": "wtyj/scripts/isluno_recovery_fixture.py",
+    "sha256": "31f4520f6666ac305dddb146450dcda6742bdaf02c6e8f02ee07e45c94b6610c"
+  },
+  {
+    "path": "wtyj/scripts/isluno_workspace_fixture.py",
+    "sha256": "cf21e048e5adba3ece359eb218028324d2e91d20c80fbc4db91b987ffa3ffa00"
+  },
+  {
+    "path": "wtyj/scripts/mermaid_release_canary.py",
+    "sha256": "ce6985983a2cd54b347a27c9d9a8a606780105891ec5408e195bdc7da6dd348d"
+  },
+  {
+    "path": "wtyj/scripts/migrate_callback_followups.py",
+    "sha256": "cf4af66eb6652c37f1ca66b1008e849b51c3214ee212934d2f76dd013cf92dd9"
+  },
+  {
+    "path": "wtyj/scripts/off_hours_check.py",
+    "sha256": "153c6c95797006211cfff2338d9a6c581ba0a5797c9d7df4804ff35ac5b2b6a1"
+  },
+  {
+    "path": "wtyj/scripts/pre_deploy_snapshot.sh",
+    "sha256": "a3abcc8ef1f84250f76d19d157bbdd69fe93b743db7a1fe3f43bb6f6f027e9fa"
+  },
+  {
+    "path": "wtyj/scripts/prepare_mermaid_reservation_release.py",
+    "sha256": "c8506aeb78cbd46bcbb02ac4f32d95574d8d957c32ae9fd2e4b730e2d4423cad"
+  },
+  {
+    "path": "wtyj/scripts/process_deploy_queue.sh",
+    "sha256": "717dd28ce937beeea6ec2a6c961a91bb67d6c72471049b7eb373df8eeaf9ba78"
+  },
+  {
+    "path": "wtyj/scripts/queue_enqueue.py",
+    "sha256": "fa9562a93bb3c49ff05ae7de015a72a79ccf2094253a930d0fafb14217d121e7"
+  },
+  {
+    "path": "wtyj/scripts/refresh_mermaid_pdf_presentation.py",
+    "sha256": "a8f7b4ad9044da1079a8047274d465f7d420acb9cc0495e989016c9adc5cc399"
+  },
+  {
+    "path": "wtyj/scripts/rehearse_isluno_transition.py",
+    "sha256": "ebc22951ea40d255193031ca238a0658f625a47a206ff9799af15741a59746a1"
+  },
+  {
+    "path": "wtyj/scripts/render_isluno_paid_samples.py",
+    "sha256": "2689574c000a4ee229ffab8e3ca198c51909a39e8c0e20c21a249dc0b0f12841"
+  },
+  {
+    "path": "wtyj/scripts/render_isluno_quote_samples.py",
+    "sha256": "a40c730ba936928cdeed1099e09d8d1337805867f5623a781d452bcce5e45de3"
+  },
+  {
+    "path": "wtyj/scripts/render_mermaid_pdf_audit_samples.py",
+    "sha256": "1e34b166d376bde62fd91745b072238b3576adf208d31dba233f5ea6b0bdb56a"
+  },
+  {
+    "path": "wtyj/scripts/render_mermaid_pdf_samples.py",
+    "sha256": "ef817e051220b5800c88e0844d99279cfc16792fe9132ef925433f6443321675"
+  },
+  {
+    "path": "wtyj/scripts/repair_customer_email_case.py",
+    "sha256": "6167d03298a3ec637d9554d89cdfff3bb7fa1e4062abf079eb5ee42a29f5327a"
+  },
+  {
+    "path": "wtyj/scripts/rollback.sh",
+    "sha256": "c13b5fcb5b6f7ff96caab72f15ce1702a180b67db9801fce9fd6f3535fef850c"
+  },
+  {
+    "path": "wtyj/scripts/rotate_mermaid_exposed_demo_credentials.py",
+    "sha256": "3a248c92afff5684ed3e6f700f9113b14b033678a0d94eee89a3080ebaa9678d"
+  },
+  {
+    "path": "wtyj/scripts/seal_isluno_candidate.py",
+    "sha256": "56c3fb21c7ea59a41430bd2920ead4e56cbc1bbaafe9e42e41649f7bca80d5cc"
+  },
+  {
+    "path": "wtyj/scripts/serve_isluno_catalog_fixture.py",
+    "sha256": "2db180918b95dd6bbf2642fdfc9d6279037141a6909f7b1318095983724f0d7e"
+  },
+  {
+    "path": "wtyj/scripts/serve_isluno_operations_fixture.py",
+    "sha256": "2156d71733d89988285e25478ef24e02f938c6262ecbbb08fbdfefdbb1c7d549"
+  },
+  {
+    "path": "wtyj/scripts/smoke_unboks_domain.sh",
+    "sha256": "513b2631c4851ad4e802a671a7a07a657684e352105fe7f55f1910c2481db1f6"
+  },
+  {
+    "path": "wtyj/scripts/sync_mermaid_config_fields.py",
+    "sha256": "e1b031687d8efb76013e1ac983b2b883e3204aa6c28accc9e060b2a67eced63e"
+  },
+  {
+    "path": "wtyj/scripts/tracy_contact_number_canary.py",
+    "sha256": "c6d2f900e0e77f99671554f97880dacdd01dfc48c3217edcfb6b2d65bcc5751e"
+  },
+  {
+    "path": "wtyj/scripts/tracy_pickup_time_canary.py",
+    "sha256": "302c4c08a1ad7fa46e5690417ce258cf020ab9f1ae7900d6f1d2a92c2d9a699c"
+  },
+  {
+    "path": "wtyj/scripts/tracy_pickup_vehicle_canary.py",
+    "sha256": "3d89e2b73e5b17dd2dc5de45d3ca7382d0b4e50269a16fb31d51483d03f6d695"
+  },
+  {
+    "path": "wtyj/scripts/tracy_ux_canary.py",
+    "sha256": "b758dc84c5b39beb747f82e64b99c16523628ad7d797f47f8f15ab301ec9d3e2"
+  },
+  {
+    "path": "wtyj/scripts/verify_icp_overrides.py",
+    "sha256": "d07a1f6f79869a30c048b6fb199d1b60f3fae1d3a8fb11e2ab1c9e16883e6e91"
+  },
+  {
+    "path": "wtyj/scripts/verify_isluno_baseline_offline.py",
+    "sha256": "6719a558e98982d33f4e073af57a6a59ae3510bfc545a55c5ea2023de3de7070"
+  },
+  {
+    "path": "wtyj/scripts/verify_isluno_candidate.py",
+    "sha256": "aeaac9280e3038629f8ba7b7a718cde7d2c13b52403aaa47ef1c1be22e8da1ac"
+  },
+  {
+    "path": "wtyj/scripts/verify_isluno_offline.py",
+    "sha256": "9d00baacaab9a937aac501f35f5e4d64070ba727b236e7a6fe3a18165ef6d364"
+  },
+  {
+    "path": "wtyj/shared",
+    "symlink": "/app/shared"
+  },
+  {
+    "path": "wtyj/templates",
+    "symlink": "/app/templates"
+  },
+  {
+    "path": "wtyj/tests/isluno/fixtures/contracts.v1.json",
+    "sha256": "58ddc19f991a1d7fc722c32a53ad3f1e153952943ac3cf80c1e9e9aed292d0cb"
+  },
+  {
+    "path": "wtyj/tests/isluno/requirements.txt",
+    "sha256": "9c3e8584733e7e4585f3b39883dc03f829d686637237439a1b78881be4bff536"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_catalog.py",
+    "sha256": "988afc857fc522ecd88b5eea8e35949439624309bff99d092e098880c70a6a50"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_catalog_api.py",
+    "sha256": "fbad902cc098fcb06dc9de11a9edd0df514f3fcf2ffd6941ecf19e3164acc9f3"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_catalog_import.py",
+    "sha256": "ad53fbc8a7c135eeac6774ffd2f09001635aa181ff33e8ae0406e9714c1ae281"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_conversation.py",
+    "sha256": "e2da30bff6d88cd5334c42462ee4bffc1679ce2702f7c8c5342184ba5a9a30d5"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_discovery.py",
+    "sha256": "cea1ddc398e48244de5e391f8c37b7415645dcec6414127f94641fea2d3a1d79"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_integrated.py",
+    "sha256": "1ba5ce50fb75e3c19c8021386b4198f6afe060ace4e688e9040faf734f721395"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_itinerary.py",
+    "sha256": "694577d024137f3c7b935730516b2e28fc6f267262f30dfed79f51e4b20f6f2f"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_journey_config.py",
+    "sha256": "bdac27f676c9cde27539f53acb888e6206a8cc31d5fb0d7a47461fdb6e11a64d"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_journey_context.py",
+    "sha256": "8b9b4f7acbb84307898fa00fea4d89c2808f00496a8a0cdea8f97d89b796566f"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_maintenance.py",
+    "sha256": "cd8963e20f6f1e0c189110d07b89b9cb4849b4401cf75e5c597b2c9d81878fb4"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_operations.py",
+    "sha256": "00eaf4d036e05cb4f36d301d8389a7c62e730a816f586aae330d8116beaf0237"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_payments.py",
+    "sha256": "394e71df84f3ebba18d7140c4a7e6a4816e5d736d32cf76f99797b909d71f616"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_quotes.py",
+    "sha256": "86d9d304eb5a7a9f57b0704abc68ddb1d17ef5642bcec1f30ccf3d557987d75f"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_recovery.py",
+    "sha256": "c41c0523dea6c17a9e0a6d555ea968b20dc2eb09662eb9480cdbc8ec13faad53"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_target_inspection.py",
+    "sha256": "1b1230cb6cdb77409450ab713473fba712e8a7ecec8f97352e8a84a4dd6d4e35"
+  },
+  {
+    "path": "wtyj/tests/isluno/test_today.py",
+    "sha256": "06fa8b8837ed5b9b64e67f758258528893319c6c33db8b74c3b1fd89bb50fcad"
+  }
+]

@@ -2567,8 +2567,18 @@
     "prior_archives_preserved": true
   },
   "oci_image": {
-    "digest": null,
+    "status": "local_built_pending_independent_review",
+    "evidence": "local-image.json",
     "target_platform_observed": "linux/amd64",
-    "reason": "Source archive is not OCI image. Immutable compatible base/dependency recipe and final image remain unverified; no image built/pulled/published."
+    "index_digest": "sha256:7375faa0dd8484fa15b6d3095a54e014562cb20e9b622cceb294780fcd635bc6",
+    "platform_manifest_digest": "sha256:6844d677b1083f4430eb040762278d67abebfea0fe8bac38417c73115d8ef9ee",
+    "config_digest": "sha256:2be4255cecfce5a7355e7868570cbfb7bddfec119bdb7d8f70391c7990df8fb9",
+    "archive": {
+      "path": "/Users/calvin/Projects/isluno-whatsapp-demo-20260908/tmp/isluno-image-e2deab8/isluno-image.tar",
+      "sha256": "b1ec5bb6733efb1cfa092ee7d7ac884b7715f73ebb340e3d66c7d98cd98151da",
+      "bytes": 169445888
+    },
+    "published": false,
+    "deployed": false
   }
 }

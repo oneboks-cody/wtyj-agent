@@ -1,7 +1,11 @@
 [
   {
     "file": "ACTION.md",
-    "sha256": "d6a42d673909c8fc8bdefd2b63c3ef38b26af8cf270b37f382d7c1d8864825c3"
+    "sha256": "7c6df1335d08fe30885c68c42aebc879ef1ee53f4a456db48b65ccd79d6b0cc0"
+  },
+  {
+    "file": "BOOTSTRAP-MINIMUM.md",
+    "sha256": "0a24ad2efe0ad44a397c9972070ea679836b17584122bce16c88ef418efc040e"
   },
   {
     "file": "BUILD.md",
@@ -18,6 +22,10 @@
   {
     "file": "DASHBOARD-TENANT-APPROVAL.md",
     "sha256": "b85bee73e38219e29049c7188b369def4a234c88afc27435c3a9304a8e7b2c1a"
+  },
+  {
+    "file": "Dockerfile.release",
+    "sha256": "a219e1d763eab4ffc5fd37e9fc68c50f6a2e86f3f197412cfb54b8b6685c8a6e"
   },
   {
     "file": "EVIDENCE-ACQUISITION.md",
@@ -38,6 +46,10 @@
   {
     "file": "MAINTENANCE.md",
     "sha256": "47c86b8c6d26942ee0ffd3e596d6235b04dbed7fc7f3326e6820572feadc4029"
+  },
+  {
+    "file": "RELEASE-SEQUENCE.md",
+    "sha256": "f532101f49a2cbe88fa24fa949e4f0e2b0b43eb6d708d9c9473d0287f5e19719"
   },
   {
     "file": "artifacts.json",
@@ -61,7 +73,7 @@
   },
   {
     "file": "current-artifacts.json",
-    "sha256": "57ab1699fc41a0a570b539ec95648919184275ceb3cbe0ac2269ea0ca6f6c8e7"
+    "sha256": "a8d3642aa375e2454f881641315dc59f5a88a87cdbf7f462eb4c7f3cb409e5cd"
   },
   {
     "file": "current-package-checks.json",
@@ -84,6 +96,34 @@
     "sha256": "fb32626ac4c19b9626f38c960ff3be2adafc1ac0427df7f3815a876cee972ee0"
   },
   {
+    "file": "image-build.txt",
+    "sha256": "1d73aa091cc950312e0105e121ffec4b659083fad2e5c349c817f71cbbdf4587"
+  },
+  {
+    "file": "image-context.json",
+    "sha256": "697d79c4a288987da2cc911325e43187d009bc0358fc2db4de6d0c13c76f4294"
+  },
+  {
+    "file": "image-dependencies.json",
+    "sha256": "0d30a251d3c13cb6ed3a77e47209552bfc348b02d14017922c8e7ed749425d39"
+  },
+  {
+    "file": "image-fixtures.json",
+    "sha256": "638aad77cb097c12ac291e00e5f6d2a77a6569318fe048d713baf693a137db0f"
+  },
+  {
+    "file": "image-module-proof.json",
+    "sha256": "4fe0d2bebbef281f2331967de935ece9c6a5d04fdd2ab1500fd708fd614ee78f"
+  },
+  {
+    "file": "image-tests-initial.txt",
+    "sha256": "f71a94d32109d570c1707761d1e34040a1042e6920a19fb92b2af9af8c68f43c"
+  },
+  {
+    "file": "image-tests-retry.txt",
+    "sha256": "27226641f4b2364968184343a7ca43d12848f7fcf4af764b284aa52c344c4957"
+  },
+  {
     "file": "ingress-evidence.json",
     "sha256": "a6c12f5d24a7a120a639c1ef228fed21e3ba1d78171d12ea773bbefd1e7193b5"
   },
@@ -94,6 +134,10 @@
   {
     "file": "inspection-repeat-summary.json",
     "sha256": "c663a744335ccc6d1af8e3981a26d00b5ecb5aaeb1493a9c6ca9dc819fe73110"
+  },
+  {
+    "file": "local-image.json",
+    "sha256": "64dc3c9a3bf1f4c0e48174b2ffc58710dcd61836b65eda6b9ffbcc47e6b668db"
   },
   {
     "file": "local-validation.json",
