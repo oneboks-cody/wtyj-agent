@@ -17,7 +17,7 @@
   },
   {
     "file": "EVIDENCE-ACQUISITION.md",
-    "sha256": "fbab234da14860f9538041ad0bfb86a89c2e9cf93bdfcbd10558bf8438bd93b5"
+    "sha256": "fc1f21b2482c80ef22c8d6adabb4be1d5602b506a3c14c78b969bdda583535d8"
   },
   {
     "file": "IMAGE-RECIPE.md",
@@ -121,7 +121,7 @@
   },
   {
     "file": "required-inputs.json",
-    "sha256": "ce0c9ed808750639a6e8f26b69cdda3206cc7b531865bf160815875f1c94ca27"
+    "sha256": "b4be2b7ad3a507cdda124d66cf4381a292d7ff86fa1313381695cd36c9f7bd46"
   },
   {
     "file": "runner-evidence.json",

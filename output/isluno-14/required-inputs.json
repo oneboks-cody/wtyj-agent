@@ -206,5 +206,16 @@
     "account_fingerprint": "ca117468b3369f1961ebc941f6774f539d98f82be488dd433c0a2df4eb6a8c09",
     "public_exact_account_id_withheld": true,
     "scope": "Configured intent only; provider ownership/sole consumer and loaded configuration remain unverified. Observation is not future CAS authority."
+  },
+  "github_control_plane_discovery": {
+    "source_commit": "1ea5f95827a34a4f79c076b559cba5483ad38c80",
+    "repository": "unboks-org/unboks-internal-control-panel",
+    "admin_locator": "https://icp.unboks.org/admin/tenants/mermaid",
+    "provider_historically_documented": "Zernio",
+    "router_source_path": "/internal/api/zernio/webhook-router",
+    "tenant_forward_destination_source": "http://wtyj-mermaid:8001/webhooks/zernio",
+    "evidence": "EVIDENCE-ACQUISITION.md",
+    "status": "GitHub source/historical provenance only; current deployment/subscription/store binding and complete bootstrap disposition remain unverified",
+    "warning": "Admin/status surfaces may synchronize provider state; not approved read-only probes."
   }
 }
