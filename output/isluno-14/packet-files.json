@@ -8,12 +8,16 @@
     "sha256": "bec5c9acd6915b52d5b8531ed37be7475be3610a7c88cd759ad0053e69bf84fb"
   },
   {
+    "file": "C1-APPROVAL.md",
+    "sha256": "2f9c56ee41705b3f234416d07ee123aeeb76094baf99762986ffa309a6d09a12"
+  },
+  {
     "file": "INGRESS-CUTOVER.md",
     "sha256": "fda7a4167caa90b12e5b24d975ad6929ff14553c041bc72aec1c4744c85d5314"
   },
   {
     "file": "INSPECTION.md",
-    "sha256": "c059a708c8ae8cedfe4974432257cc698500d261c8f15b784226af0d7c9003f3"
+    "sha256": "09cf8e9ff8a0e345d6789765464f7155d4598dc4f8bc9362b1199f6b5c928f3f"
   },
   {
     "file": "MAINTENANCE.md",
@@ -22,6 +26,14 @@
   {
     "file": "artifacts.json",
     "sha256": "b4b62ea9bec994d2d557454473586600746f8c359665133d2e95cddb660b5ea6"
+  },
+  {
+    "file": "c1-evidence.json",
+    "sha256": "66867a2ac315bcb0dd7fb2951a23e89a792fe0315941c524e3ab7c6b5b77d107"
+  },
+  {
+    "file": "c1-tests.txt",
+    "sha256": "dbacd4fca97cf0fd8246ce79e8ef595c65602e64b951e8ae566aa0155f26cde5"
   },
   {
     "file": "commands.review.txt",

@@ -1,3 +1,5 @@
+Current C1 preparation: see **C1-APPROVAL.md** and **c1-evidence.json** for the offline runner candidate. No C1 execution is authorized or performed. Historical H1–H7 wording below describes its own scope; both attempts are consumed.
+
 # ISL-14 proposed current-state inspection
 
 **Historical inspection specification; both authorized attempts are complete.** The first attempt stopped atH4; the separately approved corrected attempt succeeded on2026-09-09. See `inspection-attempt.json` and `inspection-repeat-summary.json`. No further host access is authorized. The command forms and runner-review sequence below document those bounded inspections; protected/operator/provider projections remain outside their scope. Current release state is summarized in ACTION.md.

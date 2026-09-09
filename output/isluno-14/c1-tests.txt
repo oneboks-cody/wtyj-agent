@@ -1,0 +1,19 @@
+test_alarm_failure_and_invalid_arguments_are_fixed (test_config_projection.ProjectionTests.test_alarm_failure_and_invalid_arguments_are_fixed) ... ok
+test_config_lock_and_parent_replacement_rejected (test_config_projection.ProjectionTests.test_config_lock_and_parent_replacement_rejected) ... ok
+test_default_and_missing_authority_do_not_dispatch (test_config_projection.ProjectionTests.test_default_and_missing_authority_do_not_dispatch) ... ok
+test_fixed_states_and_generation_bounds (test_config_projection.ProjectionTests.test_fixed_states_and_generation_bounds) ... ok
+test_identity_duplicates_and_malformed (test_config_projection.ProjectionTests.test_identity_duplicates_and_malformed) ... ok
+test_inplace_edit_rejected (test_config_projection.ProjectionTests.test_inplace_edit_rejected) ... ok
+test_missing_and_busy_lock_no_creation_or_wait (test_config_projection.ProjectionTests.test_missing_and_busy_lock_no_creation_or_wait) ... ok
+test_private_binding_permissions_no_overwrite_and_public_output (test_config_projection.ProjectionTests.test_private_binding_permissions_no_overwrite_and_public_output) ... ok
+test_remote_payload_is_standalone_and_fixed_failure (test_config_projection.ProjectionTests.test_remote_payload_is_standalone_and_fixed_failure) ... ok
+test_result_boundary_rejects_unknown_or_wrong_fields (test_config_projection.ProjectionTests.test_result_boundary_rejects_unknown_or_wrong_fields) ... ok
+test_same_bytes_and_selected_only (test_config_projection.ProjectionTests.test_same_bytes_and_selected_only) ... ok
+test_size_cap_and_growth (test_config_projection.ProjectionTests.test_size_cap_and_growth) ... ok
+test_symlink_fifo_directory_hardlink_and_escape (test_config_projection.ProjectionTests.test_symlink_fifo_directory_hardlink_and_escape) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.025s
+
+OK
+External sockets/DNS denied. No legacy pytest root fixtures loaded.

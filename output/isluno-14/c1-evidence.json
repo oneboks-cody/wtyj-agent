@@ -1,0 +1,27 @@
+{
+  "status": "offline_candidate_pending_gatekeeper_review",
+  "host_contacted": false,
+  "provider_calls": 0,
+  "test_count": 13,
+  "tests": "c1-tests.txt",
+  "source_sha256": {
+    "wtyj/scripts/project_isluno_config.py": "79ba19aeb59255193e104b7a9b12a7c47ba8fcce2ed11ab368c04776de2d0296",
+    "wtyj/scripts/inspect_isluno_target.py": "9a19b292999a1c20641f93bbaad9c7e7adbd984c355ea6325234651ceda4b60f",
+    "wtyj/tests/isluno/test_config_projection.py": "177ec8d2a37e7f6a74ee1ce6db81d6c154107b5d3703346dc53f093590b1ce00",
+    "wtyj/scripts/sync_mermaid_config_fields.py": "e1b031687d8efb76013e1ac983b2b883e3204aa6c28accc9e060b2a67eced63e",
+    "wtyj/shared/config_loader.py": "4625542e3d701e0da325d71d0d5ac6fc073c44df3aca00b140ce8c4f26aa2964"
+  },
+  "remote_payload_sha256": "93e07609a784f2ef5ada797478c7d70a4c426f7d2eb8503c9d1ff3b32c7717f8",
+  "remote_payload_bytes": 5420,
+  "runtime_source_unchanged": "e2deab8c2ad6c4313324d5b94769b91a1f0ae168",
+  "package_source_unchanged": "57552cc61a85fcd6a60461f41377ac6e9195b4e4",
+  "limits": {
+    "config_bytes": 1048576,
+    "remote_seconds": 15,
+    "transport_seconds": 30,
+    "combined_stdout_stderr_bytes": 8192,
+    "connections": 1,
+    "lock_wait_seconds": 0
+  },
+  "authority": "No C1 execution approved. Both prior H1-H7 approvals consumed."
+}
