@@ -152,7 +152,7 @@ def validate_nginx(text):
                 require(body is None and len(head)==2,'nginx_include_shape')
                 pattern=head[1] if head[1].startswith('/') else '/etc/nginx/'+head[1]
                 matched=sorted(n for n in sources if fnmatch.fnmatchcase(n,pattern))
-                require(bool(matched),'nginx_include_unresolved')
+                require(bool(matched) or any(c in pattern for c in '*?['),'nginx_include_unresolved')
                 for name in matched:
                     require(name not in stack,'nginx_include_cycle');out+=expand(sources[name],stack+[name])
             else:out.append((head,expand(body,stack) if body is not None else None))
@@ -166,17 +166,36 @@ def validate_nginx(text):
     visit(nodes)
     def selected(host):
         result=[s for s in servers if any(h[0]=='server_name' and host in h[1:] for h,b in s)
-                and any(h[0]=='listen' and 'ssl' in h[1:] for h,b in s)]
+                and any(h[0]=='listen' and len(h)>1 and h[1] in ('443','*:443','0.0.0.0:443','[::]:443','108.61.192.52:443') and 'ssl' in h[2:] for h,b in s)]
         require(len(result)==1,'nginx_selected_server_ambiguous');return result[0]
     api=selected('api.unboks.org');dashboard=selected('dashboard.unboks.org')
+    routing_overrides={'rewrite','return','if','try_files','error_page','proxy_pass','fastcgi_pass','uwsgi_pass','scgi_pass','grpc_pass','alias'}
+    for server in (api,dashboard):
+        require(not any(h[0] in routing_overrides for h,b in server),'nginx_server_routing_override')
     loc=[b for h,b in api if h==['location','^~','/api/mermaid/']]
     require(len(loc)==1 and loc[0] is not None,'nginx_mermaid_location')
     block=loc[0]
     require([h for h,b in block if h[0]=='proxy_pass']==[['proxy_pass','http://127.0.0.1:8102/']],'nginx_mermaid_upstream')
     require([h for h,b in block if h[:2]==['proxy_set_header','X-Tenant-Slug']]==[['proxy_set_header','X-Tenant-Slug','mermaid']],'nginx_mermaid_identity')
-    require(not any(h[0] in ('rewrite','try_files','location') for h,b in block),'nginx_mermaid_rewrite')
+    for h,b in block:
+        if h==['if','($request_method','=','OPTIONS)']:
+            # The source-defined CORS preflight cannot redirect normal requests.
+            require(b is not None and all(child is None and (words[0]=='add_header' or words==['return','204']) for words,child in b)
+                    and sum(words==['return','204'] for words,child in b)==1,'nginx_cors_override')
+        else:
+            require(b is None and h[0] not in routing_overrides-{'proxy_pass'} and h[0] not in ('location','root'),'nginx_mermaid_rewrite')
     require(not any(h[0]=='location' and h!=['location','^~','/api/mermaid/'] and any(x.startswith('/api/mermaid/') for x in h[1:]) for h,b in api),'nginx_mermaid_competing_location')
     require([h for h,b in dashboard if h[0]=='root']==[['root','/var/www/unboks-dashboard/current']],'nginx_dashboard_root')
+    roots=[b for h,b in dashboard if h==['location','/']]
+    require(len(roots)==1 and roots[0] is not None,'nginx_dashboard_root_location')
+    require([h for h,b in roots[0] if h[0]=='try_files']==[['try_files','$uri','$uri/','/index.html']],'nginx_dashboard_spa_route')
+    for h,b in dashboard:
+        if h[0]!='location':continue
+        require(b is not None,'nginx_dashboard_location_shape')
+        for words,child in b:
+            require(child is None and words[0] not in routing_overrides-{'try_files'} and words[0] not in ('root','location'),'nginx_dashboard_routing_override')
+            if words[0]=='try_files':
+                require(words in (['try_files','$uri','$uri/','/index.html'],['try_files','$uri','=404']),'nginx_dashboard_file_override')
     return {'api_server':'api.unboks.org','prefix':'/api/mermaid/','upstream':'http://127.0.0.1:8102/','tenant_header':'mermaid','dashboard_server':'dashboard.unboks.org','static_root':'/var/www/unboks-dashboard/current'}
 
 

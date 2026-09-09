@@ -53,7 +53,7 @@
   },
   {
     "file": "PREFLIGHT-FOLLOW-UP.md",
-    "sha256": "956987362a780be9afe554358899978d9eef5b302481dfd2d0166987f268c41b"
+    "sha256": "b8095ebf9af7a49687ebe7a0f5d4d8e0842701cb89c2e470a5b170f4b65394fe"
   },
   {
     "file": "RELEASE-SEQUENCE.md",
@@ -213,15 +213,19 @@
   },
   {
     "file": "preflight-correction.diff",
-    "sha256": "737bf17c687554c0ebd65ace35892d43f8cfa3b8486489bdbba0068a90bd5094"
+    "sha256": "90260c95e6e3c2f3fb1202b954daa04db7c12a0643007b3302fcf59c92eaa676"
   },
   {
     "file": "preflight-execution-report.json",
-    "sha256": "cc42814cda6ee6cfcd9d6fcb45ab2ef6d0b8bce186f2824b1584b215dd8364a5"
+    "sha256": "ec826d24ec12d6923f29d89c2f9fb49dd81a5383a8016bc345c2591468b06a3a"
   },
   {
     "file": "preflight-failed-original.py.txt",
     "sha256": "38a3bc7cf4ebac8622e5761cff5ce6455a7722814c1c9913c92df1c21e3e43f7"
+  },
+  {
+    "file": "preflight-nginx-correction-tests.txt",
+    "sha256": "fa05b0d640909d17ca2e8eba50f64107d80fa1df40d505b2f488cc1c8b52f67a"
   },
   {
     "file": "read-only-metadata.json",

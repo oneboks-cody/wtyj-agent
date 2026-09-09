@@ -31,6 +31,20 @@ class Contract(unittest.TestCase):
   self.assertEqual(m.validate_nginx(NG)['tenant_header'],'mermaid')
   for bad in [NG.replace('8102','8103'),NG.replace('X-Tenant-Slug mermaid','X-Tenant-Slug other'),NG.replace('server_name api.unboks.org','server_name wrong.example'),NG.replace('location ^~ /api/mermaid/','location ^~ /api/other/'),NG.replace('proxy_pass http://127.0.0.1:8102/;','proxy_pass http://127.0.0.1:8102/; rewrite ^ /other;'),NG.replace('sites-enabled/*','absent/*')]:
    with self.subTest(bad=bad),self.assertRaises(m.Stop):m.validate_nginx(bad)
+ def test_nginx_empty_optional_glob_and_required_literal(self):
+  valid=NG.replace('http {','http { include /etc/nginx/conf.d/*.conf;')
+  self.assertEqual(m.validate_nginx(valid)['tenant_header'],'mermaid')
+  for bad in [NG.replace('http {','http { include /etc/nginx/required.conf;'),NG.replace('sites-enabled/*','missing-selected/*.conf')]:
+   with self.subTest(bad=bad),self.assertRaises(m.Stop):m.validate_nginx(bad)
+ def test_nginx_effective_selected_routing_regressions(self):
+  bads=[NG.replace('server_name api.unboks.org;','server_name api.unboks.org; '+x) for x in ['rewrite ^ /api/ali/ last;','return 302 https://wrong.example;','if ($host) { return 302 /other; }']]
+  bads += [NG.replace('listen 443 ssl','listen 8443 ssl'),NG.replace('try_files $uri $uri/ /index.html;','proxy_pass http://127.0.0.1:9999/;'),NG.replace('try_files $uri $uri/ /index.html;','try_files $uri $uri/ /other.html;'),NG.replace('proxy_pass http://127.0.0.1:8102/;','proxy_pass http://127.0.0.1:8102/; if ($host) { return 302 /other; }')]
+  for bad in bads:
+   with self.subTest(bad=bad),self.assertRaises(m.Stop):m.validate_nginx(bad)
+ def test_nginx_source_defined_options_guard_is_supported(self):
+  valid=NG.replace('proxy_pass http://127.0.0.1:8102/;','proxy_pass http://127.0.0.1:8102/; if ($request_method = OPTIONS) { add_header Access-Control-Max-Age 86400 always; return 204; }')
+  self.assertEqual(m.validate_nginx(valid)['tenant_header'],'mermaid')
+  with self.assertRaises(m.Stop):m.validate_nginx(valid.replace('return 204;','return 302 /other;'))
  def test_holder_inode_alias_and_known_classification(self):
   with tempfile.TemporaryDirectory() as temp:
    root=Path(temp);data=root/'root/clients/mermaid/data';config=root/'root/clients/mermaid/config';data.mkdir(parents=True);config.mkdir()

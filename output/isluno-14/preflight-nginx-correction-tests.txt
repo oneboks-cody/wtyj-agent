@@ -1,0 +1,9 @@
+test_nginx_effective_selected_routing_regressions (checks.Contract.test_nginx_effective_selected_routing_regressions) ... ok
+test_nginx_empty_optional_glob_and_required_literal (checks.Contract.test_nginx_empty_optional_glob_and_required_literal) ... ok
+test_nginx_loaded_server_location_upstream_binding (checks.Contract.test_nginx_loaded_server_location_upstream_binding) ... ok
+test_nginx_source_defined_options_guard_is_supported (checks.Contract.test_nginx_source_defined_options_guard_is_supported) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.004s
+
+OK
