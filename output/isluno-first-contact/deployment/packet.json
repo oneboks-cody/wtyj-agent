@@ -1,0 +1,27 @@
+{
+  "packet_sha256": "2c6f4a1e87671fc68c12140ada7b2166ac439db184526ceeb66066c08b3062ac",
+  "source_commit": "b0eef7a395d2ada58aa0e6e090b1b9dbfdbec420",
+  "frontend_commit": "25dfebfb8688f76ef357b97c60c893fdf1bb8791",
+  "preflight_sha256": "f28503802fba7267ee8421a167fc8057f5da5667df93628c79a883e0042f8fe0",
+  "stage_sha256": "029545c19648f45f32570f344befa9c4ae70cd995ab20ba1e707ece844431a75",
+  "rollout_template_sha256": "87cd8ddb46a502a25ba53d99f811d039b5f50d6a91796ba2b45bff9ffff68898",
+  "bundle": {
+    "bytes": 51200,
+    "sha256": "1ca27770eba7430f0319b49744e276338274144ef5c58aaf762926d7d199ad63"
+  },
+  "history_proof": "df8b083ca12612f6ee288672b21f59f5b900ca127529418056763458424dd582",
+  "overall_seconds": 900,
+  "transfers": 1,
+  "transfer_seconds": 60,
+  "build_seconds": 120,
+  "minimum_before_disruption_seconds": 500,
+  "minimum_before_activation_seconds": 300,
+  "rollback_reserve_seconds": 180,
+  "no_automatic_retries": true,
+  "postverification_reserve_seconds": 180,
+  "postverification_script_sha256": "5da9052824e4a3327264da68d0209288095929ddd6d06d401e72e62f6ca90be4",
+  "frontend_target": "/var/www/unboks-dashboard/releases/isluno-25dfebf-20260909-b",
+  "frontend_unchanged": true,
+  "catalog_before_sha256": "b9733d8e45ea6525a11b476ce5e6cc85554211b7c9b6194bc380edeaa5a03a0b",
+  "catalog_after_sha256": "b9733d8e45ea6525a11b476ce5e6cc85554211b7c9b6194bc380edeaa5a03a0b"
+}

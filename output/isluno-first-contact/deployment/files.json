@@ -1,0 +1,24 @@
+{
+  "source_commit": "b0eef7a395d2ada58aa0e6e090b1b9dbfdbec420",
+  "frontend_commit": "25dfebfb8688f76ef357b97c60c893fdf1bb8791",
+  "base_image": "sha256:293a23ac71835e382d0da0534f289fa7f95b4d4e0150b4b0ad033b0b6185fa47",
+  "catalog_sha256": "b9733d8e45ea6525a11b476ce5e6cc85554211b7c9b6194bc380edeaa5a03a0b",
+  "files": {
+    "agents/social/isluno_conversation_understanding.py": {
+      "bytes": 12820,
+      "sha256": "beba9d904d444f1efe90721640160cc785deb8af5ee4ff3669200d5221ef1aa5"
+    },
+    "agents/social/isluno_hospitality.py": {
+      "bytes": 29220,
+      "sha256": "a7ffa6566dce74f37058e03ddff94fd9e73e2a3e8019d42d1e5f14d3223893f5"
+    },
+    "Dockerfile": {
+      "bytes": 310,
+      "sha256": "2c44f8e2e233e6a46137483525fab72e407474892084bf78109a52fb5fa68008"
+    }
+  },
+  "bundle": {
+    "bytes": 51200,
+    "sha256": "1ca27770eba7430f0319b49744e276338274144ef5c58aaf762926d7d199ad63"
+  }
+}

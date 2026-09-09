@@ -1,0 +1,34 @@
+{
+  "verdict": "SOURCE_TECHNICAL_PASS",
+  "source_commit": "b0eef7a395d2ada58aa0e6e090b1b9dbfdbec420",
+  "base_commit": "6df78fbf4773e5d83c9ef3efac9484dfdd3f6c68",
+  "changed_application_files": [
+    "wtyj/agents/social/isluno_conversation_understanding.py",
+    "wtyj/agents/social/isluno_hospitality.py"
+  ],
+  "independent_checks": {
+    "tests": 28,
+    "seconds": 15.317,
+    "modules": [
+      "test_first_contact",
+      "test_hospitality_delivery"
+    ],
+    "passed": true,
+    "network": "disabled Docker"
+  },
+  "findings": [],
+  "evidence": [
+    "Confirmed prior-sharing context requires scoped accepted history plus correlated delivered/read status.",
+    "Failed, ambiguous and legacy unverified assistant content is excluded from model dialogue, with status retained.",
+    "Foreign callbacks and late failure cannot retain sharing proof.",
+    "Fresh broad introduction uses one travelling-party question and contextual restrained emoji instruction.",
+    "Exactly one existing understanding call; no provider, config, catalog, booking authority or classifier change."
+  ],
+  "limitations": [
+    "Scripted model fixtures prove projection and sender behavior, not live wording or native-language quality.",
+    "Refinement has not been deployed; exact new two-file rollout packet still requires review."
+  ],
+  "root_host_calls": 0,
+  "root_provider_calls": 0,
+  "root_customer_sends": 0
+}

@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "url": "https://dashboard.unboks.org/today",
+  "authenticated": true,
+  "tenant_label": "Isluno \u00b7 Itinerary operations",
+  "today_counts": {
+    "itineraries": 0,
+    "trip_items": 0,
+    "demo_paid": 0,
+    "pending_review": 0
+  },
+  "no_pending_or_failed_journey_actions": true,
+  "no_recovery_incidents_or_quarantined_work_recorded": true,
+  "no_itineraries_recorded": true,
+  "method": "Existing Nr2 browser reload and completed accessibility tree",
+  "conversation_opened": false,
+  "writes": 0
+}
