@@ -36,5 +36,8 @@ class PremiumCatalogTests(unittest.TestCase):
                     self.assertEqual(len(assets),min(3,len(product['gallery'])))
                     self.assertIn(selected['summary'],''.join(text_of(p['body']) for p in parts))
                     for part in parts:validate_body(part['body'])
-                    if len(assets)>1:self.assertEqual(parts[0]['body']['interactive']['type'],'carousel')
-                    else:self.assertIn('attachmentUrl',parts[0]['body'])
+                    if profile['gallery_mode']=='carousel' and len(assets)>1:
+                        self.assertEqual(parts[0]['body']['interactive']['type'],'carousel')
+                    else:
+                        self.assertTrue(all('attachmentUrl' in part['body'] for part in parts))
+                        self.assertTrue(all('interactive' not in part['body'] for part in parts))
