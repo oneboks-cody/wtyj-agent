@@ -187,8 +187,9 @@
     "record": "INGRESS-CUTOVER.md",
     "evidence": "ingress-evidence.json",
     "durable_acceptance": "matched-source transaction before200 for valid admitted messages",
-    "drain": "not established; minimal scoped correction proposed, not implemented",
+    "drain": "Coordinated implementation prepared; deployed runtime participation and first-install external boundary not verified",
     "provider_contract": "public Zernio docs found; configured applicability unverified",
-    "authority": "offline analysis only; no additional access"
+    "authority": "offline analysis only; no additional access",
+    "implementation": "MAINTENANCE.md / maintenance-evidence.json; default-off candidate pending review"
   }
 }

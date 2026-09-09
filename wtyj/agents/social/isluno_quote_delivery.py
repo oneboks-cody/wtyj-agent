@@ -1,4 +1,5 @@
 """Bounded, resumable multipart quote dispatch with persisted per-part ambiguity."""
+from shared.mermaid_maintenance import participating as _maintenance_participating
 import copy
 import hashlib
 import time
@@ -10,6 +11,7 @@ from shared.isluno_config import JourneyScope
 from shared.isluno_pricing import ItineraryError
 
 
+@_maintenance_participating('delivery')
 def send_job(conversation_id, account_id, job_id, *, store=None, post=None, window=None, sleep=None):
     from agents.social import zernio_dm_client as client
     store = store or QuoteStore()

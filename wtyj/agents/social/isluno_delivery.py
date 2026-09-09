@@ -1,4 +1,5 @@
 """One-attempt native sends, persistent ambiguity and recipient pacing."""
+from shared.mermaid_maintenance import participating as _maintenance_participating
 import hashlib
 import json
 import os
@@ -10,6 +11,7 @@ from shared.isluno_config import JourneyScope, require_scope
 from shared.isluno_pricing import ItineraryError
 
 
+@_maintenance_participating('transport')
 def post_once(scope, body, key, guard=None):
     from agents.social import zernio_dm_client as client
     require_scope(scope)
@@ -39,6 +41,7 @@ def post_once(scope, body, key, guard=None):
     return {'status': 'rejected'}
 
 
+@_maintenance_participating('delivery')
 def send_plan(conversation_id, account_id, plan_id, *, store=None, post=None, window=None, sleep=None):
     from agents.social import zernio_dm_client as client
     store = store or DiscoveryStore()

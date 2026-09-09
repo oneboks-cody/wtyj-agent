@@ -1,0 +1,217 @@
+{
+  "entry_points": [
+    {
+      "path": "wtyj/agents/social/webhook_server.py",
+      "functions": [
+        {
+          "function": "_recover_stale_ali_inbound_once",
+          "line": 438,
+          "role": "recovery"
+        },
+        {
+          "function": "_process_whatsapp_event",
+          "line": 1199,
+          "role": "inbound"
+        },
+        {
+          "function": "_buffer_message",
+          "line": 1288,
+          "role": "inbound"
+        },
+        {
+          "function": "_flush_buffer",
+          "line": 1543,
+          "role": "inbound"
+        },
+        {
+          "function": "_process_queued_zernio_failed_events_once",
+          "line": 3147,
+          "role": "scheduled"
+        },
+        {
+          "function": "_process_zernio_event",
+          "line": 3234,
+          "role": "inbound"
+        }
+      ]
+    },
+    {
+      "path": "wtyj/agents/social/isluno_recovery.py",
+      "functions": [
+        {
+          "function": "run_once",
+          "line": 212,
+          "role": "scheduled"
+        }
+      ]
+    },
+    {
+      "path": "wtyj/agents/social/isluno_delivery.py",
+      "functions": [
+        {
+          "function": "post_once",
+          "line": 15,
+          "role": "transport"
+        },
+        {
+          "function": "send_plan",
+          "line": 45,
+          "role": "delivery"
+        }
+      ]
+    },
+    {
+      "path": "wtyj/agents/social/isluno_fulfillment.py",
+      "functions": [
+        {
+          "function": "send_pending_email",
+          "line": 33,
+          "role": "delivery"
+        },
+        {
+          "function": "send_fulfillment",
+          "line": 66,
+          "role": "delivery"
+        }
+      ]
+    },
+    {
+      "path": "wtyj/agents/social/isluno_quote_delivery.py",
+      "functions": [
+        {
+          "function": "send_job",
+          "line": 15,
+          "role": "delivery"
+        }
+      ]
+    },
+    {
+      "path": "wtyj/agents/social/whatsapp_client.py",
+      "functions": [
+        {
+          "function": "send_text_message",
+          "line": 70,
+          "role": "transport"
+        },
+        {
+          "function": "send_whatsapp_message",
+          "line": 280,
+          "role": "transport"
+        },
+        {
+          "function": "send_whatsapp_template_message",
+          "line": 351,
+          "role": "transport"
+        }
+      ]
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_reservation_email.py",
+      "functions": [
+        {
+          "function": "_send",
+          "line": 132,
+          "role": "delivery"
+        }
+      ]
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_abandoned_reminders.py",
+      "functions": [
+        {
+          "function": "run_once",
+          "line": 86,
+          "role": "scheduled"
+        }
+      ]
+    },
+    {
+      "path": "wtyj/agents/social/zernio_dm_client.py",
+      "functions": [
+        {
+          "function": "_confirmed_text_reply",
+          "line": 548,
+          "role": "transport"
+        },
+        {
+          "function": "_post_recommendation_message",
+          "line": 1044,
+          "role": "transport"
+        },
+        {
+          "function": "send_dm_template",
+          "line": 2195,
+          "role": "transport"
+        },
+        {
+          "function": "send_dm_reply_with_attachment",
+          "line": 2355,
+          "role": "transport"
+        },
+        {
+          "function": "send_typing_indicator",
+          "line": 2660,
+          "role": "transport"
+        }
+      ]
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_email_transport.py",
+      "functions": [
+        {
+          "function": "send_email",
+          "line": 155,
+          "role": "transport"
+        }
+      ]
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_delivery_reconciliation.py",
+      "functions": [
+        {
+          "function": "reconcile_job",
+          "line": 25,
+          "role": "delivery"
+        },
+        {
+          "function": "reconcile_pending_once",
+          "line": 130,
+          "role": "scheduled"
+        }
+      ]
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_demo_payment.py",
+      "functions": [
+        {
+          "function": "complete_short_checkout",
+          "line": 106,
+          "role": "operator_writers"
+        },
+        {
+          "function": "complete_checkout",
+          "line": 175,
+          "role": "operator_writers"
+        }
+      ]
+    },
+    {
+      "path": "wtyj/agents/social/senders/__init__.py",
+      "functions": [
+        {
+          "function": "send_reply",
+          "line": 24,
+          "role": "transport"
+        }
+      ]
+    }
+  ],
+  "count": 28,
+  "external_inventory_required": [
+    "operator writers and direct/manual scripts quiesced",
+    "generic email-poller/hold-reaper/ali-quote-recovery disabled or separately coordinated for Mermaid",
+    "no old binary, second webhook consumer, alternate app process or uninstrumented producer",
+    "actual host supervisor/Compose and provider routing verified separately"
+  ],
+  "not_proof": "Role-set declaration is not automatic discovery/verification of deployed producer inventory."
+}

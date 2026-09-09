@@ -107,7 +107,8 @@ class RecoveryTests(unittest.TestCase):
         import ast,hashlib
         source=ast.parse((Path(__file__).resolve().parents[2]/'agents/social/webhook_server.py').read_text())
         function=next(n for n in source.body if isinstance(n,ast.FunctionDef) and n.name=='_recover_stale_ali_inbound_once')
-        namespace={'state_registry':state_registry,'hashlib':hashlib,'log':lambda *a,**k:None}
+        from shared.mermaid_maintenance import participating
+        namespace={'state_registry':state_registry,'hashlib':hashlib,'log':lambda *a,**k:None,'_maintenance_participating':participating}
         exec(compile(ast.Module(body=[function],type_ignores=[]),'webhook_server.py','exec'),namespace)
         with patch.object(state_registry,'inbound_processing_claim_recoverable',return_value=[{'message_id':'old-inbound','conversation_id':'legacy-guest','processing_token':'fixture-claim'}]),patch.object(state_registry,'inbound_processing_bulk_update') as disposition:
             self.assertEqual(namespace['_recover_stale_ali_inbound_once'](),0)

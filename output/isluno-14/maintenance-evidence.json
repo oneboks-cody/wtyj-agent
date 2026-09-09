@@ -1,0 +1,90 @@
+{
+  "base_commit": "58e7cbe783855809fb83f77d8b5449fe65e6ac57",
+  "status": "implementation_candidate_pending_independent_review",
+  "targeted_tests": 16,
+  "backend_suite_tests": 214,
+  "backend_suite_seconds": 27.085,
+  "external_test_spend_usd": 0,
+  "host_contacted": false,
+  "default_activation": false,
+  "files": [
+    {
+      "path": "wtyj/agents/social/isluno_delivery.py",
+      "sha256": "926ba09f9e3e15565c64f75492ac72b84eac326ec844c621f702fb2b2e75cc56"
+    },
+    {
+      "path": "wtyj/agents/social/isluno_fulfillment.py",
+      "sha256": "fdaf399e92b8f9eec8111beea4a7c950150ca3c47518ef97228a9cd274fb75ed"
+    },
+    {
+      "path": "wtyj/agents/social/isluno_quote_delivery.py",
+      "sha256": "cb14dacdb8cb6f000063e94d201242cbdd894c5604b79126c5654e2100adfe55"
+    },
+    {
+      "path": "wtyj/agents/social/isluno_recovery.py",
+      "sha256": "17b974e60094113d5555203f8c59b93d85fae797dc0a291f71a1edbbba597004"
+    },
+    {
+      "path": "wtyj/agents/social/isluno_transition.py",
+      "sha256": "cd3a98a5034cc65d1c281b54d4fb94e0ead182d4ad6e6dcd16bb6e8414e944ce"
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_abandoned_reminders.py",
+      "sha256": "4a661ab954e57409b64d21090c9351a348ff305fedf4aea4f2164a56d0a2ddab"
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_delivery_reconciliation.py",
+      "sha256": "319928b6d6c39429769ea9e6fdf10fe2b17f7df29e5ed077ca46a1254e8bfadd"
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_demo_payment.py",
+      "sha256": "e22afc7a994ba76638129ba8a3a389c2d450e723cc1103687e6d0ea50e02b745"
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_email_transport.py",
+      "sha256": "3de34657d446c195ff3aa633892a09400a940f411fa75d20830da8d8a3e73b65"
+    },
+    {
+      "path": "wtyj/agents/social/mermaid_reservation_email.py",
+      "sha256": "86d0cd9aa968a96af48f4eebbc62a55aa483c46528b4528faad3d9c1ca06d14d"
+    },
+    {
+      "path": "wtyj/agents/social/senders/__init__.py",
+      "sha256": "132594850b1122fb215cbbf8674b92d9b88fda3340f45e011271b1dcf9b1300a"
+    },
+    {
+      "path": "wtyj/agents/social/webhook_server.py",
+      "sha256": "2fee3faed10e635a8bb29009f757a7a67bef0f459d0ee8c277ab8ea7bbacf70d"
+    },
+    {
+      "path": "wtyj/agents/social/whatsapp_client.py",
+      "sha256": "3182e3e78959998a13f47ffd32ec0c7a3e2a820e6c19e1aa9d89f4f5cc458736"
+    },
+    {
+      "path": "wtyj/agents/social/zernio_dm_client.py",
+      "sha256": "ea239b9cf27334f1ab0dcd9fc7746a4cb4fc5a6f8108093117dd538a7e72332e"
+    },
+    {
+      "path": "wtyj/dashboard/isluno_api.py",
+      "sha256": "4ee84f8c277fb3fe9a317b6a7ac807dea96cf01ffa84b9f66efa679a66891752"
+    },
+    {
+      "path": "wtyj/shared/mermaid_maintenance.py",
+      "sha256": "eeea87c71e0d5dfa6539221d4bb92fa010b2aa00e37d5cfc8a8be736925e63a6"
+    },
+    {
+      "path": "wtyj/shared/state_registry.py",
+      "sha256": "c9a2a906a25daefa18a95c7beba9fd5a4d81b831ea6b0d4b0ead4b3fa87f243d"
+    },
+    {
+      "path": "wtyj/tests/isluno/test_maintenance.py",
+      "sha256": "dc40e23746a948832f4c908854bebf63b0891feefe971c5b435ecf2ef32f7250"
+    },
+    {
+      "path": "wtyj/tests/isluno/test_recovery.py",
+      "sha256": "c41c0523dea6c17a9e0a6d555ea968b20dc2eb09662eb9480cdbc8ec13faad53"
+    }
+  ],
+  "prior_release_archives": "historical accepted artifacts only; do not deploy as this changed runtime",
+  "limitations": "Coverage declaration requires independent external inventory proof; old-runtime first-install boundary absent. Unknown claims/ledgers block promotion; no automatic resolution or administrative override."
+}

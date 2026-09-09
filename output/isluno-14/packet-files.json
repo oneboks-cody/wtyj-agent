@@ -1,7 +1,7 @@
 [
   {
     "file": "ACTION.md",
-    "sha256": "65a50733cf5280434498a37c804c52253ef474ce63bf5acc69f2732c24c23f16"
+    "sha256": "be8ebbb06dfd79b605a4cc5d072263b01367d8c3e2fe70469bc1661484e73f1f"
   },
   {
     "file": "BUILD.md",
@@ -14,6 +14,10 @@
   {
     "file": "INSPECTION.md",
     "sha256": "a68e5084c34d08eec0995915dc7ba477b0e8595d4cf1c2bb7e4b80baafba7a66"
+  },
+  {
+    "file": "MAINTENANCE.md",
+    "sha256": "92ae4ad1283aed299090644e353a3f06ca31c46faf405b157ac0b2ebdb5e5fa3"
   },
   {
     "file": "artifacts.json",
@@ -48,6 +52,22 @@
     "sha256": "ae6fc3418f195eef12402c4088f6ffeaef9e87899c0a477919f5f5ae94530610"
   },
   {
+    "file": "maintenance-coverage.json",
+    "sha256": "a94673fa8ade0941fa8ae82fcb8f42a8b9278b20143cfc4a66007592189e0afe"
+  },
+  {
+    "file": "maintenance-evidence.json",
+    "sha256": "5b7a08c06b449ae41dc9486aa35eccee369005de9a2f6a49db9dc240aa7c9ab5"
+  },
+  {
+    "file": "maintenance-regression.txt",
+    "sha256": "537874720fbd7132f362f89d18eab1f950fa6f98bcb969da75ad9a4c5205f6ee"
+  },
+  {
+    "file": "maintenance-tests.txt",
+    "sha256": "7170b260159ce99cea036022df0f4d084ae28ed65ee9fb8cd25291093b9ab79b"
+  },
+  {
     "file": "package-local-artifacts.py",
     "sha256": "cd78b95a024d14cfcf44a769ae1dc5451dcdb1992cc5d9c0f211237ea88d99ec"
   },
@@ -57,7 +77,7 @@
   },
   {
     "file": "required-inputs.json",
-    "sha256": "8b87441fa62b4bb0f2b800cf4ae0b73c93a04387342668f89284e745d255c567"
+    "sha256": "a06af726c9a7ace919a5edfb533d3efbbe811efa4a8f8876a5b48e905a43af27"
   },
   {
     "file": "runner-evidence.json",

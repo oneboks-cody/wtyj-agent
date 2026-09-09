@@ -39,6 +39,8 @@ def ensure(db_path=None,now=None):
             original_status TEXT,sha256 TEXT NOT NULL,disposition TEXT NOT NULL,quarantined_at TEXT NOT NULL,PRIMARY KEY(source,reference));''')
         db.execute('BEGIN IMMEDIATE')
         if db.execute("SELECT 1 FROM isluno_cutover WHERE tenant='mermaid'").fetchone():return
+        from shared.mermaid_maintenance import require_sealed
+        require_sealed(db,(config_loader.get_raw().get("mermaid_maintenance") or {}).get("activation_generation"))
         tables={r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
         definitions=[('mermaid_reservations','public_id','state'),('mermaid_checkout_links','token',''),
                      ('mermaid_abandoned_reminders','idempotency_key','status'),('mermaid_delivery_jobs','public_id','status'),

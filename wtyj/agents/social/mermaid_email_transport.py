@@ -6,6 +6,7 @@ request is performed by ``ready`` or ``sender_address``.
 """
 
 from __future__ import annotations
+from shared.mermaid_maintenance import participating as _maintenance_participating
 
 import os
 from pathlib import Path
@@ -150,6 +151,7 @@ def _message(
     return message
 
 
+@_maintenance_participating('transport')
 def send_email(
     recipient: str, content: dict, pdf_attachment: tuple[str, bytes],
     *, message_id: str,

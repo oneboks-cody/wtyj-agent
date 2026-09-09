@@ -1,6 +1,6 @@
 # ISL-14 preparation handoff
 
-ISL-13 is accepted at backend 4f62147871ada343edb7360c66fe8baae89eae90 and dashboard 2c99c3a13e01af625432e5f681d4c065e95dd1a8. This preparation changes no runtime source or tracked frontend files.
+ISL-13 is accepted at backend 4f62147871ada343edb7360c66fe8baae89eae90 and dashboard 2c99c3a13e01af625432e5f681d4c065e95dd1a8. That accepted baseline is preserved as historical evidence. The latest maintenance candidate changes backend coordination/entry points and adds an authenticated read-only status route; tracked frontend files remain unchanged.
 
 Review `output/isluno-14/ACTION.md`, `commands.review.txt`, `artifacts.json` and `required-inputs.json`. Local source/default-off config/static archives are built and pinned, with safe member paths and frontend asset references verified. Frontend built with no env files and a cleared environment, 3.17 seconds. No unchanged test matrix or PDF rendering was repeated.
 
@@ -10,3 +10,6 @@ Return the packet for preparation review, not execution acceptance. All ISL-14 l
 
 
 The H1–H7 inspection runner is implemented in `wtyj/scripts/inspect_isluno_target.py`, with 15 passing network-denied synthetic tests in `wtyj/tests/isluno/test_target_inspection.py`. Default execution contacts no host. `output/isluno-14/INSPECTION.md` defines the exact limited command and access gate; runner source hashes and test evidence are pinned in that packet. This candidate is for independent runner review, with no host/provider execution authorized or performed. Protected/operator/provider facts C1/R1/P1/I1/I2 remain excluded.
+
+
+Latest ISL14 maintenance implementation: `output/isluno-14/MAINTENANCE.md`, `maintenance-coverage.json`, `maintenance-evidence.json`.16 targeted and214 full backend network-denied tests passed on the revised runtime.28 participating entry points are recorded, with mandatory external inventory/operator-writer exclusions. Gate default is inactive; no live configuration changed. Prior source/image packaging must be refreshed after independent review and must not be relabeled as this runtime. First installation still needs verified external admission/retention and old-worker disposition; no bootstrap execution authority exists.

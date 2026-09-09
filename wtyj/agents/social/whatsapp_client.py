@@ -1,3 +1,4 @@
+from shared.mermaid_maintenance import participating as _maintenance_participating
 # bluemarlin/agents/social/whatsapp_client.py
 # Created: Brief 068
 # Last modified: Brief 068
@@ -65,6 +66,7 @@ def parse_webhook_payload(payload: dict) -> list:
     return messages
 
 
+@_maintenance_participating('transport')
 def send_text_message(to: str, text: str) -> bool:
     """Send a text message via WhatsApp Cloud API. Returns True on success."""
     url = f"https://graph.facebook.com/{_API_VERSION}/{_phone_number_id()}/messages"
@@ -274,6 +276,7 @@ def resolve_zernio_conversation_contacts(conversation_ids: list[str]) -> dict[st
     return current_contacts(resolved)
 
 
+@_maintenance_participating('transport')
 def send_whatsapp_message(customer_id: str, text: str,
                           attachment_url: str = "",
                           attachment_type: str = "image",
@@ -344,6 +347,7 @@ def send_whatsapp_message(customer_id: str, text: str,
     return False
 
 
+@_maintenance_participating('transport')
 def send_whatsapp_template_message(
     customer_id: str,
     template_name: str,

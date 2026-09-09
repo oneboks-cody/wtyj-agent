@@ -1,4 +1,5 @@
 """Opt-in booking emails, durable recipient consent and an at-most-once send ledger."""
+from shared.mermaid_maintenance import participating as _maintenance_participating
 import hashlib
 import json
 import os
@@ -127,6 +128,7 @@ def _job_reply(job, locale):
     return copy(locale, 'failed', email=job['recipient'])
 
 
+@_maintenance_participating('delivery')
 def _send(reservation, recipient, source_id, locale, *, allow_resend=False):
     """Prepare current data before claiming the SMTP attempt, then never blind-retry."""
     from agents.social.isluno_transition import blocked

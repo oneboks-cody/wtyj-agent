@@ -1,0 +1,22 @@
+test_accepted_commit_survives_crash_and_duplicate (test_maintenance.MaintenanceTests.test_accepted_commit_survives_crash_and_duplicate) ... ok
+test_active_worker_blocks_seal_and_nested_completion (test_maintenance.MaintenanceTests.test_active_worker_blocks_seal_and_nested_completion) ... ok
+test_actual_zernio_ack_boundary (test_maintenance.MaintenanceTests.test_actual_zernio_ack_boundary) ... ok
+test_atomic_closure_acceptance_race (test_maintenance.MaintenanceTests.test_atomic_closure_acceptance_race) ... ok
+test_deadline_and_stale_generation (test_maintenance.MaintenanceTests.test_deadline_and_stale_generation) ... ok
+test_first_cutover_requires_sealed_when_gate_installed (test_maintenance.MaintenanceTests.test_first_cutover_requires_sealed_when_gate_installed) ... ok
+test_flag_off_does_not_remove_existing_fence (test_maintenance.MaintenanceTests.test_flag_off_does_not_remove_existing_fence) ... ok
+test_inactive_and_other_tenant_behavior (test_maintenance.MaintenanceTests.test_inactive_and_other_tenant_behavior) ... ok
+test_incomplete_coverage_and_unknown_producer (test_maintenance.MaintenanceTests.test_incomplete_coverage_and_unknown_producer) ... ok
+test_noncustomer_event_semantics (test_maintenance.MaintenanceTests.test_noncustomer_event_semantics) ... ok
+test_pending_failed_and_unknown_ledger_prevent_false_ready (test_maintenance.MaintenanceTests.test_pending_failed_and_unknown_ledger_prevent_false_ready) ... ok
+test_real_email_transport_denied_before_credentials_or_smtp (test_maintenance.MaintenanceTests.test_real_email_transport_denied_before_credentials_or_smtp) ... ok
+test_returned_send_with_ambiguous_business_ledger_blocks_seal (test_maintenance.MaintenanceTests.test_returned_send_with_ambiguous_business_ledger_blocks_seal) ... ok
+test_scheduled_and_outbound_roots_blocked_before_side_effect (test_maintenance.MaintenanceTests.test_scheduled_and_outbound_roots_blocked_before_side_effect) ... ok
+test_sealed_generation_and_deadline_rechecked_at_activation (test_maintenance.MaintenanceTests.test_sealed_generation_and_deadline_rechecked_at_activation) ... ok
+test_unknown_crash_and_ambiguous_send_remain_visible (test_maintenance.MaintenanceTests.test_unknown_crash_and_ambiguous_send_remain_visible) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 1.236s
+
+OK
+External sockets/DNS denied. No legacy pytest root fixtures loaded.

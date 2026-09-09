@@ -1443,6 +1443,8 @@ def wa_claim_inbound_processing(
     conn = _get_conn()
     try:
         conn.execute("BEGIN IMMEDIATE")
+        from shared.mermaid_maintenance import admit
+        admit(conn, message_id)
         claimed = conn.execute(
             "INSERT OR IGNORE INTO whatsapp_processed (message_id, created_at) "
             "VALUES (?, ?)",

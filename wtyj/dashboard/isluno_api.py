@@ -11,6 +11,12 @@ from shared import isluno_config
 def build_router(check_auth, itinerary_store_factory=ItineraryStore, conversation_store_factory=ConversationStore):
     router = APIRouter(prefix="/isluno", dependencies=[Depends(check_auth)])
 
+    @router.get("/maintenance")
+    def get_maintenance(response: Response):
+        from shared.mermaid_maintenance import status
+        response.headers["Cache-Control"] = "no-store"
+        return status()
+
     @router.get("/capabilities")
     def get_capabilities(response: Response):
         response.headers["Cache-Control"] = "no-store"

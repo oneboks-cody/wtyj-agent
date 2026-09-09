@@ -1,3 +1,4 @@
+from shared.mermaid_maintenance import participating as _maintenance_participating
 # wtyj/agents/social/senders/__init__.py
 # Brief 187 — Sender registry + dispatcher.
 from .base import Sender
@@ -19,6 +20,7 @@ SENDERS: dict[str, type[Sender]] = {
 DEFAULT_SENDER: type[Sender] = ZernioSender
 
 
+@_maintenance_participating('transport')
 def send_reply(channel: str, conversation_id: str, account_id: str, text: str,
                attachment_url: str = "", attachment_type: str = "image",
                confirm_delivery: bool = False,

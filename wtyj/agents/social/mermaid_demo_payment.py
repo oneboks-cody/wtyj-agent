@@ -1,6 +1,7 @@
 """Signed, no-money checkout for Mermaid's WhatsApp reservation demonstration."""
 
 from __future__ import annotations
+from shared.mermaid_maintenance import participating as _maintenance_participating
 
 import hashlib
 import hmac
@@ -101,6 +102,7 @@ def short_checkout_page(token: str) -> Response:
     return checkout_page(*payment, form_action="") if payment else Response(status_code=404)
 
 
+@_maintenance_participating('operator_writers')
 def complete_short_checkout(token: str, status: str) -> Response:
     from agents.social.isluno_transition import blocked
     if blocked():return _page("Mermaid link retired", "<p>This legacy action is quarantined. Please contact the operator. No payment or booking has been made by this action.</p>", status=410)
@@ -169,6 +171,7 @@ def success_message(reservation: dict, payment: dict) -> str:
 
 
 
+@_maintenance_participating('operator_writers')
 def complete_checkout(reservation_id: str, expires: int, signature: str, status: str) -> Response:
     from agents.social.isluno_transition import blocked
     if blocked():return _page("Mermaid link retired", "<p>This legacy action is quarantined. Please contact the operator. No payment or booking has been made by this action.</p>", status=410)

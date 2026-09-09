@@ -1,4 +1,5 @@
 """WhatsApp fulfillment uses the existing durable sender; email is independent."""
+from shared.mermaid_maintenance import participating as _maintenance_participating
 from html import escape
 import json
 import threading
@@ -28,6 +29,7 @@ def email_guard(scope):
     return _provider_account_allowed(scope.account_id, 'isluno_receipt_email', boundary='mutation') is True
 
 
+@_maintenance_participating('delivery')
 def send_pending_email(scope, *, store=None, transport=None, guard=None):
     from agents.social import mermaid_email_transport
     store=store or PaymentStore();transport=transport or mermaid_email_transport.send_email
@@ -60,6 +62,7 @@ def send_pending_email(scope, *, store=None, transport=None, guard=None):
     return status=='accepted'
 
 
+@_maintenance_participating('delivery')
 def send_fulfillment(conversation_id, account_id, job_id, *, store=None, dispatch=None, schedule_email=None, send_question=None):
     store=store or PaymentStore()
     try:

@@ -1,3 +1,5 @@
+**Latest runtime candidate includes maintenance coordination changes. The source/config/static archive records below predate this backend delta; the old backend source archive is NOT the current release candidate. Repackage the reviewed runtime and pin its image before any release approval.**
+
 # ISL-14 proposed release action — target binding still incomplete
 
 **Preparation only. Not approved for execution.** ISL-13 passed independent review. Current counts are 13/14 accepted in candidate, 0/14 merged/verified, three deferred. This packet pins local release material and identifies exact outstanding target facts. Do not approve a blanket deployment against placeholders; complete the target binding and obtain Calvin's final action-specific authorization first.
@@ -83,3 +85,8 @@ The separately approved corrected-runner attempt completed on 2026-09-09 at 02:0
 ## I1/I2 offline cutover disposition
 
 `INGRESS-CUTOVER.md` and `ingress-evidence.json` trace the three matched baseline Python files and candidate quarantine changes. Durable pre-acknowledgement acceptance/recovery exists, but no coordinated admission/drain boundary is established; inbox-disable acknowledges without retaining new messages. Public Zernio retry documentation is conditional evidence, not configured-subscription proof. The minimal proposed correction is reviewed Mermaid-only coordination in the existing path; no runtime change or operational switch was implemented. Exact next step is design disposition by Gatekeeper, with R1/P1/I2 protected/provider facts still separately gated.
+
+
+## Implemented maintenance candidate
+
+`MAINTENANCE.md`, `maintenance-coverage.json` and `maintenance-evidence.json` describe the inactive-by-default coordinator,28 worker entry points, verified offline behavior and first-install external-boundary gap.16 focused and214 full backend tests passed; no host/provider access or activation occurred. This runtime delta awaits independent review. Prior archive/evidence identities are retained as historical records, not relabeled as this code.

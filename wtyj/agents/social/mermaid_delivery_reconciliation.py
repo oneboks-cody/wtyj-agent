@@ -3,6 +3,7 @@
 A synchronous timeout is not a failed delivery. This worker never sends and
 matches the tenant's exact immutable document, independent of URL signatures.
 """
+from shared.mermaid_maintenance import participating as _maintenance_participating
 import json
 import os
 import time
@@ -20,6 +21,7 @@ def _document_identity(url):
     return parsed.scheme, parsed.netloc, parsed.path
 
 
+@_maintenance_participating('delivery')
 def reconcile_job(job_id):
     from agents.social.isluno_transition import blocked
     if blocked():return "quarantined"
@@ -124,6 +126,7 @@ def reconcile_job(job_id):
     return "pending" if matched else "unknown"
 
 
+@_maintenance_participating('scheduled')
 def reconcile_pending_once(limit=5):
     global _next_scan
     if not mermaid_catalog.reservation_demo_enabled() or time.monotonic() < _next_scan:

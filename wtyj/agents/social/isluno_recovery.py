@@ -1,4 +1,5 @@
 """Durable reminder eligibility and operator recovery, without blind retries."""
+from shared.mermaid_maintenance import participating as _maintenance_participating
 import hashlib
 import json
 from datetime import datetime,timedelta
@@ -207,6 +208,7 @@ class RecoveryStore:
         return status=='accepted'
 
 
+@_maintenance_participating('scheduled')
 def run_once(*,store=None,post=None,guard=None,window=None):
     from agents.social.isluno_transition import requested,ensure
     if not requested():
