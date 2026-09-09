@@ -66,3 +66,8 @@ Native-language sign-off, outer login/webhook, live takeover and provider render
 ## Bounded inspection proposal
 
 `INSPECTION.md` extends command-plan step 1 with exact proposed target checks, selected output fields, execution limits, operator-only protected projections and provider-owned evidence. The H1–H7 runner is now implemented with offline/default transport disabled; see `runner-evidence.json` and `runner-tests.txt`. It remains preparation awaiting independent runner review and separate exact access authorization. No host/provider inspection has occurred.
+
+
+## Authorized inspection attempt
+
+Calvin approved one H1–H7 inspection using runner digest `6e2741055558f8075aafcc3f583fe0a82926be751501d6fc2d0e0b6390d1292d` at code `80e6c86cacfc793ebe724e0a377553ce46818776`. The single attempt stopped at H4 and returned no partial checks. See `inspection-attempt.json` for sanitized status/time/scope; detailed runner output remains private locally. No current binding can be promoted from this result and the specific failure cause is not established. No retry, alternate access or broader inspection was attempted. Earlier no-access statements describe preparation before this explicitly approved attempt; no provider access, protected-data read or mutation occurred.

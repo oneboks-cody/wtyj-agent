@@ -122,5 +122,12 @@
     "Approved public media/document bases and their actual tenant route mapping; existing domain does not imply Isluno endpoints are exposed.",
     "Pinned compatible OCI base/platform/dependencies and final candidate image digest. Historical current image digest is not an approved candidate base.",
     "Fresh protected config digest and exact CAS diff; private backup/restore plan; exact action authorization and change window."
-  ]
+  ],
+  "current_state_inspection": {
+    "record": "inspection-attempt.json",
+    "status": "stopped_at_H4",
+    "usable_bindings": 0,
+    "authorization_consumed": "calvin-gatekeeper-h1h7-approved; one attempt only",
+    "next_step": "Gatekeeper review of sanitized failure; no retry or broader access authorized."
+  }
 }
