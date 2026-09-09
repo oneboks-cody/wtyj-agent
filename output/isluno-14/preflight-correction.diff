@@ -1,0 +1,339 @@
+--- consumed-first-preflight
++++ corrected-candidate
+@@ -1,5 +1,5 @@
+ """Single reviewed-scope selected release preflight; no host mutations/provider calls."""
+-import os,sys,json,hashlib,subprocess,time,signal,sqlite3,stat,platform,re
++import os,sys,json,hashlib,subprocess,time,signal,sqlite3,stat,platform,re,selectors,shlex,fnmatch
+ from pathlib import Path
+ START=time.monotonic();RESULT={'status':'running','checks':{},'mutations':False,'provider_calls':0}
+ class Stop(Exception):pass
+@@ -7,11 +7,76 @@
+ def require(ok,code):
+     if not ok:raise Stop(code)
+ 
++def bounded_command(argv, *, timeout=15, cap=2097152, data=None):
++    """Bound stdout+stderr together before buffering; never expose stderr."""
++    proc = subprocess.Popen(argv, stdin=subprocess.PIPE if data is not None else subprocess.DEVNULL,
++                            stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
++    sel = selectors.DefaultSelector()
++    result = bytearray()
++    count = 0
++    deadline = time.monotonic() + timeout
++    end = deadline - min(.1, timeout / 5)  # reserve bounded cleanup inside the call budget
++    pending = memoryview(data or b'')
++    try:
++        for stream in (proc.stdout, proc.stderr):
++            os.set_blocking(stream.fileno(), False)
++            sel.register(stream, selectors.EVENT_READ)
++        if proc.stdin:
++            os.set_blocking(proc.stdin.fileno(), False)
++            if pending:
++                sel.register(proc.stdin, selectors.EVENT_WRITE)
++            else:
++                proc.stdin.close()
++        while sel.get_map():
++            left = end - time.monotonic()
++            require(left > 0, 'timeout')
++            for key, event in sel.select(min(left, .1)):
++                if event & selectors.EVENT_WRITE:
++                    n = os.write(key.fd, pending[:8192]); pending = pending[n:]
++                    if not pending:
++                        sel.unregister(key.fileobj); key.fileobj.close()
++                    continue
++                block = os.read(key.fd, 8192)
++                if not block:
++                    sel.unregister(key.fileobj)
++                    continue
++                count += len(block)
++                require(count <= cap, 'output_limit')
++                if key.fileobj is proc.stdout:
++                    result.extend(block)
++        require(time.monotonic() < end, 'timeout')
++        try:
++            code = proc.wait(timeout=max(.001, end-time.monotonic()))
++        except subprocess.TimeoutExpired:
++            raise Stop('timeout') from None
++        require(code == 0, 'command_failed')
++        try:
++            return result.decode('utf-8', errors='strict')
++        except UnicodeError:
++            raise Stop('invalid_encoding') from None
++    finally:
++        sel.close()
++        try:
++            # The direct child may already have exited while descendants retain pipes.
++            # This session/process group is ours even after proc.poll() reports exit.
++            try:
++                os.killpg(proc.pid, signal.SIGKILL)
++            except ProcessLookupError:
++                pass
++            try:
++                proc.wait(timeout=max(.001, min(.1, deadline-time.monotonic())))
++            except subprocess.TimeoutExpired:
++                raise Stop('cleanup_timeout') from None
++        finally:
++            for stream in (proc.stdin, proc.stdout, proc.stderr):
++                if stream and not stream.closed:
++                    stream.close()
++
++
+ def run(argv,cap=2097152):
+     left=110-(time.monotonic()-START);require(left>0,'preflight_deadline')
+-    p=subprocess.run(argv,stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=min(12,left),check=False)
+-    require(len(p.stdout)+len(p.stderr)<=cap,'command_output_bound');require(p.returncode==0,'selected_command_failed')
+-    return p.stdout.decode()
++    return bounded_command(argv,timeout=min(12,left),cap=cap)
++
+ 
+ def read(path,cap=2097152):
+     p=Path(path);require(p.is_absolute(),'absolute_path')
+@@ -30,13 +95,135 @@
+     labels=x['Config'].get('Labels') or {}
+     return {'id':x['Id'],'name':x['Name'].lstrip('/'),'image':x['Image'],'running':x['State']['Running'],'pid':x['State']['Pid'],'compose_service':labels.get('com.docker.compose.service'),'compose_working_dir':labels.get('com.docker.compose.project.working_dir'),'compose_files':labels.get('com.docker.compose.project.config_files'),'mounts':[{'source':m['Source'],'destination':m['Destination'],'rw':m['RW']} for m in x['Mounts']],'networks':sorted(x['NetworkSettings']['Networks'])}
+ 
++def selected_icp_compose_files(value):
++    expected=['/root/unboks-internal-control-panel/docker-compose.yml',
++              '/root/unboks-internal-control-panel/docker-compose.override.yml']
++    require(isinstance(value,str) and value.split(',')==expected,'icp_compose_unresolved')
++    return expected
++
++def validate_mounts(actual,expected):
++    key=lambda m:(m['source'],m['destination'],m['rw'])
++    require(isinstance(actual,list) and len(actual)==len(expected),'selected_mount_count')
++    require(all(set(m)=={'source','destination','rw'} and type(m['rw']) is bool for m in actual),'selected_mount_shape')
++    require(sorted(map(key,actual))==sorted(map(key,expected)),'selected_mount_binding')
++
++
++def validate_regular_path(path,cap):
++    p=Path(path)
++    for part in [*reversed(p.parents),p]:require(not part.is_symlink(),'selected_symlink')
++    fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW)
++    try:
++        info=os.fstat(fd);require(stat.S_ISREG(info.st_mode) and info.st_size<=cap,'selected_file_shape')
++    finally:os.close(fd)
++
++
++def nginx_nodes(text):
++    lexer=shlex.shlex(text,posix=True,punctuation_chars='{};');lexer.whitespace_split=True;lexer.commenters='#'
++    tokens=list(lexer);require(len(tokens)<=100000,'nginx_token_bound')
++    # shlex joins adjacent punctuation (e.g. '}}'); normalize only those tokens.
++    tokens=[p for t in tokens for p in (list(t) if t and set(t)<=set('{};') else [t])]
++    pos=0
++    def parse(depth=0):
++        nonlocal pos
++        require(depth<20,'nginx_depth');nodes=[];words=[]
++        while pos<len(tokens):
++            t=tokens[pos];pos+=1
++            if t==';':require(bool(words),'nginx_empty_directive');nodes.append((words,None));words=[]
++            elif t=='{':require(bool(words),'nginx_block_shape');nodes.append((words,parse(depth+1)));words=[]
++            elif t=='}':require(depth>0 and not words,'nginx_balance');return nodes
++            else:words.append(t)
++        require(depth==0 and not words,'nginx_balance');return nodes
++    return parse()
++
++
++def validate_nginx(text):
++    # Bind include content from nginx -T itself; never open another config file.
++    chunks=re.split(r'^# configuration file ([^\n]+):\s*$',text,flags=re.M)
++    require(len(chunks)>2,'nginx_source_sections')
++    sources={}
++    for i in range(1,len(chunks),2):
++        name=chunks[i];require(name.startswith('/etc/nginx/') and name not in sources,'nginx_source_identity')
++        sources[name]=nginx_nodes(chunks[i+1])
++    require('/etc/nginx/nginx.conf' in sources,'nginx_root_missing')
++    def expand(nodes,stack):
++        require(len(stack)<=12,'nginx_include_depth');out=[]
++        for head,body in nodes:
++            if head[0]=='include':
++                require(body is None and len(head)==2,'nginx_include_shape')
++                pattern=head[1] if head[1].startswith('/') else '/etc/nginx/'+head[1]
++                matched=sorted(n for n in sources if fnmatch.fnmatchcase(n,pattern))
++                require(bool(matched),'nginx_include_unresolved')
++                for name in matched:
++                    require(name not in stack,'nginx_include_cycle');out+=expand(sources[name],stack+[name])
++            else:out.append((head,expand(body,stack) if body is not None else None))
++        return out
++    nodes=expand(sources['/etc/nginx/nginx.conf'],['/etc/nginx/nginx.conf'])
++    servers=[]
++    def visit(ns):
++        for h,b in ns:
++            if h==['server'] and b is not None:servers.append(b)
++            elif b is not None:visit(b)
++    visit(nodes)
++    def selected(host):
++        result=[s for s in servers if any(h[0]=='server_name' and host in h[1:] for h,b in s)
++                and any(h[0]=='listen' and 'ssl' in h[1:] for h,b in s)]
++        require(len(result)==1,'nginx_selected_server_ambiguous');return result[0]
++    api=selected('api.unboks.org');dashboard=selected('dashboard.unboks.org')
++    loc=[b for h,b in api if h==['location','^~','/api/mermaid/']]
++    require(len(loc)==1 and loc[0] is not None,'nginx_mermaid_location')
++    block=loc[0]
++    require([h for h,b in block if h[0]=='proxy_pass']==[['proxy_pass','http://127.0.0.1:8102/']],'nginx_mermaid_upstream')
++    require([h for h,b in block if h[:2]==['proxy_set_header','X-Tenant-Slug']]==[['proxy_set_header','X-Tenant-Slug','mermaid']],'nginx_mermaid_identity')
++    require(not any(h[0] in ('rewrite','try_files','location') for h,b in block),'nginx_mermaid_rewrite')
++    require(not any(h[0]=='location' and h!=['location','^~','/api/mermaid/'] and any(x.startswith('/api/mermaid/') for x in h[1:]) for h,b in api),'nginx_mermaid_competing_location')
++    require([h for h,b in dashboard if h[0]=='root']==[['root','/var/www/unboks-dashboard/current']],'nginx_dashboard_root')
++    return {'api_server':'api.unboks.org','prefix':'/api/mermaid/','upstream':'http://127.0.0.1:8102/','tenant_header':'mermaid','dashboard_server':'dashboard.unboks.org','static_root':'/var/www/unboks-dashboard/current'}
++
++
++def classify_holder(cgroup,mermaid_id,icp_id,worker,watchdog):
++    return (mermaid_id in cgroup or icp_id in cgroup or
++            '/nr3-provision-worker.service' in cgroup and worker.get('LoadState')=='loaded' or
++            '/unboks-tracy-watchdog.service' in cgroup and watchdog['unboks-tracy-watchdog.service'].get('LoadState')=='loaded')
++
++
++def selected_holders(mermaid_id,icp_id,worker,watchdog):
++    # Device/inode matching catches files opened through a container alias.
++    selected=set();count=0
++    for base in ('/root/clients/mermaid/config','/root/clients/mermaid/data'):
++        for root,dirs,files in os.walk(base,followlinks=False):
++            require(not any(Path(root,n).is_symlink() for n in dirs),'selected_tree_symlink')
++            for name in files:
++                count+=1;require(count<=10000,'selected_file_count')
++                p=Path(root,name);require(not p.is_symlink(),'selected_tree_symlink')
++                info=p.stat();require(stat.S_ISREG(info.st_mode),'selected_tree_file_shape');selected.add((info.st_dev,info.st_ino))
++    holders=[];scanned=0
++    for proc in Path('/proc').iterdir():
++        if not proc.name.isdigit():continue
++        try:
++            cgroup=(proc/'cgroup').read_text();known=classify_holder(cgroup,mermaid_id,icp_id,worker,watchdog)
++            for fd in (proc/'fd').iterdir():
++                scanned+=1;require(scanned<=100000,'process_fd_bound')
++                try:
++                    target=os.readlink(fd);info=fd.stat()
++                except (FileNotFoundError,ProcessLookupError):continue
++                matched=(info.st_dev,info.st_ino) in selected or target.startswith('/root/clients/mermaid/')
++                if not matched and target.startswith(('/app/data/','/app/config/')) and (mermaid_id in cgroup or icp_id in cgroup):matched=True
++                if matched:
++                    # Never print file names that may embed customer identifiers.
++                    holders.append({'pid':int(proc.name),'known_fenceable_producer':known});break
++        except (FileNotFoundError,ProcessLookupError):continue
++        except PermissionError:raise Stop('process_visibility_incomplete')
++    require(len(holders)<=100,'holder_bound');return holders
++
++
+ def main():
+     require(platform.machine()=='x86_64','platform_mismatch')
+-    mm=inspect('wtyj-mermaid');s=slim(mm);RESULT['mermaid']=s
++    mm=inspect('wtyj-mermaid');s=slim(mm)
+     require(s['running'] and s['image']=='sha256:ed146176bbf4e116270b55a04771af5fb3cd5d0f62d124d8650aa7e1bac97552','mermaid_image_or_state_mismatch')
+     require(s['compose_service']=='agent' and s['compose_files']=='/root/clients/mermaid/docker-compose.yml','mermaid_compose_mismatch')
+-    mounts={m['destination']:m for m in s['mounts']}
+-    require(mounts.get('/app/config',{}).get('source')=='/root/clients/mermaid/config' and mounts.get('/app/data',{}).get('source')=='/root/clients/mermaid/data','mermaid_mount_mismatch')
++    validate_mounts(s['mounts'],[{'source':'/root/clients/mermaid/'+n,'destination':'/app/'+n,'rw':True} for n in ('config','data','logs')])
++    require(s['name']=='wtyj-mermaid' and re.fullmatch('[0-9a-f]{64}',s['id']),'mermaid_identity_shape')
++    RESULT['mermaid']=s
+     raw=read('/root/clients/mermaid/config/client.json',1048576);doc=json.loads(raw)
+     require(doc.get('slug')=='mermaid' and doc.get('business',{}).get('slug')=='mermaid','tenant_mismatch')
+     b=doc.get('channel_account_allowlist',{});accounts=b.get('zernio_accounts')
+@@ -48,33 +235,37 @@
+     rows=[json.loads(x) for x in run(['docker','ps','--format','{{json .}}'],65536).splitlines()]
+     selected=[r for r in rows if '127.0.0.1:8010->8010' in r.get('Ports','')]
+     require(len(selected)==1,'icp_selection_ambiguous')
+-    icp=inspect(selected[0]['ID']);s=slim(icp);RESULT['icp']=s
++    icp=inspect(selected[0]['ID']);s=slim(icp)
+     require(s['running'] and s['compose_service']=='wtyj-admin','icp_service_mismatch')
+-    require(s['compose_files'] and ',' not in s['compose_files'] and s['compose_working_dir'],'icp_compose_unresolved')
+-    RESULT['icp']['compose_sha256']=sha(read(s['compose_files']))
++    require(s['compose_working_dir']=='/root/unboks-internal-control-panel','icp_working_dir_mismatch')
++    compose_files=selected_icp_compose_files(s['compose_files'])
++    validate_mounts(s['mounts'],[{'source':'/root/unboks-internal-control-panel/data','destination':'/app/data','rw':True},{'source':'/root/clients','destination':'/app/tenant_root','rw':False}])
++    require(s['name']=='unboks-internal-control-panel-wtyj-admin-1' and re.fullmatch('[0-9a-f]{64}',s['id']),'icp_identity_shape')
++    RESULT['icp']=s
++    RESULT['icp']['compose_sources']=[{'path':p,'sha256':sha(read(p))} for p in compose_files]
+     env=dict(v.split('=',1) for v in icp['Config'].get('Env',[]) if '=' in v)
+     db=env.get('NR3_DB_PATH','data/nr3.db');db=os.path.normpath(db if db.startswith('/') else icp['Config']['WorkingDir']+'/'+db)
+     require(db=='/app/data/nr3.db','icp_db_path_mismatch')
+     mount=next((m for m in s['mounts'] if m['destination']=='/app/data'),None)
+-    require(mount and mount['rw'],'icp_data_mount_unresolved');dbhost=mount['source']+'/nr3.db';read(dbhost,268435456)
++    require(mount and mount['rw'],'icp_data_mount_unresolved');dbhost=mount['source']+'/nr3.db';validate_regular_path(dbhost,268435456)
+     RESULT['icp']['database_path']=dbhost
+     con=sqlite3.connect('file:'+dbhost+'?mode=ro',uri=True,timeout=0)
+     try:
+         con.execute('PRAGMA query_only=ON');con.set_progress_handler(lambda:1 if time.monotonic()-START>105 else 0,10000)
+-        links=con.execute('SELECT tenant_id,channel,provider,status,zernio_account_verified FROM tenant_channel_connections WHERE zernio_account_id=?',(accounts[0],)).fetchall()
++        links=con.execute('SELECT tenant_id,channel,provider,status,zernio_account_verified FROM tenant_channel_connections WHERE zernio_account_id=? LIMIT 2',(accounts[0],)).fetchall()
+         require(links==[('mermaid','whatsapp','zernio','connected',1)],'stored_account_route_not_unique_verified')
+     finally:con.close()
+     RESULT['checks']['stored_account_mapping']='pass'
+     code="from pathlib import Path;import hashlib,json;p=Path('/app/app/routes/connect.py');s=p.read_bytes();print(json.dumps({'sha256':hashlib.sha256(s).hexdigest(),'router':b'/zernio/webhook-router' in s,'forward':b'http://wtyj-{tenant_id}:8001/webhooks/zernio' in s}))"
+     route=json.loads(run(['docker','exec',s['id'],'python','-I','-B','-c',code],8192))
+-    require(route['router'] and route['forward'],'icp_route_source_mismatch');RESULT['icp']['router']=route
++    require(route['router'] and route['forward'] and route['sha256']=='948001e21d0ed6b238caffa4a1d277197cc11e4f377311fba30d7e4ca527f112','icp_route_source_mismatch');RESULT['icp']['router']=route
+     require(set(s['networks']) & set(RESULT['mermaid']['networks']),'selected_network_mismatch')
+     require(not Path(mount['source']+'/mermaid-ingress-gate').exists(),'existing_ingress_gate')
+     RESULT['checks']['icp_binding']='pass'
+     pointer=Path('/var/www/unboks-dashboard/current');require(pointer.is_symlink(),'frontend_pointer_shape')
+     old=os.readlink(pointer);resolved=str(pointer.resolve());require(resolved=='/var/www/unboks-dashboard/releases/2e41f4a209fbafc602419408696a25fa9791dc34','frontend_pointer_changed')
+     RESULT['frontend']={'pointer':str(pointer),'raw_target':old,'resolved_target':resolved,'index_sha256':sha(read(resolved+'/index.html'))}
+-    ng=run(['nginx','-T']);require('/api/mermaid/' in ng and ('8102' in ng or 'wtyj-mermaid' in ng) and '/var/www/unboks-dashboard/current' in ng,'loaded_routes_unresolved')
++    ng=run(['nginx','-T']);RESULT['frontend']['selected_routes']=validate_nginx(ng)
+     RESULT['frontend']['loaded_config_sha256']=sha(ng.encode());RESULT['checks']['selected_dashboard_routes']='pass'
+     watchdog=read('/usr/local/lib/unboks/tracy_watchdog.py')
+     require(b"/root/clients/mermaid/.maintenance" in watchdog and b"STATE.with_suffix('.lock')" in watchdog and b'LOCK_EX' in watchdog,'watchdog_contract_unresolved')
+@@ -84,18 +275,12 @@
+         lines=run(['systemctl','show',unit,'--property=LoadState,ActiveState,SubState,MainPID,FragmentPath'],8192)
+         fields=dict(line.split('=',1) for line in lines.splitlines() if '=' in line)
+         require(fields.get('LoadState')=='loaded','watchdog_unit_missing');RESULT['watchdog']['units'][unit]=fields
+-    # Only selected file holders, no argv/environ/customer contents.
+-    holders=[]
+-    for proc in Path('/proc').iterdir():
+-        if not proc.name.isdigit():continue
+-        try:
+-            for fd in (proc/'fd').iterdir():
+-                try:target=os.readlink(fd)
+-                except OSError:continue
+-                if target.startswith(('/root/clients/mermaid/','/var/lib/unboks-tracy-watchdog/')):
+-                    holders.append({'pid':int(proc.name),'comm':(proc/'comm').read_text().strip(),'path':target});break
+-        except (FileNotFoundError,PermissionError,ProcessLookupError):continue
+-    require(len(holders)<=100,'holder_bound');RESULT['selected_file_holders']=holders
++    # Name known host-worker scope without executing it or reading key files.
++    worker=run(['systemctl','show','nr3-provision-worker.service','--property=LoadState,ActiveState,SubState,MainPID,FragmentPath'],8192)
++    worker=dict(x.split('=',1) for x in worker.splitlines() if '=' in x)
++    require(worker.get('LoadState') in ('loaded','not-found'),'host_worker_unresolved')
++    RESULT['host_worker']=worker
++    RESULT['selected_file_holders']=selected_holders(RESULT['mermaid']['id'],RESULT['icp']['id'],worker,RESULT['watchdog']['units'])
+     # Read only selected unit/cron definitions; never execute them or print arguments.
+     selected_jobs=[]
+     for root in ['/etc/systemd/system','/etc/cron.d','/var/spool/cron/crontabs']:
+@@ -106,20 +291,30 @@
+             if root.endswith('system') and f.suffix not in ('.service','.timer'):continue
+             data=read(str(f),262144)
+             if any(x in data for x in [b'mermaid',b'tracy_watchdog',b'unboks-tracy-watchdog']):
+-                selected_jobs.append({'path':str(f),'sha256':sha(data),'known_watchdog':f.name in ('unboks-tracy-watchdog.service','unboks-tracy-watchdog.timer')})
++                selected_jobs.append({'path':str(f),'sha256':sha(data),'known_fenceable_unit':f.name in ('unboks-tracy-watchdog.service','unboks-tracy-watchdog.timer','nr3-provision-worker.service')})
+     RESULT['selected_jobs']=selected_jobs
+-    require(all(x['known_watchdog'] for x in selected_jobs),'additional_selected_producer_requires_fence')
+-    require(not holders,'active_selected_file_holder_requires_fence')
++    require(all(x['known_fenceable_unit'] for x in selected_jobs),'additional_selected_producer_requires_fence')
++    require(all(x['known_fenceable_producer'] for x in RESULT['selected_file_holders']),'unknown_selected_file_holder')
+     RESULT['checks']['selected_producer_fencing_plan']='pass'
+     backup=Path('/root/backups/isluno-manual-e2e-20260909-a');require(not backup.exists() and not backup.is_symlink(),'backup_destination_exists')
+     release=Path('/var/www/unboks-dashboard/releases/isluno-2c99c3a-20260909-a');require(not release.exists(),'staged_frontend_exists')
+     free=os.statvfs('/root');require(free.f_bavail*free.f_frsize>1073741824,'insufficient_space')
+     RESULT['checks']['new_backup_and_space']='pass';RESULT['status']='pass'
+ 
+-try:
+-    def alarm(*_):raise Stop('preflight_deadline')
+-    signal.signal(signal.SIGALRM,alarm);signal.alarm(112);main()
+-except Exception as e:
+-    RESULT['status']='fail';RESULT['stop_code']=str(e) if isinstance(e,Stop) else type(e).__name__
+-finally:
+-    RESULT['elapsed_seconds']=round(time.monotonic()-START,3);print(json.dumps(RESULT,sort_keys=True))
++def entry(argv=None):
++    argv=sys.argv[1:] if argv is None else argv
++    if not argv:
++        print('{"status":"offline_default","host_reads":false,"mutations":false}')
++        return
++    if argv!=['--execute-approved-preflight']:
++        print('{"status":"stopped","check":"explicit_preflight_flag"}')
++        return
++    try:
++        def alarm(*_):raise Stop('preflight_deadline')
++        signal.signal(signal.SIGALRM,alarm);signal.alarm(112);main()
++    except Exception as e:
++        RESULT['status']='fail';RESULT['stop_code']=str(e) if isinstance(e,Stop) else type(e).__name__
++    finally:
++        RESULT['elapsed_seconds']=round(time.monotonic()-START,3);print(json.dumps(RESULT,sort_keys=True))
++
++if __name__=='__main__':entry()

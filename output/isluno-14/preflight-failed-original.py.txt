@@ -1,0 +1,125 @@
+"""Single reviewed-scope selected release preflight; no host mutations/provider calls."""
+import os,sys,json,hashlib,subprocess,time,signal,sqlite3,stat,platform,re
+from pathlib import Path
+START=time.monotonic();RESULT={'status':'running','checks':{},'mutations':False,'provider_calls':0}
+class Stop(Exception):pass
+
+def require(ok,code):
+    if not ok:raise Stop(code)
+
+def run(argv,cap=2097152):
+    left=110-(time.monotonic()-START);require(left>0,'preflight_deadline')
+    p=subprocess.run(argv,stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=min(12,left),check=False)
+    require(len(p.stdout)+len(p.stderr)<=cap,'command_output_bound');require(p.returncode==0,'selected_command_failed')
+    return p.stdout.decode()
+
+def read(path,cap=2097152):
+    p=Path(path);require(p.is_absolute(),'absolute_path')
+    for a in [*reversed(p.parents),p]:require(not a.is_symlink(),'selected_symlink')
+    fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW)
+    try:
+        s=os.fstat(fd);require(stat.S_ISREG(s.st_mode) and s.st_size<=cap,'selected_file_shape')
+        raw=os.read(fd,cap+1);require(len(raw)<=cap,'selected_file_bound');return raw
+    finally:os.close(fd)
+
+def sha(raw):return hashlib.sha256(raw).hexdigest()
+
+def inspect(name):return json.loads(run(['docker','inspect',name]))[0]
+
+def slim(x):
+    labels=x['Config'].get('Labels') or {}
+    return {'id':x['Id'],'name':x['Name'].lstrip('/'),'image':x['Image'],'running':x['State']['Running'],'pid':x['State']['Pid'],'compose_service':labels.get('com.docker.compose.service'),'compose_working_dir':labels.get('com.docker.compose.project.working_dir'),'compose_files':labels.get('com.docker.compose.project.config_files'),'mounts':[{'source':m['Source'],'destination':m['Destination'],'rw':m['RW']} for m in x['Mounts']],'networks':sorted(x['NetworkSettings']['Networks'])}
+
+def main():
+    require(platform.machine()=='x86_64','platform_mismatch')
+    mm=inspect('wtyj-mermaid');s=slim(mm);RESULT['mermaid']=s
+    require(s['running'] and s['image']=='sha256:ed146176bbf4e116270b55a04771af5fb3cd5d0f62d124d8650aa7e1bac97552','mermaid_image_or_state_mismatch')
+    require(s['compose_service']=='agent' and s['compose_files']=='/root/clients/mermaid/docker-compose.yml','mermaid_compose_mismatch')
+    mounts={m['destination']:m for m in s['mounts']}
+    require(mounts.get('/app/config',{}).get('source')=='/root/clients/mermaid/config' and mounts.get('/app/data',{}).get('source')=='/root/clients/mermaid/data','mermaid_mount_mismatch')
+    raw=read('/root/clients/mermaid/config/client.json',1048576);doc=json.loads(raw)
+    require(doc.get('slug')=='mermaid' and doc.get('business',{}).get('slug')=='mermaid','tenant_mismatch')
+    b=doc.get('channel_account_allowlist',{});accounts=b.get('zernio_accounts')
+    require(b.get('mode')=='strict' and isinstance(accounts,list) and len(accounts)==1 and isinstance(accounts[0],str),'strict_binding_mismatch')
+    fingerprint=sha(accounts[0].encode());require(fingerprint=='ca117468b3369f1961ebc941f6774f539d98f82be488dd433c0a2df4eb6a8c09','account_mismatch')
+    require(not doc.get('features',{}).get('isluno_itinerary_demo_v1') and not doc.get('features',{}).get('mermaid_cutover_coordination'),'already_changed_features')
+    RESULT['config']={'sha256':sha(raw),'bytes':len(raw),'account_fingerprint':fingerprint,'tenant':'mermaid'}
+    RESULT['checks']['mermaid_binding']='pass'
+    rows=[json.loads(x) for x in run(['docker','ps','--format','{{json .}}'],65536).splitlines()]
+    selected=[r for r in rows if '127.0.0.1:8010->8010' in r.get('Ports','')]
+    require(len(selected)==1,'icp_selection_ambiguous')
+    icp=inspect(selected[0]['ID']);s=slim(icp);RESULT['icp']=s
+    require(s['running'] and s['compose_service']=='wtyj-admin','icp_service_mismatch')
+    require(s['compose_files'] and ',' not in s['compose_files'] and s['compose_working_dir'],'icp_compose_unresolved')
+    RESULT['icp']['compose_sha256']=sha(read(s['compose_files']))
+    env=dict(v.split('=',1) for v in icp['Config'].get('Env',[]) if '=' in v)
+    db=env.get('NR3_DB_PATH','data/nr3.db');db=os.path.normpath(db if db.startswith('/') else icp['Config']['WorkingDir']+'/'+db)
+    require(db=='/app/data/nr3.db','icp_db_path_mismatch')
+    mount=next((m for m in s['mounts'] if m['destination']=='/app/data'),None)
+    require(mount and mount['rw'],'icp_data_mount_unresolved');dbhost=mount['source']+'/nr3.db';read(dbhost,268435456)
+    RESULT['icp']['database_path']=dbhost
+    con=sqlite3.connect('file:'+dbhost+'?mode=ro',uri=True,timeout=0)
+    try:
+        con.execute('PRAGMA query_only=ON');con.set_progress_handler(lambda:1 if time.monotonic()-START>105 else 0,10000)
+        links=con.execute('SELECT tenant_id,channel,provider,status,zernio_account_verified FROM tenant_channel_connections WHERE zernio_account_id=?',(accounts[0],)).fetchall()
+        require(links==[('mermaid','whatsapp','zernio','connected',1)],'stored_account_route_not_unique_verified')
+    finally:con.close()
+    RESULT['checks']['stored_account_mapping']='pass'
+    code="from pathlib import Path;import hashlib,json;p=Path('/app/app/routes/connect.py');s=p.read_bytes();print(json.dumps({'sha256':hashlib.sha256(s).hexdigest(),'router':b'/zernio/webhook-router' in s,'forward':b'http://wtyj-{tenant_id}:8001/webhooks/zernio' in s}))"
+    route=json.loads(run(['docker','exec',s['id'],'python','-I','-B','-c',code],8192))
+    require(route['router'] and route['forward'],'icp_route_source_mismatch');RESULT['icp']['router']=route
+    require(set(s['networks']) & set(RESULT['mermaid']['networks']),'selected_network_mismatch')
+    require(not Path(mount['source']+'/mermaid-ingress-gate').exists(),'existing_ingress_gate')
+    RESULT['checks']['icp_binding']='pass'
+    pointer=Path('/var/www/unboks-dashboard/current');require(pointer.is_symlink(),'frontend_pointer_shape')
+    old=os.readlink(pointer);resolved=str(pointer.resolve());require(resolved=='/var/www/unboks-dashboard/releases/2e41f4a209fbafc602419408696a25fa9791dc34','frontend_pointer_changed')
+    RESULT['frontend']={'pointer':str(pointer),'raw_target':old,'resolved_target':resolved,'index_sha256':sha(read(resolved+'/index.html'))}
+    ng=run(['nginx','-T']);require('/api/mermaid/' in ng and ('8102' in ng or 'wtyj-mermaid' in ng) and '/var/www/unboks-dashboard/current' in ng,'loaded_routes_unresolved')
+    RESULT['frontend']['loaded_config_sha256']=sha(ng.encode());RESULT['checks']['selected_dashboard_routes']='pass'
+    watchdog=read('/usr/local/lib/unboks/tracy_watchdog.py')
+    require(b"/root/clients/mermaid/.maintenance" in watchdog and b"STATE.with_suffix('.lock')" in watchdog and b'LOCK_EX' in watchdog,'watchdog_contract_unresolved')
+    require(not Path('/root/clients/mermaid/.maintenance').exists(),'existing_maintenance_marker')
+    RESULT['watchdog']={'script_sha256':sha(watchdog),'marker_present':False,'units':{}}
+    for unit in ['unboks-tracy-watchdog.service','unboks-tracy-watchdog.timer']:
+        lines=run(['systemctl','show',unit,'--property=LoadState,ActiveState,SubState,MainPID,FragmentPath'],8192)
+        fields=dict(line.split('=',1) for line in lines.splitlines() if '=' in line)
+        require(fields.get('LoadState')=='loaded','watchdog_unit_missing');RESULT['watchdog']['units'][unit]=fields
+    # Only selected file holders, no argv/environ/customer contents.
+    holders=[]
+    for proc in Path('/proc').iterdir():
+        if not proc.name.isdigit():continue
+        try:
+            for fd in (proc/'fd').iterdir():
+                try:target=os.readlink(fd)
+                except OSError:continue
+                if target.startswith(('/root/clients/mermaid/','/var/lib/unboks-tracy-watchdog/')):
+                    holders.append({'pid':int(proc.name),'comm':(proc/'comm').read_text().strip(),'path':target});break
+        except (FileNotFoundError,PermissionError,ProcessLookupError):continue
+    require(len(holders)<=100,'holder_bound');RESULT['selected_file_holders']=holders
+    # Read only selected unit/cron definitions; never execute them or print arguments.
+    selected_jobs=[]
+    for root in ['/etc/systemd/system','/etc/cron.d','/var/spool/cron/crontabs']:
+        p=Path(root)
+        if not p.exists():continue
+        for f in p.iterdir():
+            if not f.is_file() or f.is_symlink():continue
+            if root.endswith('system') and f.suffix not in ('.service','.timer'):continue
+            data=read(str(f),262144)
+            if any(x in data for x in [b'mermaid',b'tracy_watchdog',b'unboks-tracy-watchdog']):
+                selected_jobs.append({'path':str(f),'sha256':sha(data),'known_watchdog':f.name in ('unboks-tracy-watchdog.service','unboks-tracy-watchdog.timer')})
+    RESULT['selected_jobs']=selected_jobs
+    require(all(x['known_watchdog'] for x in selected_jobs),'additional_selected_producer_requires_fence')
+    require(not holders,'active_selected_file_holder_requires_fence')
+    RESULT['checks']['selected_producer_fencing_plan']='pass'
+    backup=Path('/root/backups/isluno-manual-e2e-20260909-a');require(not backup.exists() and not backup.is_symlink(),'backup_destination_exists')
+    release=Path('/var/www/unboks-dashboard/releases/isluno-2c99c3a-20260909-a');require(not release.exists(),'staged_frontend_exists')
+    free=os.statvfs('/root');require(free.f_bavail*free.f_frsize>1073741824,'insufficient_space')
+    RESULT['checks']['new_backup_and_space']='pass';RESULT['status']='pass'
+
+try:
+    def alarm(*_):raise Stop('preflight_deadline')
+    signal.signal(signal.SIGALRM,alarm);signal.alarm(112);main()
+except Exception as e:
+    RESULT['status']='fail';RESULT['stop_code']=str(e) if isinstance(e,Stop) else type(e).__name__
+finally:
+    RESULT['elapsed_seconds']=round(time.monotonic()-START,3);print(json.dumps(RESULT,sort_keys=True))

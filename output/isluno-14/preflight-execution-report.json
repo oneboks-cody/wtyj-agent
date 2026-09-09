@@ -1,0 +1,28 @@
+{
+  "packet_head": "b66bf6952075cd80d838abf2aef881449f2ea6bf",
+  "status": "stopped_before_mutation",
+  "preflight_dispatches": 1,
+  "remote_elapsed_seconds": 0.088,
+  "passed": [
+    "mermaid_binding"
+  ],
+  "stop_code": "icp_compose_unresolved",
+  "reason": "ICP has ordered base and override Compose files; runner only accepted a single path. Host misconfiguration is not established.",
+  "remaining_checks": "ICP selected stored account mapping, source routing, dashboard loaded routes, producer/watchdog fencing, private destination/free space were not reached",
+  "host_mutations": 0,
+  "provider_calls": 0,
+  "gates_changed": false,
+  "live_isluno_deployed": false,
+  "automatic_retry": false,
+  "recorded_at": "2026-09-09T05:28:30.316616+00:00",
+  "failed_payload_sha256": "38a3bc7cf4ebac8622e5761cff5ce6455a7722814c1c9913c92df1c21e3e43f7",
+  "corrected_runner_path": "wtyj/scripts/preflight_isluno_release.py",
+  "corrected_runner_sha256": "36ea23be779c9bb001695472dd419b7ec9fe59e3c5999d823b8343c7e7e44fe2",
+  "corrected_tests_path": "wtyj/tests/scripts/test_isluno_release_preflight.py",
+  "corrected_tests_sha256": "bd0df15a3eb24ce06f1484ff09e2abf7cc17d3cf55ce21ff08657ec172a93066",
+  "correction_test_count": 9,
+  "correction_test_seconds": 0.277,
+  "correction_dispatched": false,
+  "conditional_deployment_authority": "Previously approved; failed one-run inspection does not provide a second attempt.",
+  "new_allowance_required": "One bounded corrected preflight attempt only; no repeat deployment approval requested."
+}

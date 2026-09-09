@@ -1,0 +1,14 @@
+test_bad_compose_stops_full_flow (__main__.CompletePreflight.test_bad_compose_stops_full_flow) ... ok
+test_complete_synthetic_preflight (__main__.CompletePreflight.test_complete_synthetic_preflight) ... ok
+test_wrong_mount_stops_full_flow (__main__.CompletePreflight.test_wrong_mount_stops_full_flow) ... ok
+test_compose_exact_order_and_rejections (__main__.Contract.test_compose_exact_order_and_rejections) ... ok
+test_default_does_not_inspect_host (__main__.Contract.test_default_does_not_inspect_host) ... ok
+test_holder_inode_alias_and_known_classification (__main__.Contract.test_holder_inode_alias_and_known_classification) ... ok
+test_mount_exact_duplicate_extra_mode_and_path (__main__.Contract.test_mount_exact_duplicate_extra_mode_and_path) ... ok
+test_nginx_loaded_server_location_upstream_binding (__main__.Contract.test_nginx_loaded_server_location_upstream_binding) ... ok
+test_stream_output_cap_and_time_limit (__main__.Contract.test_stream_output_cap_and_time_limit) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.277s
+
+OK

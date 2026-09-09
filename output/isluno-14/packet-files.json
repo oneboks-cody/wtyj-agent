@@ -52,6 +52,10 @@
     "sha256": "47c86b8c6d26942ee0ffd3e596d6235b04dbed7fc7f3326e6820572feadc4029"
   },
   {
+    "file": "PREFLIGHT-FOLLOW-UP.md",
+    "sha256": "956987362a780be9afe554358899978d9eef5b302481dfd2d0166987f268c41b"
+  },
+  {
     "file": "RELEASE-SEQUENCE.md",
     "sha256": "f1fc766d41cbb56e337a4048a5bfad2e325545187b766a5767729586426977cb"
   },
@@ -202,6 +206,22 @@
   {
     "file": "persisted-package-checks.json",
     "sha256": "4de2ade52130bc9990fa4c516fd9bad45f210aff8fcba4f8badea96850a66eb0"
+  },
+  {
+    "file": "preflight-correction-tests.txt",
+    "sha256": "a21ade84f9118d089100c7e5763bd1cfb980615a7bc2d8fea27e1d3f4178162b"
+  },
+  {
+    "file": "preflight-correction.diff",
+    "sha256": "737bf17c687554c0ebd65ace35892d43f8cfa3b8486489bdbba0068a90bd5094"
+  },
+  {
+    "file": "preflight-execution-report.json",
+    "sha256": "cc42814cda6ee6cfcd9d6fcb45ab2ef6d0b8bce186f2824b1584b215dd8364a5"
+  },
+  {
+    "file": "preflight-failed-original.py.txt",
+    "sha256": "38a3bc7cf4ebac8622e5761cff5ce6455a7722814c1c9913c92df1c21e3e43f7"
   },
   {
     "file": "read-only-metadata.json",
