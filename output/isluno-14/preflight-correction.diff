@@ -138,7 +138,7 @@
 +    require(len(chunks)>2,'nginx_source_sections')
 +    sources={}
 +    for i in range(1,len(chunks),2):
-+        name=chunks[i];require(name.startswith('/etc/nginx/') and name not in sources,'nginx_source_identity')
++        name=chunks[i];require(name.startswith('/') and os.path.normpath(name)==name and name not in sources,'nginx_source_identity')
 +        sources[name]=nginx_nodes(chunks[i+1])
 +    require('/etc/nginx/nginx.conf' in sources,'nginx_root_missing')
 +    def expand(nodes,stack):

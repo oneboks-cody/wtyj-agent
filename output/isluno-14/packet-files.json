@@ -53,7 +53,7 @@
   },
   {
     "file": "PREFLIGHT-FOLLOW-UP.md",
-    "sha256": "b8095ebf9af7a49687ebe7a0f5d4d8e0842701cb89c2e470a5b170f4b65394fe"
+    "sha256": "df0dd6190e1efc72c7fc439bb76ea61e8cf9247a0d4832bc4bd7138b1ed90336"
   },
   {
     "file": "RELEASE-SEQUENCE.md",
@@ -213,15 +213,19 @@
   },
   {
     "file": "preflight-correction.diff",
-    "sha256": "90260c95e6e3c2f3fb1202b954daa04db7c12a0643007b3302fcf59c92eaa676"
+    "sha256": "3399b837975dc183349d126cf26fea2a09ffac974d8ed10558ebc15d532523e8"
   },
   {
     "file": "preflight-execution-report.json",
-    "sha256": "ec826d24ec12d6923f29d89c2f9fb49dd81a5383a8016bc345c2591468b06a3a"
+    "sha256": "89c90cf86f88f626ab84db9bdb955f811b854605a91075ef4241141ab32fdd46"
   },
   {
     "file": "preflight-failed-original.py.txt",
     "sha256": "38a3bc7cf4ebac8622e5761cff5ce6455a7722814c1c9913c92df1c21e3e43f7"
+  },
+  {
+    "file": "preflight-nginx-compatibility-tests.txt",
+    "sha256": "c57ff7e01898409c508fd3ce4176490d29e3e6387ac7f9c490705baabd9ea658"
   },
   {
     "file": "preflight-nginx-correction-tests.txt",

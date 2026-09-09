@@ -1,0 +1,7 @@
+test_nginx_returned_external_ssl_include_and_app_shell_cache (checks.Contract.test_nginx_returned_external_ssl_include_and_app_shell_cache) ... ok
+test_nginx_empty_optional_glob_and_required_literal (checks.Contract.test_nginx_empty_optional_glob_and_required_literal) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+OK

@@ -45,6 +45,12 @@ class Contract(unittest.TestCase):
   valid=NG.replace('proxy_pass http://127.0.0.1:8102/;','proxy_pass http://127.0.0.1:8102/; if ($request_method = OPTIONS) { add_header Access-Control-Max-Age 86400 always; return 204; }')
   self.assertEqual(m.validate_nginx(valid)['tenant_header'],'mermaid')
   with self.assertRaises(m.Stop):m.validate_nginx(valid.replace('return 204;','return 302 /other;'))
+ def test_nginx_returned_external_ssl_include_and_app_shell_cache(self):
+  valid=NG.replace('server_name api.unboks.org;','server_name api.unboks.org; include /etc/letsencrypt/options-ssl-nginx.conf;')
+  valid+='\n# configuration file /etc/letsencrypt/options-ssl-nginx.conf:\nssl_protocols TLSv1.2 TLSv1.3; ssl_session_cache shared:le_nginx_SSL:10m;\n'
+  valid=valid.replace('location / { try_files', 'location = /index.html { expires -1; add_header Cache-Control "no-store, no-cache, must-revalidate, max-age=0" always; add_header Pragma "no-cache" always; } location / { expires -1; add_header Cache-Control "no-store, no-cache, must-revalidate, max-age=0" always; try_files')
+  self.assertEqual(m.validate_nginx(valid)['tenant_header'],'mermaid')
+  with self.assertRaises(m.Stop):m.validate_nginx(valid.replace('ssl_protocols TLSv1.2 TLSv1.3;','return 302 https://wrong.example;'))
  def test_holder_inode_alias_and_known_classification(self):
   with tempfile.TemporaryDirectory() as temp:
    root=Path(temp);data=root/'root/clients/mermaid/data';config=root/'root/clients/mermaid/config';data.mkdir(parents=True);config.mkdir()
