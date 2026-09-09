@@ -12,6 +12,10 @@
     "sha256": "2f9c56ee41705b3f234416d07ee123aeeb76094baf99762986ffa309a6d09a12"
   },
   {
+    "file": "IMAGE-RECIPE.md",
+    "sha256": "121cc0365a2a90672877d8eab17b95cafcb6fa87e0cc55f998ef9a421e4ea4f3"
+  },
+  {
     "file": "INGRESS-CUTOVER.md",
     "sha256": "fda7a4167caa90b12e5b24d975ad6929ff14553c041bc72aec1c4744c85d5314"
   },
